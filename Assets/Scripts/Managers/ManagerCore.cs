@@ -2,24 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ManagerCore : MonoBehaviour {
-
-	// Singleton
-	private static ManagerCore _instance;
-	public static ManagerCore Instance{
-		get{
-			if (_instance == null) {
-				// シーン上から取得する
-				_instance = FindObjectOfType<ManagerCore> ();
-				if (_instance == null) {
-					// ゲームオブジェクトを作成しコンポーネントを追加する
-					_instance = new GameObject ("ObjectPool").AddComponent<ManagerCore>();
-				}
-			}
-			return _instance;
-		}
-	}
-
+public class ManagerCore : SingletonMonoBehaviour<ManagerCore> {
 	// Manager Properties
 	private HUDManager _hud;
 	public HUDManager Hud{
