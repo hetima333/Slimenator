@@ -3,7 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ManagerCore : SingletonMonoBehaviour<ManagerCore> {
+	
 	// Manager Properties
+	private GameMainManager _game;
+	public GameMainManager Game{
+		get {
+			if(_game == null){
+				_game = GetComponentInChildren<GameMainManager>();
+			}
+			return _game;
+		}
+	}
+
 	private HUDManager _hud;
 	public HUDManager Hud{
 		get {

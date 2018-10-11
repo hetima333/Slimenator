@@ -1,19 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class HUDManager : MonoBehaviour {
+public class PlayerDummy : MonoBehaviour {
 
-	[SerializeField]
-	private Text _text;
+	const int MAX_HEALTH = 3;
+	public int Health{
+		get; set;
+	}
 
 	// Use this for initialization
 	void Start () {
+		Health = MAX_HEALTH;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		_text.text = "" + ManagerCore.Instance.Game.Player.Health;
+		
 	}
 }
