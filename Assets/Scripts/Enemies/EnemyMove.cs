@@ -128,10 +128,14 @@ public class EnemyMove : MonoBehaviour {
         //移動先の座標を求める（Find the coordinates to move）
         //X軸移動量の設定
         float randomX = Random.Range(-_enemy._freeMoveRange, _enemy._freeMoveRange);
+
+        float nextX = gameObject.transform.position.x + randomX;
         //Z軸移動量の設定
         float randomZ = Random.Range(-_enemy._freeMoveRange, _enemy._freeMoveRange);
+
+        float nextZ = gameObject.transform.position.z + randomZ;
         //次の移動座標の設定
-        Vector3 nextPos = new Vector3(randomX, 1, randomZ);
+        Vector3 nextPos = new Vector3(nextX, 1, nextZ);
 
         return nextPos;
     }
