@@ -23,13 +23,14 @@ GameObject:
   - component: {fileID: 65206223175265366}
   - component: {fileID: 23703178118912406}
   - component: {fileID: 114325806150278704}
+  - component: {fileID: 54037968668190096}
   m_Layer: 0
   m_Name: LightingSlime
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4837388652153324
 Transform:
   m_ObjectHideFlags: 1
@@ -84,6 +85,21 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1359915208302376}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!54 &54037968668190096
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1359915208302376}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!65 &65206223175265366
 BoxCollider:
   m_ObjectHideFlags: 1

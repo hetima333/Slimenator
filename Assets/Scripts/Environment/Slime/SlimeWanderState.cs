@@ -12,7 +12,6 @@ public class SlimeWanderState : SlimeBaseState
 
     public SlimeWanderState(SlimeBase owner) : base(owner)
     {
-        Debug.Log("HAEJREAIFIE");
         _startPosition = _owner.GetPosition();
     }
 
@@ -50,7 +49,17 @@ public class SlimeWanderState : SlimeBaseState
 
     private Vector3 GetNewDestination()
     {
-        return new Vector3(UnityEngine.Random.Range(_owner.GetPosition().x - _owner.Stats.MovementRange, _owner.GetPosition().x + _owner.Stats.MovementRange), _owner.GetPosition().y , UnityEngine.Random.Range(_owner.GetPosition().z - -_owner.Stats.MovementRange, _owner.GetPosition().z + -_owner.Stats.MovementRange));
+        Vector3 newDestination = new Vector3(UnityEngine.Random.Range(_owner.GetPosition().x - _owner.Stats.MovementRange, _owner.GetPosition().x + _owner.Stats.MovementRange), _owner.GetPosition().y, UnityEngine.Random.Range(_owner.GetPosition().z - -_owner.Stats.MovementRange, _owner.GetPosition().z + -_owner.Stats.MovementRange));
+
+        // ENG: Ensure that it moves at a certain range.
+        // JAP: 特定の範囲で移動することを確認する.
+        if (newDestination.x > _startPosition.x + _owner.Stats.MaxMovementRange || newDestination.z > _startPosition.z + _owner.Stats.MaxMovementRange ||
+            newDestination.x < _startPosition.x - _owner.Stats.MaxMovementRange || newDestination.z < _startPosition.z - _owner.Stats.MaxMovementRange)
+        {
+            return GetNewDestination();
+        }
+
+        return newDestination;
     }
 
     private bool ReachedDestination()

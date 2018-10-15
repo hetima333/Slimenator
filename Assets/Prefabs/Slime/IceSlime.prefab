@@ -23,13 +23,14 @@ GameObject:
   - component: {fileID: 65812704873749258}
   - component: {fileID: 23996077022370132}
   - component: {fileID: 114887386705119394}
+  - component: {fileID: 54104513476308568}
   m_Layer: 0
   m_Name: IceSlime
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4564573792538562
 Transform:
   m_ObjectHideFlags: 1
@@ -84,6 +85,21 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1757657778201920}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!54 &54104513476308568
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1757657778201920}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!65 &65812704873749258
 BoxCollider:
   m_ObjectHideFlags: 1

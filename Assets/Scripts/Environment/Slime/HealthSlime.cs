@@ -3,7 +3,6 @@
     // Use this for initialization
     protected override void Start()
     {
-        Init(100f, 5.0f, SlimeStats.Slime_Type.SLIME_HEALTH);
         base.Start();
     }
 

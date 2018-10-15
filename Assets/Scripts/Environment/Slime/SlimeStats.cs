@@ -17,7 +17,8 @@ public class SlimeStats
         _health,
         _maxHealth,
         _velocity,
-        _movementRange;
+        _movementRange,
+        _maxMovementRange;
 
     bool
         _isDead;
@@ -71,6 +72,18 @@ public class SlimeStats
         set
         {
             _movementRange = value;
+        }
+    }
+    public float MaxMovementRange
+    {
+        get
+        {
+            return _maxMovementRange;
+        }
+
+        set
+        {
+            _maxMovementRange = value;
         }
     }
     public bool IsDead

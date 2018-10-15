@@ -42,7 +42,7 @@ public abstract class SlimeBase : MonoBehaviour {
     protected virtual void Update () {
         _state.Tick();
     }
-
+  
     public void TakeDamage(float dmg)
     {
         _stats.Health -= dmg;
@@ -71,6 +71,7 @@ public abstract class SlimeBase : MonoBehaviour {
         _stats.Type = type;
         _stats.IsDead = false;
         _stats.MovementRange = Random.Range(5.0f, 10.0f);
+        _stats.MaxMovementRange = 3.0f;
         _material = gameObject.GetComponent<Renderer>().material;
 
         // ENG: Initialize Slime material.
