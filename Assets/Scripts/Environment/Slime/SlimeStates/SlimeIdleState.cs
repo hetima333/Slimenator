@@ -43,6 +43,11 @@ public class SlimeIdleState : SlimeBaseState
 
     private bool CheckIsPlayerInRange()
     {
-        return Vector3.Distance(_owner.GetPosition(), _tempPlayer.transform.position) < 2.0f;
+        if (_tempPlayer != null)
+        {
+            return Vector3.Distance(_owner.GetPosition(), _tempPlayer.transform.position) < 7.0f;
+        }
+
+        return false;
     }
 }

@@ -62,7 +62,7 @@ public abstract class SlimeBase : MonoBehaviour {
 
     // ENG: Initialization 
     // JAP: 初期化。
-    public void Init(float maxHealth, float velocity, SlimeStats.Slime_Type type)
+    public virtual void Init(float maxHealth, float velocity, SlimeStats.Slime_Type type)
     {
         _stats = new SlimeStats();
         _stats.MaxHealth = maxHealth;

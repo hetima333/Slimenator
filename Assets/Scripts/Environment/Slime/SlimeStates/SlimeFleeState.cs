@@ -40,7 +40,7 @@ public class SlimeFleeState : SlimeBaseState
     private Vector3 GetNewDestination()
     {
         Vector3 dir = _owner.GetPosition() - _tempPlayer.transform.position;
-        return dir * 15f;
+        return dir * _owner.Stats.MovementRange;
     }
 
     //private bool ReachedDestination()
@@ -48,8 +48,15 @@ public class SlimeFleeState : SlimeBaseState
     //    return Vector3.Distance(_owner.GetPosition(), _destination) < 0.5f;
     //}
 
+    // ENG: Check distance between the slime and player.
+    // JAP: スライムとプレイヤーの距離を確認してください。
     private bool Escaped()
     {
-        return Vector3.Distance(_owner.GetPosition(), _tempPlayer.transform.position) > 7.5f;
+        if (_tempPlayer != null)
+        {
+            return Vector3.Distance(_owner.GetPosition(), _tempPlayer.transform.position) > 7.5f;
+        }
+
+        return false;
     }
 }

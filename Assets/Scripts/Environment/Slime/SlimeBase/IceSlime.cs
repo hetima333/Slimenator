@@ -1,4 +1,4 @@
-﻿public class LightingSlime : SlimeBase
+﻿public class IceSlime : SlimeBase
 {
     // Use this for initialization
     protected override void Start()
