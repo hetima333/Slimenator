@@ -11,14 +11,19 @@ public class EntityDetector : MonoBehaviour
     private GameObject
             _Owner;
 
+    [SerializeField]
+    private PlayerStats
+        _PlayerStats;
+
     protected void OnTriggerStay(Collider other)
     {
         if (other.gameObject.tag.Equals("Suckable"))
         {
             Rigidbody RB = other.GetComponent<Rigidbody>();
 
-            if (RB != null)
+            if (RB != null && RB.mass < _PlayerStats.SuckingPowerProperties)
                 RB.AddForce(-GAcceleration(_Owner.transform.position, RB.mass, RB));
+
         }
     }
 

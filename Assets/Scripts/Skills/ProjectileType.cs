@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Entity/Projectile")]
 public class ProjectileType : ScriptableObject
 {
-
-
+    public virtual void MovePosition(GameObject go, Vector3 dir, float speed)
+    { }
 }

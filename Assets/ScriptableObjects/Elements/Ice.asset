@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 32e8d1fb205a4324f99c4d9085aaae87, type: 3}
-  m_Name: New Element Type
+  m_Name: Ice
   m_EditorClassIdentifier: 
-  _minMoney: 0
-  _maxMoney: 0
+  _minAmount: 0
+  _maxAmount: 0
