@@ -13,6 +13,9 @@ public class EntityPlayer : MonoBehaviour
     private PlayerStats
         _Player_Stats;
 
+    private Queue<ElementType>
+        _OrbSlot = new Queue<ElementType>();
+
     private void Start()
     {
     }
@@ -38,5 +41,13 @@ public class EntityPlayer : MonoBehaviour
                 _SuckingRadius.SetActive(false);
         }
 
+    }
+
+    public void StoreElementInOrb(ElementType type)
+    {
+        _OrbSlot.Enqueue(type);
+
+        if (_OrbSlot.Count > 3)
+            _OrbSlot.Dequeue();
     }
 }

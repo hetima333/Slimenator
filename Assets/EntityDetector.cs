@@ -15,6 +15,10 @@ public class EntityDetector : MonoBehaviour
     private PlayerStats
         _PlayerStats;
 
+    [SerializeField]
+    private EntityPlayer
+        _Player;
+
     protected void OnTriggerStay(Collider other)
     {
         if (other.gameObject.tag.Equals("Suckable"))
@@ -24,6 +28,10 @@ public class EntityDetector : MonoBehaviour
             if (RB != null && RB.mass < _PlayerStats.SuckingPowerProperties)
                 RB.AddForce(-GAcceleration(_Owner.transform.position, RB.mass, RB));
 
+            if(Vector3.Distance(other.gameObject.transform.position, _Owner.gameObject.transform.position) < 1)
+            {
+                _Player.StoreElementInOrb(other.GetComponent<IElement>().GetElementType());
+            }
         }
     }
 
