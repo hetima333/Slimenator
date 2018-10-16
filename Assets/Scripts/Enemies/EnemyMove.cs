@@ -18,16 +18,13 @@ public class EnemyMove : MonoBehaviour {
     }
 	
 	// Update is called once per frame
-	void Update () {
-        //移動速度のリセット
-        _enemy._rigidbody.velocity = Vector3.zero;
-
-    }
 
 
     //待機コルーチン
     public IEnumerator Idle()
     {
+        //移動速度のリセット
+        _enemy._rigidbody.velocity = Vector3.zero;
         //TODO 指定時間待機
         yield return new WaitForSeconds(2);
 
@@ -42,7 +39,8 @@ public class EnemyMove : MonoBehaviour {
     //自由移動
     public void FreeMove()
     {
-
+        //移動速度のリセット
+        _enemy._rigidbody.velocity = Vector3.zero;
         //現在座標を取得
         Vector3 pos = gameObject.transform.position;
 
@@ -74,7 +72,8 @@ public class EnemyMove : MonoBehaviour {
     //プレイヤーに向かっての移動
     public void Move2Player()
     {
-
+        //移動速度のリセット
+        _enemy._rigidbody.velocity = Vector3.zero;
         if (!_enemy._target) return;
         //現在座標を取得
         Vector3 pos = gameObject.transform.position;
@@ -102,6 +101,9 @@ public class EnemyMove : MonoBehaviour {
     //初期位置に戻る
     public void Return2FirstPos()
     {
+
+        //移動速度のリセット
+        _enemy._rigidbody.velocity = Vector3.zero;
         //現在座標を取得
         Vector3 pos = gameObject.transform.position;
 
@@ -124,6 +126,8 @@ public class EnemyMove : MonoBehaviour {
     //目的地のセット
     public Vector3 SetMovePos()
     {
+        //移動速度のリセット
+        _enemy._rigidbody.velocity = Vector3.zero;
 
         //移動先の座標を求める（Find the coordinates to move）
         //X軸移動量の設定
