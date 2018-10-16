@@ -12,7 +12,7 @@ public class ElementType : ScriptableObject
 
     [SerializeField]
     private Color
-        Color;
+        _color;
 
     public int GetRandomAmount()
     {
@@ -21,6 +21,6 @@ public class ElementType : ScriptableObject
 
     public Color GetColor()
     {
-        return Color;
+        return _color;
     }
 }
