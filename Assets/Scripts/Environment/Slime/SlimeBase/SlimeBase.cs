@@ -3,8 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class SlimeBase : MonoBehaviour, ISuckable, IDamageable {
-
+public abstract class SlimeBase : MonoBehaviour, ISuckable, IDamageable, IElement
+{
     SlimeStats _stats;
     SlimeBaseState _state;
     Material _material;
@@ -115,5 +115,11 @@ public abstract class SlimeBase : MonoBehaviour, ISuckable, IDamageable {
     public void Sacking()
     {
         return;
+    }
+
+
+    public ElementType GetElementType()
+    {
+        return _stats.Elementtype;
     }
 }

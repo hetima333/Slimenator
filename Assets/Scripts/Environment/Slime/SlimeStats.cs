@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SlimeStats : IElement
+public class SlimeStats
 {   
     public enum Slime_Type
     {
@@ -126,9 +126,4 @@ public class SlimeStats : IElement
     }
 
     #endregion
-
-    public ElementType GetElementType()
-    {
-        return Elementtype;
-    }
 }
