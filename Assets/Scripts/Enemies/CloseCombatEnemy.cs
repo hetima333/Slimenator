@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using UnityEngine;
 public class CloseCombatEnemy : Enemy
 {
-
+    //TODO Enemy Performance
     const float MAX_HP = 4.0f;
     const float MOVE_SPEED = 1.0f;
     const float SEARCH_RANGE = 3.0f;
@@ -56,7 +56,7 @@ public class CloseCombatEnemy : Enemy
                 break;
             case State.DISCOVERY:
                 //プレイヤー追従
-                _move.Move2Player();
+                _move.Dash2Player();
                 break;
 
             case State.RETURN:
@@ -84,6 +84,17 @@ public class CloseCombatEnemy : Enemy
         if (_isAction) yield break;
         //行動開始
         _isAction = true;
+
+        //対象の方向を見る
+        if (_target)
+        {
+            //対象の位置を取得
+            Vector3 targetPos = _target.transform.position;
+            //高さ合わせ
+            targetPos.y = gameObject.transform.position.y;
+            //相手の方向を見る。
+            gameObject.transform.LookAt(targetPos);
+        }
 
         //TODO　攻撃
         Debug.Log("Attack");

@@ -98,6 +98,35 @@ public class EnemyMove : MonoBehaviour {
 
     }
 
+
+    public void Dash2Player()
+    {
+        //移動速度のリセット
+        _enemy._rigidbody.velocity = Vector3.zero;
+        if (!_enemy._target) return;
+        //現在座標を取得
+        Vector3 pos = gameObject.transform.position;
+        //対象の座標取得
+        Vector3 targetPos = _enemy._target.transform.position;
+        //高さ合わせ
+        targetPos.y = gameObject.transform.position.y;
+
+        //現在座標と目的座標の差が0.1f以上
+        if (Vector3.Distance(pos, _enemy._target.transform.position) >= _enemy._attackRange)
+        {
+            //向かう場所の方向を見る
+            gameObject.transform.LookAt(targetPos);
+            //移動
+            _enemy._rigidbody.velocity = transform.forward * _enemy._moveSpeed*1.5f;
+        }
+        else
+        {
+            //攻撃状態に移行
+            _enemy._currentState = Enemy.State.ATTACK;
+        }
+
+    }
+
     //初期位置に戻る
     public void Return2FirstPos()
     {

@@ -8,7 +8,7 @@ using UnityEngine;
 
 public class LongRangeEnemy : Enemy
 {
-
+    //TODO Enemy Performance
     const float MAX_HP = 14.0f;
     const float MOVE_SPEED = 1.0f;
     const float SEARCH_RANGE = 5.0f;
@@ -17,6 +17,9 @@ public class LongRangeEnemy : Enemy
 
     //移動スクリプト
     EnemyMove _move;
+
+    [SerializeField]
+    GameObject _bullet;
 
     // Use this for initialization
     void Start()
@@ -35,6 +38,8 @@ public class LongRangeEnemy : Enemy
         _sphereCol.radius = _searchRange;
         //自由移動ポジション設定
         _freeMovePosition = _move.SetMovePos();
+        //弾オブジェクトのロード
+        _bullet = Resources.Load("EnemyItem/EnemyBullet", typeof(GameObject)) as GameObject;
 
     }
 
@@ -65,16 +70,7 @@ public class LongRangeEnemy : Enemy
                 break;
 
             case State.ATTACK:
-                //対象の方向を見る
-                if (_target)
-                {
-                    //対象の位置を取得
-                    Vector3 targetPos = _target.transform.position;
-                    //高さ合わせ
-                    targetPos.y = gameObject.transform.position.y;
-                    //相手の方向を見る。
-                    gameObject.transform.LookAt(_target.transform.position);
-                }
+               
                 //攻撃開始
                 StartCoroutine(Attack());
                 break;
@@ -94,9 +90,28 @@ public class LongRangeEnemy : Enemy
         if (_isAction) yield break;
         //行動開始
         _isAction = true;
-   
+
+
+        //対象の方向を見る
+        if (_target)
+        {
+            //対象の位置を取得
+            Vector3 targetPos = _target.transform.position;
+            //高さ合わせ
+            targetPos.y = gameObject.transform.position.y;
+            //相手の方向を見る。
+            gameObject.transform.LookAt(targetPos);
+        }
         //TODO　攻撃
         Debug.Log("LongRangeAttack");
+
+        if(_bullet)
+        {
+            GameObject bullet = Instantiate(_bullet) as GameObject;
+            bullet.transform.position = gameObject.transform.position + transform.forward;
+            bullet.GetComponent<Rigidbody>().velocity = gameObject.transform.forward * 10;
+        }
+     
 
         //TODO行動終了までの時間経過
         yield return new WaitForSeconds(1);
