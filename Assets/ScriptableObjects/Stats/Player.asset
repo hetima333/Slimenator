@@ -13,6 +13,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Health: 3
   Damage: 1
-  Speed: 30
+  Speed: 10
   Money: 0
   Sucking_Power: 10
