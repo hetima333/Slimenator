@@ -10,8 +10,17 @@ public class ElementType : ScriptableObject
         _minAmount,
         _maxAmount;
 
+    [SerializeField]
+    private Color
+        _color;
+
     public int GetRandomAmount()
     {
         return (int)Random.Range(_minAmount, _maxAmount);
+    }
+
+    public Color GetColor()
+    {
+        return _color;
     }
 }

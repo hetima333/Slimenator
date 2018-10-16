@@ -13,3 +13,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _minAmount: 1
   _maxAmount: 10
+  _color: {r: 1, g: 0.8482758, b: 0, a: 0}

@@ -12,7 +12,7 @@
         base.Update();
     }
 
-    public override void Init(float maxHealth, float velocity, SlimeStats.Slime_Type type)
+    public override void Init(float maxHealth, float velocity, ElementType type)
     {
         base.Init(maxHealth, velocity * 2, type);
     }

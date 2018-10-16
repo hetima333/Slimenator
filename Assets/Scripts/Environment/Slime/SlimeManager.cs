@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SlimeManager : MonoBehaviour {
+
+    [SerializeField]
+    private List<ElementType>
+        Elements = new List<ElementType>();
+
     private static SlimeManager _instance;
     public static SlimeManager Instance { get { return _instance; } }
 
@@ -35,19 +40,19 @@ public class SlimeManager : MonoBehaviour {
         //Temporary
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            int random = Random.Range(0, 5);
-            GameObject slime = GetSlimeFromPool((SlimeStats.Slime_Type)random);
+            int random = Random.Range(0, Elements.Count);
+            GameObject slime = GetSlimeFromPool(random);
             slime.transform.position = new Vector3(1, 1, 1);
         }
     }
 
-    public GameObject GetSlimeFromPool(SlimeStats.Slime_Type type)
+    public GameObject GetSlimeFromPool(int type)
     {
         foreach (GameObject slime_obj in _slimePool)
         {
-            if (!slime_obj.activeSelf && slime_obj.name.Equals(_slimeList[(int)type].name + "(Clone)"))
+            if (!slime_obj.activeSelf && slime_obj.name.Equals(_slimeList[type].name + "(Clone)"))
             {
-                slime_obj.GetComponent<SlimeBase>().Init(100,2,type);
+                slime_obj.GetComponent<SlimeBase>().Init(100, 2, Elements[type]);
                 slime_obj.SetActive(true);
                 return slime_obj;
             }

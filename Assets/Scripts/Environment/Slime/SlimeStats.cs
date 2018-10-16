@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SlimeStats
-{
+{   
     public enum Slime_Type
     {
         SLIME_FIRE,
@@ -24,6 +24,7 @@ public class SlimeStats
         _isDead;
 
     Slime_Type _type;
+    ElementType _elementtype;
 
     #region Getter/Setter
     public float Health
@@ -108,6 +109,19 @@ public class SlimeStats
         set
         {
             _type = value;
+        }
+    }
+
+    public ElementType Elementtype
+    {
+        get
+        {
+            return _elementtype;
+        }
+
+        set
+        {
+            _elementtype = value;
         }
     }
 
