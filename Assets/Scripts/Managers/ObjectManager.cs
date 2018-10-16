@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class ObjectManager : MonoBehaviour {
+public class ObjectManager : SingletonMonoBehaviour<ObjectManager> {
 
 	// プール済みのオブジェクト
 	// key : prefabのインスタンスID, value : 該当するインスタンスIDのゲームオブジェクト
@@ -21,7 +21,7 @@ public class ObjectManager : MonoBehaviour {
 		bool isPooled = _pooledObjects.ContainsKey(key);
 
 		// キーが存在しない場合は新たにリストを作成する
-		if(isPooled == false){
+		if(isPooled != true){
 			_pooledObjects.Add(key, new List<GameObject>());
 		}
 		return isPooled;
@@ -31,7 +31,7 @@ public class ObjectManager : MonoBehaviour {
 	/// オブジェクトプーリングを利用してインスタンス化を行なう
 	/// </summary>
 	/// <returns></returns>
-	public GameObject InstantiateWithObjectPooling(GameObject prefab){
+	public GameObject InstantiateWithObjectPooling(GameObject prefab, Vector3 position = new Vector3(), Quaternion rotation = new Quaternion()){
 
 		// 同じ種類のオブジェクトがすでにプールされているかをチェックする
 		CheckPooledObject(prefab);
@@ -40,12 +40,13 @@ public class ObjectManager : MonoBehaviour {
 		GameObject obj = null;
 
 		// 使用済みオブジェクトを探す
-		var target = _pooledObjects[key].FirstOrDefault(x => x.activeInHierarchy == false);
+		var target = _pooledObjects[key].FirstOrDefault(x => x.activeInHierarchy != true);
 
 		// 使用済みオブジェクトがあれば再利用する
 		if(target != null){
+			target.transform.position = position;
+			target.transform.rotation = rotation;
 			target.SetActive(true);
-			// === ここに初期化処理 ===
 			obj = target;
 		}
 		else{
@@ -56,5 +57,13 @@ public class ObjectManager : MonoBehaviour {
 		}
 
 		return target;
+	}
+
+	/// <summary>
+	/// オブジェクトプールにおいて未使用状態にする
+	/// </summary>
+	/// <param name="obj">未使用にするGameObject</param>
+	public void ReleaseObject(GameObject obj){
+		obj.SetActive(false);
 	}
 }
