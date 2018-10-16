@@ -42,6 +42,27 @@ public class Enemy : MonoBehaviour, IDamageable
     //狙う対象
     public GameObject _target;
 
+    //ステータスのセット関数
+    public void SetStatus(float hp,float speed,float searchRange,float attackRange,float moveRange)
+    {
+        //初期はアイドル
+        _currentState = State.IDLE;
+        //体力
+        _hp = hp;
+        //移動速度
+        _moveSpeed = speed;
+        //索敵範囲
+        _searchRange = searchRange;
+        //攻撃範囲
+        _attackRange = attackRange;
+        //自由移動の幅
+        _freeMoveRange = moveRange;
+        //初期位置の記憶
+        _staetPosition = gameObject.transform.position;
+    }
+
+
+    //ダメージを受ける
     public void TakeDamage(float damage)
     {
         if (_currentState == State.DEAD) return;
@@ -55,10 +76,12 @@ public class Enemy : MonoBehaviour, IDamageable
 
     }
 
+
+    //死亡コルーチン
     IEnumerator Dying()
     {
 
-        Debug.Log("しんだ");
+        Debug.Log("Dead");
 
         yield return new WaitForSeconds(2);
 

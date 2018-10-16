@@ -9,13 +9,20 @@ using UnityEngine;
 public class LongRangeEnemy : Enemy
 {
 
+    const float MAX_HP = 14.0f;
+    const float MOVE_SPEED = 1.0f;
+    const float SEARCH_RANGE = 5.0f;
+    const float ATTACK_RANGE = 4.0f;
+    const float MOVE_RANGE = 2.0f;
+
     //移動スクリプト
     EnemyMove _move;
 
     // Use this for initialization
     void Start()
     {
-
+        //ステータスのセット
+        SetStatus(MAX_HP, MOVE_SPEED, SEARCH_RANGE, ATTACK_RANGE, MOVE_RANGE);
         //移動コンポーネントの取得
         _move = GetComponent<EnemyMove>();
         //リジットボディの取得
@@ -26,8 +33,6 @@ public class LongRangeEnemy : Enemy
         _sphereCol.isTrigger = true;
         //範囲設定
         _sphereCol.radius = _searchRange;
-        //初期位置を記憶
-        _staetPosition = gameObject.transform.position;
         //自由移動ポジション設定
         _freeMovePosition = _move.SetMovePos();
 
@@ -63,6 +68,11 @@ public class LongRangeEnemy : Enemy
                 //対象の方向を見る
                 if (_target)
                 {
+                    //対象の位置を取得
+                    Vector3 targetPos = _target.transform.position;
+                    //高さ合わせ
+                    targetPos.y = gameObject.transform.position.y;
+                    //相手の方向を見る。
                     gameObject.transform.LookAt(_target.transform.position);
                 }
                 //攻撃開始
@@ -126,7 +136,7 @@ public class LongRangeEnemy : Enemy
     {
         if (col.gameObject.tag == "Skill")
         {
-            //TODO take damage
+            //TODO take damage   
             TakeDamage(1);
         }
     }

@@ -210,7 +210,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _currentState: 0
-  _hp: 10
+  _hp: 4
   _moveSpeed: 1
   _searchRange: 3
   _attackRange: 3
