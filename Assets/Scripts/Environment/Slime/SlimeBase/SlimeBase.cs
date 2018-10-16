@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class SlimeBase : MonoBehaviour, ISuckable {
+public abstract class SlimeBase : MonoBehaviour, ISuckable, IDamageable {
 
     SlimeStats _stats;
     SlimeBaseState _state;
