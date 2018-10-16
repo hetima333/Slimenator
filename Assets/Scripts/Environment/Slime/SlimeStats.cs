@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SlimeStats
-{
+public class SlimeStats : IElement
+{   
     public enum Slime_Type
     {
         SLIME_FIRE,
@@ -24,6 +24,7 @@ public class SlimeStats
         _isDead;
 
     Slime_Type _type;
+    ElementType _elementtype;
 
     #region Getter/Setter
     public float Health
@@ -111,5 +112,23 @@ public class SlimeStats
         }
     }
 
+    public ElementType Elementtype
+    {
+        get
+        {
+            return _elementtype;
+        }
+
+        set
+        {
+            _elementtype = value;
+        }
+    }
+
     #endregion
+
+    public ElementType GetElementType()
+    {
+        return Elementtype;
+    }
 }

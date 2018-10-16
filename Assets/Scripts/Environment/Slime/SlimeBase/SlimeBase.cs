@@ -1,8 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class SlimeBase : MonoBehaviour {
+public abstract class SlimeBase : MonoBehaviour, ISuckable {
 
     SlimeStats _stats;
     SlimeBaseState _state;
@@ -62,40 +63,19 @@ public abstract class SlimeBase : MonoBehaviour {
 
     // ENG: Initialization 
     // JAP: 初期化。
-    public virtual void Init(float maxHealth, float velocity, SlimeStats.Slime_Type type)
+    public virtual void Init(float maxHealth, float velocity, ElementType type)
     {
         _stats = new SlimeStats();
         _stats.MaxHealth = maxHealth;
         _stats.Health = _stats.MaxHealth;
         _stats.Velocity = velocity;
-        _stats.Type = type;
+        _stats.Elementtype = type;
         _stats.IsDead = false;
-        _stats.MovementRange = Random.Range(5.0f, 10.0f);
+        _stats.MovementRange = UnityEngine.Random.Range(5.0f, 10.0f);
         _stats.MaxMovementRange = 3.0f;
         _material = gameObject.GetComponent<Renderer>().material;
 
-        // ENG: Initialize Slime material.
-        // JAP: スライム材料を初期化する。
-        switch (_stats.Type)
-        {
-            case SlimeStats.Slime_Type.SLIME_FIRE:
-                Material.SetColor("_Color", Color.red);
-                break;
-            case SlimeStats.Slime_Type.SLIME_ICE:
-                Material.SetColor("_Color", Color.blue);
-                break;
-            case SlimeStats.Slime_Type.SLIME_LIGHTING:
-                Material.SetColor("_Color", Color.magenta);
-                break;
-            case SlimeStats.Slime_Type.SLIME_HEALTH:
-                Material.SetColor("_Color", Color.green);
-                break;
-            case SlimeStats.Slime_Type.SLIME_GOLD:
-                Material.SetColor("_Color", Color.yellow);
-                break;
-            default:
-                break;
-        }
+        Material.SetColor("_Color", _stats.Elementtype.GetColor());
     }
 
     public Vector3 GetPosition()
@@ -130,5 +110,10 @@ public abstract class SlimeBase : MonoBehaviour {
     private Vector3 GetDirection(Vector3 destination)
     {
         return (destination - transform.position).normalized;
+    }
+
+    public void Sacking()
+    {
+        return;
     }
 }
