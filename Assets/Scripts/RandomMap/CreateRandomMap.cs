@@ -13,6 +13,9 @@ public class CreateRandomMap : MonoBehaviour {
     //最大部屋数
     [SerializeField]
     private int _maxRoomNum = 6;
+    //1つの部屋の範囲(大きさ)
+    [SerializeField]
+    private int _minRangeWidth = 6;
 
     //部屋のプレハブ
     [SerializeField]
@@ -66,7 +69,7 @@ public class CreateRandomMap : MonoBehaviour {
     private void GenerateMapObject()
     {
         //マップを生成する
-        _map = new MapGenerator().GenerateMap(_width, _depth, _maxRoomNum);
+        _map = new MapGenerator().GenerateMap(_width, _depth, _maxRoomNum, _minRangeWidth);
 
         //部屋のプレハブ
        // _floorPrefab = Resources.Load("Prefabs/RandomMap/Floor") as GameObject;

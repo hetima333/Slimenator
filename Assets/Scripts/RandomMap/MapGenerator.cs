@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class MapGenerator {
 
-    private int _mapSizeX; //マップサイズX軸
-    private int _mapSizeZ; //マップサイズZ軸
-    private int _maxRoomNum;    //最大部屋数
-
+    //マップサイズX軸
+    private int _mapSizeX;
+    //マップサイズZ軸
+    private int _mapSizeZ;
+    //最大部屋数
+    private int _maxRoomNum;
     //区画の数
-    private const int MINIMUM_RANGE_WIDTH = 6;
+    private int _minimumRangeWidth;
 
     //部屋(全体)
     private List<Range> _room = new List<Range>();
@@ -37,12 +39,13 @@ public class MapGenerator {
     /// <param name="mapSizeZ">マップサイズZ軸</param>
     /// <param name="maxRoom">部屋の最大数</param>
     /// <returns></returns>
-    public int[,] GenerateMap(int mapSizeX, int mapSizeZ, int maxRoom)
+    public int[,] GenerateMap(int mapSizeX, int mapSizeZ, int maxRoom, int minimumRangeWidth)
     {
         //マップサイズの設定
         _mapSizeX = mapSizeX;
         _mapSizeZ = mapSizeZ;
         _maxRoomNum = maxRoom;
+        _minimumRangeWidth = minimumRangeWidth;
 
         //マップ配列
         int[,] map = new int[mapSizeX, mapSizeZ];
@@ -137,11 +140,11 @@ public class MapGenerator {
         foreach (Range range in _range)
         {
             //区画の数の制限を超えたらスキップ
-            if (isVertical && range.GetWidthZ() < MINIMUM_RANGE_WIDTH * 2 + 1)
+            if (isVertical && range.GetWidthZ() < _minimumRangeWidth * 2 + 1)
             {
                 continue;
             }
-            else if (!isVertical && range.GetWidthX() < MINIMUM_RANGE_WIDTH * 2 + 1)
+            else if (!isVertical && range.GetWidthX() < _minimumRangeWidth * 2 + 1)
             {
                 continue;
             }
@@ -166,7 +169,7 @@ public class MapGenerator {
 
             //余白(最少の区画サイズ2つ分引く)
             //右の最大幅から左の最少(0)に向かってみている
-            int margin = length - MINIMUM_RANGE_WIDTH * 2;
+            int margin = length - _minimumRangeWidth * 2;
 
             int baseIndex;
             if (isVertical)
@@ -177,7 +180,7 @@ public class MapGenerator {
                 baseIndex = range._start._x;
 
             //除外(引いた分の残りをランダムで分割位置を決定する)
-            int devideIndex = baseIndex + MINIMUM_RANGE_WIDTH + RogueUtils.GetRandomInt(1, margin) - 1;
+            int devideIndex = baseIndex + _minimumRangeWidth + RogueUtils.GetRandomInt(1, margin) - 1;
 
 
             Range newRange = new Range();
@@ -234,8 +237,8 @@ public class MapGenerator {
             }
 
             //区画の空き領域(余白)計算
-            int marginX = range.GetWidthX() - MINIMUM_RANGE_WIDTH + 1;
-            int marginZ = range.GetWidthZ() - MINIMUM_RANGE_WIDTH + 1;
+            int marginX = range.GetWidthX() - _minimumRangeWidth + 1;
+            int marginZ = range.GetWidthZ() - _minimumRangeWidth + 1;
 
             //軸をランダムに決める
             int randomX = RogueUtils.GetRandomInt(1, marginX);

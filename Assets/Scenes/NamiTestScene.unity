@@ -253,9 +253,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 754ece16b2f7dfd44bc29cb26f5ede15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _width: 30
-  _depth: 20
-  _maxRoomNum: 6
+  _width: 50
+  _depth: 30
+  _maxRoomNum: 18
+  _minRangeWidth: 10
   _floorPrefab: {fileID: 1097908476900526, guid: e2590cd87e30f1645b73d48097d7c574,
     type: 2}
   _wallPrefab: {fileID: 1520048981918090, guid: c8780ffdd371ce349808f98bb29b3b17,
