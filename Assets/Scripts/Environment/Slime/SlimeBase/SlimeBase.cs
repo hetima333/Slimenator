@@ -115,7 +115,9 @@ public abstract class SlimeBase : MonoBehaviour, ISuckable, IDamageable, IElemen
     public void MoveToward(Vector3 destination)
     {
         Vector3 direction = GetDirection(destination);
-        transform.rotation = Quaternion.LookRotation(direction);
+        direction.y = 0;
+        Quaternion rotation = Quaternion.LookRotation(direction);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * _stats.Velocity);
         transform.Translate(Vector3.forward * Time.deltaTime * _stats.Velocity);
     }
 
