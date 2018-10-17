@@ -14,6 +14,10 @@ public class ElementType : ScriptableObject
     private Color
         _color;
 
+    [SerializeField]
+    private string
+        _classname;
+
     public int GetRandomAmount()
     {
         return (int)Random.Range(_minAmount, _maxAmount);
@@ -22,5 +26,10 @@ public class ElementType : ScriptableObject
     public Color GetColor()
     {
         return _color;
+    }
+
+    public string GetSlimeScriptName()
+    {
+        return _classname;
     }
 }
