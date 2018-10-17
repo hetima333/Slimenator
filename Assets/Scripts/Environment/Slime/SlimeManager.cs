@@ -12,7 +12,7 @@ public class SlimeManager : MonoBehaviour {
     public static SlimeManager Instance { get { return _instance; } }
 
     [SerializeField]
-    private GameObject[] _slimeList;
+    private GameObject _slimeList;
     private List<GameObject> _slimePool = new List<GameObject>();
 
     private void Awake()
@@ -29,10 +29,8 @@ public class SlimeManager : MonoBehaviour {
 
     private void Start()
     {
-        for (int slime_list_count = 0; slime_list_count < _slimeList.Length; ++slime_list_count)
-        {
-            ExpandPool(slime_list_count);
-        }
+
+        ExpandPool();
     }
 
     private void Update()
@@ -50,30 +48,33 @@ public class SlimeManager : MonoBehaviour {
     {
         foreach (GameObject slime_obj in _slimePool)
         {
-            if (!slime_obj.activeSelf && slime_obj.name.Equals(_slimeList[type].name + "(Clone)"))
+            if (!slime_obj.activeSelf)
             {
+                SlimeBase temp_component = slime_obj.GetComponent<SlimeBase>();
+                if (temp_component != null)
+                    DestroyImmediate(temp_component);
+
+
+                System.Type _MyScriptType = System.Type.GetType(Elements[type].GetSlimeScriptName());
+                slime_obj.AddComponent(_MyScriptType);
+
                 slime_obj.GetComponent<SlimeBase>().Init(100, 2, Elements[type]);
                 slime_obj.SetActive(true);
                 return slime_obj;
             }
         }
 
-        ExpandPool((int)type);
+        ExpandPool();
 
         return GetSlimeFromPool(type);
     }
 
-    public int GetSizeOfSlime()
-    {
-        return _slimeList.Length;
-    }
-
-    private void ExpandPool(int type)
+    private void ExpandPool()
     {
         for (int i = 0; i < 5; ++i)
         {
             GameObject obj = null;
-            obj = Instantiate(_slimeList[type]);
+            obj = Instantiate(_slimeList);
             obj.SetActive(false);
             _slimePool.Add(obj);
             obj.transform.parent = gameObject.transform;

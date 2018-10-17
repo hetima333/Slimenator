@@ -21,16 +21,29 @@ public class EntityDetector : MonoBehaviour
 
     protected void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag.Equals("Suckable"))
+        ISuckable suckable_temp = other.gameObject.GetComponent<ISuckable>();
+        if (suckable_temp != null)
         {
             Rigidbody RB = other.GetComponent<Rigidbody>();
+            suckable_temp.Sacking();
 
             if (RB != null && RB.mass < _PlayerStats.SuckingPowerProperties)
                 RB.AddForce(-GAcceleration(_Owner.transform.position, RB.mass, RB));
 
-            if(Vector3.Distance(other.gameObject.transform.position, _Owner.gameObject.transform.position) < 1)
+            IElement element_temp = other.gameObject.GetComponent<IElement>();
+            if (element_temp != null)
             {
-                _Player.StoreElementInOrb(other.GetComponent<IElement>().GetElementType());
+                if (Vector3.Distance(other.gameObject.transform.position, _Owner.gameObject.transform.position) < 1)
+                {
+                    _Player.StoreElementInOrb(element_temp.GetElementType());
+                    
+                    IDamageable damage_temp = other.gameObject.GetComponent<IDamageable>();
+
+                    if(damage_temp != null)
+                    {
+                        damage_temp.TakeDamage(1000);
+                    }
+                }
             }
         }
     }
