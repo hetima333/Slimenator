@@ -8,10 +8,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32e8d1fb205a4324f99c4d9085aaae87, type: 3}
-  m_Name: Fire
+  m_Script: {fileID: 11500000, guid: e15984cda4ba82b46a2318a4d33541ca, type: 3}
+  m_Name: InstantProjectile
   m_EditorClassIdentifier: 
-  _minAmount: 0
-  _maxAmount: 0
-  _color: {r: 1, g: 0, b: 0, a: 0}
-  _classname: FireSlime

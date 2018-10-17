@@ -22,6 +22,7 @@ public class EntityPlayer : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+
         if (Input.GetKey(KeyCode.Mouse0))
         {
             if (!_SuckingParticle.activeSelf)
@@ -60,9 +61,9 @@ public class EntityPlayer : MonoBehaviour
             _OrbSlot.Dequeue();
     }
 
-    public void StoreSkills(SkillProjectile type)
+    public void StoreSkills()
     {
-        _Skills.Enqueue(type);
+       // _Skills.Enqueue(type);
 
         if (_Skills.Count > 3)
             _Skills.Dequeue();

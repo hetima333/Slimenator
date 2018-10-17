@@ -7,22 +7,26 @@ public class SkillProjectile : ScriptableObject
 {
     [SerializeField]
     private ElementType[]
-         Combination = new ElementType[3];
+         _Combination = new ElementType[3];
 
     [SerializeField]
     private ElementType
-        Base;
+        _Base;
 
     [SerializeField]
     private ProjectileType
-        Type;
+        _Type;
 
     [SerializeField]
     private List<ProjectileProperties>
-        Properties = new List<ProjectileProperties>();
+        _Properties = new List<ProjectileProperties>();
 
-	// Update is called once per frame
-	void Update ()
+    [SerializeField]
+    private float
+        _LifeTime;
+
+    // Update is called once per frame
+    void Update ()
     {
 		
 	}
