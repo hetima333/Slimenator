@@ -9,6 +9,9 @@ public abstract class SlimeBase : MonoBehaviour, ISuckable, IDamageable, IElemen
     SlimeBaseState _state;
     Material _material;
     Animator _animator;
+    Rigidbody _rigidbody;
+    [SerializeField]
+    Transform _model;
 
     #region Getter/Setter
     public SlimeStats Stats
@@ -47,6 +50,19 @@ public abstract class SlimeBase : MonoBehaviour, ISuckable, IDamageable, IElemen
             _animator = value;
         }
     }
+    public Rigidbody Rigidbody
+    {
+        get
+        {
+            return _rigidbody;
+        }
+
+        set
+        {
+            _rigidbody = value;
+        }
+    }
+
     #endregion
 
     protected virtual void Start () {
@@ -78,6 +94,9 @@ public abstract class SlimeBase : MonoBehaviour, ISuckable, IDamageable, IElemen
     // JAP: 初期化。
     public virtual void Init(float maxHealth, float velocity, ElementType type)
     {
+        if (_rigidbody == null)
+            CacheObject();
+
         _stats = new SlimeStats();
         _stats.MaxHealth = maxHealth;
         _stats.Health = _stats.MaxHealth;
@@ -86,10 +105,27 @@ public abstract class SlimeBase : MonoBehaviour, ISuckable, IDamageable, IElemen
         _stats.IsDead = false;
         _stats.MovementRange = UnityEngine.Random.Range(5.0f, 10.0f);
         _stats.MaxMovementRange = 3.0f;
-        _material = gameObject.GetComponentInChildren<Renderer>().material;
-        _animator = gameObject.GetComponentInChildren<Animator>();
+        _rigidbody.velocity = Vector3.zero;
+        _model.position = Vector3.zero;
+
 
         Material.SetColor("_Color", _stats.Elementtype.GetColor());
+    }
+
+    public void CacheObject()
+    {
+        _material = gameObject.GetComponentInChildren<Renderer>().material;
+        _animator = gameObject.GetComponentInChildren<Animator>();
+        _rigidbody = gameObject.GetComponent<Rigidbody>();
+
+        Transform[] tempArray = gameObject.GetComponentsInChildren<Transform>();
+        foreach (Transform t in tempArray)
+        {
+            if (t.gameObject.GetInstanceID() != GetInstanceID())
+            {
+                _model = t;
+            }
+        }
     }
 
     public Vector3 GetPosition()
