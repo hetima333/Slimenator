@@ -10,8 +10,6 @@ public abstract class SlimeBase : MonoBehaviour, ISuckable, IDamageable, IElemen
     Material _material;
     Animator _animator;
     Rigidbody _rigidbody;
-    [SerializeField]
-    Transform _model;
 
     #region Getter/Setter
     public SlimeStats Stats
@@ -106,8 +104,6 @@ public abstract class SlimeBase : MonoBehaviour, ISuckable, IDamageable, IElemen
         _stats.MovementRange = UnityEngine.Random.Range(5.0f, 10.0f);
         _stats.MaxMovementRange = 3.0f;
         _rigidbody.velocity = Vector3.zero;
-        _model.position = Vector3.zero;
-
 
         Material.SetColor("_Color", _stats.Elementtype.GetColor());
     }
@@ -117,15 +113,6 @@ public abstract class SlimeBase : MonoBehaviour, ISuckable, IDamageable, IElemen
         _material = gameObject.GetComponentInChildren<Renderer>().material;
         _animator = gameObject.GetComponentInChildren<Animator>();
         _rigidbody = gameObject.GetComponent<Rigidbody>();
-
-        Transform[] tempArray = gameObject.GetComponentsInChildren<Transform>();
-        foreach (Transform t in tempArray)
-        {
-            if (t.gameObject.GetInstanceID() != GetInstanceID())
-            {
-                _model = t;
-            }
-        }
     }
 
     public Vector3 GetPosition()
