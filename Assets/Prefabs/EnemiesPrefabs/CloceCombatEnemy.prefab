@@ -26,7 +26,7 @@ GameObject:
   - component: {fileID: 135695996809346812}
   - component: {fileID: 114553488735151720}
   - component: {fileID: 114622998431718408}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: CloceCombatEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 33551120892131864}
   - component: {fileID: 65237361587634286}
   - component: {fileID: 23650143685397216}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: FrontMark
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,7 +71,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1748272800313294}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: -5.2, y: 1, z: 2.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4069403398870110}
@@ -221,6 +221,7 @@ MonoBehaviour:
   _rigidbody: {fileID: 0}
   _sphereCol: {fileID: 0}
   _target: {fileID: 0}
+  _outputDamage: 25
 --- !u!135 &135695996809346812
 SphereCollider:
   m_ObjectHideFlags: 1

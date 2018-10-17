@@ -26,7 +26,7 @@ GameObject:
   - component: {fileID: 135544272717396340}
   - component: {fileID: 114286880785733224}
   - component: {fileID: 114224104152592058}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: TankEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 33782592407687812}
   - component: {fileID: 65850170350154330}
   - component: {fileID: 23608051068438992}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: FrontMark
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -198,7 +198,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2944987a21cab145ad3da86956b4ef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentState: 3
+  _currentState: 0
   _hp: 30
   _moveSpeed: 1
   _searchRange: 3
@@ -210,6 +210,12 @@ MonoBehaviour:
   _rigidbody: {fileID: 54313304767687394}
   _sphereCol: {fileID: 135544272717396340}
   _target: {fileID: 0}
+  _shockWave: {fileID: 0}
+  _comboDamege:
+  - 10
+  - 10
+  - 20
+  - 10
 --- !u!114 &114286880785733224
 MonoBehaviour:
   m_ObjectHideFlags: 1

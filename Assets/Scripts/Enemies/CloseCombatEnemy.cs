@@ -9,14 +9,17 @@ using UnityEngine;
 public class CloseCombatEnemy : Enemy
 {
     //TODO Enemy Performance
-    const float MAX_HP = 4.0f;
-    const float MOVE_SPEED = 1.0f;
-    const float SEARCH_RANGE = 3.0f;
+    const float MAX_HP = 40.0f;
+    const float MOVE_SPEED = 3.0f;
+    const float SEARCH_RANGE = 3.5f;
     const float ATTACK_RANGE = 2.0f;
-    const float MOVE_RANGE = 2.0f;
+    const float MOVE_RANGE = 3.0f;
 
     //移動スクリプト
     EnemyMove _move;
+
+    [SerializeField]
+    float _outputDamage = 25;
 
     // Use this for initialization
     void Start()

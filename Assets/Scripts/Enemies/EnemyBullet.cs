@@ -11,6 +11,8 @@ public class EnemyBullet : MonoBehaviour {
 
     float _aliveTime = 3.0f;
 
+    float _damage;
+
     void Update()
     {
         _aliveTime -= Time.deltaTime;
@@ -19,6 +21,12 @@ public class EnemyBullet : MonoBehaviour {
         {
             Destroy(gameObject);
         }
+    }
+
+
+    public void SetDamage(float damage)
+    {
+        _damage = damage;
     }
 
 
@@ -34,9 +42,10 @@ public class EnemyBullet : MonoBehaviour {
         {
             //ダメージ判定
             //TODO take damage   
-            col.gameObject.GetComponent<IDamageable>().TakeDamage(1);
+            col.gameObject.GetComponent<IDamageable>().TakeDamage(_damage);
         }
 
+        //Delete bullet
         Destroy(gameObject);
     }
 }

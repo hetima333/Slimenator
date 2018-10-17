@@ -10,19 +10,23 @@ using UnityEngine;
 public class TankEnemy : Enemy
 {
     //TODO Enemy Performance
-    const float MAX_HP = 30.0f;
-    const float MOVE_SPEED = 1.0f;
-    const float SEARCH_RANGE = 3.0f;
+    const float MAX_HP = 200.0f;
+    const float MOVE_SPEED = 2.0f;
+    const float SEARCH_RANGE = 4.0f;
     const float ATTACK_RANGE = 2.0f;
     const float MOVE_RANGE = 2.0f;
 
     //移動スクリプト
     EnemyMove _move;
 
-    int _comboCount = 1;
+    private int _comboCount = 0;
 
     [SerializeField]
-    GameObject _shockWave;
+    private GameObject _shockWave;
+
+    [SerializeField]
+    float[] _comboDamage = {10,10,20,10};
+
 
     // Use this for initialization
     void Start()
@@ -73,7 +77,6 @@ public class TankEnemy : Enemy
                 break;
 
             case State.ATTACK:
-
                 //攻撃開始
                 StartCoroutine(Attack());
                 break;
@@ -109,12 +112,12 @@ public class TankEnemy : Enemy
         //TODO　攻撃
         Debug.Log("Combo"+_comboCount);
 
-        if (_comboCount == 3)
+        if (_comboCount == 2)
         {
             if (_shockWave)
             {
                 GameObject shockWave = Instantiate(_shockWave) as GameObject;
-
+                shockWave.GetComponent<ShockWave>().SetDamage(_comboDamage[3]);
                 Vector3 ShockPos = gameObject.transform.position + transform.forward;
                 ShockPos.y = 0.1f;
                 shockWave.transform.position = ShockPos;    
@@ -122,17 +125,14 @@ public class TankEnemy : Enemy
         }
 
         
-
-
-
         //TODO行動終了までの時間経過
         yield return new WaitForSeconds(1);
 
         //コンボのカウント増加
         _comboCount++;
-        if (_comboCount > 3)
+        if (_comboCount > 2)
         {
-            _comboCount = 1;
+            _comboCount = 0;
         }
 
         //行動終了

@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 33405626593684606}
   - component: {fileID: 65100518048612296}
   - component: {fileID: 23283832349548738}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: FrontMark
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 135432735846627080}
   - component: {fileID: 114751010357764836}
   - component: {fileID: 114862116972052596}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: LongRangeEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58,7 +58,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1296264576233312}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 2.7, y: 1, z: -5.01}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4346456131009976}
@@ -221,6 +221,8 @@ MonoBehaviour:
   _rigidbody: {fileID: 0}
   _sphereCol: {fileID: 0}
   _target: {fileID: 0}
+  _outputDamage: 15
+  _bullet: {fileID: 0}
 --- !u!135 &135432735846627080
 SphereCollider:
   m_ObjectHideFlags: 1

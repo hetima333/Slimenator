@@ -6,7 +6,10 @@ public class ShockWave : MonoBehaviour {
 
     //パーティクルの生存時間
     //Particle's living time
-    float _aliveTime = 3.0f;
+    private   float _aliveTime = 3.0f;
+
+
+    private float _damage;
 
     void Update()
     {
@@ -16,6 +19,12 @@ public class ShockWave : MonoBehaviour {
         {
             Destroy(gameObject);
         }
+    }
+
+
+    public void SetDamage(float damage)
+    {
+        _damage = damage;
     }
 
     void OnParticleCollision(GameObject obj)
@@ -31,7 +40,7 @@ public class ShockWave : MonoBehaviour {
         {
             //ダメージ判定
             //TODO take damage   
-            obj.GetComponent<IDamageable>().TakeDamage(1);
+            obj.GetComponent<IDamageable>().TakeDamage(_damage);
             
         }
 

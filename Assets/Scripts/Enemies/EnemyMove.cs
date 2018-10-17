@@ -9,6 +9,8 @@ using UnityEngine;
 public class EnemyMove : MonoBehaviour {
 
 
+    const float DASH_SPEED = 2.0f;
+
     Enemy _enemy;
 
 
@@ -117,7 +119,7 @@ public class EnemyMove : MonoBehaviour {
             //向かう場所の方向を見る
             gameObject.transform.LookAt(targetPos);
             //移動
-            _enemy._rigidbody.velocity = transform.forward * _enemy._moveSpeed*1.5f;
+            _enemy._rigidbody.velocity = transform.forward * _enemy._moveSpeed * DASH_SPEED;
         }
         else
         {

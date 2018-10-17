@@ -9,14 +9,19 @@ using UnityEngine;
 public class LongRangeEnemy : Enemy
 {
     //TODO Enemy Performance
-    const float MAX_HP = 14.0f;
+    const float MAX_HP = 100.0f;
     const float MOVE_SPEED = 1.0f;
-    const float SEARCH_RANGE = 5.0f;
-    const float ATTACK_RANGE = 4.0f;
+    const float SEARCH_RANGE = 6.0f;
+    const float ATTACK_RANGE = 4.5f;
     const float MOVE_RANGE = 2.0f;
+
+
 
     //移動スクリプト
     EnemyMove _move;
+
+    [SerializeField]
+    float _outputDamage = 15;
 
     [SerializeField]
     GameObject _bullet;
@@ -107,8 +112,13 @@ public class LongRangeEnemy : Enemy
 
         if(_bullet)
         {
+            //make bullet 
             GameObject bullet = Instantiate(_bullet) as GameObject;
+            //set bullet damage
+            bullet.GetComponent<EnemyBullet>().SetDamage(_outputDamage);
+            //set bullet position
             bullet.transform.position = gameObject.transform.position + transform.forward;
+            //set bullet speed(TODO)
             bullet.GetComponent<Rigidbody>().velocity = gameObject.transform.forward * 10;
         }
      
