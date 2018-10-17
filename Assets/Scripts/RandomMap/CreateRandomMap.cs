@@ -6,10 +6,10 @@ public class CreateRandomMap : MonoBehaviour {
 
     //幅
     [SerializeField]
-    private int _width = 30;
+    public int _width = 30;
     //奥行き
     [SerializeField]
-    private int _depth = 20;
+    public int _depth = 20;
     //最大部屋数
     [SerializeField]
     private int _maxRoomNum = 6;
@@ -25,7 +25,7 @@ public class CreateRandomMap : MonoBehaviour {
     private GameObject _wallPrefab;
 
     //マップ
-    private int[,] _map;
+    public int[,] _map;
 
     //マップサイズ
     [SerializeField]
@@ -95,7 +95,7 @@ public class CreateRandomMap : MonoBehaviour {
                     //部屋オブジェクトを生成する
                     GameObject floor = Instantiate(_floorPrefab, new Vector3(x, 0, z), new Quaternion());
                     floor.transform.SetParent(transform);
-                    Debug.Log("Create floorPrefab map!!");
+                    //Debug.Log("Create floorPrefab map!!");
                 }
                 else
                 {
@@ -103,7 +103,7 @@ public class CreateRandomMap : MonoBehaviour {
                     //壁オブジェクトを生成する
                     GameObject wall = Instantiate(_wallPrefab, new Vector3(x, 0, z), new Quaternion());
                     wall.transform.SetParent(transform);
-                    Debug.Log("Create wallPrefab map!!");
+                    //Debug.Log("Create wallPrefab map!!");
                 }
             }
         }

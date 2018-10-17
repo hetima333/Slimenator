@@ -320,8 +320,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1656232250}
   - component: {fileID: 1656232249}
+  - component: {fileID: 1656232251}
   m_Layer: 0
-  m_Name: CreateMapBase
+  m_Name: CreateMap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -361,6 +362,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1656232251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1656232248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0d264f334462dd44a082ec430197fc8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _redSlime: {fileID: 1582254517707458, guid: a6696c94f7bbc1b4db5ff8724de81f90, type: 2}
+  _blueSlime: {fileID: 1761924878460918, guid: 5725d3947e1a4ff4d98ef4779c851781, type: 2}
+  _yellowSlime: {fileID: 1435102716233652, guid: ca892876b09998a44a81db90a1b896f4,
+    type: 2}
+  _redSlimeNum: 10
+  _blueSlimeNum: 10
+  _yellowSlimeNum: 10
 --- !u!1 &1883922126
 GameObject:
   m_ObjectHideFlags: 0

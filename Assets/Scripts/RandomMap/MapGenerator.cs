@@ -65,7 +65,7 @@ public class MapGenerator {
                     map[x, z] = 1;
                 }
             }
-            Debug.Log("passage!!!");
+            //Debug.Log("passage!!!");
         }
 
         //部屋から繋がっている通路の表示
@@ -78,7 +78,7 @@ public class MapGenerator {
                     map[x, z] = 1;
                 }
             }
-            Debug.Log("roomPassage!!!");
+            //Debug.Log("roomPassage!!!");
         }
 
         //部屋の表示
@@ -91,7 +91,7 @@ public class MapGenerator {
                     map[x, z] = 1;
                 }
             }
-            Debug.Log("room!!!");
+            //Debug.Log("room!!!");
         }
 
         //通路の作成
@@ -121,7 +121,7 @@ public class MapGenerator {
                 break;
         } while (isDevided);
 
-        Debug.Log("SeparateRoom!!");
+        //Debug.Log("SeparateRoom!!");
 
     }
 
@@ -211,7 +211,7 @@ public class MapGenerator {
         //追加リストに退避しておいた新しい区画を追加する
         _range.AddRange(newRangeList);
 
-        Debug.Log("DevideRange!!");
+        //Debug.Log("DevideRange!!");
 
         return isDevided;
     }
@@ -257,7 +257,7 @@ public class MapGenerator {
             //通路を作る
             CreatePassage(range,room);
 
-            Debug.Log("CreateGroundInTheRoom!!");
+            //Debug.Log("CreateGroundInTheRoom!!");
 
         }
 
