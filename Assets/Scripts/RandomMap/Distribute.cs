@@ -4,25 +4,29 @@ using UnityEngine;
 
 public class Distribute : MonoBehaviour {
 
-    //赤のスライムオブジェクト
+    //スライムオブジェクト
     [SerializeField]
-    private GameObject _redSlime;
-    //青のスライムオブジェクト
-    [SerializeField]
-    private GameObject _blueSlime;
-    //黄のスライムオブジェクト
-    [SerializeField]
-    private GameObject _yellowSlime;
+    private AddObject[] _slimes;
 
-    //配置する赤のスライムの数
-    [SerializeField]
-    private int _redSlimeNum;
-    //配置する青のスライムの数
-    [SerializeField]
-    private int _blueSlimeNum;
-    //配置する黄のスライムの数
-    [SerializeField]
-    private int _yellowSlimeNum;
+    ////スライムオブジェクト
+    //[SerializeField]
+    //private GameObject[] _slimes;
+    //青のスライムオブジェクト
+    //[SerializeField]
+    //private GameObject _blueSlime;
+    ////黄のスライムオブジェクト
+    //[SerializeField]
+    //private GameObject _yellowSlime;
+
+    ////配置する赤のスライムの数
+    //[SerializeField]
+    //private int _redSlimeNum;
+    ////配置する青のスライムの数
+    //[SerializeField]
+    //private int _blueSlimeNum;
+    ////配置する黄のスライムの数
+    //[SerializeField]
+    //private int _yellowSlimeNum;
 
     //マップ
     private int[,] _map;
@@ -34,17 +38,25 @@ public class Distribute : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
+        //作られたマップの情報取得
         CreateRandomMap map = GetComponent<CreateRandomMap>();
         _map = map._map;
         _width = map._width;
         _depth = map._depth;
 
-        //赤のスライムを配置する
-        CreateSlime(_redSlime, _redSlimeNum);
-        //青のスライムを配置する
-        CreateSlime(_blueSlime, _blueSlimeNum);
-        //黄のスライムを配置する
-        CreateSlime(_yellowSlime, _yellowSlimeNum);
+        //スライム種類の数
+        for (int i = 0; i < _slimes.Length; i++)
+        {
+            //最小値から最大値までのランダムの数のスライムを配置する
+            CreateSlime(_slimes[i]._object, RogueUtils.GetRandomInt(_slimes[i]._minGenerate, _slimes[i]._maxGenerate));
+        }
+
+        ////赤のスライムを配置する
+        //CreateSlime(_redSlime, _redSlimeNum);
+        ////青のスライムを配置する
+        //CreateSlime(_blueSlime, _blueSlimeNum);
+        ////黄のスライムを配置する
+        //CreateSlime(_yellowSlime, _yellowSlimeNum);
 
     }
 	

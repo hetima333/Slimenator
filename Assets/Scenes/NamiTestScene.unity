@@ -373,13 +373,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0d264f334462dd44a082ec430197fc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _redSlime: {fileID: 1582254517707458, guid: a6696c94f7bbc1b4db5ff8724de81f90, type: 2}
-  _blueSlime: {fileID: 1761924878460918, guid: 5725d3947e1a4ff4d98ef4779c851781, type: 2}
-  _yellowSlime: {fileID: 1435102716233652, guid: ca892876b09998a44a81db90a1b896f4,
-    type: 2}
-  _redSlimeNum: 10
-  _blueSlimeNum: 10
-  _yellowSlimeNum: 10
+  _slimes:
+  - _object: {fileID: 1582254517707458, guid: a6696c94f7bbc1b4db5ff8724de81f90, type: 2}
+    _minGenerate: 5
+    _maxGenerate: 10
+  - _object: {fileID: 1761924878460918, guid: 5725d3947e1a4ff4d98ef4779c851781, type: 2}
+    _minGenerate: 5
+    _maxGenerate: 10
+  - _object: {fileID: 1435102716233652, guid: ca892876b09998a44a81db90a1b896f4, type: 2}
+    _minGenerate: 5
+    _maxGenerate: 10
 --- !u!1 &1883922126
 GameObject:
   m_ObjectHideFlags: 0

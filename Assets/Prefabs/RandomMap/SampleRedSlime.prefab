@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 135169505223701316}
   - component: {fileID: 23798181561010928}
   m_Layer: 0
-  m_Name: RedSlime
+  m_Name: SampleRedSlime
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
