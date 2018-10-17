@@ -19,10 +19,17 @@ public class EntityPlayer : MonoBehaviour
     private List<Skill>
         _Skills = new List<Skill>();
 
+    private Skill
+        _CurrentSelectedSkill;
+
+    private void Start()
+    {
+        _CurrentSelectedSkill = null;
+    }
+
     // Update is called once per frame
     private void Update()
     {
-
         if (Input.GetKey(KeyCode.Mouse0))
         {
             if (!_SuckingParticle.activeSelf)
@@ -47,9 +54,16 @@ public class EntityPlayer : MonoBehaviour
             Debug.Log("Orb " + (i + 1) + ": " + _OrbSlot.ToArray()[i].name);
         }
 
+        Debug.Log("Currently Using Skill: " + ((_CurrentSelectedSkill != null) ? _CurrentSelectedSkill.name : "None"));
+
         for (int i = 0; i < _Skills.Count; ++i)
         {
             Debug.Log("Skill " + (i + 1) + ": " + _Skills.ToArray()[i].name);
+        }
+
+        for (int i = _OrbSlot.Count; i < 3; ++i)
+        {
+           // _OrbSlot.Enqueue(Slime.)
         }
     }
 
@@ -59,13 +73,54 @@ public class EntityPlayer : MonoBehaviour
 
         if (_OrbSlot.Count > 3)
             _OrbSlot.Dequeue();
+
+        bool HasUniqueCombination = true;
+
+        for (int i = 0; i < _OrbSlot.Count; ++i)
+        {
+            for (int j = i + 1; j < _OrbSlot.Count; ++j)
+            {
+                if (_OrbSlot.ToArray()[i].Equals(_OrbSlot.ToArray()[j]))
+                {
+                    HasUniqueCombination = false;
+                    break;
+                }
+            }
+        }
+
+        foreach (Skill s in SkillsHolder.Instance.GetSkillList())
+        {
+            if (HasUniqueCombination)
+            {
+                if (s.GetCombinationElements().Equals(_OrbSlot.ToArray()))
+                {
+                    _CurrentSelectedSkill = s;
+                    Debug.Log("Found Skill");
+                    break;
+                }
+            }
+            else
+            {
+                if (s.GetBaseElement().Equals(_OrbSlot.ToArray()[0]))
+                {
+                    _CurrentSelectedSkill = s;
+                    Debug.Log("Found Skill");
+                    break;
+                }
+            }
+        }
     }
 
     public void StoreSkills()
     {
-       _Skills.Enqueue(type);
+        if (_CurrentSelectedSkill != null)
+        {
+            _Skills.Add(_CurrentSelectedSkill);
 
-        if (_Skills.Count > 3)
-            _Skills.Dequeue();
+            if (_Skills.Count > 3)
+                _Skills.RemoveAt(0);
+
+            _CurrentSelectedSkill = null;
+        }
     }
 }

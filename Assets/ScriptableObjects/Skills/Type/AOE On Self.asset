@@ -11,4 +11,4 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: AOE On Self
   m_EditorClassIdentifier: Assembly-CSharp::SkillTargetAOE
-  _Range: 0
+  _Range: 10

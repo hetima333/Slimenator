@@ -32,4 +32,14 @@ public abstract class Skill : ScriptableObject
     {
         _Timer -= Time.deltaTime;
     }
+
+    public ElementType[] GetCombinationElements()
+    {
+        return _Combination;
+    }
+
+    public ElementType GetBaseElement()
+    {
+        return _Base;
+    }
 }

@@ -2,20 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SkillsHolder : MonoBehaviour
+public class SkillsHolder : SingletonMonoBehaviour<SkillsHolder>
 {
 
     [SerializeField]
     private List<Skill>
         _SkillList = new List<Skill>();
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+	public List<Skill>  GetSkillList()
+    {
+        return _SkillList;
+    }
 }

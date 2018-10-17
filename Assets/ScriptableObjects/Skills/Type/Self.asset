@@ -11,4 +11,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb84293c7c04fe74ba7ad4573a3eea07, type: 3}
   m_Name: Self
   m_EditorClassIdentifier: 
-  _Range: 0
+  _Range: 1

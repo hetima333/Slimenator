@@ -11,4 +11,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c8e1de46f87784449903dd62375605c, type: 3}
   m_Name: Cone
   m_EditorClassIdentifier: 
-  _Range: 0
+  _Range: 5

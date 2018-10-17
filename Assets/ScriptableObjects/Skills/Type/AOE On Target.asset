@@ -11,4 +11,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed62f1f2dc879344b9e8705c395b1831, type: 3}
   m_Name: AOE On Target
   m_EditorClassIdentifier: 
-  _Range: 0
+  _Range: 10
