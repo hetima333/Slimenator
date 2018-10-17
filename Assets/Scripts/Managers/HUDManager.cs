@@ -6,30 +6,54 @@ using System.Linq;
 
 public class HUDManager : MonoBehaviour {
 
-	[SerializeField]
-	private Mask _playerHitPoints;
-
-	private List<Image> _playerHearts = new List<Image>();
-
 	private IPlayerStats _playerStats;
+
+	[SerializeField]
+	private Slider _playerHPBar;
+
+
+	// 減少中のHP
+	private float _redHP;
+
+	// HP減少の速度
+	[SerializeField, Range(0.01f, 2.0f)]
+	private float _hpDecreaseSpeed;
+
+	private RectTransform _redHPBar;
+	private float _maxWidth;
+
 
 	// Use this for initialization
 	void Start () {
 		_playerStats = GameObject.Find("Player").GetComponent<IPlayerStats>();
 
-		// ハートの参照をとる
-		foreach(var item in _playerHitPoints.GetComponentsInChildren<Image>().Skip(1)){
-			_playerHearts.Add(item);
-		}
+		_playerHPBar.minValue = 0;
+		_redHP = _playerStats.HitPoint;
+		_redHPBar = _playerHPBar.GetComponentInChildren<Image>().rectTransform;
+		_maxWidth = _redHPBar.sizeDelta.x;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		// _text.text = _playerStats.HitPoint + " / " + _playerStats.MaxHitPoint;
+		// HPBarの更新
+		UpdateHPBar();
+	}
 
-		for (int i = 0; i < _playerStats.MaxHitPoint; i++){
-			bool f = i < _playerStats.HitPoint;
-			_playerHearts[i].color = f ? Color.red : Color.white;
+	private void UpdateHPBar(){
+		// 最大HPと現在HPの更新
+		_playerHPBar.maxValue = _playerStats.MaxHitPoint;
+		_playerHPBar.value = _playerStats.HitPoint;
+
+		// 緑HPより赤HPが多ければ赤HPをへらす
+		if(_redHP > _playerHPBar.value){
+			_redHP -= _hpDecreaseSpeed;
 		}
+		else{
+			_redHP = _playerHPBar.value;
+		}
+
+		// HPバーにサイズを適用する
+		_redHPBar.sizeDelta = new Vector2(_redHP * _maxWidth / _playerHPBar.maxValue, _redHPBar.sizeDelta.y);
+
 	}
 }

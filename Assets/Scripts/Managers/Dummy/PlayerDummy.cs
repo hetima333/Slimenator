@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class PlayerDummy : MonoBehaviour, IPlayerStats {
 
+	[SerializeField, Range(0, 100)]
 	private int _hitPoint;
 	public int HitPoint{
 		get { return _hitPoint; }
 	}
 
-	private const int MAX_HEALTH = 3;
+	private const int MAX_HEALTH = 100;
 	public int MaxHitPoint{
 		get { return MAX_HEALTH; }
 	}
