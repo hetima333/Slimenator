@@ -8,10 +8,10 @@ public class HUDManager : MonoBehaviour {
 
 	private IPlayerStats _playerStats;
 
+	#region HPBar
+
 	[SerializeField]
 	private Slider _playerHPBar;
-
-
 	// 減少中のHP
 	private float _redHP;
 
@@ -21,7 +21,10 @@ public class HUDManager : MonoBehaviour {
 
 	private RectTransform _redHPBar;
 	private float _maxWidth;
+		
+	#endregion
 
+	
 
 	// Use this for initialization
 	void Start () {
