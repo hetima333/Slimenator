@@ -20,6 +20,7 @@ public class SlimeWanderState : SlimeBaseState
         _destination = GetNewDestination();
         _stateElapsedTime = 0;
         _stateMaxTime = UnityEngine.Random.Range(3.0f, 5.0f);
+        _owner.Animator.SetBool("Moving", true);
     }
 
     public override void OnStateExit()

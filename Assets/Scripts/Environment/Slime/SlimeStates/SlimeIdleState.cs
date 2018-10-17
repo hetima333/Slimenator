@@ -18,6 +18,7 @@ public class SlimeIdleState : SlimeBaseState
     {
         _stateElapsedTime = 0;
         _stateMaxTime = UnityEngine.Random.Range(3.0f, 5.0f);
+        _owner.Animator.SetBool("Moving", false);
     }
 
     public override void OnStateExit()

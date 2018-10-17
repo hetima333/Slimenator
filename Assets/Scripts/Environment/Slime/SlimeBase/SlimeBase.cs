@@ -8,6 +8,7 @@ public abstract class SlimeBase : MonoBehaviour, ISuckable, IDamageable, IElemen
     SlimeStats _stats;
     SlimeBaseState _state;
     Material _material;
+    Animator _animator;
 
     #region Getter/Setter
     public SlimeStats Stats
@@ -32,6 +33,18 @@ public abstract class SlimeBase : MonoBehaviour, ISuckable, IDamageable, IElemen
         set
         {
             _material = value;
+        }
+    }
+    public Animator Animator
+    {
+        get
+        {
+            return _animator;
+        }
+
+        set
+        {
+            _animator = value;
         }
     }
     #endregion
@@ -73,7 +86,8 @@ public abstract class SlimeBase : MonoBehaviour, ISuckable, IDamageable, IElemen
         _stats.IsDead = false;
         _stats.MovementRange = UnityEngine.Random.Range(5.0f, 10.0f);
         _stats.MaxMovementRange = 3.0f;
-        _material = gameObject.GetComponent<Renderer>().material;
+        _material = gameObject.GetComponentInChildren<Renderer>().material;
+        _animator = gameObject.GetComponentInChildren<Animator>();
 
         Material.SetColor("_Color", _stats.Elementtype.GetColor());
     }
