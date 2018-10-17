@@ -5,9 +5,15 @@ using System.Linq;
 
 public class ObjectManager : SingletonMonoBehaviour<ObjectManager> {
 
-	// プール済みのオブジェクト
-	// key : objのインスタンスID, value : 該当するインスタンスIDのゲームオブジェクト
-	private Dictionary<int, List<GameObject>> _pooledObjects = new Dictionary<int, List<GameObject>>();
+    // ENG: List of elements in the game.
+    // JPN: ゲーム内の要素のリスト。
+    [SerializeField]
+    public List<ElementType>
+    _elements = new List<ElementType>();
+
+    // プール済みのオブジェクト
+    // key : objのインスタンスID, value : 該当するインスタンスIDのゲームオブジェクト
+    private Dictionary<int, List<GameObject>> _pooledObjects = new Dictionary<int, List<GameObject>>();
 
 	/// <summary>
 	/// 同じ種類のオブジェクトが既にプールされているか
@@ -56,7 +62,7 @@ public class ObjectManager : SingletonMonoBehaviour<ObjectManager> {
 			_pooledObjects[key].Add(go);
 		}
 
-		return target;
+		return go;
 	}
 
 	/// <summary>
