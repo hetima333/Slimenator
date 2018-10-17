@@ -58,8 +58,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: de65cf081c70c204d84310e1555674e0, type: 2}
   - {fileID: 11400000, guid: 059b6b18fc2a4e045a108b176c3783f9, type: 2}
   _slimeList:
-  - {fileID: 1328551586838468, guid: 5e37d8d94af4d9741a28b8e93f74a748, type: 2}
-  - {fileID: 1757657778201920, guid: a466b2e3d0031964aa6131340d437dda, type: 2}
-  - {fileID: 1359915208302376, guid: 7c746c8ac00067c4796b0e30b6dea020, type: 2}
-  - {fileID: 1227465154195906, guid: 88a11256131798449912cf13b762a941, type: 2}
-  - {fileID: 1888247926551946, guid: 990e8b68dbc958444920bb0faeadaa59, type: 2}
+  - {fileID: 1437516636120426, guid: 8c639dfa589184546938f1eaa7bdaa6f, type: 2}
+  - {fileID: 1437516636120426, guid: 8c639dfa589184546938f1eaa7bdaa6f, type: 2}
+  - {fileID: 1437516636120426, guid: 8c639dfa589184546938f1eaa7bdaa6f, type: 2}
+  - {fileID: 1437516636120426, guid: 8c639dfa589184546938f1eaa7bdaa6f, type: 2}
+  - {fileID: 1437516636120426, guid: 8c639dfa589184546938f1eaa7bdaa6f, type: 2}

@@ -76,8 +76,7 @@ public class SlimeManager : MonoBehaviour {
             obj = Instantiate(_slimeList[type]);
             obj.SetActive(false);
             _slimePool.Add(obj);
-
-            //obj.transform.parent = gameObject.transform;
+            obj.transform.parent = gameObject.transform;
         }
     }
 }
