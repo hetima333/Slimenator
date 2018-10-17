@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: aa968debe69853c43b27425634908ec0
+guid: ad35ced490978b74dbed6a4604ed4402
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
@@ -8,8 +8,8 @@ ModelImporter:
     2100000: Material
     2300000: //RootNode
     3300000: //RootNode
-    4300000: SLIME
-    7400000: SlimeMove
+    4300000: SLIME1
+    7400000: Slime_Movement
     9500000: //RootNode
   externalObjects: {}
   materials:
@@ -39,8 +39,8 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: SlimeMove
-      takeName: Scene
+      name: Slime_Movement
+      takeName: Take 001
       firstFrame: 1
       lastFrame: 40
       wrapMode: 0
@@ -49,8 +49,8 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
+      loopTime: 1
+      loopBlend: 1
       loopBlendOrientation: 0
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0

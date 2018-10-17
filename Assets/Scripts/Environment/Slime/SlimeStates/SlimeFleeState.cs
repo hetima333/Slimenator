@@ -18,6 +18,7 @@ public class SlimeFleeState : SlimeBaseState
     public override void OnStateEnter()
     {
         _destination = GetNewDestination();
+        _owner.Animator.SetBool("Moving", true);
     }
 
     public override void OnStateExit()
