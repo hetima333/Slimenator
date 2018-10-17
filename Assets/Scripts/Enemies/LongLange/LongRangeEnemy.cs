@@ -1,7 +1,7 @@
 ﻿/// 遠距離攻撃タイプの敵
 /// Enemy of Long Range Type
 /// Athor：　Yuhei Mastumura
-/// Last edit date：2018/10/12
+/// Last edit date：2018/10/17
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,6 +14,7 @@ public class LongRangeEnemy : Enemy
     const float SEARCH_RANGE = 6.0f;
     const float ATTACK_RANGE = 4.5f;
     const float MOVE_RANGE = 2.0f;
+    const float MONEY = 50.0f;
 
 
 
@@ -22,25 +23,25 @@ public class LongRangeEnemy : Enemy
 
     [SerializeField]
     float _outputDamage = 15;
+ 
+    private GameObject _bullet;
 
-    [SerializeField]
-    GameObject _bullet;
-
+  
     // Use this for initialization
     void Start()
     {
         //ステータスのセット
-        SetStatus(MAX_HP, MOVE_SPEED, SEARCH_RANGE, ATTACK_RANGE, MOVE_RANGE);
+        SetStatus(MAX_HP, MOVE_SPEED, SEARCH_RANGE, ATTACK_RANGE, MOVE_RANGE, MONEY);
         //移動コンポーネントの取得
         _move = GetComponent<EnemyMove>();
         //リジットボディの取得
-        _rigidbody = GetComponent<Rigidbody>();
+        RigidbodyProperties = GetComponent<Rigidbody>();
         //索敵用コライダーの設定
-        _sphereCol = GetComponent<SphereCollider>();
+        SphereColliderProperties = GetComponent<SphereCollider>();
         //TriggerOn
-        _sphereCol.isTrigger = true;
+        SphereColliderProperties.isTrigger = true;
         //範囲設定
-        _sphereCol.radius = _searchRange;
+        SphereColliderProperties.radius = _searchRange;
         //自由移動ポジション設定
         _freeMovePosition = _move.SetMovePos();
         //弾オブジェクトのロード
@@ -52,7 +53,7 @@ public class LongRangeEnemy : Enemy
     void Update()
     {
 
-        switch (_currentState)
+        switch (CurrentState)
         {
 
             case State.IDLE:
@@ -92,9 +93,9 @@ public class LongRangeEnemy : Enemy
     private IEnumerator Attack()
     {
         //行動中はreturn
-        if (_isAction) yield break;
+        if (IsAction) yield break;
         //行動開始
-        _isAction = true;
+        IsAction = true;
 
 
         //対象の方向を見る
@@ -127,7 +128,7 @@ public class LongRangeEnemy : Enemy
         yield return new WaitForSeconds(1);
 
         //行動終了
-        _isAction = false;
+        IsAction = false;
 
     }
 
@@ -139,7 +140,7 @@ public class LongRangeEnemy : Enemy
             //Targetの設定
             _target = col.gameObject;
             //発見状態になる
-            _currentState = State.DISCOVERY;
+            CurrentState = State.DISCOVERY;
         }
     }
 
@@ -151,7 +152,7 @@ public class LongRangeEnemy : Enemy
             //Targetの設定
             _target = null;
             //通常状態になる
-            _currentState = State.FREE;
+            CurrentState = State.FREE;
         }
     }
 

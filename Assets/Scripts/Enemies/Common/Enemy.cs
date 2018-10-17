@@ -1,7 +1,7 @@
 ﻿/// 敵の基本クラス
 /// Base class of enemies
 /// Athor：　Yuhei Mastumura
-/// Last edit date：2018/10/11
+/// Last edit date：2018/10/17
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,32 +18,50 @@ public class Enemy : MonoBehaviour, IDamageable
     //状態一覧(待機、自由移動、発見、戻り、攻撃、死亡)
     public enum State { IDLE,FREE, DISCOVERY, RETURN, ATTACK, DEAD }
     //今の状態
-    public State _currentState;
+    [SerializeField]
+    private State _currentState;
+    public State CurrentState { get { return _currentState; } set { _currentState = value; } }
     //体力
-    public float _hp;
+    [SerializeField]
+    private float _hp;
+    public float HP { get { return _hp; } set { _hp = value; } }
     //移動速度
-    public float _moveSpeed;
+    [SerializeField]
+    private float _moveSpeed;
+    public float Speed { get { return _moveSpeed; } set { _moveSpeed = value; } }
     //索敵範囲
     public float _searchRange;
     //攻撃範囲
     public float _attackRange;
     //自由移動の幅
     public float _freeMoveRange;
+    //所持金
+    [SerializeField]
+    private float _money;
+    public float Money { get { return _money; } set { _money = value; } }
     //自由移動の目標座標
     public Vector3 _freeMovePosition;
     //初期座標
     public Vector3 _staetPosition;
+
     //行動中か？
-    public bool _isAction;
+    [SerializeField]
+    private bool _isAction;
+    public bool IsAction { get { return _isAction; } set { _isAction = value; } }
     //移動用リジットボディ
-    public Rigidbody _rigidbody;
+    private Rigidbody _rigidbody;
+    public Rigidbody RigidbodyProperties { get { return _rigidbody; } set { _rigidbody = value; } }
     //索敵用コライダー
-    public SphereCollider _sphereCol;
+    private SphereCollider _sphereCol;
+    public SphereCollider SphereColliderProperties { get { return _sphereCol; } set { _sphereCol = value; } }
     //狙う対象
     public GameObject _target;
 
+
+
+
     //ステータスのセット関数
-    public void SetStatus(float hp,float speed,float searchRange,float attackRange,float moveRange)
+    public void SetStatus(float hp,float speed,float searchRange,float attackRange,float moveRange,float money)
     {
         //初期はアイドル
         _currentState = State.IDLE;
@@ -57,6 +75,8 @@ public class Enemy : MonoBehaviour, IDamageable
         _attackRange = attackRange;
         //自由移動の幅
         _freeMoveRange = moveRange;
+        //所持金の設定
+        _money = money;
         //初期位置の記憶
         _staetPosition = gameObject.transform.position;
     }
@@ -78,7 +98,7 @@ public class Enemy : MonoBehaviour, IDamageable
 
 
     //死亡コルーチン
-    IEnumerator Dying()
+    private IEnumerator Dying()
     {
 
         Debug.Log("Dead");

@@ -1,7 +1,7 @@
 ﻿/// 敵の弾薬処理
 /// Processing enemy's bullets
 /// Athor：　Yuhei Mastumura
-/// Last edit date：2018/10/16
+/// Last edit date：2018/10/17
 
 using System.Collections;
 using System.Collections.Generic;
@@ -27,6 +27,11 @@ public class EnemyBullet : MonoBehaviour {
     public void SetDamage(float damage)
     {
         _damage = damage;
+    }
+
+    public void SetScale(float scale)
+    {
+        gameObject.transform.localScale = new Vector3(scale, scale, scale);
     }
 
 

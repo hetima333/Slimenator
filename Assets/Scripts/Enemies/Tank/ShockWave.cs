@@ -1,4 +1,8 @@
-﻿using System.Collections;
+﻿/// 衝撃波の処理
+/// Processing enemy's shockwave
+/// Athor：　Yuhei Mastumura
+/// Last edit date：2018/10/17
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,7 +11,6 @@ public class ShockWave : MonoBehaviour {
     //パーティクルの生存時間
     //Particle's living time
     private   float _aliveTime = 3.0f;
-
 
     private float _damage;
 
@@ -25,6 +28,11 @@ public class ShockWave : MonoBehaviour {
     public void SetDamage(float damage)
     {
         _damage = damage;
+    }
+
+    public void SetScale(float scale)
+    {
+        gameObject.transform.localScale = new Vector3(scale, scale, scale);
     }
 
     void OnParticleCollision(GameObject obj)
