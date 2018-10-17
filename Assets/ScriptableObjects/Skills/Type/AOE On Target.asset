@@ -8,6 +8,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e15984cda4ba82b46a2318a4d33541ca, type: 3}
-  m_Name: InstantProjectile
+  m_Script: {fileID: 11500000, guid: ed62f1f2dc879344b9e8705c395b1831, type: 3}
+  m_Name: AOE On Target
   m_EditorClassIdentifier: 
+  _Range: 0

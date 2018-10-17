@@ -16,8 +16,8 @@ public class EntityPlayer : MonoBehaviour
     private Queue<ElementType>
         _OrbSlot = new Queue<ElementType>();
 
-    private Queue<SkillProjectile>
-        _Skills = new Queue<SkillProjectile>();
+    private List<Skill>
+        _Skills = new List<Skill>();
 
     // Update is called once per frame
     private void Update()
@@ -63,7 +63,7 @@ public class EntityPlayer : MonoBehaviour
 
     public void StoreSkills()
     {
-       // _Skills.Enqueue(type);
+       _Skills.Enqueue(type);
 
         if (_Skills.Count > 3)
             _Skills.Dequeue();
