@@ -31,6 +31,10 @@ public class CreateRandomMap : MonoBehaviour {
     [SerializeField]
     private int _mapSize = 1;
 
+    //プレイヤーの初期位置指定
+    [SerializeField]
+    [Header("-Initial position designation of player-")]
+    private GameObject _player;
 
     // Use this for initialization
     void Start () {
@@ -53,6 +57,8 @@ public class CreateRandomMap : MonoBehaviour {
         //ランダムマップの作成
         GenerateMapObject();
 
+        //プレイヤーの初期位置指定
+        InitialPositionPlayer();
 
     }
 	
@@ -102,6 +108,30 @@ public class CreateRandomMap : MonoBehaviour {
             }
         }
 
+    }
+
+    /// <summary>
+    /// プレイヤーの初期位置指定
+    /// </summary>
+    private void InitialPositionPlayer()
+    {
+        //プレイヤーが設定されていない場合は設定の必要なし
+        if (!_player)
+            return;
+
+        Position position;
+        do
+        {
+            //座標をランダムに決める
+            var x = RogueUtils.GetRandomInt(0, _width - 1);
+            var z = RogueUtils.GetRandomInt(0, _depth - 1);
+            position = new Position(x, z);
+        }
+        //床があるところに限定する
+        while (_map[position._x, position._z] != 1);
+
+        //プレイヤーの位置設定
+        _player.transform.position = new Vector3(position._x, 0, position._z);
     }
 
 }
