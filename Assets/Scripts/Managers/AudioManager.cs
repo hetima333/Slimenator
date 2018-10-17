@@ -19,8 +19,15 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager> {
 	// SEの最大数
 	private const int SE_MAX_NUM = 10;
 
+	// シーン読み込み前にインスタンスを生成
+	[RuntimeInitializeOnLoadMethod( RuntimeInitializeLoadType.BeforeSceneLoad )]
+	private static void InitializeBeforeSceneLoad(){
+		// ゲーム中に常に存在するオブジェクトを生成
+		var manager = new GameObject("AudioManager", typeof(AudioManager));
+		// シーンが変更されても破棄されないようにする
+		GameObject.DontDestroyOnLoad(manager);
+	}
 
-	// MARK : 呼び出しタイミングをプロパティによるアクセス時に変更するかも知れない
 	void Start(){
 		// オーディオリスナーをアタッチ
 		gameObject.AddComponent<AudioListener>();
@@ -43,8 +50,8 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager> {
 		_bgmDic = new Dictionary<string, AudioClip> ();
 		_seDic  = new Dictionary<string, AudioClip> ();
 
-		object[] bgmList = Resources.LoadAll (BGM_PATH);
-		object[] seList  = Resources.LoadAll (SE_PATH);
+		object[] bgmList = Resources.LoadAll (BGM_PATH, typeof(AudioClip));
+		object[] seList  = Resources.LoadAll (SE_PATH, typeof(AudioClip));
 
 		foreach (AudioClip bgm in bgmList) {
 			_bgmDic[bgm.name] = bgm;
