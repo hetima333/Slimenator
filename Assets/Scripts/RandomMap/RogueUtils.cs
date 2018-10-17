@@ -14,13 +14,4 @@ public class RogueUtils {
         return Random.value < rate;
     }
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }

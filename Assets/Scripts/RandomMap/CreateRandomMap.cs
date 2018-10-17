@@ -32,7 +32,7 @@ public class CreateRandomMap : MonoBehaviour {
     // Use this for initialization
     void Start () {
         //マップサイズをスケールの基準に設定
-        transform.localScale = new Vector3(_mapSize, _mapSize, _mapSize);
+        //transform.localScale = new Vector3(_mapSize, _mapSize, _mapSize);
 
         ////幅と奥行きの範囲内に地形ベースを生成する
         //for(int x=0; x < _width; x++)
@@ -47,7 +47,8 @@ public class CreateRandomMap : MonoBehaviour {
         //    }
         //}
 
-        GenerateMap();
+        //ランダムマップの作成
+        GenerateMapObject();
 
 
     }
@@ -59,7 +60,10 @@ public class CreateRandomMap : MonoBehaviour {
 
     }
 
-    private void GenerateMap()
+    /// <summary>
+    /// ランダムマップのオブジェクトを生成する
+    /// </summary>
+    private void GenerateMapObject()
     {
         //マップを生成する
         _map = new MapGenerator().GenerateMap(_width, _depth, _maxRoomNum);
@@ -78,13 +82,18 @@ public class CreateRandomMap : MonoBehaviour {
             {
                 if (_map[x, z] == 1)
                 {
+                    //Instantiate(_floorPrefab, new Vector3(x, 0, z), new Quaternion());
                     //部屋オブジェクトを生成する
-                    Instantiate(_floorPrefab, new Vector3(x, 0, z), new Quaternion());
+                    GameObject floor = Instantiate(_floorPrefab, new Vector3(x, 0, z), new Quaternion());
+                    floor.transform.SetParent(transform);
                     Debug.Log("Create floorPrefab map!!");
                 }
                 else
                 {
-                    Instantiate(_wallPrefab, new Vector3(x, 0, z), new Quaternion());
+                    //Instantiate(_wallPrefab, new Vector3(x, 0, z), new Quaternion());
+                    //壁オブジェクトを生成する
+                    GameObject wall = Instantiate(_wallPrefab, new Vector3(x, 0, z), new Quaternion());
+                    wall.transform.SetParent(transform);
                     Debug.Log("Create wallPrefab map!!");
                 }
             }

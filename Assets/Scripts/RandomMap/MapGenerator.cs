@@ -8,6 +8,7 @@ public class MapGenerator {
     private int _mapSizeZ; //マップサイズZ軸
     private int _maxRoomNum;    //最大部屋数
 
+    //区画の数
     private const int MINIMUM_RANGE_WIDTH = 6;
 
     //部屋(全体)
@@ -316,7 +317,7 @@ public class MapGenerator {
                     break;
                 case 1:　//右
                     random = room._start._z + RogueUtils.GetRandomInt(1, room.GetWidthZ()) - 1;
-                    _roomPassage.Add(new Range(range._end._x + 1, random, room._end._x, random));
+                    _roomPassage.Add(new Range(room._end._x + 1, random, range._end._x, random));
                     break;
 
                 case 2: //奥
@@ -326,7 +327,7 @@ public class MapGenerator {
 
                 case 3: //前
                     random = room._start._x + RogueUtils.GetRandomInt(1, room.GetWidthX()) - 1;
-                    _roomPassage.Add(new Range(random, range._end._z + 1, random, room._end._z));
+                    _roomPassage.Add(new Range(random, room._end._z + 1, random, range._end._z));
                     break;
                 default:
                     Debug.Log("dir Nothing!");

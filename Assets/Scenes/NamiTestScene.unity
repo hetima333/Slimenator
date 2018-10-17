@@ -253,12 +253,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 754ece16b2f7dfd44bc29cb26f5ede15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _width: 50
-  _depth: 50
-  _maxRoomNum: 30
-  _floorPrefab: {fileID: 1890080053769576, guid: e2590cd87e30f1645b73d48097d7c574,
+  _width: 30
+  _depth: 20
+  _maxRoomNum: 6
+  _floorPrefab: {fileID: 1097908476900526, guid: e2590cd87e30f1645b73d48097d7c574,
     type: 2}
-  _wallPrefab: {fileID: 1525288794384860, guid: c8780ffdd371ce349808f98bb29b3b17,
+  _wallPrefab: {fileID: 1520048981918090, guid: c8780ffdd371ce349808f98bb29b3b17,
     type: 2}
   _mapSize: 1
 --- !u!4 &1656232250

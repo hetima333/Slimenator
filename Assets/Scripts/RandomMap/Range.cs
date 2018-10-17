@@ -24,17 +24,9 @@ public class Range {
         _end = end;
     }
 
-    public Range(int startX,int startZ,int endX,int endZ):this(new Position(startX,startZ),new Position(endX, endZ)) { }
+    public Range(int startX,int startZ,int endX,int endZ)
+        :this(new Position(startX,startZ),new Position(endX, endZ)) { }
 
     public Range() : this(0, 0, 0, 0) { }
 
-    // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }
