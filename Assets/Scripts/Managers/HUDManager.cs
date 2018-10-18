@@ -36,6 +36,14 @@ public class HUDManager : MonoBehaviour {
 
 	#endregion
 
+	#region Money
+
+	// 表示される金額のテキスト
+	[SerializeField]
+	private Text _moneyText;
+
+	#endregion
+
 	// Use this for initialization
 	void Start () {
 		_playerStats = GameObject.Find("Player").GetComponent<IPlayerStats>();
@@ -55,6 +63,9 @@ public class HUDManager : MonoBehaviour {
 
 		// オーブスロットの更新
 		UpdateOrbSlot();
+
+		// 所持金の更新
+		UpdateMoney();
 	}
 
 	private void UpdateHPBar(){
@@ -80,5 +91,22 @@ public class HUDManager : MonoBehaviour {
 		for (int i = 0; i < _orbSlots.Length; i++){
 			_orbSlots[i].Orb = _orbs[i];
 		}
+	}
+
+	private void UpdateMoney(){
+		// TODO : プレイヤーから取得する
+		// 仮の数値
+		var money = 3000;
+
+		// 現在の所持金が変動していなかったら更新を行わない
+		int result;
+		if(int.TryParse(_moneyText.text, out result)){
+			if(result == money){
+				return;
+			}
+		}
+
+		// 表示テキストの更新(3桁ごとにカンマ)
+		_moneyText.text = money.ToString("N0");
 	}
 }
