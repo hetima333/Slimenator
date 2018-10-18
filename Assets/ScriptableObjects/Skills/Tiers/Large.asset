@@ -8,7 +8,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 031b9ab59168f4b47bb6de336e389184, type: 3}
-  m_Name: AOE On Self
+  m_Script: {fileID: 11500000, guid: acbad9be752f0674fba55db78a61c44a, type: 3}
+  m_Name: Large
   m_EditorClassIdentifier: 
-  _Range: 10
+  _Multiplyer: 3

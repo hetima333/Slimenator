@@ -75,7 +75,7 @@ public abstract class SlimeBase : MonoBehaviour, ISuckable, IDamageable, IElemen
     {
         _stats.Health -= dmg;
 
-        if (_stats.Health < 0)
+        if (_stats.Health <= 0)
         {
             Die();
         }

@@ -7,10 +7,28 @@ public class SkillsHolder : SingletonMonoBehaviour<SkillsHolder>
 
     [SerializeField]
     private List<Skill>
-        _SkillList = new List<Skill>();
+        _CombinationSkillList = new List<Skill>();
 
-	public List<Skill>  GetSkillList()
+    [SerializeField]
+    private List<Skill>
+        _BaseSkillList = new List<Skill>();
+
+    public List<Skill>  GetSkillList()
     {
-        return _SkillList;
+        List<Skill> temp = new List<Skill>();
+        temp.AddRange(_BaseSkillList);
+        temp.AddRange(_CombinationSkillList);
+
+        return temp;
+    }
+
+    public List<Skill> GetBaseSkillList()
+    {
+        return _BaseSkillList;
+    }
+
+    public List<Skill> GetCombinationSkillList()
+    {       
+        return _CombinationSkillList;
     }
 }

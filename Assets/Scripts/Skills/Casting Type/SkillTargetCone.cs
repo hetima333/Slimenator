@@ -9,8 +9,9 @@ public class SkillTargetCone : SkillCastingType
     private float
         _Range;
 
-    public override List<GameObject> GetTargets(GameObject caster)
+    public override List<GameObject> GetTargets(ref GameObject caster, ref SkillTier tier, ref List<GameObject> targets)
     {
+
         return null;
     }  
 }

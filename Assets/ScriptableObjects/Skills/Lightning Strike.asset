@@ -9,20 +9,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7680328c40acfd74aa9871324511c607, type: 3}
-  m_Name: BOOM COMBI
+  m_Name: Lightning Strike
   m_EditorClassIdentifier: 
   _Combination:
-  - {fileID: 11400000, guid: 753eac8bb53ca58458e5f20416ea0092, type: 2}
-  - {fileID: 11400000, guid: 36f0bab903e87bc43a975a9ab8b5afd1, type: 2}
-  - {fileID: 11400000, guid: 3598f9cad2b4e094e8abf6dc11ad1944, type: 2}
-  _Base: {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  _Base: {fileID: 11400000, guid: 36f0bab903e87bc43a975a9ab8b5afd1, type: 2}
   _Properties: []
   _Targetable:
   - {fileID: 1437516636120426, guid: 8c639dfa589184546938f1eaa7bdaa6f, type: 2}
   - {fileID: 1748272800313294, guid: 1fbfca09e354bb749aa17ca1d24d4ff7, type: 2}
   - {fileID: 1296264576233312, guid: fe9d545d9c3a5604bb530dfbc5980c1d, type: 2}
   - {fileID: 1586557958679214, guid: 8b74d6c1296f0ec449ef16ad6e601400, type: 2}
-  _CastTime: 10
-  _Damage: 50
-  _Description: A Combination skill
-  _CastingType: {fileID: 11400000, guid: 704f805a729bbfd46a8ea24f7c9a7878, type: 2}
+  _CastTime: 5
+  _Damage: 100
+  _Description: Strikes lightning down on your position
+  _CastingType: {fileID: 11400000, guid: 2e7805e5357b0af4699fb6b8109c705f, type: 2}

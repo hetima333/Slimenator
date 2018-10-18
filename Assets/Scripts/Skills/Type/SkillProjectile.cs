@@ -11,7 +11,9 @@ public class SkillProjectile : Skill
 
     public override void Engage(GameObject caster)
     {
-        if (_Timer <= 0)
+        base.Engage(caster);
+
+        if (IsTimeOver())
         {
             ;
         }

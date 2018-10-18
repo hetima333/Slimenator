@@ -13,12 +13,25 @@ public abstract class Skill : ScriptableObject
         _Base;
 
     [SerializeField]
-    private List<SkillProperties>
+    protected List<SkillProperties>
         _Properties = new List<SkillProperties>();
 
     [SerializeField]
-    private float
-        _CastTime;
+    protected List<GameObject>
+        _Targetable = new List<GameObject>();
+
+    [SerializeField]
+    protected float
+        _CastTime,
+        _Damage;
+
+    [SerializeField]
+    [TextArea(15, 20)]
+    private string
+        _Description;
+
+    protected SkillTier
+        _SkillTier;
 
     protected float
         _Timer;
@@ -41,5 +54,25 @@ public abstract class Skill : ScriptableObject
     public ElementType GetBaseElement()
     {
         return _Base;
+    }
+
+    public bool IsTimeOver()
+    {
+        return _Timer <= 0;
+    }
+
+    public void SetSkillTier(SkillTier tier)
+    {
+        _SkillTier = tier;
+    }
+
+    public SkillTier GetSkillTier()
+    {
+        return _SkillTier;
+    }
+
+    public string GetDescription()
+    {
+        return _Description;
     }
 }

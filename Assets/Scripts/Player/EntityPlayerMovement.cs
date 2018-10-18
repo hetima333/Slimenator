@@ -13,6 +13,10 @@ public class EntityPlayerMovement : MonoBehaviour
     private PlayerStats
         _Player_Stats;
 
+    [SerializeField]
+    private EntityPlayer
+        _EntityPlayer;
+
     private Ray
         _MouseRay;
 
@@ -27,7 +31,8 @@ public class EntityPlayerMovement : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        Move();
+        if(_EntityPlayer.GetPlayerState() == EnumHolder.States.MOVING)
+            Move();
     }
 
     private void LateUpdate()

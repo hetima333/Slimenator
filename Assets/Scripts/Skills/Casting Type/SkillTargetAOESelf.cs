@@ -3,14 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Target Type/AOE Self")]
-public class SkillTargetAOE : SkillCastingType
+public class SkillTargetAOESelf : SkillCastingType
 {
     [SerializeField]
     private float
         _Range;
 
-    public override List<GameObject> GetTargets(GameObject caster)
+    public override List<GameObject> GetTargets(ref GameObject caster, ref SkillTier tier, ref List<GameObject> targets)
     {
-        return null;
+        List<GameObject> list = new List<GameObject>();
+
+        foreach (GameObject obj in targets)
+        {
+            if (ObjectManager.Instance.GetActiveObjects(obj) != null)
+            {
+                foreach (GameObject entity in ObjectManager.Instance.GetActiveObjects(obj))
+                {
+                    if (Vector3.Distance(caster.transform.position, entity.transform.position) < _Range * tier.GetMultiplyer())
+                        list.Add(entity);
+                }
+            }
+        }
+
+        return list;
     }
 }

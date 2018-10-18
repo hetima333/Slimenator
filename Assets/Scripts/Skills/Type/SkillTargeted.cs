@@ -11,14 +11,19 @@ public class SkillTargeted : Skill
 
     public override void Engage(GameObject caster)
     {
-        if (_Timer <= 0)
+        base.Engage(caster);
+
+        if (IsTimeOver())
         {
-            foreach(GameObject obj in _CastingType.GetTargets(caster))
+            foreach(GameObject obj in _CastingType.GetTargets(ref caster, ref _SkillTier, ref _Targetable))
             {
+                IDamageable dmg = obj.GetComponent<IDamageable>();
 
+                if(dmg != null)
+                {
+                    dmg.TakeDamage(_Damage);
+                }
             }
-
-            Debug.Log("WHERE MY OBJ POOL");
         }
     }
 }
