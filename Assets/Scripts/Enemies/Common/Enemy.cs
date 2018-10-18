@@ -109,4 +109,39 @@ public class Enemy : MonoBehaviour, IDamageable
 
     }
 
+
+    void OnTriggerEnter(Collider col)
+    {
+        if (col.gameObject.tag == "Player")
+        {
+            //Targetの設定
+            _target = col.gameObject;
+            //発見状態になる
+            CurrentState = State.DISCOVERY;
+        }
+    }
+
+    //戦闘範囲離脱時の処理
+    void OnTriggerExit(Collider col)
+    {
+        if (col.gameObject.tag == "Player")
+        {
+            //Targetの設定
+            _target = null;
+            //通常状態になる
+            CurrentState = State.FREE;
+        }
+    }
+
+
+    //自分の本体に何かが接触した場合
+    void OnCollisionEnter(Collision col)
+    {
+        if (col.gameObject.tag == "Skill")
+        {
+            //TODO take damage   
+            TakeDamage(1);
+        }
+    }
+
 }

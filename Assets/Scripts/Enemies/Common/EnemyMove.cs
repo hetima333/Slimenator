@@ -1,7 +1,7 @@
 ﻿/// 敵の移動
 /// Enemies Move
 /// Athor：　Yuhei Mastumura
-/// Last edit date：2018/10/17
+/// Last edit date：2018/10/18
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,9 +13,9 @@ public class EnemyMove : MonoBehaviour {
 
     Enemy _enemy;
 
-
     // Use this for initialization
-    void Awake () {
+    void Awake ()
+    {
         _enemy = GetComponent<Enemy>();
     }
 	
@@ -139,7 +139,7 @@ public class EnemyMove : MonoBehaviour {
         Vector3 pos = gameObject.transform.position;
 
         //現在座標と目的座標の差が0.1f以上
-        if (Vector3.Distance(pos, _enemy._staetPosition) >= 0.1f)
+        if (Vector3.Distance(pos, _enemy._staetPosition) >= 0.5f)
         {
             //向かう場所の方向を見る
             gameObject.transform.LookAt(_enemy._staetPosition);

@@ -16,17 +16,15 @@ public class LongRangeEnemy : Enemy
     const float MOVE_RANGE = 2.0f;
     const float MONEY = 50.0f;
 
-
-
     //移動スクリプト
     EnemyMove _move;
 
     [SerializeField]
-    float _outputDamage = 15;
+    float _outputDamage = 25;
  
     private GameObject _bullet;
 
-  
+
     // Use this for initialization
     void Start()
     {
@@ -75,8 +73,7 @@ public class LongRangeEnemy : Enemy
                 _move.Return2FirstPos();
                 break;
 
-            case State.ATTACK:
-               
+            case State.ATTACK:   
                 //攻撃開始
                 StartCoroutine(Attack());
                 break;
@@ -133,38 +130,6 @@ public class LongRangeEnemy : Enemy
     }
 
 
-    void OnTriggerEnter(Collider col)
-    {
-        if (col.gameObject.tag == "Player")
-        {
-            //Targetの設定
-            _target = col.gameObject;
-            //発見状態になる
-            CurrentState = State.DISCOVERY;
-        }
-    }
-
-    //戦闘範囲離脱時の処理
-    void OnTriggerExit(Collider col)
-    {
-        if (col.gameObject.tag == "Player")
-        {
-            //Targetの設定
-            _target = null;
-            //通常状態になる
-            CurrentState = State.FREE;
-        }
-    }
-
-
-    //自分の本体に何かが接触した場合
-    void OnCollisionEnter(Collision col)
-    {
-        if (col.gameObject.tag == "Skill")
-        {
-            //TODO take damage   
-            TakeDamage(1);
-        }
-    }
+    
 
 }

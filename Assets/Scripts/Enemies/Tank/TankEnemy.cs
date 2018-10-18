@@ -10,7 +10,7 @@ using UnityEngine;
 public class TankEnemy : Enemy
 {
     //TODO Enemy Performance
-    const float MAX_HP = 200.0f;
+    const float MAX_HP = 250.0f;
     const float MOVE_SPEED = 2.0f;
     const float SEARCH_RANGE = 4.0f;
     const float ATTACK_RANGE = 2.0f;
@@ -25,7 +25,7 @@ public class TankEnemy : Enemy
     private GameObject _shockWave;
 
     [SerializeField]
-    private float[] _comboDamage = {10,10,20,10};
+    private float[] _comboDamage = {20,20,20,15};
 
 
     // Use this for initialization
@@ -140,42 +140,6 @@ public class TankEnemy : Enemy
 
     }
 
-
-    void OnTriggerEnter(Collider col)
-    {
-        if (col.gameObject.tag == "Player")
-        {
-            //Targetの設定
-            _target = col.gameObject;
-            //発見状態になる
-            CurrentState = State.DISCOVERY;
-        }
-    }
-
-    //戦闘範囲離脱時の処理
-    void OnTriggerExit(Collider col)
-    {
-        if (col.gameObject.tag == "Player")
-        {
-            //Targetの設定
-            _target = null;
-            //combo reset
-            _comboCount = 0;
-            //通常状態になる
-            CurrentState = State.FREE;
-        }
-    }
-
-
-    //自分の本体に何かが接触した場合
-    void OnCollisionEnter(Collision col)
-    {
-        if (col.gameObject.tag == "Skill")
-        {
-            //TODO take damage
-            TakeDamage(1);
-        }
-    }
 
 }
 

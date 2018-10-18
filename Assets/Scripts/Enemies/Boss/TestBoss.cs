@@ -1,4 +1,8 @@
-﻿using System.Collections;
+﻿/// ボスのテストタイプ
+/// Boss Test type
+/// Athor：　Yuhei Mastumura
+/// Last edit date：2018/10/17
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,16 +18,15 @@ public class TestBoss : Enemy {
     const float MOVE_RANGE = 10.0f;
     const float MONEY = 2000.0f;
 
-
+    //Object for long range attack
     private GameObject _bullet;
 
+    //Object for short range attack
     private GameObject _shockWave;
 
-
-    float _distance = 0;
-
     // Use this for initialization
-    void Start () {
+    void Start ()
+    {
         //ステータスのセット
         SetStatus(MAX_HP, MOVE_SPEED, SEARCH_RANGE, ATTACK_RANGE, MOVE_RANGE, MONEY);
         //移動コンポーネントの取得
@@ -48,7 +51,8 @@ public class TestBoss : Enemy {
     }
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
 
         switch (CurrentState)
         {
@@ -105,14 +109,11 @@ public class TestBoss : Enemy {
             gameObject.transform.LookAt(targetPos);
         }
 
+        //距離を算出
+        float distance = Vector3.Distance(_target.transform.position, gameObject.transform.position);
 
-   
-
-        _distance = Vector3.Distance(_target.transform.position, gameObject.transform.position);
-
-        if (_distance <= 6.0f)
-        {
-
+        //if (distance >= 6.0f)
+        //{
             //TODO　攻撃
             Debug.Log("Jump");
             if (_shockWave)
@@ -120,37 +121,32 @@ public class TestBoss : Enemy {
                 GameObject shockWave = Instantiate(_shockWave) as GameObject;
                 shockWave.transform.position = gameObject.transform.position;
                 shockWave.GetComponent<ShockWave>().SetDamage(10);
-                shockWave.GetComponent<ShockWave>().SetScale(20);
-              
-                
+                shockWave.GetComponent<ShockWave>().SetScale(20);       
             }
 
-        }
-        else
-        {
+        //}
+        //else
+        //{
 
-            Debug.Log("Fire");
-            if (_bullet)
-            {
-                //make bullet 
-                GameObject bullet = Instantiate(_bullet) as GameObject;
-                //set bullet damage
-                bullet.GetComponent<EnemyBullet>().SetDamage(10);
+        //    Debug.Log("Fire");
+        //    if (_bullet)
+        //    {
+        //        //make bullet 
+        //        GameObject bullet = Instantiate(_bullet) as GameObject;
+        //        //set bullet damage
+        //        bullet.GetComponent<EnemyBullet>().SetDamage(10);
 
-                bullet.GetComponent<EnemyBullet>().SetScale(1);
-                //set bullet position
-                bullet.transform.position = gameObject.transform.position + transform.forward;
-                //set bullet speed(TODO)
-                bullet.GetComponent<Rigidbody>().velocity = gameObject.transform.forward * 10;
-            }
-        }
+        //        bullet.GetComponent<EnemyBullet>().SetScale(1);
+        //        //set bullet position
+        //        bullet.transform.position = gameObject.transform.position + transform.forward;
+        //        //set bullet speed(TODO)
+        //        bullet.GetComponent<Rigidbody>().velocity = gameObject.transform.forward * 10;
+        //    }
+        //}
 
 
         //TODO行動終了までの時間経過
         yield return new WaitForSeconds(1);
-
-        //コンボのカウント増加
-        
 
         //行動終了
         IsAction = false;

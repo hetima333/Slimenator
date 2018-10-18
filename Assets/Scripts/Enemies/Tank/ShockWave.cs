@@ -12,6 +12,7 @@ public class ShockWave : MonoBehaviour {
     //Particle's living time
     private   float _aliveTime = 3.0f;
 
+    //ヒット時に与えるダメージ
     private float _damage;
 
     void Update()
@@ -32,18 +33,22 @@ public class ShockWave : MonoBehaviour {
 
     public void SetScale(float scale)
     {
+        //Change Particle　Scale
         gameObject.transform.localScale = new Vector3(scale, scale, scale);
+        //Change Particle collision radius
+        var parCol = gameObject.GetComponent<ParticleSystem>().collision;
+        parCol.radiusScale = scale;
     }
 
     void OnParticleCollision(GameObject obj)
     {
 
+        Debug.Log(obj.name);
+
         //Make sure the target has components
         var hasIDamageable = obj.gameObject.GetComponent<IDamageable>();
 
-        var parCol = gameObject.GetComponent<ParticleSystem>().collision;
-
-        //If have a component
+        //If have a IDamageable component
         if (hasIDamageable != null)
         {
             //ダメージ判定
@@ -54,6 +59,8 @@ public class ShockWave : MonoBehaviour {
 
         //パーティクルのコリジョンの解除（多段ヒット防止）
         //Release of particle community (multistage hit prevention)
+        var parCol = gameObject.GetComponent<ParticleSystem>().collision;
         parCol.enabled = false;
     }
+
 }
