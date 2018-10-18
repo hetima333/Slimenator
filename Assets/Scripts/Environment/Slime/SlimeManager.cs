@@ -17,7 +17,7 @@ public class SlimeManager : SingletonMonoBehaviour<SlimeManager> {
         //Temporary
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            int random = Random.Range(0, ObjectManager.Instance._elements.Count);
+            int random = Random.Range(0, EnumHolder.Instance._elements.Count);
             GetSlimeFromPool(random);
         }
     }
@@ -31,10 +31,10 @@ public class SlimeManager : SingletonMonoBehaviour<SlimeManager> {
         if (temp_component != null)
             DestroyImmediate(temp_component);
 
-        System.Type _MyScriptType = System.Type.GetType(ObjectManager.Instance._elements[type].GetSlimeScriptName());
+        System.Type _MyScriptType = System.Type.GetType(EnumHolder.Instance._elements[type].GetSlimeScriptName());
         slime_obj.AddComponent(_MyScriptType);
 
-        slime_obj.GetComponent<SlimeBase>().Init(100, 2, ObjectManager.Instance._elements[type]);
+        slime_obj.GetComponent<SlimeBase>().Init(100, 2, EnumHolder.Instance._elements[type]);
         slime_obj.SetActive(true);
 
         return slime_obj;

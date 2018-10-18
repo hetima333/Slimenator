@@ -7,23 +7,16 @@ public class PlayerStats : ScriptableObject
 {
     [SerializeField]
     private float
-        Health,
+        MaxHealth,
         Damage,
-        Speed, 
-        Money,
+        Speed,
         Sucking_Power;
 
     public float HealthProperties
     {
         get
         {
-            return Health;
-        }
-
-        set
-        {
-            Health = value;
-            Health = Mathf.Clamp(Health, 0, 3);
+            return MaxHealth;
         }
     }
 
@@ -33,12 +26,6 @@ public class PlayerStats : ScriptableObject
         {
             return Damage;
         }
-
-        set
-        {
-            Damage = value;
-            Damage = Mathf.Clamp(Damage, 0, Mathf.Infinity);
-        }
     }
 
     public float SpeedProperties
@@ -47,26 +34,6 @@ public class PlayerStats : ScriptableObject
         {
             return Speed;
         }
-
-        set
-        {
-            Speed = value;
-            Speed = Mathf.Clamp(Speed, 0, Mathf.Infinity);
-        }
-    }
-
-    public float MoneyProperties
-    {
-        get
-        {
-            return Money;
-        }
-
-        set
-        {
-            Money = value;
-            Money = Mathf.Clamp(Speed, 0, Mathf.Infinity);
-        }
     }
 
     public float SuckingPowerProperties
@@ -74,12 +41,6 @@ public class PlayerStats : ScriptableObject
         get
         {
             return Sucking_Power;
-        }
-
-        set
-        {
-            Sucking_Power = value;
-            Sucking_Power = Mathf.Clamp(Speed, 0, Mathf.Infinity);
         }
     }
 }

@@ -5,12 +5,6 @@ using System.Linq;
 
 public class ObjectManager : SingletonMonoBehaviour<ObjectManager> {
 
-    // ENG: List of elements in the game.
-    // JPN: ゲーム内の要素のリスト。
-    [SerializeField]
-    public List<ElementType>
-    _elements = new List<ElementType>();
-
     // プール済みのオブジェクト
     // key : objのインスタンスID, value : 該当するインスタンスIDのゲームオブジェクト
     private Dictionary<int, List<GameObject>> _pooledObjects = new Dictionary<int, List<GameObject>>();
