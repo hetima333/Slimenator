@@ -1,0 +1,218 @@
+fileFormatVersion: 2
+guid: e9d4c89b1dc58eb43b3d5555c618d6a3
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: Armature
+    100002: Belt
+    100004: Chest
+    100006: Cube_006
+    100008: Head
+    100010: Lantern
+    100012: LanternWiggle
+    100014: Left_Arm
+    100016: Left_Arm_IK
+    100018: Left_Arm_Pole
+    100020: Left_Clavicle
+    100022: Left_Elbow
+    100024: Left_Feet
+    100026: Left_Fingers1
+    100028: Left_Fingers2
+    100030: Left_Foot
+    100032: Left_Hand
+    100034: Left_Hand2
+    100036: Left_Hip
+    100038: Left_Knee
+    100040: Left_Leg_IK
+    100042: Left_Leg_Pole
+    100044: Left_Shoulder
+    100046: Left_Thumb
+    100048: Left_Thumb2
+    100050: Left_Toe
+    100052: Neck
+    100054: Pelvis
+    100056: //RootNode
+    100058: Right_Arm
+    100060: Right_Arm_IK
+    100062: Right_Arm_Pole
+    100064: Right_Clavicle
+    100066: Right_Elbow
+    100068: Right_Feet
+    100070: Right_Finger1
+    100072: Right_Finger2
+    100074: Right_Foot
+    100076: Right_Hand
+    100078: Right_Hand2
+    100080: Right_Hip
+    100082: Right_Knee
+    100084: Right_Leg_IK
+    100086: Right_Leg_Pole
+    100088: Right_Shoulder
+    100090: Right_Thumb
+    100092: Right_Thumb2
+    100094: Right_Toe
+    100096: Stick1
+    100098: Stick2
+    100100: Stick3
+    100102: Stomach
+    100104: Tank1
+    100106: Tank2
+    100108: Tank3
+    100110: Tube1
+    100112: Tube2
+    100114: Tube3
+    100116: VacHandle
+    100118: Vacuum
+    100120: VacuumHandle
+    100122: VacuumHandle1
+    400000: Armature
+    400002: Belt
+    400004: Chest
+    400006: Cube_006
+    400008: Head
+    400010: Lantern
+    400012: LanternWiggle
+    400014: Left_Arm
+    400016: Left_Arm_IK
+    400018: Left_Arm_Pole
+    400020: Left_Clavicle
+    400022: Left_Elbow
+    400024: Left_Feet
+    400026: Left_Fingers1
+    400028: Left_Fingers2
+    400030: Left_Foot
+    400032: Left_Hand
+    400034: Left_Hand2
+    400036: Left_Hip
+    400038: Left_Knee
+    400040: Left_Leg_IK
+    400042: Left_Leg_Pole
+    400044: Left_Shoulder
+    400046: Left_Thumb
+    400048: Left_Thumb2
+    400050: Left_Toe
+    400052: Neck
+    400054: Pelvis
+    400056: //RootNode
+    400058: Right_Arm
+    400060: Right_Arm_IK
+    400062: Right_Arm_Pole
+    400064: Right_Clavicle
+    400066: Right_Elbow
+    400068: Right_Feet
+    400070: Right_Finger1
+    400072: Right_Finger2
+    400074: Right_Foot
+    400076: Right_Hand
+    400078: Right_Hand2
+    400080: Right_Hip
+    400082: Right_Knee
+    400084: Right_Leg_IK
+    400086: Right_Leg_Pole
+    400088: Right_Shoulder
+    400090: Right_Thumb
+    400092: Right_Thumb2
+    400094: Right_Toe
+    400096: Stick1
+    400098: Stick2
+    400100: Stick3
+    400102: Stomach
+    400104: Tank1
+    400106: Tank2
+    400108: Tank3
+    400110: Tube1
+    400112: Tube2
+    400114: Tube3
+    400116: VacHandle
+    400118: Vacuum
+    400120: VacuumHandle
+    400122: VacuumHandle1
+    2100000: Base
+    4300000: Cube_006
+    7400000: Default Take
+    7400002: Blow
+    7400004: Idle
+    7400006: Run
+    7400008: Suck
+    9500000: //RootNode
+    13700000: Cube_006
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
