@@ -18,6 +18,10 @@ public class ElementType : ScriptableObject
     private string
         _classname;
 
+    [SerializeField]
+    private GameObject
+        _effect;
+
     public int GetRandomAmount()
     {
         return (int)Random.Range(_minAmount, _maxAmount);
@@ -31,5 +35,10 @@ public class ElementType : ScriptableObject
     public string GetSlimeScriptName()
     {
         return _classname;
+    }
+
+    public GameObject GetEffect()
+    {
+        return _effect;
     }
 }

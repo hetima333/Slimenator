@@ -1,4 +1,7 @@
-﻿public class FireSlime : SlimeBase
+﻿using System.Collections;
+using UnityEngine;
+
+public class FireSlime : SlimeBase
 {
     // Use this for initialization
     protected override void Start ()

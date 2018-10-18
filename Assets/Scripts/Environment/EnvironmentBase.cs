@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class EnvironmentBase
+public abstract class EnvironmentBase : MonoBehaviour
 {
-    GameObject _object;
+    GameObject _gameobject;
 
     private float
         _lifetime,
@@ -99,10 +99,11 @@ public abstract class EnvironmentBase
 
     #endregion
 
-    public virtual void SetUpObjectWLifeTime(float lifetime, Vector3 pos, Vector3 size, bool isStatic = true)
+    public virtual void InitObjectWithLife(float lifetime, Vector3 pos, Vector3 size, bool isStatic = true)
     {
-        _object.transform.position = pos;
-        _object.transform.localScale = size;
+        _gameobject = gameObject;
+        _gameobject.transform.position = pos;
+        _gameobject.transform.localScale = size;
         _size = size;
         _lifetime = lifetime;
         _isStatic = isStatic;
@@ -110,10 +111,11 @@ public abstract class EnvironmentBase
         _lifeElapse = 0;
     }
 
-    public virtual void SetUpObject(Vector3 pos, Vector3 size, bool isDestructible, bool isStatic = true)
+    public virtual void InitObject(Vector3 pos, Vector3 size, bool isDestructible, bool isStatic = true)
     {
-        _object.transform.position = pos;
-        _object.transform.localScale = size;
+        _gameobject = gameObject;
+        _gameobject.transform.position = pos;
+        _gameobject.transform.localScale = size;
         _size = size;
         _isDestructible = isDestructible;
         _isStatic = isStatic;
@@ -128,6 +130,14 @@ public abstract class EnvironmentBase
 
     // Update is called once per frame
     protected virtual void Update () {
-		
-	}
+        if (_willExpire)
+        {
+            _lifeElapse += Time.deltaTime;
+
+            if (_lifeElapse > _lifetime)
+            {
+                _gameobject.SetActive(false);
+            }
+        }
+    }
 }
