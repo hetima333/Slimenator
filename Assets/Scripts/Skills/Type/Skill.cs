@@ -22,7 +22,8 @@ public abstract class Skill : ScriptableObject
 
     [SerializeField]
     protected float
-        _CastTime,
+        _CastTime, 
+        _CastLength,
         _Damage;
 
     [SerializeField]
@@ -34,16 +35,24 @@ public abstract class Skill : ScriptableObject
         _SkillTier;
 
     protected float
-        _Timer;
+        _Timer,
+        _UseTimer;
 
     public virtual void Init()
     {
         _Timer = _CastTime;
+        _UseTimer = _CastLength;
     }
 
     public virtual void Engage(GameObject caster)
     {
         _Timer -= Time.deltaTime;
+
+        if (_Timer <= 0)
+            _UseTimer -= Time.deltaTime;
+        else
+            _Timer -= Time.deltaTime;
+
     }
 
     public ElementType[] GetCombinationElements()
@@ -59,6 +68,11 @@ public abstract class Skill : ScriptableObject
     public bool IsTimeOver()
     {
         return _Timer <= 0;
+    }
+
+    public bool IsSkillOver()
+    {
+        return _UseTimer <= 0;
     }
 
     public void SetSkillTier(SkillTier tier)

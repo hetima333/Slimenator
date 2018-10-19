@@ -33,7 +33,7 @@ public class EntityDetector : MonoBehaviour
             IElement element_temp = other.gameObject.GetComponent<IElement>();
             if (element_temp != null)
             {
-                if (Vector3.Distance(other.gameObject.transform.position, _Owner.gameObject.transform.position) < 2)
+                if (Vector3.Distance(other.gameObject.transform.position, _Owner.gameObject.transform.position) < 3)
                 {
                     _Player.StoreElementInOrb(element_temp.GetElementType());
                     

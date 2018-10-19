@@ -15,13 +15,16 @@ public class SkillTargeted : Skill
 
         if (IsTimeOver())
         {
-            foreach(GameObject obj in _CastingType.GetTargets(ref caster, ref _SkillTier, ref _Targetable))
+            if (!IsSkillOver())
             {
-                IDamageable dmg = obj.GetComponent<IDamageable>();
-
-                if(dmg != null)
+                foreach (GameObject obj in _CastingType.GetTargets(ref caster, ref _SkillTier, ref _Targetable))
                 {
-                    dmg.TakeDamage(_Damage);
+                    IDamageable dmg = obj.GetComponent<IDamageable>();
+
+                    if (dmg != null)
+                    {
+                        dmg.TakeDamage(_Damage);
+                    }
                 }
             }
         }

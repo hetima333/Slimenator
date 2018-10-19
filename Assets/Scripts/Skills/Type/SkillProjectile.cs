@@ -15,7 +15,10 @@ public class SkillProjectile : Skill
 
         if (IsTimeOver())
         {
-            ;
+            if (!IsSkillOver())
+            {
+                ;
+            }
         }
     }
 }
