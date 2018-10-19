@@ -4,7 +4,8 @@ using UnityEngine;
 
 public abstract class EnvironmentBase : MonoBehaviour
 {
-    GameObject _gameobject;
+    GameObject 
+        _gameobject;
 
     private float
         _lifetime,
@@ -120,12 +121,10 @@ public abstract class EnvironmentBase : MonoBehaviour
         _isDestructible = isDestructible;
         _isStatic = isStatic;
         _willExpire = false;
-
     }
 
     protected virtual void Awake()
     {
-
     }
 
     // Use this for initialization
