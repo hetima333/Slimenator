@@ -85,7 +85,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable
     {
         _CurrentUseSkill.Engage(gameObject);
 
-        if(_CurrentUseSkill.IsTimeOver())
+        if(_CurrentUseSkill.IsSkillOver())
         {
             _Player_State = EnumHolder.States.IDLE;
             DestroyImmediate(_CurrentUseSkill);

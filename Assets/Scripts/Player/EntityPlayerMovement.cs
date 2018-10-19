@@ -31,7 +31,7 @@ public class EntityPlayerMovement : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if(_EntityPlayer.GetPlayerState() == EnumHolder.States.MOVING)
+        if (_EntityPlayer.GetPlayerState() == EnumHolder.States.MOVING)
             Move();
     }
 
@@ -45,20 +45,20 @@ public class EntityPlayerMovement : MonoBehaviour
         Vector3 movement = Vector3.zero;
         if (Input.GetKey(KeyCode.W))
         {
-			movement += _Camera.gameObject.transform.forward.normalized * _Player_Stats.SpeedProperties * Time.deltaTime;
+            movement += _Camera.gameObject.transform.forward.normalized * _Player_Stats.SpeedProperties * Time.deltaTime;
         }
         else if (Input.GetKey(KeyCode.S))
         {
-			movement -= _Camera.gameObject.transform.forward.normalized * _Player_Stats.SpeedProperties * Time.deltaTime;
+            movement -= _Camera.gameObject.transform.forward.normalized * _Player_Stats.SpeedProperties * Time.deltaTime;
         }
 
         if (Input.GetKey(KeyCode.A))
         {
-			movement -= _Camera.gameObject.transform.right.normalized * _Player_Stats.SpeedProperties * Time.deltaTime;
+            movement -= _Camera.gameObject.transform.right.normalized * _Player_Stats.SpeedProperties * Time.deltaTime;
         }
         else if (Input.GetKey(KeyCode.D))
         {
-			movement += _Camera.gameObject.transform.right.normalized * _Player_Stats.SpeedProperties * Time.deltaTime;
+            movement += _Camera.gameObject.transform.right.normalized * _Player_Stats.SpeedProperties * Time.deltaTime;
         }
 
         movement.y = 0;
@@ -68,7 +68,7 @@ public class EntityPlayerMovement : MonoBehaviour
 
     void Rotate()
     {
-		_MouseRay = this._Camera.ScreenPointToRay(Input.mousePosition);
+        _MouseRay = this._Camera.ScreenPointToRay(Input.mousePosition);
 
         int layer = (1 << LayerMask.NameToLayer("Ground"));
 
