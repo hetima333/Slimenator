@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EntityPlayer : MonoBehaviour
+public class EntityPlayer : MonoBehaviour, IDamageable
 {
     [SerializeField]
     private GameObject
@@ -36,6 +36,9 @@ public class EntityPlayer : MonoBehaviour
     private Dictionary<EnumHolder.States, CheckFunctions> 
         _CheckFuntions = new Dictionary<EnumHolder.States, CheckFunctions>();
 
+    private Animator
+        _Animator;
+
     private void Start()
     {
         _CurrentSkillOutcome = null;
@@ -45,6 +48,8 @@ public class EntityPlayer : MonoBehaviour
         _Money = 0;
 
         _Player_State = EnumHolder.States.IDLE;
+
+        _Animator = gameObject.GetComponentInChildren<Animator>();
 
         _CheckFuntions.Add(EnumHolder.States.IDLE, IdleCheckFunction);
         _CheckFuntions.Add(EnumHolder.States.MOVING, MovingCheckFunction);
@@ -89,13 +94,15 @@ public class EntityPlayer : MonoBehaviour
 
     private void DieCheckFunction()
     {
-
+        if (!IsDead())
+            _Player_State = EnumHolder.States.IDLE;
     }
 
     // Update is called once per frame
     private void Update()
     {
         _CheckFuntions[_Player_State]();
+        _Animator.SetInteger("State", (int)_Player_State);
 
         if (_Player_State != EnumHolder.States.CASTING && 
             _Player_State != EnumHolder.States.KICKING && 
@@ -161,6 +168,11 @@ public class EntityPlayer : MonoBehaviour
 
             if (_SuckingRadius.activeSelf)
                 _SuckingRadius.SetActive(false);
+        }
+
+        if (IsDead() && _Player_State != EnumHolder.States.DIE)
+        {
+            _Player_State = EnumHolder.States.DIE;
         }
 
         if (_CurrentSelection < 0)
@@ -300,6 +312,11 @@ public class EntityPlayer : MonoBehaviour
         return _Player_State;
     }
 
+    public bool IsDead()
+    {
+        return _HP <= 0;
+    }
+
     void OnGUI()
     {
         GUI.Box(new Rect(10, 10, 100, 50), "Orb Slots");
@@ -324,6 +341,11 @@ public class EntityPlayer : MonoBehaviour
         }
 
         GUI.Box(new Rect(900, 10, 100, 50), "State: " + _Player_State);
+    }
+
+    public void TakeDamage(float Damage)
+    {
+        _HP -= Damage;
     }
 
     delegate void CheckFunctions();
