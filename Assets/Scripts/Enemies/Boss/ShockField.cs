@@ -29,10 +29,18 @@ public class ShockField : MonoBehaviour {
 
         if (gameObject.transform.localScale.x < _maxScale)
         {
+            //Change Scale
             float x = gameObject.transform.localScale.x + _increasingRate;
             float y = gameObject.transform.localScale.y + _increasingRate;
             float z = gameObject.transform.localScale.z + _increasingRate;
             gameObject.transform.localScale = new Vector3(x,y,z);
+
+
+            //Scale Over
+            if (gameObject.transform.localScale.x >= _maxScale)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 
@@ -44,21 +52,16 @@ public class ShockField : MonoBehaviour {
 
     public void SetScale(float scale)
     {
-        //Change Particle Scale
-        gameObject.transform.localScale = new Vector3(scale, scale, scale);
-        //Change Particle collision radius
-        var parCol = gameObject.GetComponent<ParticleSystem>().collision;
-        parCol.radiusScale = scale;
+        //Change Object Scale
+        _maxScale = scale;
+       
     }
 
     void OnTrrigerEnter(Collider col)
     {
-
         Debug.Log(col.gameObject.name);
-
         //Make sure the target has components
         var hasIDamageable = col.gameObject.GetComponent<IDamageable>();
-
         //If have a IDamageable component
         if (hasIDamageable != null)
         {
@@ -66,6 +69,5 @@ public class ShockField : MonoBehaviour {
             //TODO take damage   
             col.gameObject.GetComponent<IDamageable>().TakeDamage(_damage);
         }
-
     }
 }

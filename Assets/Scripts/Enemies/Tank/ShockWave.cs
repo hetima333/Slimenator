@@ -63,4 +63,21 @@ public class ShockWave : MonoBehaviour {
         parCol.enabled = false;
     }
 
+    void OnTriggerEnter(Collider col)
+    {
+        if (col.gameObject.tag == "Player")
+        {
+            //Make sure the target has components
+            var hasIDamageable = col.gameObject.GetComponent<IDamageable>();
+
+            //If have a component
+            if (hasIDamageable != null)
+            {
+                //ダメージ判定
+                //TODO take damage   
+                col.gameObject.GetComponent<IDamageable>().TakeDamage(_damage);
+            }
+        }
+    }
+
 }

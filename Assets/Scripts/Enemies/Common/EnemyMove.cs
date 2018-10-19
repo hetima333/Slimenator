@@ -8,7 +8,7 @@ using UnityEngine;
 
 public class EnemyMove : MonoBehaviour {
 
-
+    //ダッシュ倍率
     const float DASH_SPEED = 2.0f;
 
     Enemy _enemy;

@@ -22,7 +22,7 @@ public class TestBoss : Enemy {
     private GameObject _bullet;
 
     //Object for short range attack
-    private GameObject _shockWave;
+    private GameObject _shockField;
 
     // Use this for initialization
     void Start ()
@@ -43,7 +43,7 @@ public class TestBoss : Enemy {
         _freeMovePosition = _move.SetMovePos();
 
         //衝撃波オブジェクトのロード
-        _shockWave = Resources.Load("EnemyItem/ShockWave", typeof(GameObject)) as GameObject;
+        _shockField = Resources.Load("EnemyItem/ShockField", typeof(GameObject)) as GameObject;
 
         //弾オブジェクトのロード
         _bullet = Resources.Load("EnemyItem/EnemyBullet", typeof(GameObject)) as GameObject;
@@ -83,9 +83,7 @@ public class TestBoss : Enemy {
 
             default:
                 break;
-
         }
-
     }
 
 
@@ -112,45 +110,36 @@ public class TestBoss : Enemy {
         //距離を算出
         float distance = Vector3.Distance(_target.transform.position, gameObject.transform.position);
 
-        //if (distance >= 6.0f)
-        //{
-            //TODO　攻撃
-            Debug.Log("Jump");
-            if (_shockWave)
+        if (distance <= 6.0f)
+        {
+            if (_shockField)
             {
-                GameObject shockWave = Instantiate(_shockWave) as GameObject;
-                shockWave.transform.position = gameObject.transform.position;
-                shockWave.GetComponent<ShockWave>().SetDamage(10);
-                shockWave.GetComponent<ShockWave>().SetScale(20);       
+                GameObject shockField = Instantiate(_shockField) as GameObject;
+                shockField.transform.position = gameObject.transform.position;
+                shockField.GetComponent<ShockField>().SetDamage(10);
+                shockField.GetComponent<ShockField>().SetScale(20);
             }
-
-        //}
-        //else
-        //{
-
-        //    Debug.Log("Fire");
-        //    if (_bullet)
-        //    {
-        //        //make bullet 
-        //        GameObject bullet = Instantiate(_bullet) as GameObject;
-        //        //set bullet damage
-        //        bullet.GetComponent<EnemyBullet>().SetDamage(10);
-
-        //        bullet.GetComponent<EnemyBullet>().SetScale(1);
-        //        //set bullet position
-        //        bullet.transform.position = gameObject.transform.position + transform.forward;
-        //        //set bullet speed(TODO)
-        //        bullet.GetComponent<Rigidbody>().velocity = gameObject.transform.forward * 10;
-        //    }
-        //}
-
+        }
+        else
+        {
+            if (_bullet)
+            {
+                //make bullet 
+                GameObject bullet = Instantiate(_bullet) as GameObject;
+                //set bullet damage
+                bullet.GetComponent<EnemyBullet>().SetDamage(10);
+                bullet.GetComponent<EnemyBullet>().SetScale(1);
+                //set bullet position
+                bullet.transform.position = gameObject.transform.position + transform.forward;
+                //set bullet speed(TODO)
+                bullet.GetComponent<Rigidbody>().velocity = gameObject.transform.forward * 10;
+            }
+        }
 
         //TODO行動終了までの時間経過
         yield return new WaitForSeconds(1);
-
         //行動終了
         IsAction = false;
-
     }
 
 

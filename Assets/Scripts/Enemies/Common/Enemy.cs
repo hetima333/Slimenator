@@ -57,9 +57,6 @@ public class Enemy : MonoBehaviour, IDamageable
     //狙う対象
     public GameObject _target;
 
-
-
-
     //ステータスのセット関数
     public void SetStatus(float hp,float speed,float searchRange,float attackRange,float moveRange,float money)
     {
