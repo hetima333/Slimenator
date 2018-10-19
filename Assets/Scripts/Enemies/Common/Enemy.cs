@@ -1,4 +1,5 @@
-﻿/// 敵の基本クラス
+﻿using System;
+/// 敵の基本クラス
 /// Base class of enemies
 /// Athor：Yuhei Mastumura
 /// Last edit date：2018/10/17
@@ -21,6 +22,9 @@ public class Enemy : MonoBehaviour, IDamageable
     [SerializeField]
     private State _currentState;
     public State CurrentState { get { return _currentState; } set { _currentState = value; } }
+    //最大値
+    [SerializeField]
+    private float _maxHp;
     //体力
     [SerializeField]
     private float _hp;
@@ -43,7 +47,6 @@ public class Enemy : MonoBehaviour, IDamageable
     public Vector3 _freeMovePosition;
     //初期座標
     public Vector3 _staetPosition;
-
     //行動中か？
     [SerializeField]
     private bool _isAction;
@@ -54,16 +57,24 @@ public class Enemy : MonoBehaviour, IDamageable
     //索敵用コライダー
     private SphereCollider _sphereCol;
     public SphereCollider SphereColliderProperties { get { return _sphereCol; } set { _sphereCol = value; } }
+
     //狙う対象
     public GameObject _target;
 
+    //インタフェース用最大Hp取得
+    float IDamageable.MaxHitPoint{get{return _maxHp;}}
+    //インタフェース用現在Hp取得
+    float IDamageable.HipPoint{get{return _hp;}}
+
     //ステータスのセット関数
-    public void SetStatus(float hp,float speed,float searchRange,float attackRange,float moveRange,float money)
+    public void SetStatus(float maxHp,float speed,float searchRange,float attackRange,float moveRange,float money)
     {
         //初期はアイドル
         _currentState = State.IDLE;
+        //体力最大値
+        _maxHp = maxHp;
         //体力
-        _hp = hp;
+        _hp = _maxHp;
         //移動速度
         _moveSpeed = speed;
         //索敵範囲
@@ -78,11 +89,14 @@ public class Enemy : MonoBehaviour, IDamageable
         _staetPosition = gameObject.transform.position;
     }
 
+    
 
     //ダメージを受ける
     public void TakeDamage(float damage)
     {
+        //if CurrentState is Dead
         if (_currentState == State.DEAD) return;
+        //TakeDamage
         _hp -= damage;
 
         if (_hp <= 0)
@@ -90,7 +104,6 @@ public class Enemy : MonoBehaviour, IDamageable
             _currentState = State.DEAD;
             StartCoroutine(Dying());
         }
-
     }
 
 

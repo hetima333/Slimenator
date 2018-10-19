@@ -5,11 +5,11 @@
 
 public interface IDamageable
 {
-	// MaxHP
-	int MaxHitPoint{ get; }
+    // MaxHP
+    float MaxHitPoint { get; }
 
 	// HP
-	int HipPoint{ get; }
+	float HipPoint{ get; }
 
 	//ダメージの適用
 	void TakeDamage(float Damage);
