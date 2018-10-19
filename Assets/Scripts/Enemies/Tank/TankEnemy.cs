@@ -1,6 +1,6 @@
 ﻿/// Tankタイプの敵
 /// Enemy of Tank Type
-/// Athor：　Yuhei Mastumura
+/// Athor：Yuhei Mastumura
 /// Last edit date：2018/10/17
 
 using System.Collections;
@@ -109,7 +109,7 @@ public class TankEnemy : Enemy
         }
 
 
-        //TODO　攻撃
+        //TODO 攻撃
         Debug.Log("Combo"+(_comboCount+1));
 
         if (_comboCount == 2)

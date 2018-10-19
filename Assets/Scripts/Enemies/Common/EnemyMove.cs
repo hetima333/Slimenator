@@ -1,6 +1,6 @@
 ﻿/// 敵の移動
 /// Enemies Move
-/// Athor：　Yuhei Mastumura
+/// Athor： Yuhei Mastumura
 /// Last edit date：2018/10/18
 using System.Collections;
 using System.Collections.Generic;

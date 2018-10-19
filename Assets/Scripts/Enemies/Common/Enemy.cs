@@ -1,6 +1,6 @@
 ﻿/// 敵の基本クラス
 /// Base class of enemies
-/// Athor：　Yuhei Mastumura
+/// Athor：Yuhei Mastumura
 /// Last edit date：2018/10/17
 using System.Collections;
 using System.Collections.Generic;

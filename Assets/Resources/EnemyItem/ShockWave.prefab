@@ -61,7 +61,7 @@ ParticleSystem:
   m_GameObject: {fileID: 1205549558202436}
   serializedVersion: 5
   lengthInSec: 5
-  simulationSpeed: 0.13
+  simulationSpeed: 0.55
   stopAction: 0
   looping: 0
   prewarm: 0
@@ -2656,7 +2656,7 @@ ParticleSystem:
     collidesWithDynamic: 1
     interiorCollisions: 0
   TriggerModule:
-    enabled: 1
+    enabled: 0
     collisionShape0: {fileID: 0}
     collisionShape1: {fileID: 0}
     collisionShape2: {fileID: 0}

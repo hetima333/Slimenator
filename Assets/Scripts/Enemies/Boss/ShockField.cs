@@ -1,16 +1,18 @@
-﻿/// 衝撃波の処理
-/// Processing enemy's shockwave
-/// Athor： Yuhei Mastumura
-/// Last edit date：2018/10/17
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShockWave : MonoBehaviour {
-
+public class ShockField : MonoBehaviour {
     //パーティクルの生存時間
     //Particle's living time
-    private   float _aliveTime = 3.0f;
+    [SerializeField]
+    private float _aliveTime = 3.0f;
+
+    [SerializeField]
+    private float _maxScale;
+
+    [SerializeField]
+    private float _increasingRate;
 
     //ヒット時に与えるダメージ
     private float _damage;
@@ -22,6 +24,15 @@ public class ShockWave : MonoBehaviour {
         if (_aliveTime <= 0)
         {
             Destroy(gameObject);
+        }
+
+
+        if (gameObject.transform.localScale.x < _maxScale)
+        {
+            float x = gameObject.transform.localScale.x + _increasingRate;
+            float y = gameObject.transform.localScale.y + _increasingRate;
+            float z = gameObject.transform.localScale.z + _increasingRate;
+            gameObject.transform.localScale = new Vector3(x,y,z);
         }
     }
 
@@ -40,27 +51,21 @@ public class ShockWave : MonoBehaviour {
         parCol.radiusScale = scale;
     }
 
-    void OnParticleCollision(GameObject obj)
+    void OnTrrigerEnter(Collider col)
     {
 
-        Debug.Log(obj.name);
+        Debug.Log(col.gameObject.name);
 
         //Make sure the target has components
-        var hasIDamageable = obj.gameObject.GetComponent<IDamageable>();
+        var hasIDamageable = col.gameObject.GetComponent<IDamageable>();
 
         //If have a IDamageable component
         if (hasIDamageable != null)
         {
             //ダメージ判定
             //TODO take damage   
-            obj.GetComponent<IDamageable>().TakeDamage(_damage);
-            
+            col.gameObject.GetComponent<IDamageable>().TakeDamage(_damage);
         }
 
-        //パーティクルのコリジョンの解除（多段ヒット防止）
-        //Release of particle community (multistage hit prevention)
-        var parCol = gameObject.GetComponent<ParticleSystem>().collision;
-        parCol.enabled = false;
     }
-
 }
