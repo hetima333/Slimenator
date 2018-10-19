@@ -123,6 +123,11 @@ public abstract class EnvironmentBase : MonoBehaviour
 
     }
 
+    protected virtual void Awake()
+    {
+
+    }
+
     // Use this for initialization
     protected virtual void Start () {
 		
