@@ -15,7 +15,7 @@ MonoBehaviour:
   MaxHealth: 10
   MaxDamage: 1
   MaxSpeed: 2
-  MaxSpeedMultiplyer: 0
-  MaxDamageMultiplyer: 0
-  MaxHealthMultiplyer: 0
+  MaxSpeedMultiplyer: 1
+  MaxDamageMultiplyer: 1
+  MaxHealthMultiplyer: 1
   Sucking_Power: 0
