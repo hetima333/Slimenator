@@ -162,11 +162,24 @@ public abstract class SlimeBase : MonoBehaviour, ISuckable, IDamageable, IElemen
         return (destination - transform.position).normalized;
     }
 
+    protected virtual IEnumerator ISpawnTrail()
+    {
+        yield return new WaitForSeconds(0f); //add spawn delay if needed.
+        GameObject trail = ObjectManager.Instance.InstantiateWithObjectPooling(GetElementType().GetEffect());
+        trail.GetComponent<EnvironmentBase>().InitObjectWithLife(3.0f, GetPosition(), Vector3.one);
+    }
+
+    public virtual void SpawnTrail()
+    {
+        if (GetElementType().GetEffect() != null)
+            StartCoroutine("ISpawnTrail");
+    }
+
+
     public void Sacking()
     {
         return;
     }
-
 
     public ElementType GetElementType()
     {
