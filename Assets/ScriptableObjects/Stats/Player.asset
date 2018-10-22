@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dc3c36a00271444f93f234ac0edf53e, type: 3}
   m_Name: Player
   m_EditorClassIdentifier: 
-  MaxHealth: 10
+  MaxHealth: 1000
   Damage: 1
   Speed: 10
   Sucking_Power: 10
