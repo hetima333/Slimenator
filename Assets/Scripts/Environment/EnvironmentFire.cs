@@ -33,6 +33,9 @@ public class EnvironmentFire : EnvironmentBase {
 
     void OnTriggerEnter(Collider other)
     {
-        other.GetComponent<IDamageable>().TakeDamage(2.0f);
+        if (other.GetComponent<IDamageable>() != null)
+        {
+            other.GetComponent<IDamageable>().TakeDamage(2.0f);
+        }
     }
 }
