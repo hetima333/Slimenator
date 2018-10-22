@@ -44,7 +44,7 @@ public abstract class Skill : ScriptableObject
         _UseTimer = _CastLength;
     }
 
-    public virtual void Engage(GameObject caster)
+    public virtual void Engage(GameObject caster, Vector3 dir = new Vector3())
     {
         _Timer -= Time.deltaTime;
 

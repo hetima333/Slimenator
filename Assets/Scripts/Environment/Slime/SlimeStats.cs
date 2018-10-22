@@ -15,8 +15,6 @@ public class SlimeStats
 
     float
         _health,
-        _maxHealth,
-        _velocity,
         _movementRange,
         _maxMovementRange;
 
@@ -37,30 +35,6 @@ public class SlimeStats
         set
         {
             _health = value;
-        }
-    }
-    public float MaxHealth
-    {
-        get
-        {
-            return _maxHealth;
-        }
-
-        set
-        {
-            _maxHealth = value;
-        }
-    }
-    public float Velocity
-    {
-        get
-        {
-            return _velocity;
-        }
-
-        set
-        {
-            _velocity = value;
         }
     }
     public float MovementRange

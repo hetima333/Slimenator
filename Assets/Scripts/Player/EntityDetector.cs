@@ -12,10 +12,6 @@ public class EntityDetector : MonoBehaviour
             _Owner;
 
     [SerializeField]
-    private PlayerStats
-        _PlayerStats;
-
-    [SerializeField]
     private EntityPlayer
         _Player;
 
@@ -27,7 +23,7 @@ public class EntityDetector : MonoBehaviour
             Rigidbody RB = other.GetComponent<Rigidbody>();
             suckable_temp.Sacking();
 
-            if (RB != null && RB.mass < _PlayerStats.SuckingPowerProperties)
+            if (RB != null && RB.mass < _Player.GetPlayerStats().SuckingPowerProperties)
                 RB.AddForce(-GAcceleration(_Owner.transform.position, RB.mass, RB));
 
             IElement element_temp = other.gameObject.GetComponent<IElement>();

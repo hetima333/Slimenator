@@ -10,10 +10,6 @@ public class EntityPlayerMovement : MonoBehaviour
         _Camera;
 
     [SerializeField]
-    private PlayerStats
-        _Player_Stats;
-
-    [SerializeField]
     private EntityPlayer
         _EntityPlayer;
 
@@ -45,20 +41,20 @@ public class EntityPlayerMovement : MonoBehaviour
         Vector3 movement = Vector3.zero;
         if (Input.GetKey(KeyCode.W))
         {
-            movement += _Camera.gameObject.transform.forward.normalized * _Player_Stats.SpeedProperties * Time.deltaTime;
+            movement += _Camera.gameObject.transform.forward.normalized * _EntityPlayer.GetPlayerStats().SpeedProperties * Time.deltaTime;
         }
         else if (Input.GetKey(KeyCode.S))
         {
-            movement -= _Camera.gameObject.transform.forward.normalized * _Player_Stats.SpeedProperties * Time.deltaTime;
+            movement -= _Camera.gameObject.transform.forward.normalized * _EntityPlayer.GetPlayerStats().SpeedProperties * Time.deltaTime;
         }
 
         if (Input.GetKey(KeyCode.A))
         {
-            movement -= _Camera.gameObject.transform.right.normalized * _Player_Stats.SpeedProperties * Time.deltaTime;
+            movement -= _Camera.gameObject.transform.right.normalized * _EntityPlayer.GetPlayerStats().SpeedProperties * Time.deltaTime;
         }
         else if (Input.GetKey(KeyCode.D))
         {
-            movement += _Camera.gameObject.transform.right.normalized * _Player_Stats.SpeedProperties * Time.deltaTime;
+            movement += _Camera.gameObject.transform.right.normalized * _EntityPlayer.GetPlayerStats().SpeedProperties * Time.deltaTime;
         }
 
         movement.y = 0;

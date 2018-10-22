@@ -9,16 +9,14 @@ public class SkillProjectile : Skill
     private GameObject
         _Projectile;
 
-    public override void Engage(GameObject caster)
+    public override void Engage(GameObject caster, Vector3 dir = new Vector3())
     {
         base.Engage(caster);
 
         if (IsTimeOver())
         {
-            if (!IsSkillOver())
-            {
-                ;
-            }
+                GameObject temp  = ObjectManager.Instance.InstantiateWithObjectPooling(_Projectile, caster.transform.position, caster.transform.rotation);
+                temp.GetComponent<Projectile>().Init(dir, 20);
         }
     }
 }

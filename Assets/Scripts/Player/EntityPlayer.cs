@@ -10,7 +10,10 @@ public class EntityPlayer : MonoBehaviour, IDamageable
         _SuckingRadius;
 
     [SerializeField]
-    private PlayerStats
+    private GameObject
+        _PrefabInstance;
+
+    private Stats
         _Player_Stats;
 
     private float
@@ -39,10 +42,19 @@ public class EntityPlayer : MonoBehaviour, IDamageable
     private Animator
         _Animator;
 
+    [SerializeField]
+    private GameObject
+        _CastingPoint;
+
     private void Start()
     {
         _CurrentSkillOutcome = null;
         _CurrentSelection = 0;
+
+        if (_Player_Stats != null)
+            DestroyImmediate(_Player_Stats);
+
+        _Player_Stats = EnumHolder.Instance.GetStats(gameObject.name);
 
         _HP = _Player_Stats.HealthProperties;
         _Money = 0;
@@ -83,7 +95,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable
 
     private void CastingCheckFunction()
     {
-        _CurrentUseSkill.Engage(gameObject);
+        _CurrentUseSkill.Engage(_CastingPoint, gameObject.transform.forward);
 
         if(_CurrentUseSkill.IsSkillOver())
         {
@@ -179,6 +191,12 @@ public class EntityPlayer : MonoBehaviour, IDamageable
             _CurrentSelection = _Skills.Count - 1;
         else if (_CurrentSelection > _Skills.Count - 1)
             _CurrentSelection = 0;
+    }
+
+    protected virtual void LateUpdate()
+    {
+        if (_Animator.speed != _Player_Stats.SpeedMultiplyerProperties)
+            _Animator.speed = _Player_Stats.SpeedMultiplyerProperties;
     }
 
     public void StoreElementInOrb(ElementType type)
@@ -310,6 +328,11 @@ public class EntityPlayer : MonoBehaviour, IDamageable
     public EnumHolder.States GetPlayerState()
     {
         return _Player_State;
+    }
+
+    public Stats GetPlayerStats()
+    {
+        return _Player_Stats;
     }
 
     public bool IsDead()

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Target Type/AOE On Target")]
+[CreateAssetMenu(menuName = "Skills/Target Type/AOE On Target")]
 public class SkillTargetAOEPosition : SkillCastingType
 {
     [SerializeField]
