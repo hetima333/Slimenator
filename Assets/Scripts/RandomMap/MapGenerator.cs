@@ -22,16 +22,6 @@ public class MapGenerator {
     //部屋から繋がっている通路
     private List<Range> _roomPassage = new List<Range>();
 
-    // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
     /// <summary>
     /// マップを生成する
     /// </summary>
@@ -65,7 +55,6 @@ public class MapGenerator {
                     map[x, z] = 1;
                 }
             }
-            //Debug.Log("passage!!!");
         }
 
         //部屋から繋がっている通路の表示
@@ -78,7 +67,6 @@ public class MapGenerator {
                     map[x, z] = 1;
                 }
             }
-            //Debug.Log("roomPassage!!!");
         }
 
         //部屋の表示
@@ -91,7 +79,6 @@ public class MapGenerator {
                     map[x, z] = 1;
                 }
             }
-            //Debug.Log("room!!!");
         }
 
         //通路の作成
@@ -120,9 +107,6 @@ public class MapGenerator {
             if (_range.Count >= maxRoom)
                 break;
         } while (isDevided);
-
-        //Debug.Log("SeparateRoom!!");
-
     }
 
     /// <summary>
@@ -211,8 +195,6 @@ public class MapGenerator {
         //追加リストに退避しておいた新しい区画を追加する
         _range.AddRange(newRangeList);
 
-        //Debug.Log("DevideRange!!");
-
         return isDevided;
     }
 
@@ -221,11 +203,13 @@ public class MapGenerator {
     /// </summary>
     public void CreateGroundInTheRoom()
     {
+        List<Range> rangeList = _range;
+
         //部屋をランダムにする
-        _range.Sort((a, b) => RogueUtils.GetRandomInt(0, 1) - 1);
+        rangeList.Sort((a, b) => RogueUtils.GetRandomInt(0, 1) - 1);
 
         //1区間毎に1部屋作る
-        foreach(Range range in _range)
+        foreach(Range range in rangeList)
         {
             System.Threading.Thread.Sleep(1);
 
@@ -256,9 +240,6 @@ public class MapGenerator {
 
             //通路を作る
             CreatePassage(range,room);
-
-            //Debug.Log("CreateGroundInTheRoom!!");
-
         }
 
     }
@@ -464,6 +445,44 @@ public class MapGenerator {
                 }
             }
         }
+    }
+
+    /// <summary>
+    /// 指定された部屋の幅の最小値
+    /// </summary>
+    /// <param name="num">部屋の番号</param>
+    /// <returns></returns>
+    public int GetStartX(int num)
+    {
+        return _room[num]._start._x;
+    }
+
+    /// <summary>
+    /// 指定された部屋の幅の最大値
+    /// </summary>
+    /// <param name="num">部屋の番号</param>
+    /// <returns></returns>
+    public int GetEndX(int num)
+    {
+        return _room[num]._end._x;
+    }
+
+    /// <summary>
+    /// 指定された部屋の奥行きの最小値
+    /// </summary>
+    /// <param name="num">部屋の番号</param>
+    public int GetStartZ(int num)
+    {
+        return _room[num]._start._z;
+    }
+
+    /// <summary>
+    /// 指定された部屋の奥行きの最小値
+    /// </summary>
+    /// <param name="num">部屋の番号</param>
+    public int GetEndZ(int num)
+    {
+        return _room[num]._end._z;
     }
 
 }

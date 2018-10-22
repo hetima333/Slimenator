@@ -27,6 +27,9 @@ public class CreateRandomMap : MonoBehaviour {
     //マップ
     public int[,] _map;
 
+    //マップ生成
+    private MapGenerator _mapGenerator;
+
     //マップサイズ
     [SerializeField]
     private int _mapSize = 1;
@@ -75,7 +78,8 @@ public class CreateRandomMap : MonoBehaviour {
     private void GenerateMapObject()
     {
         //マップを生成する
-        _map = new MapGenerator().GenerateMap(_width, _depth, _maxRoomNum, _minRangeWidth);
+        _mapGenerator = new MapGenerator();
+        _map = _mapGenerator.GenerateMap(_width, _depth, _maxRoomNum, _minRangeWidth);
 
         //部屋のプレハブ
        // _floorPrefab = Resources.Load("Prefabs/RandomMap/Floor") as GameObject;
@@ -119,12 +123,27 @@ public class CreateRandomMap : MonoBehaviour {
         if (!_player)
             return;
 
+        //最初に作られた部屋の位置取得
+        var startX = _mapGenerator.GetStartX(0);
+        var endX = _mapGenerator.GetEndX(0);
+        var startZ = _mapGenerator.GetStartZ(0);
+        var endZ = _mapGenerator.GetEndZ(0);
+
+        Debug.Log("startx:" + startX);
+        Debug.Log("endx:" + endX);
+        Debug.Log("startz:" + startZ);
+        Debug.Log("endz:" + endZ);
+
         Position position;
         do
         {
             //座標をランダムに決める
-            var x = RogueUtils.GetRandomInt(0, _width - 1);
-            var z = RogueUtils.GetRandomInt(0, _depth - 1);
+            //var x = RogueUtils.GetRandomInt(0, _width - 1);
+            //var z = RogueUtils.GetRandomInt(0, _depth - 1);
+            var x = RogueUtils.GetRandomInt(0, endX);
+            var z = RogueUtils.GetRandomInt(0, endZ);
+            Debug.Log("x:" + x);
+            Debug.Log("z:" + z);
             position = new Position(x, z);
         }
         //床があるところに限定する
