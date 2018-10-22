@@ -341,7 +341,7 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
+      loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -390,7 +390,7 @@ ModelImporter:
       name: Armature|Run
       takeName: Armature|Run
       firstFrame: 0
-      lastFrame: 17
+      lastFrame: 16
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
