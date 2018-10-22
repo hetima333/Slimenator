@@ -129,10 +129,10 @@ public class CreateRandomMap : MonoBehaviour {
         var startZ = _mapGenerator.GetStartZ(0);
         var endZ = _mapGenerator.GetEndZ(0);
 
-        Debug.Log("startx:" + startX);
-        Debug.Log("endx:" + endX);
-        Debug.Log("startz:" + startZ);
-        Debug.Log("endz:" + endZ);
+        //Debug.Log("startx:" + startX);
+        //Debug.Log("endx:" + endX);
+        //Debug.Log("startz:" + startZ);
+        //Debug.Log("endz:" + endZ);
 
         Position position;
         do
@@ -142,8 +142,8 @@ public class CreateRandomMap : MonoBehaviour {
             //var z = RogueUtils.GetRandomInt(0, _depth - 1);
             var x = RogueUtils.GetRandomInt(0, endX);
             var z = RogueUtils.GetRandomInt(0, endZ);
-            Debug.Log("x:" + x);
-            Debug.Log("z:" + z);
+            //Debug.Log("x:" + x);
+            //Debug.Log("z:" + z);
             position = new Position(x, z);
         }
         //床があるところに限定する
