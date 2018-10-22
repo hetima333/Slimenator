@@ -445,7 +445,7 @@ Prefab:
         type: 2}
       propertyPath: _slimes.Array.data[0]._object
       value: 
-      objectReference: {fileID: 1582254517707458, guid: a6696c94f7bbc1b4db5ff8724de81f90,
+      objectReference: {fileID: 1437516636120426, guid: 8c639dfa589184546938f1eaa7bdaa6f,
         type: 2}
     - target: {fileID: 114016712845709412, guid: 05418d951fdb48e498028fd64f0b8898,
         type: 2}
@@ -504,7 +504,7 @@ Prefab:
     - target: {fileID: 114129762375989926, guid: 05418d951fdb48e498028fd64f0b8898,
         type: 2}
       propertyPath: _mapSize
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 114129762375989926, guid: 05418d951fdb48e498028fd64f0b8898,
         type: 2}
