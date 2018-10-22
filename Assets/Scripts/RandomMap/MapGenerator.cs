@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class MapGenerator {
 
-    private int _mapSizeX; //マップサイズX軸
-    private int _mapSizeZ; //マップサイズZ軸
-    private int _maxRoomNum;    //最大部屋数
-
-    private const int MINIMUM_RANGE_WIDTH = 6;
+    //マップサイズX軸
+    private int _mapSizeX;
+    //マップサイズZ軸
+    private int _mapSizeZ;
+    //最大部屋数
+    private int _maxRoomNum;
+    //区画の数
+    private int _minimumRangeWidth;
 
     //部屋(全体)
     private List<Range> _room = new List<Range>();
@@ -19,16 +22,6 @@ public class MapGenerator {
     //部屋から繋がっている通路
     private List<Range> _roomPassage = new List<Range>();
 
-    // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
     /// <summary>
     /// マップを生成する
     /// </summary>
@@ -36,12 +29,13 @@ public class MapGenerator {
     /// <param name="mapSizeZ">マップサイズZ軸</param>
     /// <param name="maxRoom">部屋の最大数</param>
     /// <returns></returns>
-    public int[,] GenerateMap(int mapSizeX, int mapSizeZ, int maxRoom)
+    public int[,] GenerateMap(int mapSizeX, int mapSizeZ, int maxRoom, int minimumRangeWidth)
     {
         //マップサイズの設定
         _mapSizeX = mapSizeX;
         _mapSizeZ = mapSizeZ;
         _maxRoomNum = maxRoom;
+        _minimumRangeWidth = minimumRangeWidth;
 
         //マップ配列
         int[,] map = new int[mapSizeX, mapSizeZ];
@@ -61,7 +55,6 @@ public class MapGenerator {
                     map[x, z] = 1;
                 }
             }
-            Debug.Log("passage!!!");
         }
 
         //部屋から繋がっている通路の表示
@@ -74,7 +67,6 @@ public class MapGenerator {
                     map[x, z] = 1;
                 }
             }
-            Debug.Log("roomPassage!!!");
         }
 
         //部屋の表示
@@ -87,7 +79,6 @@ public class MapGenerator {
                     map[x, z] = 1;
                 }
             }
-            Debug.Log("room!!!");
         }
 
         //通路の作成
@@ -116,9 +107,6 @@ public class MapGenerator {
             if (_range.Count >= maxRoom)
                 break;
         } while (isDevided);
-
-        Debug.Log("SeparateRoom!!");
-
     }
 
     /// <summary>
@@ -136,11 +124,11 @@ public class MapGenerator {
         foreach (Range range in _range)
         {
             //区画の数の制限を超えたらスキップ
-            if (isVertical && range.GetWidthZ() < MINIMUM_RANGE_WIDTH * 2 + 1)
+            if (isVertical && range.GetWidthZ() < _minimumRangeWidth * 2 + 1)
             {
                 continue;
             }
-            else if (!isVertical && range.GetWidthX() < MINIMUM_RANGE_WIDTH * 2 + 1)
+            else if (!isVertical && range.GetWidthX() < _minimumRangeWidth * 2 + 1)
             {
                 continue;
             }
@@ -165,7 +153,7 @@ public class MapGenerator {
 
             //余白(最少の区画サイズ2つ分引く)
             //右の最大幅から左の最少(0)に向かってみている
-            int margin = length - MINIMUM_RANGE_WIDTH * 2;
+            int margin = length - _minimumRangeWidth * 2;
 
             int baseIndex;
             if (isVertical)
@@ -176,7 +164,7 @@ public class MapGenerator {
                 baseIndex = range._start._x;
 
             //除外(引いた分の残りをランダムで分割位置を決定する)
-            int devideIndex = baseIndex + MINIMUM_RANGE_WIDTH + RogueUtils.GetRandomInt(1, margin) - 1;
+            int devideIndex = baseIndex + _minimumRangeWidth + RogueUtils.GetRandomInt(1, margin) - 1;
 
 
             Range newRange = new Range();
@@ -207,8 +195,6 @@ public class MapGenerator {
         //追加リストに退避しておいた新しい区画を追加する
         _range.AddRange(newRangeList);
 
-        Debug.Log("DevideRange!!");
-
         return isDevided;
     }
 
@@ -217,11 +203,13 @@ public class MapGenerator {
     /// </summary>
     public void CreateGroundInTheRoom()
     {
+        List<Range> rangeList = _range;
+
         //部屋をランダムにする
-        _range.Sort((a, b) => RogueUtils.GetRandomInt(0, 1) - 1);
+        rangeList.Sort((a, b) => RogueUtils.GetRandomInt(0, 1) - 1);
 
         //1区間毎に1部屋作る
-        foreach(Range range in _range)
+        foreach(Range range in rangeList)
         {
             System.Threading.Thread.Sleep(1);
 
@@ -233,8 +221,8 @@ public class MapGenerator {
             }
 
             //区画の空き領域(余白)計算
-            int marginX = range.GetWidthX() - MINIMUM_RANGE_WIDTH + 1;
-            int marginZ = range.GetWidthZ() - MINIMUM_RANGE_WIDTH + 1;
+            int marginX = range.GetWidthX() - _minimumRangeWidth + 1;
+            int marginZ = range.GetWidthZ() - _minimumRangeWidth + 1;
 
             //軸をランダムに決める
             int randomX = RogueUtils.GetRandomInt(1, marginX);
@@ -252,9 +240,6 @@ public class MapGenerator {
 
             //通路を作る
             CreatePassage(range,room);
-
-            Debug.Log("CreateGroundInTheRoom!!");
-
         }
 
     }
@@ -316,7 +301,7 @@ public class MapGenerator {
                     break;
                 case 1:　//右
                     random = room._start._z + RogueUtils.GetRandomInt(1, room.GetWidthZ()) - 1;
-                    _roomPassage.Add(new Range(range._end._x + 1, random, room._end._x, random));
+                    _roomPassage.Add(new Range(room._end._x + 1, random, range._end._x, random));
                     break;
 
                 case 2: //奥
@@ -326,7 +311,7 @@ public class MapGenerator {
 
                 case 3: //前
                     random = room._start._x + RogueUtils.GetRandomInt(1, room.GetWidthX()) - 1;
-                    _roomPassage.Add(new Range(random, range._end._z + 1, random, room._end._z));
+                    _roomPassage.Add(new Range(random, room._end._z + 1, random, range._end._z));
                     break;
                 default:
                     Debug.Log("dir Nothing!");
@@ -460,6 +445,44 @@ public class MapGenerator {
                 }
             }
         }
+    }
+
+    /// <summary>
+    /// 指定された部屋の幅の最小値
+    /// </summary>
+    /// <param name="num">部屋の番号</param>
+    /// <returns></returns>
+    public int GetStartX(int num)
+    {
+        return _room[num]._start._x;
+    }
+
+    /// <summary>
+    /// 指定された部屋の幅の最大値
+    /// </summary>
+    /// <param name="num">部屋の番号</param>
+    /// <returns></returns>
+    public int GetEndX(int num)
+    {
+        return _room[num]._end._x;
+    }
+
+    /// <summary>
+    /// 指定された部屋の奥行きの最小値
+    /// </summary>
+    /// <param name="num">部屋の番号</param>
+    public int GetStartZ(int num)
+    {
+        return _room[num]._start._z;
+    }
+
+    /// <summary>
+    /// 指定された部屋の奥行きの最小値
+    /// </summary>
+    /// <param name="num">部屋の番号</param>
+    public int GetEndZ(int num)
+    {
+        return _room[num]._end._z;
     }
 
 }

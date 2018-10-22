@@ -6,13 +6,16 @@ public class CreateRandomMap : MonoBehaviour {
 
     //幅
     [SerializeField]
-    private int _width = 30;
+    public int _width = 30;
     //奥行き
     [SerializeField]
-    private int _depth = 20;
+    public int _depth = 20;
     //最大部屋数
     [SerializeField]
     private int _maxRoomNum = 6;
+    //1つの部屋の範囲(大きさ)
+    [SerializeField]
+    private int _minRangeWidth = 6;
 
     //部屋のプレハブ
     [SerializeField]
@@ -22,17 +25,24 @@ public class CreateRandomMap : MonoBehaviour {
     private GameObject _wallPrefab;
 
     //マップ
-    private int[,] _map;
+    public int[,] _map;
+
+    //マップ生成
+    private MapGenerator _mapGenerator;
 
     //マップサイズ
     [SerializeField]
     private int _mapSize = 1;
 
+    //プレイヤーの初期位置指定
+    [SerializeField]
+    [Header("-Initial position designation of player-")]
+    private GameObject _player;
 
     // Use this for initialization
     void Start () {
         //マップサイズをスケールの基準に設定
-        transform.localScale = new Vector3(_mapSize, _mapSize, _mapSize);
+        //transform.localScale = new Vector3(_mapSize, _mapSize, _mapSize);
 
         ////幅と奥行きの範囲内に地形ベースを生成する
         //for(int x=0; x < _width; x++)
@@ -47,8 +57,11 @@ public class CreateRandomMap : MonoBehaviour {
         //    }
         //}
 
-        GenerateMap();
+        //ランダムマップの作成
+        GenerateMapObject();
 
+        //プレイヤーの初期位置指定
+        InitialPositionPlayer();
 
     }
 	
@@ -59,10 +72,14 @@ public class CreateRandomMap : MonoBehaviour {
 
     }
 
-    private void GenerateMap()
+    /// <summary>
+    /// ランダムマップのオブジェクトを生成する
+    /// </summary>
+    private void GenerateMapObject()
     {
         //マップを生成する
-        _map = new MapGenerator().GenerateMap(_width, _depth, _maxRoomNum);
+        _mapGenerator = new MapGenerator();
+        _map = _mapGenerator.GenerateMap(_width, _depth, _maxRoomNum, _minRangeWidth);
 
         //部屋のプレハブ
        // _floorPrefab = Resources.Load("Prefabs/RandomMap/Floor") as GameObject;
@@ -78,18 +95,62 @@ public class CreateRandomMap : MonoBehaviour {
             {
                 if (_map[x, z] == 1)
                 {
+                    //Instantiate(_floorPrefab, new Vector3(x, 0, z), new Quaternion());
                     //部屋オブジェクトを生成する
-                    Instantiate(_floorPrefab, new Vector3(x, 0, z), new Quaternion());
-                    Debug.Log("Create floorPrefab map!!");
+                    GameObject floor = Instantiate(_floorPrefab, new Vector3(x, 0, z), new Quaternion());
+                    floor.transform.SetParent(transform);
+                    //Debug.Log("Create floorPrefab map!!");
                 }
                 else
                 {
-                    Instantiate(_wallPrefab, new Vector3(x, 0, z), new Quaternion());
-                    Debug.Log("Create wallPrefab map!!");
+                    //Instantiate(_wallPrefab, new Vector3(x, 0, z), new Quaternion());
+                    //壁オブジェクトを生成する
+                    GameObject wall = Instantiate(_wallPrefab, new Vector3(x, 0, z), new Quaternion());
+                    wall.transform.SetParent(transform);
+                    //Debug.Log("Create wallPrefab map!!");
                 }
             }
         }
 
+    }
+
+    /// <summary>
+    /// プレイヤーの初期位置指定
+    /// </summary>
+    private void InitialPositionPlayer()
+    {
+        //プレイヤーが設定されていない場合は設定の必要なし
+        if (!_player)
+            return;
+
+        //最初に作られた部屋の位置取得
+        var startX = _mapGenerator.GetStartX(0);
+        var endX = _mapGenerator.GetEndX(0);
+        var startZ = _mapGenerator.GetStartZ(0);
+        var endZ = _mapGenerator.GetEndZ(0);
+
+        //Debug.Log("startx:" + startX);
+        //Debug.Log("endx:" + endX);
+        //Debug.Log("startz:" + startZ);
+        //Debug.Log("endz:" + endZ);
+
+        Position position;
+        do
+        {
+            //座標をランダムに決める
+            //var x = RogueUtils.GetRandomInt(0, _width - 1);
+            //var z = RogueUtils.GetRandomInt(0, _depth - 1);
+            var x = RogueUtils.GetRandomInt(0, endX);
+            var z = RogueUtils.GetRandomInt(0, endZ);
+            //Debug.Log("x:" + x);
+            //Debug.Log("z:" + z);
+            position = new Position(x, z);
+        }
+        //床があるところに限定する
+        while (_map[position._x, position._z] != 1);
+
+        //プレイヤーの位置設定
+        _player.transform.position = new Vector3(position._x, 0, position._z);
     }
 
 }

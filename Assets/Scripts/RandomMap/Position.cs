@@ -15,13 +15,4 @@ public class Position {
 
     public Position() : this(0, 0) { }
 
-    // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }
