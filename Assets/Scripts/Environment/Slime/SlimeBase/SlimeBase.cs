@@ -10,8 +10,9 @@ public abstract class SlimeBase : MonoBehaviour, ISuckable, IDamageable, IElemen
     Material _material;
     Animator _animator;
     Rigidbody _rigidbody;
+    Stats _properties;
 
-	public float MaxHitPoint { get { return _stats.MaxHealth; } }
+	public float MaxHitPoint { get { return _properties.HealthProperties; } }
 	public float HitPoint { get { return _stats.Health; } }
 
 	#region Getter/Setter
@@ -73,6 +74,12 @@ public abstract class SlimeBase : MonoBehaviour, ISuckable, IDamageable, IElemen
     protected virtual void Update () {
         _state.Tick();
     }
+
+    protected virtual void LateUpdate()
+    {
+        if (_animator.speed != _properties.SpeedMultiplyerProperties)
+            _animator.speed = _properties.SpeedMultiplyerProperties;
+    }
   
     public void TakeDamage(float dmg)
     {
@@ -93,15 +100,19 @@ public abstract class SlimeBase : MonoBehaviour, ISuckable, IDamageable, IElemen
 
     // ENG: Initialization 
     // JAP: 初期化。
-    public virtual void Init(float maxHealth, float velocity, ElementType type)
+    public virtual void Init(Stats newstats, float speedmultiplyer, ElementType type)
     {
         if (_rigidbody == null)
             CacheObject();
 
+        if (_properties != null)
+            DestroyImmediate(_properties);
+
+        _properties = newstats;
+
         _stats = new SlimeStats();
-        _stats.MaxHealth = maxHealth;
-        _stats.Health = _stats.MaxHealth;
-        _stats.Velocity = velocity;
+        _stats.Health = _properties.HealthProperties;
+        _properties.SpeedMultiplyerProperties = speedmultiplyer;
         _stats.Elementtype = type;
         _stats.IsDead = false;
         _stats.MovementRange = UnityEngine.Random.Range(5.0f, 10.0f);
@@ -143,8 +154,8 @@ public abstract class SlimeBase : MonoBehaviour, ISuckable, IDamageable, IElemen
         Vector3 direction = GetDirection(destination);
         direction.y = 0;
         Quaternion rotation = Quaternion.LookRotation(direction);
-        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * _stats.Velocity);
-        transform.Translate(Vector3.forward * Time.deltaTime * _stats.Velocity);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, (_properties.SpeedProperties * _properties.SpeedMultiplyerProperties) * Time.deltaTime);
+        transform.Translate(Vector3.forward * Time.deltaTime * (_properties.SpeedProperties * _properties.SpeedMultiplyerProperties));
     }
 
     // ENG: Returns the direction vector between slime and the destination.

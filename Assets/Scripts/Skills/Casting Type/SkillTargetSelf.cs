@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Target Type/Self")]
+[CreateAssetMenu(menuName = "Skills/Target Type/Self")]
 public class SkillTargetSelf : SkillCastingType
 {
     [SerializeField]

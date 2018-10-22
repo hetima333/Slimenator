@@ -25,7 +25,7 @@ public class SlimeManager : SingletonMonoBehaviour<SlimeManager> {
     public GameObject GetSlimeFromPool(int type)
     {
         GameObject slime_obj = ObjectManager.Instance.InstantiateWithObjectPooling(_prefab);
-        Debug.Log(slime_obj);
+        Stats temp = EnumHolder.instance.GetStats(_prefab.name);
         SlimeBase temp_component = slime_obj.GetComponent<SlimeBase>();
 
         if (temp_component != null)
@@ -34,7 +34,7 @@ public class SlimeManager : SingletonMonoBehaviour<SlimeManager> {
         System.Type _MyScriptType = System.Type.GetType(EnumHolder.Instance._elements[type].GetSlimeScriptName());
         slime_obj.AddComponent(_MyScriptType);
 
-        slime_obj.GetComponent<SlimeBase>().Init(100, 2, EnumHolder.Instance._elements[type]);
+        slime_obj.GetComponent<SlimeBase>().Init(temp, ((EnumHolder.Instance._elements[type].name.Equals("Lightning")) ? 2 : 1), EnumHolder.Instance._elements[type]);
         slime_obj.SetActive(true);
 
         return slime_obj;

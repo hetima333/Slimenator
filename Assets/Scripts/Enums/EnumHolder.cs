@@ -18,12 +18,28 @@ public class EnumHolder : SingletonMonoBehaviour<EnumHolder>
     public List<SkillTier>
     _skillTier = new List<SkillTier>();
 
+    [SerializeField]
+    public List<Stats>
+    _Stat = new List<Stats>();
+
     public enum States
     {
         IDLE,
         MOVING,
+        ATTACKING,
         CASTING,
         KICKING,
         DIE
+    }
+
+    public Stats GetStats(string InstanceName)
+    {
+        foreach(Stats s in _Stat)
+        {
+            if (s.GetPrefabName().Equals(InstanceName))
+                return Instantiate(s);
+        }
+
+        return null;
     }
 }

@@ -9,7 +9,11 @@ public class SkillTargeted : Skill
     private SkillCastingType
         _CastingType;
 
-    public override void Engage(GameObject caster)
+    [SerializeField]
+    private GameObject
+     _Particle;
+
+    public override void Engage(GameObject caster, Vector3 dir = new Vector3())
     {
         base.Engage(caster);
 
