@@ -113,8 +113,11 @@ public class EntityPlayer : MonoBehaviour, IDamageable
                 if (!_SuckingParticle.activeSelf)
                     _SuckingParticle.SetActive(true);
 
+
                 if (!_SuckingRadius.activeSelf)
                     _SuckingRadius.SetActive(true);
+
+                _SuckingParticle.transform.Rotate(Vector3.up, 15);
 
             }
             else
