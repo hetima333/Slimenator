@@ -15,14 +15,18 @@ public class HPBarCore : MonoBehaviour {
 	[SerializeField, Range(0.01f, 2.0f)]
 	private float _hpDecreaseSpeed;
 
-	private RectTransform _redHPBar;
+	private RectTransform _redHPBarTrans;
 	private float _maxWidth;
 
 	// Use this for initialization
 	void Start () {
 		var dmg = GetComponent<IDamageable>();
 
-		_maxWidth = _redHPBar.sizeDelta.x;
+		_slider = GetComponent<Slider>();
+		_slider.minValue = 0;
+		_redHP = dmg.HipPoint;
+		_redHPBarTrans = _slider.GetComponentInChildren<Image>().rectTransform;
+		_maxWidth = _redHPBarTrans.sizeDelta.x;
 
 		// 現在のHPの変化を監視する
 		dmg.ObserveEveryValueChanged(x => dmg.HipPoint)
@@ -38,7 +42,7 @@ public class HPBarCore : MonoBehaviour {
 		this.ObserveEveryValueChanged(x => _redHP)
 			.Subscribe(x => {
 				// HPバーにサイズを適用する
-				_redHPBar.sizeDelta = new Vector2(_redHP * _maxWidth / _slider.maxValue, _redHPBar.sizeDelta.y);
+				_redHPBarTrans.sizeDelta = new Vector2(_redHP * _maxWidth / _slider.maxValue, _redHPBarTrans.sizeDelta.y);
 			});
 	}
 	
