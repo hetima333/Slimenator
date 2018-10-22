@@ -11,8 +11,11 @@ public abstract class SlimeBase : MonoBehaviour, ISuckable, IDamageable, IElemen
     Animator _animator;
     Rigidbody _rigidbody;
 
-    #region Getter/Setter
-    public SlimeStats Stats
+	public float MaxHitPoint { get { return _stats.MaxHealth; } }
+	public float HitPoint { get { return _stats.Health; } }
+
+	#region Getter/Setter
+	public SlimeStats Stats
     {
         get
         {

@@ -39,6 +39,9 @@ public class EntityPlayer : MonoBehaviour, IDamageable
     private Animator
         _Animator;
 
+	public float MaxHitPoint {get { return _Player_Stats.HealthProperties; } }
+	public float HitPoint {get { return _HP; } }
+
     private void Start()
     {
         _CurrentSkillOutcome = null;
