@@ -24,12 +24,12 @@ public class HPBarCore : MonoBehaviour {
 
 		_slider = GetComponent<Slider>();
 		_slider.minValue = 0;
-		_redHP = dmg.HipPoint;
+		_redHP = dmg.HitPoint;
 		_redHPBarTrans = _slider.GetComponentInChildren<Image>().rectTransform;
 		_maxWidth = _redHPBarTrans.sizeDelta.x;
 
 		// 現在のHPの変化を監視する
-		dmg.ObserveEveryValueChanged(x => dmg.HipPoint)
+		dmg.ObserveEveryValueChanged(x => dmg.HitPoint)
 			.Subscribe(x => {
 				_slider.value = x;
 				// 赤HPが緑HPより少なかったら緑HPの位置に合わせる

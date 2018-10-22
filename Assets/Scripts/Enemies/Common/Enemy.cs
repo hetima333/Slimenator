@@ -21,6 +21,9 @@ public class Enemy : MonoBehaviour, IDamageable
     [SerializeField]
     private State _currentState;
     public State CurrentState { get { return _currentState; } set { _currentState = value; } }
+    //最大値
+    [SerializeField]
+    private float _maxHp;
     //体力
     [SerializeField]
     private float _hp;
@@ -57,16 +60,20 @@ public class Enemy : MonoBehaviour, IDamageable
     //狙う対象
     public GameObject _target;
 
+    //インタフェース用最大Hp取得
+    public float MaxHitPoint{get{return _maxHp;}}
+    //インタフェース用現在Hp取得
+    public float HitPoint{get{return _hp;}}
 
 
 
     //ステータスのセット関数
-    public void SetStatus(float hp,float speed,float searchRange,float attackRange,float moveRange,float money)
+    public void SetStatus(float maxHp,float speed,float searchRange,float attackRange,float moveRange,float money)
     {
         //初期はアイドル
         _currentState = State.IDLE;
         //体力
-        _hp = hp;
+        _hp = _maxHp;
         //移動速度
         _moveSpeed = speed;
         //索敵範囲
