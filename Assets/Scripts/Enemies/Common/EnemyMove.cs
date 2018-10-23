@@ -11,7 +11,11 @@ public class EnemyMove : MonoBehaviour {
     //ダッシュ倍率
     const float DASH_SPEED = 2.0f;
 
+    const float IDLE_TIME = 2.0f;
+    const float THINK_TIME = 3.0f;
     Enemy _enemy;
+
+    float _thinkTime = THINK_TIME;
 
     // Use this for initialization
     void Awake ()
@@ -27,14 +31,17 @@ public class EnemyMove : MonoBehaviour {
     {
         //移動速度のリセット
         _enemy.RigidbodyProperties.velocity = Vector3.zero;
+         //思考時間リセット
+        _thinkTime = THINK_TIME;
         //TODO 指定時間待機
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(IDLE_TIME);
 
         if (_enemy.CurrentState != Enemy.State.IDLE) yield break;
         //目的地の再取得
         _enemy._freeMovePosition = SetMovePos();
         //自由移動に移行
         _enemy.CurrentState = Enemy.State.FREE;
+       
     }
 
 
@@ -49,6 +56,14 @@ public class EnemyMove : MonoBehaviour {
         //現在座標と目的座標の差が0.1f以上
         if (Vector3.Distance(pos, _enemy._freeMovePosition) >= 0.1f)
         {
+
+            //TODO 
+            _thinkTime -= Time.deltaTime;
+            if(_thinkTime<=0)
+            {
+                //待機状態になる。
+                _enemy.CurrentState = Enemy.State.IDLE;
+            }
             //向かう場所の方向を見る
             gameObject.transform.LookAt(_enemy._freeMovePosition);
             //移動
