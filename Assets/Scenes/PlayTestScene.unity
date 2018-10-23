@@ -375,6 +375,12 @@ Prefab:
       propertyPath: _mapSize
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 114129762375989926, guid: 05418d951fdb48e498028fd64f0b8898,
+        type: 2}
+      propertyPath: _floorPrefab
+      value: 
+      objectReference: {fileID: 1097908476900526, guid: e2590cd87e30f1645b73d48097d7c574,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 05418d951fdb48e498028fd64f0b8898, type: 2}
   m_IsPrefabParent: 0
