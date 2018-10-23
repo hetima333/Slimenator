@@ -32,7 +32,7 @@ public class EnvironmentFire : EnvironmentBase {
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<FireSlime>() != null)
+        if (other.GetComponent<SlimeBase>() != null)
             return;
         if (other.GetComponent<IDamageable>() != null)
             other.GetComponent<IDamageable>().TakeDamage(2.0f);
