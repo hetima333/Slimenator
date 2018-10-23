@@ -26,6 +26,7 @@ MonoBehaviour:
   _CastLength: 0
   _Damage: 50
   _Description: A Combination skill
-  _ChannelingParticle: {fileID: 0}
+  _ChannelingParticle: {fileID: 1224654138171122, guid: 777d630388bee1244b930e59722f4a86,
+    type: 2}
   _CastingParticle: {fileID: 0}
   _CastingType: {fileID: 11400000, guid: 704f805a729bbfd46a8ea24f7c9a7878, type: 2}

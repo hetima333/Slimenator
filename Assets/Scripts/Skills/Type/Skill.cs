@@ -78,7 +78,7 @@ public abstract class Skill : ScriptableObject
             }
         }
 
-        if(!IsSkillOver())
+        if(IsSkillOver())
         {
             if (_CastingParticleCopy != null)
             {
