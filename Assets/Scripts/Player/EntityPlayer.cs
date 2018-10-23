@@ -98,9 +98,9 @@ public class EntityPlayer : MonoBehaviour, IDamageable
 
     private void CastingCheckFunction()
     {
-        _CurrentUseSkill.Engage(_CastingPoint, gameObject.transform.forward);
+        _CurrentUseSkill.Engage(_CastingPoint, gameObject.transform.forward.normalized);
 
-        if(_CurrentUseSkill.IsSkillOver())
+        if(_CurrentUseSkill.IsSkillOver() && _CurrentUseSkill.IsTimeOver())
         {
             _Player_State = EnumHolder.States.IDLE;
             DestroyImmediate(_CurrentUseSkill);

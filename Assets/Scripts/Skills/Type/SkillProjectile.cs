@@ -15,8 +15,9 @@ public class SkillProjectile : Skill
 
         if (IsTimeOver())
         {
-                GameObject temp  = ObjectManager.Instance.InstantiateWithObjectPooling(_Projectile, caster.transform.position, caster.transform.rotation);
-                temp.GetComponent<Projectile>().Init(dir, 20);
+            GameObject temp = ObjectManager.Instance.InstantiateWithObjectPooling(_Projectile, caster.transform.position, caster.transform.rotation);
+            temp.GetComponent<Projectile>().Init(dir, 20);
+            temp.transform.localScale = new Vector3(GetSkillTier().GetMultiplyer(), GetSkillTier().GetMultiplyer(), GetSkillTier().GetMultiplyer());
         }
     }
 }
