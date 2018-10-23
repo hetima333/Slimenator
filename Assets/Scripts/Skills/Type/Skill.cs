@@ -74,7 +74,7 @@ public abstract class Skill : ScriptableObject
         {
             if (_ChannelingParticle != null && _ChannelingParticleCopy == null)
             {
-                _ChannelingParticleCopy = Instantiate(_ChannelingParticle, Vector3.zero, caster.transform.rotation);
+                _ChannelingParticleCopy = Instantiate(_ChannelingParticle, caster.transform.position, caster.transform.rotation);
             }
         }
 
