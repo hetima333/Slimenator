@@ -74,6 +74,8 @@ public class Enemy : MonoBehaviour, IDamageable
     {
         //初期はアイドル
         _currentState = State.IDLE;
+        //最大体力
+        _maxHp = maxHp;
         //体力
         _hp = _maxHp;
         //移動速度
