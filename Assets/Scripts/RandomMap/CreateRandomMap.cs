@@ -18,8 +18,8 @@ public class CreateRandomMap : MonoBehaviour {
     private int _minRangeWidth = 6;
 
     //部屋のプレハブ
-    [SerializeField]
-    private GameObject _floorPrefab;
+    //[SerializeField]
+    //private GameObject _floorPrefab;
     //壁のプレハブ
     [SerializeField]
     private GameObject _wallPrefab;
@@ -82,11 +82,15 @@ public class CreateRandomMap : MonoBehaviour {
         _map = _mapGenerator.GenerateMap(_width, _depth, _maxRoomNum, _minRangeWidth);
 
         //部屋のプレハブ
-       // _floorPrefab = Resources.Load("Prefabs/RandomMap/Floor") as GameObject;
-       // _wallPrefab = Resources.Load("Prefabs/RandomMap/Wall") as GameObject;
+        // _floorPrefab = Resources.Load("Prefabs/RandomMap/Floor") as GameObject;
+        // _wallPrefab = Resources.Load("Prefabs/RandomMap/Wall") as GameObject;
 
-       // var floorList = new List<Vector3>();
-       // var wallList = new List<Vector3>();
+        // var floorList = new List<Vector3>();
+        // var wallList = new List<Vector3>();
+
+        ////床を一枚マップ全体の大きさに合わせて生成
+        //GameObject floor = GameObject.CreatePrimitive(PrimitiveType.Plane);
+        //floor.transform.localScale = new Vector3(_width * _mapSize, _depth * _mapSize);
 
         //幅と奥行きの範囲内
         for (int z = 0; z < _depth; z++)
@@ -97,8 +101,8 @@ public class CreateRandomMap : MonoBehaviour {
                 {
                     //Instantiate(_floorPrefab, new Vector3(x, 0, z), new Quaternion());
                     //部屋オブジェクトを生成する
-                    GameObject floor = Instantiate(_floorPrefab, new Vector3(x, 0, z), new Quaternion());
-                    floor.transform.SetParent(transform);
+                    //GameObject floor = Instantiate(_floorPrefab, new Vector3(x, 0, z), new Quaternion());
+                    //floor.transform.SetParent(transform);
                     //Debug.Log("Create floorPrefab map!!");
                 }
                 else
