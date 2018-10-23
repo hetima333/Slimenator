@@ -1,78 +1,73 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Linq;
 
 public class HUDManager : MonoBehaviour {
 
 	private IPlayerStats _playerStats;
 
-	#region HPBar
+	// プレイヤーへの参照
+	private EntityPlayer _player;
 
+	// HPBarへの参照
 	private HPBarCore _hpbar;
-
-	#endregion
-
-	#region OrbSlot
 
 	// スロットへの参照
 	private OrbSlot[] _orbSlots = new OrbSlot[3];
-
-	// 仮のコード
-	// TODO : プレイヤーから情報を得る
-	[SerializeField]
-	private Orbs[] _orbs = new Orbs[3];
-
-	#endregion
-
-	#region Money
 
 	// 表示される金額のテキスト
 	[SerializeField]
 	private Text _moneyText;
 
-	#endregion
-
-	// Use this for initialization
-	void Start () {
-		_playerStats = GameObject.Find("Player").GetComponent<IPlayerStats>();
-
+	void Awake() {
+		// プレイヤーへの参照を取得する
+		_player = GameObject.Find("Player").GetComponent<EntityPlayer>();
+		_hpbar = GameObject.Find("PlayerHPBar").GetComponent<HPBarCore>();
 		_orbSlots = GameObject.Find("OrbSlot").GetComponentsInChildren<OrbSlot>();
 
-		_hpbar = GameObject.Find("HPBar").GetComponent<HPBarCore>();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		// オーブスロットの更新
-		UpdateOrbSlot();
-
-		// 所持金の更新
-		UpdateMoney();
+		// HPBarのターゲットを指定
+		_hpbar.Target = _player.GetComponent<IDamageable>();
 	}
 
-	private void UpdateOrbSlot(){
-		// オーブのデータを更新する
-		for (int i = 0; i < _orbSlots.Length; i++){
-			_orbSlots[i].Orb = _orbs[i];
-		}
-	}
+	// Use this for initialization
+	void Start() {
+		// 所持金が変化したら表示に反映する
+		this.ObserveEveryValueChanged(x => _player.MoneyAmount)
+			.DistinctUntilChanged()
+			.Subscribe(x => {
+				// 表示テキストの更新(3桁ごとにカンマ)
+				_moneyText.text = x.ToString("N0");
+			});
 
-	private void UpdateMoney(){
-		// TODO : プレイヤーから取得する
-		// 仮の数値
-		var money = 3000;
+		// オーブ内容が変化したら表示に反映する
+		this.ObserveEveryValueChanged(x => _player.GetOrbsInSlot())
+			.DistinctUntilChanged()
+			.Select(x => x.ToArray())
+			.Subscribe(x => {
+				// オーブのデータを更新する
+				for (int i = 0; i < x.Length; i++) {
+					// キューが大きすぎたら処理を中断
+					if (i >= 3) return;
 
-		// 現在の所持金が変動していなかったら更新を行わない
-		int result;
-		if(int.TryParse(_moneyText.text, out result)){
-			if(result == money){
-				return;
-			}
-		}
-
-		// 表示テキストの更新(3桁ごとにカンマ)
-		_moneyText.text = money.ToString("N0");
+					var orb = Orbs.NONE;
+					// 属性ごとの分岐
+					switch (x[i].name) {
+						case "Fire":
+							orb = Orbs.FIRE;
+							break;
+						case "Ice":
+							orb = Orbs.WATER;
+							break;
+						case "Lightning":
+							orb = Orbs.THUNDER;
+							break;
+					}
+					// スロットにデータを代入
+					_orbSlots[i].Orb = orb;
+				}
+			});
 	}
 }

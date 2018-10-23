@@ -44,6 +44,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable
 
 	public float MaxHitPoint {get { return _Player_Stats.HealthProperties; } }
 	public float HitPoint {get { return _HP; } }
+    public float MoneyAmount { get { return _Money; } }
     [SerializeField]
     private GameObject
         _CastingPoint;
@@ -374,6 +375,26 @@ public class EntityPlayer : MonoBehaviour, IDamageable
     public void TakeDamage(float Damage)
     {
         _HP -= Damage;
+    }
+
+    public Queue<ElementType> GetOrbsInSlot()
+    {
+        return _OrbSlot;
+    }
+
+    public List<Skill> GetSkillsInSlot()
+    {
+        return _Skills;
+    }
+
+    public int CurrentSelectedSkill()
+    {
+        return _CurrentSelection;
+    }
+
+    public Skill CurrentSkillOutcome()
+    {
+        return _CurrentSkillOutcome;
     }
 
     delegate void CheckFunctions();
