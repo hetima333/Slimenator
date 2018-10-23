@@ -19,7 +19,7 @@ public class SkillTargetAOEPosition : SkillCastingType
             {
                 foreach (GameObject entity in ObjectManager.Instance.GetActiveObjects(obj))
                 {
-                    if (Vector3.Distance(caster.transform.position, entity.transform.position) < _Range * tier.GetMultiplyer())
+                    if (Vector3.Distance(caster.transform.position, entity.transform.position) < _Range * ((tier != null) ? tier.GetMultiplyer() : 1))
                         list.Add(entity);
                 }
             }
