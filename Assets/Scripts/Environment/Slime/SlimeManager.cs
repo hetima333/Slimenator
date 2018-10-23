@@ -24,7 +24,7 @@ public class SlimeManager : SingletonMonoBehaviour<SlimeManager> {
 
     public GameObject GetSlimeFromPool(int type)
     {
-        GameObject slime_obj = ObjectManager.Instance.InstantiateWithObjectPooling(_prefab);
+        GameObject slime_obj = ObjectManager.Instance.InstantiateWithObjectPooling(_prefab, new Vector3 (0,0.5f,0));
         Stats temp = EnumHolder.instance.GetStats(_prefab.name);
         SlimeBase temp_component = slime_obj.GetComponent<SlimeBase>();
 

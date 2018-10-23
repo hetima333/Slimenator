@@ -6,7 +6,6 @@ public class EnvironmentFire : EnvironmentBase {
     [SerializeField]
     private ParticleSystem _pSystem;
     private ParticleSystem.MainModule _pSystemMain;
-    private List<ParticleCollisionEvent> _collisionEvents;
 
     protected override void Awake() {
         _pSystem = GetComponentInChildren<ParticleSystem>();
@@ -33,9 +32,9 @@ public class EnvironmentFire : EnvironmentBase {
 
     void OnTriggerEnter(Collider other)
     {
+        if (other.GetComponent<FireSlime>() != null)
+            return;
         if (other.GetComponent<IDamageable>() != null)
-        {
             other.GetComponent<IDamageable>().TakeDamage(2.0f);
-        }
     }
 }
