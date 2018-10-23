@@ -9,16 +9,16 @@ public class SkillTargeted : Skill
     private SkillCastingType
         _CastingType;
 
-    public override void Engage(GameObject caster, Vector3 dir = new Vector3())
+    public override void Engage(GameObject caster, Vector3 spawn_position = new Vector3(), Vector3 dir = new Vector3())
     {
-        base.Engage(caster);
+        base.Engage(caster, spawn_position, dir);
 
         if (IsTimeOver())
         {
             if (!IsSkillOver() || _CastLength == 0)
-            {            
-                foreach (GameObject obj in _CastingType.GetTargets(ref caster, ref _SkillTier, ref _Targetable))
-                {
+            {
+                foreach (GameObject obj in _CastingType.GetTargets(ref spawn_position, ref _SkillTier, ref _Targetable, ref caster))
+                {                   
                     IDamageable dmg = obj.GetComponent<IDamageable>();
 
                     if (dmg != null)

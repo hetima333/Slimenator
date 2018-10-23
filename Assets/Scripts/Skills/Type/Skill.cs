@@ -53,7 +53,7 @@ public abstract class Skill : ScriptableObject
         _UseTimer = _CastLength;
     }
 
-    public virtual void Engage(GameObject caster, Vector3 dir = new Vector3())
+    public virtual void Engage(GameObject caster, Vector3 spawn_position = new Vector3(), Vector3 dir = new Vector3())
     {
         _Timer -= Time.deltaTime;
 
@@ -74,11 +74,11 @@ public abstract class Skill : ScriptableObject
         {
             if (_ChannelingParticle != null && _ChannelingParticleCopy == null)
             {
-                _ChannelingParticleCopy = Instantiate(_ChannelingParticle, caster.transform.position, caster.transform.rotation);
+                _ChannelingParticleCopy = Instantiate(_ChannelingParticle, spawn_position, caster.transform.rotation, caster.transform);
             }
         }
 
-        if(!IsSkillOver())
+        if(IsSkillOver())
         {
             if (_CastingParticleCopy != null)
             {
@@ -90,7 +90,7 @@ public abstract class Skill : ScriptableObject
         {
             if (_CastingParticle != null && _CastingParticleCopy == null)
             {
-                _CastingParticleCopy = Instantiate(_CastingParticle, caster.transform.position, caster.transform.rotation);
+                _CastingParticleCopy = Instantiate(_CastingParticle, spawn_position, caster.transform.rotation, caster.transform);
             }
         }
     }
