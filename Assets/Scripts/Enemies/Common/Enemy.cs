@@ -118,7 +118,7 @@ public class Enemy : MonoBehaviour, IDamageable
 
         yield return new WaitForSeconds(2);
 
-        Destroy(gameObject);
+        ObjectManager.Instance.ReleaseObject(gameObject);
 
     }
 
