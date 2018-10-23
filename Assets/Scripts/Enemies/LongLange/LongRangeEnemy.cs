@@ -92,7 +92,7 @@ public class LongRangeEnemy : Enemy
     private IEnumerator Attack()
     {
         //行動中はreturn
-        if (IsAction) yield break;
+        if (IsAction||CurrentState == State.DEAD) yield break;
         //行動開始
         IsAction = true;
 
@@ -128,6 +128,9 @@ public class LongRangeEnemy : Enemy
      
         //TODO行動終了までの時間経過
         yield return new WaitForSeconds(1);
+        
+        if(CurrentState == State.DEAD)yield break;
+
          _anim.CrossFade("Idle",0);
         //行動終了
         IsAction = false;
