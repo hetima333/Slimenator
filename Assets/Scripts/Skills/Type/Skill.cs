@@ -31,6 +31,15 @@ public abstract class Skill : ScriptableObject
     private string
         _Description;
 
+    [SerializeField]
+    private GameObject
+      _ChannelingParticle,
+      _CastingParticle;
+
+    private GameObject
+        _ChannelingParticleCopy,
+        _CastingParticleCopy;
+
     protected SkillTier
         _SkillTier;
 
@@ -53,6 +62,37 @@ public abstract class Skill : ScriptableObject
         else
             _Timer -= Time.deltaTime;
 
+        if (IsTimeOver())
+        {
+            if (_ChannelingParticleCopy != null)
+            {
+                DestroyImmediate(_ChannelingParticleCopy);
+                _ChannelingParticleCopy = null;
+            }
+        }
+        else
+        {
+            if (_ChannelingParticle != null && _ChannelingParticleCopy == null)
+            {
+                _ChannelingParticleCopy = Instantiate(_ChannelingParticle, Vector3.zero, caster.transform.rotation);
+            }
+        }
+
+        if(!IsSkillOver())
+        {
+            if (_CastingParticleCopy != null)
+            {
+                DestroyImmediate(_CastingParticleCopy);
+                _CastingParticleCopy = null;
+            }
+        }
+        else
+        {
+            if (_CastingParticle != null && _CastingParticleCopy == null)
+            {
+                _CastingParticleCopy = Instantiate(_CastingParticle, caster.transform.position, caster.transform.rotation);
+            }
+        }
     }
 
     public ElementType[] GetCombinationElements()

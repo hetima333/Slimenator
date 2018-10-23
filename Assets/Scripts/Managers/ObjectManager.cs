@@ -51,7 +51,7 @@ public class ObjectManager : SingletonMonoBehaviour<ObjectManager> {
 		}
 		else{
 			// 使用済みオブジェクトがない場合は新規に作成する
-			go = Instantiate(obj);
+			go = Instantiate(obj, position, rotation);
 			// 作成したオブジェクトをリストに追加する
 			_pooledObjects[key].Add(go);
 		}
