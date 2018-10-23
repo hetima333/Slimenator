@@ -199,7 +199,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _go_target: {fileID: 1257719337}
-  _offSet: 35
+  _offSet: 40
 --- !u!1001 &351387671
 Prefab:
   m_ObjectHideFlags: 0
@@ -288,11 +288,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4776465431612086, guid: e2590cd87e30f1645b73d48097d7c574, type: 2}
       propertyPath: m_LocalScale.x
-      value: 100
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 4776465431612086, guid: e2590cd87e30f1645b73d48097d7c574, type: 2}
       propertyPath: m_LocalScale.z
-      value: 100
+      value: 1000
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e2590cd87e30f1645b73d48097d7c574, type: 2}
@@ -397,12 +397,12 @@ Prefab:
     - target: {fileID: 114016712845709412, guid: 05418d951fdb48e498028fd64f0b8898,
         type: 2}
       propertyPath: _enemys.Array.data[0]._minGenerate
-      value: 3
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 114016712845709412, guid: 05418d951fdb48e498028fd64f0b8898,
         type: 2}
       propertyPath: _enemys.Array.data[0]._maxGenerate
-      value: 5
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 114129762375989926, guid: 05418d951fdb48e498028fd64f0b8898,
         type: 2}
@@ -428,7 +428,7 @@ Prefab:
     - target: {fileID: 114129762375989926, guid: 05418d951fdb48e498028fd64f0b8898,
         type: 2}
       propertyPath: _mapSize
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 114129762375989926, guid: 05418d951fdb48e498028fd64f0b8898,
         type: 2}
@@ -436,6 +436,11 @@ Prefab:
       value: 
       objectReference: {fileID: 1097908476900526, guid: e2590cd87e30f1645b73d48097d7c574,
         type: 2}
+    - target: {fileID: 114129762375989926, guid: 05418d951fdb48e498028fd64f0b8898,
+        type: 2}
+      propertyPath: _maxRoomNum
+      value: 12
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 05418d951fdb48e498028fd64f0b8898, type: 2}
   m_IsPrefabParent: 0
