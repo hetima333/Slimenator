@@ -41,39 +41,38 @@ public class HUDManager : MonoBehaviour {
 				// 表示テキストの更新(3桁ごとにカンマ)
 				_moneyText.text = x.ToString("N0");
 			});
+	}
 
-		// オーブ内容が変化したら表示に反映する
-		this.ObserveEveryValueChanged(x => _player.GetOrbsInSlot())
-			.DistinctUntilChanged()
-			.Select(x => x.ToArray())
-			.Subscribe(x => {
-				// オーブのデータを更新する
-				for (int i = 0; i < _orbSlots.Length; i++) {
+	void Update() {
 
-					var orb = Orbs.NONE;
-					// キューが大きすぎたら処理を中断
-					if (i >= x.Length) {
-						// スロットにデータを代入
-						_orbSlots[i].Orb = orb;
-						// 次以降のスロット全ても同じ
-						continue;
-					}
+		var slot = _player.GetOrbsInSlot().ToArray();
+		// オーブのデータを更新する
+		for (int i = 0; i < _orbSlots.Length; i++) {
 
-					// 属性ごとの分岐
-					switch (x[i].name) {
-						case "Fire":
-							orb = Orbs.FIRE;
-							break;
-						case "Ice":
-							orb = Orbs.WATER;
-							break;
-						case "Lightning":
-							orb = Orbs.THUNDER;
-							break;
-					}
-					// スロットにデータを代入
-					_orbSlots[i].Orb = orb;
-				}
-			});
+			var orb = Orbs.NONE;
+			// キューが大きすぎたら処理を中断
+			if (i >= slot.Length) {
+				// スロットにデータを代入
+				_orbSlots[i].Orb = orb;
+				// 次以降のスロット全ても同じ
+				continue;
+			}
+
+			// 属性ごとの分岐
+			switch (slot[i].name) {
+				case "Fire":
+					orb = Orbs.FIRE;
+					break;
+				case "Ice":
+					orb = Orbs.WATER;
+					break;
+				case "Lightning":
+					orb = Orbs.THUNDER;
+					break;
+			}
+			// スロットにデータを代入
+			_orbSlots[i].Orb = orb;
+		}
+
 	}
 }

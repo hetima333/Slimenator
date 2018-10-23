@@ -6,10 +6,10 @@ using UnityEngine.UI;
 public class OrbSlot : MonoBehaviour {
 
 	private Orbs _orb = Orbs.NONE;
-	public Orbs Orb{
+	public Orbs Orb {
 		get { return _orb; }
-		set	{
-			if(_orb == value){
+		set {
+			if (_orb == value) {
 				return;
 			}
 			_orb = value;
@@ -21,32 +21,35 @@ public class OrbSlot : MonoBehaviour {
 	private Image _image;
 
 	// Use this for initialization
-	void Start () {
+	void Start() {
 		_image = GetComponent<Image>();
+
+		ChangeOrbImage(Orbs.NONE);
 	}
 
-	private void ChangeOrbImage(Orbs orb){
+	private void ChangeOrbImage(Orbs orb) {
 		Sprite sprite = null;
-		switch(orb){
+		switch (orb) {
 			case Orbs.FIRE:
-				sprite = OrbDefine.Instance.fireSprite;
+				// sprite = OrbDefine.Instance.fireSprite;
+				sprite = Resources.Load("Managers/fire", typeof(Sprite)) as Sprite;
 				break;
 			case Orbs.WATER:
-				sprite = OrbDefine.Instance.waterSprite;
+				// sprite = OrbDefine.Instance.waterSprite;
+				sprite = Resources.Load("Managers/water", typeof(Sprite)) as Sprite;
 				break;
 			case Orbs.THUNDER:
-				sprite = OrbDefine.Instance.thunderSprite;
+				// sprite = OrbDefine.Instance.thunderSprite;
+				sprite = Resources.Load("Managers/thunder", typeof(Sprite)) as Sprite;
 				break;
 		}
 
-		// スプライトを設定
-		_image.sprite = sprite;
-
 		// スプライトが設定されなければ透明にする
-		if(sprite == null){
+		if (sprite == null) {
 			_image.color = _image.color * new Color(1, 1, 1, 0);
-		}
-		else{
+		} else {
+			// スプライトを設定
+			_image.sprite = sprite;
 			_image.color = Color.white;
 		}
 
