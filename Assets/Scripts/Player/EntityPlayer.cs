@@ -98,7 +98,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable
 
     private void CastingCheckFunction()
     {
-        _CurrentUseSkill.Engage(_CastingPoint, gameObject.transform.forward.normalized);
+        _CurrentUseSkill.Engage(gameObject, _CastingPoint.transform.position, gameObject.transform.forward.normalized);
 
         if(_CurrentUseSkill.IsSkillOver() && _CurrentUseSkill.IsTimeOver())
         {
@@ -220,7 +220,6 @@ public class EntityPlayer : MonoBehaviour, IDamageable
 
             default:
                 {
-
                     if (_CurrentSkillOutcome != null)
                     {
                         DestroyImmediate(_CurrentSkillOutcome);

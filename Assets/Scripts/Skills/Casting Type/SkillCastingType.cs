@@ -4,5 +4,5 @@ using UnityEngine;
 
 public abstract class SkillCastingType : ScriptableObject
 {
-    public abstract List<GameObject> GetTargets(ref GameObject caster, ref SkillTier tier, ref List<GameObject> targets);
+    public abstract List<GameObject> GetTargets(ref Vector3 caster_position, ref SkillTier tier, ref List<GameObject> targets, ref GameObject caster);
 }

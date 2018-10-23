@@ -26,5 +26,7 @@ MonoBehaviour:
   _CastLength: 0
   _Damage: 10
   _Description: Shoots a fire ball
-  _Projectile: {fileID: 1005836929663442, guid: ac48cf082fcd82843a04c8748fdaa940,
+  _ChannelingParticle: {fileID: 0}
+  _CastingParticle: {fileID: 0}
+  _Projectile: {fileID: 1762178163839322, guid: ac48cf082fcd82843a04c8748fdaa940,
     type: 2}

@@ -27,5 +27,6 @@ MonoBehaviour:
   _Damage: 1000
   _Description: Breathes out a cone of frost
   _ChannelingParticle: {fileID: 0}
-  _CastingParticle: {fileID: 0}
+  _CastingParticle: {fileID: 1842664229368296, guid: e77da83b1249e6e4fb1132c45464e885,
+    type: 2}
   _CastingType: {fileID: 11400000, guid: 7777f7888ac2cc243ad6e788a1715d00, type: 2}
