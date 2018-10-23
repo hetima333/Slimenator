@@ -10,10 +10,10 @@ public class LongRangeEnemy : Enemy
 {
     //TODO Enemy Performance
     const float MAX_HP = 100.0f;
-    const float MOVE_SPEED = 1.0f;
-    const float SEARCH_RANGE = 6.0f;
-    const float ATTACK_RANGE = 4.5f;
-    const float MOVE_RANGE = 2.0f;
+    const float MOVE_SPEED = 2.5f;
+    const float SEARCH_RANGE = 10.0f;
+    const float ATTACK_RANGE = 6.0f;
+    const float MOVE_RANGE = 4.0f;
     const float MONEY = 50.0f;
 
     //移動スクリプト

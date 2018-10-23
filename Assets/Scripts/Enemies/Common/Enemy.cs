@@ -115,6 +115,7 @@ public class Enemy : MonoBehaviour, IDamageable
     {
 
         Debug.Log("Dead");
+        _anim.CrossFade("Dead",0);
 
         yield return new WaitForSeconds(2);
 
