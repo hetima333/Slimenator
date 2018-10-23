@@ -48,11 +48,17 @@ public class HUDManager : MonoBehaviour {
 			.Select(x => x.ToArray())
 			.Subscribe(x => {
 				// オーブのデータを更新する
-				for (int i = 0; i < x.Length; i++) {
-					// キューが大きすぎたら処理を中断
-					if (i >= 3) return;
+				for (int i = 0; i < _orbSlots.Length; i++) {
 
 					var orb = Orbs.NONE;
+					// キューが大きすぎたら処理を中断
+					if (i >= x.Length) {
+						// スロットにデータを代入
+						_orbSlots[i].Orb = orb;
+						// 次以降のスロット全ても同じ
+						continue;
+					}
+
 					// 属性ごとの分岐
 					switch (x[i].name) {
 						case "Fire":
