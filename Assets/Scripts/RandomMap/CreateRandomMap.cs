@@ -150,7 +150,7 @@ public class CreateRandomMap : MonoBehaviour {
         while (_map[position._x, position._z] != 1);
 
         //プレイヤーの位置設定
-        _player.transform.position = new Vector3(position._x, 0, position._z);
+        _player.transform.position = new Vector3(position._x * _mapSize, 0, position._z * _mapSize);
     }
 
 }
