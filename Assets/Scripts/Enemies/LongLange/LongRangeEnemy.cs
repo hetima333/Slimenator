@@ -79,7 +79,6 @@ public class LongRangeEnemy : Enemy
                 //攻撃開始
                 StartCoroutine(Attack());
                 break;
-
             default:
                 break;
 

@@ -128,10 +128,13 @@ public class Enemy : MonoBehaviour, IDamageable
     {
         if (col.gameObject.tag == "Player")
         {
+             if(CurrentState != State.DEAD)
+            {
             //Targetの設定
             _target = col.gameObject;
             //発見状態になる
             CurrentState = State.DISCOVERY;
+            }
         }
     }
 
@@ -140,10 +143,14 @@ public class Enemy : MonoBehaviour, IDamageable
     {
         if (col.gameObject.tag == "Player")
         {
+            if(CurrentState != State.DEAD)
+            {
             //Targetの設定
             _target = null;
             //通常状態になる
             CurrentState = State.FREE;
+            }
+            
         }
     }
 
