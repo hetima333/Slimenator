@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 座標
+/// </summary>
 public class Position {
 
     public int _x { get; set; }

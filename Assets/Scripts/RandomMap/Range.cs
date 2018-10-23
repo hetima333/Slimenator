@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 範囲
+/// </summary>
 public class Range {
 
     //最初
@@ -9,10 +12,13 @@ public class Range {
     //最後
     public Position _end { get; set; }
 
+    //幅を取得
     public int GetWidthX()
     {
         return _end._x - _start._x + 1;
     }
+
+    //奥行きを取得
     public int GetWidthZ()
     {
         return _end._z - _start._z + 1;
