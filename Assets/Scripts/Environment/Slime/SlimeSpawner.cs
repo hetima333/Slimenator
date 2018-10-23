@@ -46,7 +46,7 @@ public class SlimeSpawner : MonoBehaviour {
         if (_spawnTimer > _spawnRate)
         {
             int random = Random.Range(0, EnumHolder.Instance._elements.Count);
-            GetSlimeFromPool(random);
+            GetSlimeFromPool(random, gameObject.transform.position);
             _spawnTimer = 0;
         }
     }
