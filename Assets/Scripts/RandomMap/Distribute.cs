@@ -12,26 +12,6 @@ public class Distribute : MonoBehaviour {
     [SerializeField]
     private AddObject[] _enemys;
 
-    ////スライムオブジェクト
-    //[SerializeField]
-    //private GameObject[] _slimes;
-    //青のスライムオブジェクト
-    //[SerializeField]
-    //private GameObject _blueSlime;
-    ////黄のスライムオブジェクト
-    //[SerializeField]
-    //private GameObject _yellowSlime;
-
-    ////配置する赤のスライムの数
-    //[SerializeField]
-    //private int _redSlimeNum;
-    ////配置する青のスライムの数
-    //[SerializeField]
-    //private int _blueSlimeNum;
-    ////配置する黄のスライムの数
-    //[SerializeField]
-    //private int _yellowSlimeNum;
-
     //マップ
     private int[,] _map;
     //幅
@@ -64,13 +44,6 @@ public class Distribute : MonoBehaviour {
             //最小値から最大値までのランダムの数の敵を配置する
             CreateObject(_enemys[i]._object, RogueUtils.GetRandomInt(_enemys[i]._minGenerate, _enemys[i]._maxGenerate));
         }
-
-        ////赤のスライムを配置する
-        //CreateSlime(_redSlime, _redSlimeNum);
-        ////青のスライムを配置する
-        //CreateSlime(_blueSlime, _blueSlimeNum);
-        ////黄のスライムを配置する
-        //CreateSlime(_yellowSlime, _yellowSlimeNum);
 
     }
 	
@@ -148,10 +121,8 @@ public class Distribute : MonoBehaviour {
             while (_map[position._x, position._z] != 1);
 
             //オブジェクトを生成する
-            Instantiate(type, new Vector3(position._x * _mapSize, 1, position._z * _mapSize), new Quaternion());
-            //GameObject slimes = Instantiate(slime, new Vector3(position._x, 0, position._z), new Quaternion());
-            //slimes.transform.position = new Vector3(position._x, 0, position._z);
-            //slimes.transform.SetParent(transform);
+            ObjectManager.Instance.InstantiateWithObjectPooling(type, new Vector3(position._x * _mapSize, 1, position._z * _mapSize), new Quaternion());
+         
         }
 
     }
