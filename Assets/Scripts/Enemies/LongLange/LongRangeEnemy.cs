@@ -18,12 +18,10 @@ public class LongRangeEnemy : Enemy
 
     //移動スクリプト
     EnemyMove _move;
-
     [SerializeField]
     float _outputDamage = 25;
- 
-    private GameObject _bullet;
 
+    private GameObject _bullet;
 
     // Use this for initialization
     void Start()
@@ -57,20 +55,24 @@ public class LongRangeEnemy : Enemy
             case State.IDLE:
                 //待機
                 StartCoroutine(_move.Idle());
+                _anim.CrossFade("Idle",0);
                 break;
 
             case State.FREE:
                 //自由移動
                 _move.FreeMove();
+                _anim.CrossFade("Move",0);
                 break;
             case State.DISCOVERY:
                 //プレイヤー追従
                 _move.Move2Player();
+                _anim.CrossFade("Move",0);
                 break;
 
             case State.RETURN:
                 //初期位置に帰る
                 _move.Return2FirstPos();
+                _anim.CrossFade("Move",0);
                 break;
 
             case State.ATTACK:   
@@ -107,6 +109,10 @@ public class LongRangeEnemy : Enemy
         }
         //TODO　攻撃
         Debug.Log("LongRangeAttack");
+        _anim.CrossFade("Attack",0);
+
+        //TODO行動終了までの時間経過
+        yield return new WaitForSeconds(0.2f);
 
         if(_bullet)
         {
@@ -120,10 +126,9 @@ public class LongRangeEnemy : Enemy
             bullet.GetComponent<Rigidbody>().velocity = gameObject.transform.forward * 10;
         }
      
-
         //TODO行動終了までの時間経過
         yield return new WaitForSeconds(1);
-
+         _anim.CrossFade("Idle",0);
         //行動終了
         IsAction = false;
 

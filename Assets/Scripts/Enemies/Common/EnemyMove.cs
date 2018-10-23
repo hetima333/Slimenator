@@ -69,6 +69,11 @@ public class EnemyMove : MonoBehaviour {
             _enemy.CurrentState = Enemy.State.IDLE;
         }
 
+        //モデルの中心軸ずれによる傾きの防止
+        var rot = gameObject.transform.rotation;
+        rot.x = 0;
+        gameObject.transform.rotation = rot;
+
     }
 
     //プレイヤーに向かっての移動
@@ -97,7 +102,10 @@ public class EnemyMove : MonoBehaviour {
             //攻撃状態に移行
             _enemy.CurrentState = Enemy.State.ATTACK;
         }
-
+        //モデルの中心軸ずれによる傾きの防止
+        var rot = gameObject.transform.rotation;
+        rot.x = 0;
+        gameObject.transform.rotation = rot;
     }
 
 
@@ -126,6 +134,10 @@ public class EnemyMove : MonoBehaviour {
             //攻撃状態に移行
             _enemy.CurrentState = Enemy.State.ATTACK;
         }
+        //モデルの中心軸ずれによる傾きの防止
+        var rot = gameObject.transform.rotation;
+        rot.x = 0;
+        gameObject.transform.rotation = rot;
 
     }
 
@@ -137,12 +149,16 @@ public class EnemyMove : MonoBehaviour {
         _enemy.RigidbodyProperties.velocity = Vector3.zero;
         //現在座標を取得
         Vector3 pos = gameObject.transform.position;
+        //対象の座標取得
+        Vector3 startPos = _enemy._staetPosition;
+        //高さ合わせ
+        startPos.y = gameObject.transform.position.y;
 
         //現在座標と目的座標の差が0.1f以上
         if (Vector3.Distance(pos, _enemy._staetPosition) >= 0.5f)
         {
             //向かう場所の方向を見る
-            gameObject.transform.LookAt(_enemy._staetPosition);
+            gameObject.transform.LookAt(startPos);
             //移動
             _enemy.RigidbodyProperties.velocity = transform.forward * _enemy.Speed;
         }
@@ -150,6 +166,10 @@ public class EnemyMove : MonoBehaviour {
         {          
             _enemy.CurrentState = Enemy.State.IDLE;
         }
+        //モデルの中心軸ずれによる傾きの防止
+        var rot = gameObject.transform.rotation;
+        rot.x = 0;
+        gameObject.transform.rotation = rot;
     }
 
 

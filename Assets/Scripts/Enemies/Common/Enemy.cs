@@ -60,6 +60,8 @@ public class Enemy : MonoBehaviour, IDamageable
     //狙う対象
     public GameObject _target;
 
+    public SimpleAnimation _anim;
+
     //インタフェース用最大Hp取得
     public float MaxHitPoint{get{return _maxHp;}}
     //インタフェース用現在Hp取得
@@ -86,6 +88,8 @@ public class Enemy : MonoBehaviour, IDamageable
         _money = money;
         //初期位置の記憶
         _staetPosition = gameObject.transform.position;
+
+        _anim = GetComponent<SimpleAnimation>();
     }
 
 
