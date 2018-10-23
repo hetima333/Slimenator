@@ -16,6 +16,18 @@ public class RigidbodyVelocity {
 	}
 }
 
+/// <summary>
+/// Animatorの速度とハッシュを保存しておくクラス
+/// </summary>
+public class AnimatorSaver {
+	public int hash;
+	public float startTime;
+	public AnimatorSaver(AnimatorStateInfo info) {
+		hash = info.fullPathHash;
+		startTime = info.normalizedTime;
+	}
+}
+
 public class Pausable : SingletonMonoBehaviour<Pausable> {
 
 	/// <summary>
@@ -40,6 +52,16 @@ public class Pausable : SingletonMonoBehaviour<Pausable> {
 	private Rigidbody[] _pausingRigidbodies;
 
 	/// <summary>
+	/// ポーズ前の再生位置とハッシュ値の配列
+	/// </summary>
+	private AnimatorSaver[] _animSavers;
+
+	/// <summary>
+	/// ポーズ中のアニメーターの配列
+	/// </summary>
+	private Animator[] _pausingAnimators;
+
+	/// <summary>
 	/// ポーズ中のMonoBehaviourの配列
 	/// </summary>
 	private MonoBehaviour[] _pausingMonoBehaviours;
@@ -58,6 +80,15 @@ public class Pausable : SingletonMonoBehaviour<Pausable> {
 	/// <value></value>
 	[SerializeField]
 	private bool _pauseChildren;
+	public bool PauseChildren {
+		get { return _pauseChildren; }
+		set {
+			if (_prevPausing) {
+				Debug.Assert(false, "An attempt was made to change the temporary stop target while pausing");
+			}
+			_pauseChildren = value;
+		}
+	}
 
 	/// <summary>
 	/// 更新処理
@@ -99,12 +130,33 @@ public class Pausable : SingletonMonoBehaviour<Pausable> {
 				Array.FindIndex(rbs, gameObject => gameObject == obj.gameObject) < 0;
 			_pausingRigidbodies = Array.FindAll(FindObjectsOfType<Rigidbody>(), rigidbodyPredicate);
 		}
-		// 速度配列の確保
+		// 配列の確保
 		_rigidbodyVelocities = new RigidbodyVelocity[_pausingRigidbodies.Length];
 		for (int i = 0; i < _pausingRigidbodies.Length; i++) {
-			// 速度、角速度も保存しておく
+			// 速度、角速度を保存しておく
 			_rigidbodyVelocities[i] = new RigidbodyVelocity(_pausingRigidbodies[i]);
 			_pausingRigidbodies[i].Sleep();
+		}
+
+		// Animatorの停止
+		Predicate<Animator> animPredicate = null;
+
+		if (_pauseChildren) {
+			animPredicate = obj => Array.FindIndex(_ignoreGameObjects, gameObject => gameObject == obj.gameObject) < 0;
+			_pausingAnimators = Array.FindAll(transform.GetComponentsInChildren<Animator>(), animPredicate);
+		} else {
+			// 子と無視リストの重複なし配列の作成
+			GameObject[] anims = transform.GetComponentsInChildren<Animator>().Select(x => x.gameObject).ToArray().Union(_ignoreGameObjects).ToArray();
+			// スリープ中でなく、IgnoreGameObjectsに含まれておらず、子でもないRigidbodyを抽出
+			animPredicate = obj => Array.FindIndex(anims, gameObject => gameObject == obj.gameObject) < 0;
+			_pausingAnimators = Array.FindAll(FindObjectsOfType<Animator>(), animPredicate);
+		}
+		// 配列の確保
+		_animSavers = new AnimatorSaver[_pausingAnimators.Length];
+		for (int i = 0; i < _pausingAnimators.Length; i++) {
+			_animSavers[i] = new AnimatorSaver(_pausingAnimators[i].GetCurrentAnimatorStateInfo(0));
+			// アニメーターの停止
+			_pausingAnimators[i].enabled = false;
 		}
 
 		// MonoBehaviourの停止
@@ -116,14 +168,12 @@ public class Pausable : SingletonMonoBehaviour<Pausable> {
 			monoBehaviourPredicate = obj => obj.enabled &&
 				obj != this &&
 				Array.FindIndex(_ignoreGameObjects, gameObject => gameObject == obj.gameObject) < 0;
-
 			_pausingMonoBehaviours = Array.FindAll(transform.GetComponentsInChildren<MonoBehaviour>().Where(obj => obj.gameObject != this.gameObject).ToArray(), monoBehaviourPredicate);
 		}
 		// 子以外を停止する
 		else {
 			// 子と無視リストの重複なし配列の作成
 			GameObject[] monos = transform.GetComponentsInChildren<MonoBehaviour>().Select(x => x.gameObject).ToArray().Union(_ignoreGameObjects).ToArray();
-
 			// 子要素から、有効かつこのインスタンスでないもの、IgnoreGameObjectsに含まれていないMonoBehaviourを抽出
 			monoBehaviourPredicate = obj => obj.enabled &&
 				obj != this &&
@@ -147,6 +197,12 @@ public class Pausable : SingletonMonoBehaviour<Pausable> {
 			_pausingRigidbodies[i].WakeUp();
 			_pausingRigidbodies[i].velocity = _rigidbodyVelocities[i].velocity;
 			_pausingRigidbodies[i].angularVelocity = _rigidbodyVelocities[i].angularVeloccity;
+		}
+
+		// Animatorの再開
+		for (int i = 0; i < _pausingAnimators.Length; i++) {
+			_pausingAnimators[i].enabled = true;
+			_pausingAnimators[i].Play(_animSavers[i].hash, 0, _animSavers[i].startTime);
 		}
 
 		// MonoBehaviourの再開
