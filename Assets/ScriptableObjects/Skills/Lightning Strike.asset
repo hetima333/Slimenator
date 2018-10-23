@@ -22,7 +22,11 @@ MonoBehaviour:
   - {fileID: 1748272800313294, guid: 1fbfca09e354bb749aa17ca1d24d4ff7, type: 2}
   - {fileID: 1296264576233312, guid: fe9d545d9c3a5604bb530dfbc5980c1d, type: 2}
   - {fileID: 1586557958679214, guid: 8b74d6c1296f0ec449ef16ad6e601400, type: 2}
-  _CastTime: 5
+  _CastTime: 9
+  _CastLength: 0
   _Damage: 100
   _Description: Strikes lightning down on your position
+  _ChannelingParticle: {fileID: 1242461848233782, guid: 664f1451b9732a9499089f0494689818,
+    type: 2}
+  _CastingParticle: {fileID: 0}
   _CastingType: {fileID: 11400000, guid: 2e7805e5357b0af4699fb6b8109c705f, type: 2}

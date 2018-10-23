@@ -44,6 +44,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable
 
 	public float MaxHitPoint {get { return _Player_Stats.HealthProperties; } }
 	public float HitPoint {get { return _HP; } }
+    public float MoneyAmount { get { return _Money; } }
     [SerializeField]
     private GameObject
         _CastingPoint;
@@ -97,9 +98,9 @@ public class EntityPlayer : MonoBehaviour, IDamageable
 
     private void CastingCheckFunction()
     {
-        _CurrentUseSkill.Engage(_CastingPoint, gameObject.transform.forward);
+        _CurrentUseSkill.Engage(_CastingPoint, gameObject.transform.forward.normalized);
 
-        if(_CurrentUseSkill.IsSkillOver())
+        if(_CurrentUseSkill.IsSkillOver() && _CurrentUseSkill.IsTimeOver())
         {
             _Player_State = EnumHolder.States.IDLE;
             DestroyImmediate(_CurrentUseSkill);
@@ -374,6 +375,26 @@ public class EntityPlayer : MonoBehaviour, IDamageable
     public void TakeDamage(float Damage)
     {
         _HP -= Damage;
+    }
+
+    public Queue<ElementType> GetOrbsInSlot()
+    {
+        return _OrbSlot;
+    }
+
+    public List<Skill> GetSkillsInSlot()
+    {
+        return _Skills;
+    }
+
+    public int CurrentSelectedSkill()
+    {
+        return _CurrentSelection;
+    }
+
+    public Skill CurrentSkillOutcome()
+    {
+        return _CurrentSkillOutcome;
     }
 
     delegate void CheckFunctions();
