@@ -32,7 +32,7 @@ public class CreateRandomMap : MonoBehaviour {
 
     //マップサイズ
     [SerializeField]
-    private int _mapSize = 1;
+    public int _mapSize = 1;
 
     //プレイヤーの初期位置指定
     [SerializeField]

@@ -34,15 +34,18 @@ public class Distribute : MonoBehaviour {
     private int _width;
     //奥行き
     private int _depth;
+    //マップサイズ
+    private int _mapSize;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 
         //作られたマップの情報取得
         CreateRandomMap map = GetComponent<CreateRandomMap>();
         _map = map._map;
         _width = map._width;
         _depth = map._depth;
+        _mapSize = map._mapSize;
 
         //スライム種類の数
         for (int i = 0; i < _slimes.Length; i++)
@@ -95,7 +98,7 @@ public class Distribute : MonoBehaviour {
             while (_map[position._x, position._z] != 1);
 
             //スライムを生成する
-            Instantiate(slime, new Vector3(position._x, 0, position._z), new Quaternion());
+            Instantiate(slime, new Vector3(position._x * _mapSize, 0, position._z * _mapSize), new Quaternion());
             //GameObject slimes = Instantiate(slime, new Vector3(position._x, 0, position._z), new Quaternion());
             //slimes.transform.position = new Vector3(position._x, 0, position._z);
             //slimes.transform.SetParent(transform);
