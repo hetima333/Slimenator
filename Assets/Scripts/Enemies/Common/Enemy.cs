@@ -1,22 +1,21 @@
 ﻿/// 敵の基本クラス
 /// Base class of enemies
 /// Athor：　Yuhei Mastumura
-/// Last edit date：2018/10/17
+/// Last edit date：2018/10/24
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 //必須コンポーネントの指定
-[RequireComponent(typeof(Rigidbody))]
-[RequireComponent(typeof(SphereCollider))]
-[RequireComponent(typeof(EnemyMove))]
+[RequireComponent (typeof (Rigidbody))]
+[RequireComponent (typeof (SphereCollider))]
+[RequireComponent (typeof (EnemyMove))]
+[RequireComponent (typeof (SimpleAnimation))]
 
-
-public class Enemy : MonoBehaviour, IDamageable
-{
+public class Enemy : MonoBehaviour, IDamageable {
 
     //状態一覧(待機、自由移動、発見、戻り、攻撃、死亡)
-    public enum State { IDLE,FREE, DISCOVERY, RETURN, ATTACK, DEAD }
+    public enum State { IDLE, FREE, DISCOVERY, RETURN, ATTACK, DEAD }
     //今の状態
     [SerializeField]
     private State _currentState;
@@ -59,19 +58,16 @@ public class Enemy : MonoBehaviour, IDamageable
     public SphereCollider SphereColliderProperties { get { return _sphereCol; } set { _sphereCol = value; } }
     //狙う対象
     public GameObject _target;
-
+    //シンプルアニメーション
     public SimpleAnimation _anim;
 
     //インタフェース用最大Hp取得
-    public float MaxHitPoint{get{return _maxHp;}}
+    public float MaxHitPoint { get { return _maxHp; } }
     //インタフェース用現在Hp取得
-    public float HitPoint{get{return _hp;}}
-
-
+    public float HitPoint { get { return _hp; } }
 
     //ステータスのセット関数
-    public void SetStatus(float maxHp,float speed,float searchRange,float attackRange,float moveRange,float money)
-    {
+    public void SetStatus (float maxHp, float speed, float searchRange, float attackRange, float moveRange, float money) {
         //初期はアイドル
         _currentState = State.IDLE;
         //最大体力
@@ -91,77 +87,61 @@ public class Enemy : MonoBehaviour, IDamageable
         //初期位置の記憶
         _staetPosition = gameObject.transform.position;
         //animationSystem Set
-        _anim = GetComponent<SimpleAnimation>();
+        _anim = GetComponent<SimpleAnimation> ();
     }
 
-
     //ダメージを受ける
-    public void TakeDamage(float damage)
-    {
+    public void TakeDamage (float damage) {
         if (_currentState == State.DEAD) return;
         _hp -= damage;
 
-        if (_hp <= 0)
-        {
+        if (_hp <= 0) {
             _currentState = State.DEAD;
-            StartCoroutine(Dying());
+            StartCoroutine (Dying ());
         }
 
     }
 
-
     //死亡コルーチン
-    private IEnumerator Dying()
-    {
-
-        Debug.Log("Dead");
-        _anim.CrossFade("Dead",0);
-
-        yield return new WaitForSeconds(2);
-
-        ObjectManager.Instance.ReleaseObject(gameObject);
+    private IEnumerator Dying () {
+        //Dead Animation
+        _anim.CrossFade ("Dead", 0);
+        //Wait Animation End 
+        yield return new WaitForSeconds (2);
+        //Object Release
+        ObjectManager.Instance.ReleaseObject (gameObject);
 
     }
 
-
-    void OnTriggerEnter(Collider col)
-    {
-        if (col.gameObject.tag == "Player")
-        {
-             if(CurrentState != State.DEAD)
-            {
-            //Targetの設定
-            _target = col.gameObject;
-            //発見状態になる
-            CurrentState = State.DISCOVERY;
+    void OnTriggerEnter (Collider col) {
+        if (col.gameObject.tag == "Player") {
+            if (CurrentState != State.DEAD) {
+                //Set Target
+                _target = col.gameObject;
+                //Change State
+                CurrentState = State.DISCOVERY;
             }
         }
     }
 
     //戦闘範囲離脱時の処理
-    void OnTriggerExit(Collider col)
-    {
-        if (col.gameObject.tag == "Player")
-        {
-            if(CurrentState != State.DEAD)
-            {
-            //Targetの設定
-            _target = null;
-            //通常状態になる
-            CurrentState = State.FREE;
+    void OnTriggerExit (Collider col) {
+        if (col.gameObject.tag == "Player") {
+            if (CurrentState != State.DEAD) {
+                //Set Target
+                _target = null;
+                //Change State
+                CurrentState = State.FREE;
             }
-            
+
         }
     }
 
-
     //自分の本体に何かが接触した場合
-    void OnCollisionEnter(Collision col)
-    {
-        if (col.gameObject.tag == "Skill")
-        {
+    void OnCollisionEnter (Collision col) {
+        if (col.gameObject.tag == "Skill") {
             //TODO take damage   
-            TakeDamage(1);
+            TakeDamage (1);
         }
     }
 

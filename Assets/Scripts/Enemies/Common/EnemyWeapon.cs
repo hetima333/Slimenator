@@ -1,26 +1,40 @@
-﻿using System.Collections;
+﻿/// 敵の武器（爪なども含む）の判定スクリプト
+/// Enemy Weapon
+/// Athor：Yuhei Mastumura
+/// Last edit date：2018/10/24
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-[RequireComponent(typeof(BoxCollider))]
+[RequireComponent (typeof (BoxCollider))]
 
 public class EnemyWeapon : MonoBehaviour {
+    [SerializeField]
+    float _damage;
 
-float _damage;
+    public void SetDamage (float damage) {
+        _damage = damage;
+    }
 
-BoxCollider _col;
+    //collision swich
+    public void ActiveCollision (bool isActive) {
+        var collider = GetComponent<BoxCollider> ();
+        if (isActive == true) {
+            collider.enabled = true;
 
-	// Use this for initialization
-	void Start () 
-	{
-		
-	}
+        } else if (isActive == false) {
+            collider.enabled = false;
+        }
+    }
 
+    //自分の本体に何かが接触した場合
+    void OnCollisionEnter (Collision col) {
+        //Make sure the target has components
+        var hasIDamageable = col.gameObject.GetComponent<IDamageable> ();
 
-	public void SetDamage(float damage)
-	{
-_damage = damage;
-
-	}
-	
-
+        //If have a component
+        if (hasIDamageable != null) {
+            //ダメージ判定  
+            col.gameObject.GetComponent<IDamageable> ().TakeDamage (_damage);
+        }
+    }
 }
