@@ -1,19 +1,28 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
+using UniRx;
+using UnityEngine;
 
 public class ObjectManager : SingletonMonoBehaviour<ObjectManager> {
 
-    // プール済みのオブジェクト
-    // key : objのインスタンスID, value : 該当するインスタンスIDのゲームオブジェクト
-    private Dictionary<int, List<GameObject>> _pooledObjects = new Dictionary<int, List<GameObject>>();
+	// プール済みのオブジェクト
+	// key : objのインスタンスID, value : 該当するインスタンスIDのゲームオブジェクト
+	private Dictionary<int, List<GameObject>> _pooledObjects = new Dictionary<int, List<GameObject>>();
+
+	// インスタンス化イベントのサブジェクト
+	private Subject<GameObject> _onInstantiate = new Subject<GameObject>();
+
+	// インスタンス化イベントの購読
+	public IObservable<GameObject> OnInstantiateObservable {
+		get { return _onInstantiate.AsObservable(); }
+	}
 
 	/// <summary>
 	/// 同じ種類のオブジェクトが既にプールされているか
 	/// </summary>
 	/// <returns></returns>
-	private bool CheckPooledObject(GameObject obj){
+	private bool CheckPooledObject(GameObject obj) {
 
 		// プレハブのキーを取得する
 		int key = obj.GetInstanceID();
@@ -21,7 +30,7 @@ public class ObjectManager : SingletonMonoBehaviour<ObjectManager> {
 		bool isPooled = _pooledObjects.ContainsKey(key);
 
 		// キーが存在しない場合は新たにリストを作成する
-		if(isPooled != true){
+		if (isPooled != true) {
 			_pooledObjects.Add(key, new List<GameObject>());
 		}
 		return isPooled;
@@ -31,7 +40,7 @@ public class ObjectManager : SingletonMonoBehaviour<ObjectManager> {
 	/// オブジェクトプーリングを利用してインスタンス化を行なう
 	/// </summary>
 	/// <returns></returns>
-	public GameObject InstantiateWithObjectPooling(GameObject obj, Vector3 position = new Vector3(), Quaternion rotation = new Quaternion()){
+	public GameObject InstantiateWithObjectPooling(GameObject obj, Vector3 position = new Vector3(), Quaternion rotation = new Quaternion()) {
 
 		// 同じ種類のオブジェクトがすでにプールされているかをチェックする
 		CheckPooledObject(obj);
@@ -43,18 +52,20 @@ public class ObjectManager : SingletonMonoBehaviour<ObjectManager> {
 		var target = _pooledObjects[key].FirstOrDefault(x => x.activeInHierarchy != true);
 
 		// 使用済みオブジェクトがあれば再利用する
-		if(target != null){
+		if (target != null) {
 			target.transform.position = position;
 			target.transform.rotation = rotation;
 			target.SetActive(true);
 			go = target;
-		}
-		else{
+		} else {
 			// 使用済みオブジェクトがない場合は新規に作成する
 			go = Instantiate(obj, position, rotation);
 			// 作成したオブジェクトをリストに追加する
 			_pooledObjects[key].Add(go);
 		}
+
+		// インスタンス化イベントの発行
+		_onInstantiate.OnNext(go);
 
 		return go;
 	}
@@ -63,7 +74,7 @@ public class ObjectManager : SingletonMonoBehaviour<ObjectManager> {
 	/// オブジェクトプールにおいて未使用状態にする
 	/// </summary>
 	/// <param name="obj">未使用にするGameObject</param>
-	public void ReleaseObject(GameObject obj){
+	public void ReleaseObject(GameObject obj) {
 		obj.SetActive(false);
 	}
 
@@ -71,8 +82,8 @@ public class ObjectManager : SingletonMonoBehaviour<ObjectManager> {
 	/// アクティブなオブジェクトのリストを返す
 	/// </summary>
 	/// <returns></returns>
-	public List<GameObject> GetActiveObjects(GameObject obj){
-		if(CheckPooledObject(obj) != true){
+	public List<GameObject> GetActiveObjects(GameObject obj) {
+		if (CheckPooledObject(obj) != true) {
 			return null;
 		}
 		return _pooledObjects[obj.GetInstanceID()].Where(x => x.activeInHierarchy == true).ToList();
@@ -82,8 +93,8 @@ public class ObjectManager : SingletonMonoBehaviour<ObjectManager> {
 	/// 非アクティブなオブジェクトのリストを返す
 	/// </summary>
 	/// <returns></returns>
-	public List<GameObject> GetSleepObjects(GameObject obj){
-		if(CheckPooledObject(obj) != true){
+	public List<GameObject> GetSleepObjects(GameObject obj) {
+		if (CheckPooledObject(obj) != true) {
 			return null;
 		}
 		return _pooledObjects[obj.GetInstanceID()].Where(x => x.activeInHierarchy != true).ToList();
