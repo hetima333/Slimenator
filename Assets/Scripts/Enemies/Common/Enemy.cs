@@ -90,7 +90,7 @@ public class Enemy : MonoBehaviour, IDamageable
         _money = money;
         //初期位置の記憶
         _staetPosition = gameObject.transform.position;
-
+        //animationSystem Set
         _anim = GetComponent<SimpleAnimation>();
     }
 

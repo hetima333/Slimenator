@@ -24,6 +24,8 @@ public class TankEnemy : Enemy
 
     private GameObject _shockWave;
 
+    private GameObject _weapon;
+
     [SerializeField]
     private float[] _comboDamage = {20,20,20,15};
 
@@ -112,6 +114,9 @@ public class TankEnemy : Enemy
         //TODO 攻撃
         Debug.Log("Combo"+(_comboCount+1));
 
+        //_anim.CrossFade("Attack"+(_comboCount+1).ToString(),0);
+        _weapon.GetComponent<BoxCollider>().enabled = true;
+
         if (_comboCount == 2)
         {
             if (_shockWave)
@@ -137,6 +142,7 @@ public class TankEnemy : Enemy
 
         //行動終了
         IsAction = false;
+        _weapon.GetComponent<BoxCollider>().enabled = false;
 
     }
 
