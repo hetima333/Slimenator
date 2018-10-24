@@ -64,10 +64,10 @@ public class HUDManager : MonoBehaviour {
 					orb = Orbs.FIRE;
 					break;
 				case "Ice":
-					orb = Orbs.WATER;
+					orb = Orbs.ICE;
 					break;
 				case "Lightning":
-					orb = Orbs.THUNDER;
+					orb = Orbs.LIGHTNING;
 					break;
 			}
 			// スロットにデータを代入
