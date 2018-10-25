@@ -70,6 +70,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4125678664684204}
+  - component: {fileID: 114133286258957142}
   m_Layer: 0
   m_Name: ParticleCombo
   m_TagString: Untagged
@@ -380,6 +381,17 @@ Transform:
   m_Father: {fileID: 4125678664684204}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114133286258957142
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1224654138171122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf4c19401c6b33e40a1ef7cc49d49490, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!198 &198001011660346582
 ParticleSystem:
   m_ObjectHideFlags: 1
