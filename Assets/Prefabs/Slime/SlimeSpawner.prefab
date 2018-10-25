@@ -51,7 +51,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b24c137d3fb380458c991f35b4bd17d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _spawner: {fileID: 1711871630936228}
   _prefab: {fileID: 1437516636120426, guid: 8c639dfa589184546938f1eaa7bdaa6f, type: 2}
   _spawnTimer: 0
   _spawnRate: 3
   _elements: {fileID: 11400000, guid: dafcf0a15e8eadb4fa33c1a792f407fa, type: 2}
+  _maxSpawnCount: 0

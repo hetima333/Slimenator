@@ -6,12 +6,14 @@ public class SlimeSpawner : MonoBehaviour {
 
     [SerializeField]
     private GameObject
+        _spawner,
         _prefab;
 
     [SerializeField]
     private float
         _spawnTimer,
-        _spawnRate;
+        _spawnRate,
+        _maxSpawnCount;
 
     [SerializeField]
     public SOList
@@ -41,15 +43,34 @@ public class SlimeSpawner : MonoBehaviour {
 
     private void Start()
     {
+        _maxSpawnCount = 8;
     }
 
     private void Update()
     {
         _spawnTimer += Time.deltaTime;
-        //Temporary
+
         if (_spawnTimer > _spawnRate)
         {
             int random = Random.Range(0, _elements.GetList().Count);
+            //if ((ObjectManager.Instance.GetActiveObjects(_spawner) != null))
+            //{
+            //    if (ObjectManager.Instance.GetActiveObjects(_prefab) != null)
+            //    {
+            //        if (ObjectManager.Instance.GetActiveObjects(_prefab).Count < (_maxSpawnCount * ObjectManager.Instance.GetActiveObjects(_spawner).Count))
+            //        {
+            //            int random = Random.Range(0, EnumHolder.Instance._elements.Count);
+            //            GetSlimeFromPool(random, gameObject.transform.position);
+            //        }
+            //    }
+            //}
+            //    }
+            //    else
+            //    {
+            //        int random = Random.Range(0, EnumHolder.Instance._elements.Count);
+            //        GetSlimeFromPool(random, gameObject.transform.position);
+            //    }
+            //}
             GetSlimeFromPool(random, gameObject.transform.position);
             _spawnTimer = 0;
         }

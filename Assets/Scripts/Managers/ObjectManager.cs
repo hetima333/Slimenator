@@ -73,7 +73,7 @@ public class ObjectManager : SingletonMonoBehaviour<ObjectManager> {
 	/// <returns></returns>
 	public List<GameObject> GetActiveObjects(GameObject obj){
 		if(CheckPooledObject(obj) != true){
-			return null;
+            return new List<GameObject>();
 		}
 		return _pooledObjects[obj.GetInstanceID()].Where(x => x.activeInHierarchy == true).ToList();
 	}

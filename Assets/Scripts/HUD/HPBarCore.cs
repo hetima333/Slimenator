@@ -11,9 +11,10 @@ public class HPBarCore : MonoBehaviour {
 	private float _redHP;
 
 	// HP減少の速度
-	[SerializeField, Range(0.01f, 2.0f)]
-	private float _hpDecreaseSpeed;
+	[SerializeField, Range(0.3f, 2.0f)]
+	private float _hpDecreaseSpeed = 0.5f;
 
+	[SerializeField]
 	private RectTransform _redHPBarTrans;
 	private float _maxWidth;
 
@@ -31,7 +32,6 @@ public class HPBarCore : MonoBehaviour {
 		_slider.minValue = 0;
 		_slider.maxValue = Target.MaxHitPoint;
 		_redHP = Target.HitPoint;
-		_redHPBarTrans = _slider.GetComponentInChildren<Image>().rectTransform;
 		_maxWidth = _redHPBarTrans.sizeDelta.x;
 
 		// 現在のHPの変化を監視する
