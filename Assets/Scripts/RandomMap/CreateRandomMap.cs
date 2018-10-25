@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CreateRandomMap : MonoBehaviour {
+public class CreateRandomMap : MonoBehaviour
+{
 
     //幅
     [SerializeField]
@@ -40,7 +41,8 @@ public class CreateRandomMap : MonoBehaviour {
     private GameObject _player;
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         //マップサイズをスケールの基準に設定
         //transform.localScale = new Vector3(_mapSize, _mapSize, _mapSize);
 
@@ -64,9 +66,10 @@ public class CreateRandomMap : MonoBehaviour {
         InitialPositionPlayer();
 
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update()
+    {
         //マップサイズをスケールの基準に設定
         transform.localScale = new Vector3(_mapSize, _mapSize, _mapSize);
 
