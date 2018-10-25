@@ -12,7 +12,7 @@ public class LongRangeEnemy : Enemy {
     const float MOVE_SPEED = 2.5f;
     const float SEARCH_RANGE = 14.0f;
     const float ATTACK_RANGE = 10.0f;
-    const float MOVE_RANGE = 4.0f;
+    const float MOVE_RANGE = 10.0f;
     const float MONEY = 50.0f;
 
     //移動スクリプト
@@ -101,7 +101,7 @@ public class LongRangeEnemy : Enemy {
         Debug.Log ("LongRangeAttack");
         _anim.CrossFade ("Attack", 0);
 
-        //TODO行動終了までの時間経過
+        //アニメーションとの時間調整
         yield return new WaitForSeconds (0.2f);
 
         if (_bullet) {

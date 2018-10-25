@@ -1,7 +1,7 @@
 ﻿/// 敵の移動
 /// Enemies Move
 /// Athor： Yuhei Mastumura
-/// Last edit date：2018/10/23
+/// Last edit date：2018/10/25
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,6 +15,8 @@ public class EnemyMove : MonoBehaviour {
     Enemy _enemy;
 
     float _thinkTime = THINK_TIME;
+    //目的地のと距離
+    float _distance;
 
     // Use this for initialization
     void Awake () {
@@ -46,10 +48,10 @@ public class EnemyMove : MonoBehaviour {
         _enemy.RigidbodyProperties.velocity = Vector3.zero;
         //現在座標を取得
         Vector3 pos = gameObject.transform.position;
-
+        //距離を算出
+        _distance = (pos - _enemy._freeMovePosition).sqrMagnitude;
         //現在座標と目的座標の差が0.1f以上
-        if (Vector3.Distance (pos, _enemy._freeMovePosition) >= 0.1f) {
-
+        if (_distance > 0.1f) {
             //TODO 
             _thinkTime -= Time.deltaTime;
             if (_thinkTime <= 0) {
@@ -61,7 +63,7 @@ public class EnemyMove : MonoBehaviour {
             //移動
             _enemy.RigidbodyProperties.velocity = transform.forward * _enemy.Speed;
 
-            if (Vector3.Distance (pos, _enemy._staetPosition) >= _enemy._freeMoveRange) {
+            if (_distance >= _enemy._freeMoveRange) {
                 //戻り状態になる
                 //目的地の再取得
                 _enemy._freeMovePosition = SetMovePos ();
@@ -73,10 +75,7 @@ public class EnemyMove : MonoBehaviour {
             _enemy.CurrentState = Enemy.State.IDLE;
         }
 
-        //モデルの中心軸ずれによる傾きの防止
-        var rot = gameObject.transform.rotation;
-        rot.x = 0;
-        gameObject.transform.rotation = rot;
+        XRotFixed ();
 
     }
 
@@ -91,9 +90,11 @@ public class EnemyMove : MonoBehaviour {
         Vector3 targetPos = _enemy._target.transform.position;
         //高さ合わせ
         targetPos.y = gameObject.transform.position.y;
+        //距離を算出
+        _distance = (pos - targetPos).sqrMagnitude;
 
-        //現在座標と目的座標の差が0.1f以上
-        if (Vector3.Distance (pos, _enemy._target.transform.position) >= _enemy._attackRange) {
+        //現在座標と目的座標の差が攻撃範囲以上
+        if (_distance >= _enemy._attackRange) {
             //向かう場所の方向を見る
             gameObject.transform.LookAt (targetPos);
             //移動
@@ -102,15 +103,14 @@ public class EnemyMove : MonoBehaviour {
             //攻撃状態に移行
             _enemy.CurrentState = Enemy.State.ATTACK;
         }
-        //モデルの中心軸ずれによる傾きの防止
-        var rot = gameObject.transform.rotation;
-        rot.x = 0;
-        gameObject.transform.rotation = rot;
+
+        XRotFixed ();
     }
 
     public void Dash2Player () {
         //移動速度のリセット
         _enemy.RigidbodyProperties.velocity = Vector3.zero;
+        //対象がいない場合は終了
         if (!_enemy._target) return;
         //現在座標を取得
         Vector3 pos = gameObject.transform.position;
@@ -118,9 +118,11 @@ public class EnemyMove : MonoBehaviour {
         Vector3 targetPos = _enemy._target.transform.position;
         //高さ合わせ
         targetPos.y = gameObject.transform.position.y;
+        //距離を算出
+        _distance = (pos - targetPos).sqrMagnitude;
 
         //現在座標と目的座標の差が0.1f以上
-        if (Vector3.Distance (pos, _enemy._target.transform.position) >= _enemy._attackRange) {
+        if (_distance >= _enemy._attackRange) {
             //向かう場所の方向を見る
             gameObject.transform.LookAt (targetPos);
             //移動
@@ -129,10 +131,7 @@ public class EnemyMove : MonoBehaviour {
             //攻撃状態に移行
             _enemy.CurrentState = Enemy.State.ATTACK;
         }
-        //モデルの中心軸ずれによる傾きの防止
-        var rot = gameObject.transform.rotation;
-        rot.x = 0;
-        gameObject.transform.rotation = rot;
+        XRotFixed ();
 
     }
 
@@ -148,8 +147,11 @@ public class EnemyMove : MonoBehaviour {
         //高さ合わせ
         startPos.y = gameObject.transform.position.y;
 
+        //距離を算出
+        _distance = (pos - startPos).sqrMagnitude;
+
         //現在座標と目的座標の差が0.1f以上
-        if (Vector3.Distance (pos, _enemy._staetPosition) >= 0.5f) {
+        if (_distance >= 0.5f) {
             //向かう場所の方向を見る
             gameObject.transform.LookAt (startPos);
             //移動
@@ -157,10 +159,9 @@ public class EnemyMove : MonoBehaviour {
         } else {
             _enemy.CurrentState = Enemy.State.IDLE;
         }
-        //モデルの中心軸ずれによる傾きの防止
-        var rot = gameObject.transform.rotation;
-        rot.x = 0;
-        gameObject.transform.rotation = rot;
+
+        XRotFixed ();
+
     }
 
     //目的地のセット
@@ -181,5 +182,12 @@ public class EnemyMove : MonoBehaviour {
         Vector3 nextPos = new Vector3 (nextX, gameObject.transform.position.y, nextZ);
 
         return nextPos;
+    }
+
+    void XRotFixed () {
+        //モデルの中心軸ずれによる傾きの防止
+        var rot = gameObject.transform.rotation;
+        rot.x = 0;
+        gameObject.transform.rotation = rot;
     }
 }

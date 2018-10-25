@@ -47,7 +47,7 @@ public class TankEnemy : Enemy {
         _freeMovePosition = _move.SetMovePos ();
         //衝撃波オブジェクトのロード
         _shockWave = Resources.Load ("EnemyItem/ShockWave", typeof (GameObject)) as GameObject;
-
+        //武器プレハブの取得
         SetWeapons ();
 
     }
