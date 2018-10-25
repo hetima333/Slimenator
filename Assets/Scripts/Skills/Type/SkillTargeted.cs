@@ -15,9 +15,9 @@ public class SkillTargeted : Skill
 
         if (IsTimeOver())
         {
-            if (!IsSkillOver() || _CastLength == 0)
+            if (!IsSkillOver() || _UseTimer == 0)
             {
-                foreach (GameObject obj in _CastingType.GetTargets(ref spawn_position, ref _SkillTier, ref _Targetable, ref caster))
+                foreach (GameObject obj in _CastingType.GetTargets(ref spawn_position, ref _SkillTier, _Targetable.GetList(), ref caster))
                 {                   
                     IDamageable dmg = obj.GetComponent<IDamageable>();
 

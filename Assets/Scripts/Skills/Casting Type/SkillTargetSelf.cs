@@ -9,7 +9,7 @@ public class SkillTargetSelf : SkillCastingType
     private float
         _Range;
 
-    public override List<GameObject> GetTargets(ref Vector3 casting_position, ref SkillTier tier, ref List<GameObject> targets, ref GameObject caster)
+    public override List<GameObject> GetTargets(ref Vector3 casting_position, ref SkillTier tier, List<GameObject> targets, ref GameObject caster)
     {
         List<GameObject> list = new List<GameObject>();
         list.Add(caster);

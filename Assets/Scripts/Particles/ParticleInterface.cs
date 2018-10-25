@@ -6,7 +6,7 @@ public class ParticleInterface : MonoBehaviour {
 
     ParticleSystem[] _ps;
 
-    private void Start()
+    private void Awake()
     {
         _ps = GetComponentsInChildren<ParticleSystem>();
     }
