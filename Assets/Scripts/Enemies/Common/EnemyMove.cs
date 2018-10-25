@@ -63,7 +63,7 @@ public class EnemyMove : MonoBehaviour {
             //移動
             _enemy.RigidbodyProperties.velocity = transform.forward * _enemy.Speed;
 
-            if (_distance >= _enemy._freeMoveRange) {
+            if (_distance >= Mathf.Pow (_enemy._freeMoveRange, 2)) {
                 //戻り状態になる
                 //目的地の再取得
                 _enemy._freeMovePosition = SetMovePos ();
@@ -71,7 +71,7 @@ public class EnemyMove : MonoBehaviour {
             }
 
         } else {
-            //待機状態になる。
+            //待機状態になる
             _enemy.CurrentState = Enemy.State.IDLE;
         }
 
@@ -94,7 +94,7 @@ public class EnemyMove : MonoBehaviour {
         _distance = (pos - targetPos).sqrMagnitude;
 
         //現在座標と目的座標の差が攻撃範囲以上
-        if (_distance >= _enemy._attackRange) {
+        if (_distance >= Mathf.Pow (_enemy._attackRange, 2)) {
             //向かう場所の方向を見る
             gameObject.transform.LookAt (targetPos);
             //移動
@@ -121,8 +121,8 @@ public class EnemyMove : MonoBehaviour {
         //距離を算出
         _distance = (pos - targetPos).sqrMagnitude;
 
-        //現在座標と目的座標の差が0.1f以上
-        if (_distance >= _enemy._attackRange) {
+        //攻撃範囲に入ったら
+        if (_distance >= Mathf.Pow (_enemy._attackRange, 2)) {
             //向かう場所の方向を見る
             gameObject.transform.LookAt (targetPos);
             //移動
@@ -143,7 +143,7 @@ public class EnemyMove : MonoBehaviour {
         //現在座標を取得
         Vector3 pos = gameObject.transform.position;
         //対象の座標取得
-        Vector3 startPos = _enemy._staetPosition;
+        Vector3 startPos = _enemy._startPosition;
         //高さ合わせ
         startPos.y = gameObject.transform.position.y;
 
@@ -172,11 +172,9 @@ public class EnemyMove : MonoBehaviour {
         //移動先の座標を求める（Find the coordinates to move）
         //X軸移動量の設定
         float randomX = Random.Range (-_enemy._freeMoveRange, _enemy._freeMoveRange);
-
         float nextX = gameObject.transform.position.x + randomX;
         //Z軸移動量の設定
         float randomZ = Random.Range (-_enemy._freeMoveRange, _enemy._freeMoveRange);
-
         float nextZ = gameObject.transform.position.z + randomZ;
         //次の移動座標の設定
         Vector3 nextPos = new Vector3 (nextX, gameObject.transform.position.y, nextZ);

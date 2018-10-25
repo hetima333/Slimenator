@@ -1,7 +1,7 @@
 ﻿/// 遠距離攻撃タイプの敵
 /// Enemy of Long Range Type
 /// Athor：　Yuhei Mastumura
-/// Last edit date：2018/10/17
+/// Last edit date：2018/10/25
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -97,8 +97,8 @@ public class LongRangeEnemy : Enemy {
             //相手の方向を見る。
             gameObject.transform.LookAt (targetPos);
         }
-        //TODO　攻撃
-        Debug.Log ("LongRangeAttack");
+
+        //遠距離攻撃
         _anim.CrossFade ("Attack", 0);
 
         //アニメーションとの時間調整
