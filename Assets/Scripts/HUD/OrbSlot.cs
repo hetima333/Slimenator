@@ -19,28 +19,34 @@ public class OrbSlot : MonoBehaviour {
 	}
 
 	private Image _image;
+	[SerializeField]
+	private OrbSprites _sprites;
 
 	// Use this for initialization
 	void Start() {
 		_image = GetComponent<Image>();
+		// オーブ画像の読み込み
+		_sprites = Resources.Load("HUD/OrbSprites", typeof(OrbSprites))as OrbSprites;
 
+		// 最初はスロットを空にする
 		ChangeOrbImage(Orbs.NONE);
 	}
 
+	/// <summary>
+	/// オーブの種類によって画像を変更する
+	/// </summary>
+	/// <param name="orb"></param>
 	private void ChangeOrbImage(Orbs orb) {
 		Sprite sprite = null;
 		switch (orb) {
 			case Orbs.FIRE:
-				// sprite = OrbDefine.Instance.fireSprite;
-				sprite = Resources.Load("Managers/fire", typeof(Sprite)) as Sprite;
+				sprite = _sprites.Fire;
 				break;
-			case Orbs.WATER:
-				// sprite = OrbDefine.Instance.waterSprite;
-				sprite = Resources.Load("Managers/water", typeof(Sprite)) as Sprite;
+			case Orbs.ICE:
+				sprite = _sprites.Ice;
 				break;
-			case Orbs.THUNDER:
-				// sprite = OrbDefine.Instance.thunderSprite;
-				sprite = Resources.Load("Managers/thunder", typeof(Sprite)) as Sprite;
+			case Orbs.LIGHTNING:
+				sprite = _sprites.Lightning;
 				break;
 		}
 
