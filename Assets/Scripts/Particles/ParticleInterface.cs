@@ -31,4 +31,18 @@ public class ParticleInterface : MonoBehaviour {
         return transform.localRotation;
     }
 
+    public float GetLongestParticleEffect()
+    {
+        float tempMaxDuration = 0;
+
+        for (int i = 0; i < _ps.Length; ++i)
+        {
+            ParticleSystem.MainModule main = _ps[i].main;
+            float duration = main.duration + main.startDelay.constant;
+            if (duration > tempMaxDuration)
+                tempMaxDuration = duration;
+        }
+
+        return tempMaxDuration;
+    }
 }
