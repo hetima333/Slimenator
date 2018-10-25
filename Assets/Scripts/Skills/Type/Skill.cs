@@ -17,13 +17,11 @@ public abstract class Skill : ScriptableObject
         _Properties = new List<SkillProperties>();
 
     [SerializeField]
-    protected List<GameObject>
-        _Targetable = new List<GameObject>();
+    protected GameObjectList
+        _Targetable;
 
     [SerializeField]
     protected float
-        _CastTime, 
-        _CastLength,
         _Damage;
 
     [SerializeField]
@@ -49,8 +47,31 @@ public abstract class Skill : ScriptableObject
 
     public virtual void Init()
     {
-        _Timer = _CastTime;
-        _UseTimer = _CastLength;
+        if (_ChannelingParticle != null)
+        {
+            if (_ChannelingParticle.GetComponent<ParticleInterface>() != null)
+            {
+                _Timer = _ChannelingParticle.GetComponent<ParticleInterface>().GetLongestParticleEffect();
+                Debug.Log("Channeling Timer: " + _Timer);
+            }
+            else
+                _Timer = 0;
+        }
+        else
+            _Timer = 0;
+
+        if (_CastingParticle != null)
+        {
+            if (_CastingParticle.GetComponent<ParticleInterface>() != null)
+            {
+                _UseTimer = _CastingParticle.GetComponent<ParticleInterface>().GetLongestParticleEffect();
+                Debug.Log("Casting Timer: " + _UseTimer);
+            }
+            else
+                _UseTimer = 0;
+        }
+        else
+            _UseTimer = 0;
     }
 
     public virtual void Engage(GameObject caster, Vector3 spawn_position = new Vector3(), Vector3 dir = new Vector3())
