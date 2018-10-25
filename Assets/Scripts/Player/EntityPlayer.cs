@@ -20,6 +20,12 @@ public class EntityPlayer : MonoBehaviour, IDamageable
         _HP,
         _Money;
 
+    [SerializeField]
+    private SOList
+        _skillTier, 
+        _baseSkill,
+        _combiSkill;
+
     private Queue<ElementType>
         _OrbSlot = new Queue<ElementType>();
 
@@ -252,7 +258,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable
 
                     if (HasUniqueCombination)
                     {
-                        foreach (Skill s in SkillsHolder.Instance.GetCombinationSkillList())
+                        foreach (Skill s in _combiSkill.GetList())
                         {
                             if (s.GetCombinationElements()[0] == _OrbSlot.ToArray()[0]
                                 && s.GetCombinationElements()[1] == _OrbSlot.ToArray()[1]
@@ -268,7 +274,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable
                     }
                     else
                     {
-                        foreach (Skill s in SkillsHolder.Instance.GetBaseSkillList())
+                        foreach (Skill s in _baseSkill.GetList())
                         {
                             if (s.GetBaseElement().Equals(_OrbSlot.ToArray()[0]))
                             {
@@ -285,7 +291,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable
                                         break;
                                 }
 
-                                _CurrentSkillOutcome.SetSkillTier(EnumHolder.Instance._skillTier[temp_tier]);
+                                _CurrentSkillOutcome.SetSkillTier((SkillTier)_skillTier.GetList()[temp_tier]);
 
                                 break;
                             }

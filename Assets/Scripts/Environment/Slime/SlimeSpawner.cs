@@ -13,6 +13,10 @@ public class SlimeSpawner : MonoBehaviour {
         _spawnTimer,
         _spawnRate;
 
+    [SerializeField]
+    public SOList
+      _elements;
+
     #region Getter/Setter
     public float SpawnTimer
     {
@@ -45,7 +49,7 @@ public class SlimeSpawner : MonoBehaviour {
         //Temporary
         if (_spawnTimer > _spawnRate)
         {
-            int random = Random.Range(0, EnumHolder.Instance._elements.Count);
+            int random = Random.Range(0, _elements.GetList().Count);
             GetSlimeFromPool(random, gameObject.transform.position);
             _spawnTimer = 0;
         }
@@ -53,17 +57,17 @@ public class SlimeSpawner : MonoBehaviour {
 
     public GameObject GetSlimeFromPool(int type, Vector3 position = new Vector3())
     {
-        GameObject slime_obj = ObjectManager.Instance.InstantiateWithObjectPooling(_prefab, position);
+        GameObject slime_obj = ObjectManager.Instance.InstantiateWithObjectPooling(_prefab, new Vector3(0, 0.5f, 0));
         Stats temp = EnumHolder.Instance.GetStats(_prefab.name);
         SlimeBase temp_component = slime_obj.GetComponent<SlimeBase>();
 
         if (temp_component != null)
             DestroyImmediate(temp_component);
 
-        System.Type _MyScriptType = System.Type.GetType(EnumHolder.Instance._elements[type].GetSlimeScriptName());
+        System.Type _MyScriptType = System.Type.GetType(((ElementType)_elements.GetList()[type]).GetSlimeScriptName());
         slime_obj.AddComponent(_MyScriptType);
 
-        slime_obj.GetComponent<SlimeBase>().Init(temp, ((EnumHolder.Instance._elements[type].name.Equals("Lightning")) ? 2 : 1), EnumHolder.Instance._elements[type]);
+        slime_obj.GetComponent<SlimeBase>().Init(temp, ((((ElementType)_elements.GetList()[type]).name.Equals("Lightning")) ? 2 : 1), ((ElementType)_elements.GetList()[type]));
         slime_obj.SetActive(true);
 
         return slime_obj;

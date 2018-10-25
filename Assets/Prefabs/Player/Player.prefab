@@ -1862,7 +1862,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1294561646650140}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 39, y: 0, z: 9}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4582413086083254}
@@ -2807,6 +2807,9 @@ MonoBehaviour:
   _SuckingParticle: {fileID: 1929610641034208}
   _SuckingRadius: {fileID: 1944767245314202}
   _PrefabInstance: {fileID: 1294561646650140}
+  _skillTier: {fileID: 11400000, guid: dcd849cc3d1479044834399c90986366, type: 2}
+  _baseSkill: {fileID: 11400000, guid: 4f203488e8646e248a88079e91126339, type: 2}
+  _combiSkill: {fileID: 11400000, guid: f99c96af4be7dbb41aadfb0eae2d5767, type: 2}
   _CastingPoint: {fileID: 1600906898397308}
 --- !u!114 &114988621395578590
 MonoBehaviour:
