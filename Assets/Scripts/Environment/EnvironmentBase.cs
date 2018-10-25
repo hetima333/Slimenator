@@ -16,7 +16,6 @@ public abstract class EnvironmentBase : MonoBehaviour
 
     private bool
         _isStatic,
-        _isDestructible,
         _willExpire;
 
     #region Getter/Setter
@@ -84,20 +83,6 @@ public abstract class EnvironmentBase : MonoBehaviour
             _willExpire = value;
         }
     }
-
-    public bool IsDestructible
-    {
-        get
-        {
-            return _isDestructible;
-        }
-
-        set
-        {
-            _isDestructible = value;
-        }
-    }
-
     #endregion
 
     public virtual void InitObjectWithLife(float lifetime, Vector3 pos, Vector3 size, bool isStatic = true)
@@ -112,13 +97,12 @@ public abstract class EnvironmentBase : MonoBehaviour
         _lifeElapse = 0;
     }
 
-    public virtual void InitObject(Vector3 pos, Vector3 size, bool isDestructible, bool isStatic = true)
+    public virtual void InitObject(Vector3 pos, Vector3 size, bool isStatic = true)
     {
         _gameobject = gameObject;
         _gameobject.transform.position = pos;
         _gameobject.transform.localScale = size;
         _size = size;
-        _isDestructible = isDestructible;
         _isStatic = isStatic;
         _willExpire = false;
     }
