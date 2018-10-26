@@ -52,6 +52,7 @@ public abstract class Skill : ScriptableObject
             ParticleInterface ChannelingParticlePI = _ChannelingParticle.GetComponent<ParticleInterface>();
             ChannelingParticlePI.Init();
             _Timer = _ChannelingParticle.GetComponent<ParticleInterface>().GetLongestParticleEffect();
+            Debug.Log("Channeling Particle: " + _Timer);
         }
         else
             _Timer = 0;
@@ -61,6 +62,7 @@ public abstract class Skill : ScriptableObject
             ParticleInterface CastingParticlePI = _CastingParticle.GetComponent<ParticleInterface>();
             CastingParticlePI.Init();
             _UseTimer = _CastingParticle.GetComponent<ParticleInterface>().GetLongestParticleEffect();
+            Debug.Log("Casting Particle: " + _UseTimer);
         }
         else
             _UseTimer = 0;
