@@ -36,6 +36,12 @@ public class HPBarCore : MonoBehaviour {
 		// 緑HPの変化の監視
 		_greenHP
 			.Subscribe(x => {
+				// ダメージのポップ
+				var dmg = _slider.value - x;
+				if (dmg > 0) {
+					DamagePoper.Instance.PopDamage(transform.parent, (int) dmg);
+				}
+
 				_slider.value = x;
 
 				// 赤HPが緑HPより少なかったら緑HPに合わせる
