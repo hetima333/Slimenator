@@ -40,6 +40,8 @@ public class EntityPlayerMovement : MonoBehaviour
     void Move()
     {
         Vector3 movement = Vector3.zero;
+        Debug.Log(_EntityPlayer.GetPlayerStats().SpeedProperties);
+
         if (Input.GetKey(KeyCode.W))
         {
             movement += _Camera.gameObject.transform.forward.normalized * _EntityPlayer.GetPlayerStats().SpeedProperties * Time.deltaTime;

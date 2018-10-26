@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Name: Player
   m_EditorClassIdentifier: 
   _Prefab: {fileID: 1294561646650140, guid: 2249c65a616e71048972fb35250b8b9d, type: 2}
-  MaxHealth: 100
-  MaxDamage: 1
-  MaxSpeed: 8
-  MaxSpeedMultiplyer: 1
-  MaxDamageMultiplyer: 1
-  MaxHealthMultiplyer: 1
-  Sucking_Power: 10
+  _MaxHealth: 100
+  _MaxDamage: 1
+  _MaxSpeed: 18
+  _MaxSpeedMultiplyer: 1
+  _MaxDamageMultiplyer: 1
+  _MaxHealthMultiplyer: 1
+  _SuckingPower: 10
+  _UsedByMultipleEntities: 0
