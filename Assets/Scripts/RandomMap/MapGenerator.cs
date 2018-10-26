@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MapGenerator {
-
+public class MapGenerator
+{
     //マップサイズX軸
     private int _mapSizeX;
     //マップサイズZ軸
@@ -169,7 +169,7 @@ public class MapGenerator {
 
             Range newRange = new Range();
             //垂直なら
-            if(isVertical)
+            if (isVertical)
             {
                 //横の範囲
                 _passage.Add(new Range(range._start._x, devideIndex, range._end._x, devideIndex));
@@ -209,7 +209,7 @@ public class MapGenerator {
         rangeList.Sort((a, b) => RogueUtils.GetRandomInt(0, 1) - 1);
 
         //1区間毎に1部屋作る
-        foreach(Range range in rangeList)
+        foreach (Range range in rangeList)
         {
             System.Threading.Thread.Sleep(1);
 
@@ -239,7 +239,7 @@ public class MapGenerator {
             _room.Add(room);
 
             //通路を作る
-            CreatePassage(range,room);
+            CreatePassage(range, room);
         }
 
     }
@@ -249,7 +249,7 @@ public class MapGenerator {
     /// </summary>
     /// <param name="range"></param>
     /// <param name="room"></param>
-    private void CreatePassage(Range range,Range room)
+    private void CreatePassage(Range range, Range room)
     {
         List<int> direction = new List<int>();
         //範囲Xの最小値を0と設定(左)
@@ -277,12 +277,12 @@ public class MapGenerator {
         direction.Sort((a, b) => RogueUtils.GetRandomInt(0, 1) - 1);
 
         bool isFirst = true;
-        foreach(int dir in direction)
+        foreach (int dir in direction)
         {
             System.Threading.Thread.Sleep(1);
 
             //80%の確立で通路を作らない
-            if(!isFirst && RogueUtils.RandomJadge(0.8f))
+            if (!isFirst && RogueUtils.RandomJadge(0.8f))
             {
                 continue;
             }
@@ -306,7 +306,7 @@ public class MapGenerator {
 
                 case 2: //奥
                     random = room._start._x + RogueUtils.GetRandomInt(1, room.GetWidthX()) - 1;
-                    _roomPassage.Add(new Range(random, range._start._z, random, room._start._z- 1));
+                    _roomPassage.Add(new Range(random, range._start._z, random, room._start._z - 1));
                     break;
 
                 case 3: //前

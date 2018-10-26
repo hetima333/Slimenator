@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Distribute : MonoBehaviour {
-
+public class Distribute : MonoBehaviour
+{
     //スライムオブジェクト
     [SerializeField]
     private AddObject[] _slimes;
@@ -22,7 +22,8 @@ public class Distribute : MonoBehaviour {
     private int _mapSize;
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
 
         //作られたマップの情報取得
         CreateRandomMap map = GetComponent<CreateRandomMap>();
@@ -46,11 +47,12 @@ public class Distribute : MonoBehaviour {
         }
 
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
 
     ///// <summary>
     ///// スライムを配置する
@@ -90,7 +92,6 @@ public class Distribute : MonoBehaviour {
 
     //}
 
-
     /// <summary>
     /// オブジェクトを配置する
     /// </summary>
@@ -122,7 +123,7 @@ public class Distribute : MonoBehaviour {
 
             //オブジェクトを生成する
             ObjectManager.Instance.InstantiateWithObjectPooling(type, new Vector3(position._x * _mapSize, 1, position._z * _mapSize), new Quaternion());
-         
+
         }
 
     }

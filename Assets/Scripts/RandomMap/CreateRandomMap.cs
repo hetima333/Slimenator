@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class CreateRandomMap : MonoBehaviour
 {
-
     //幅
     [SerializeField]
     public int _width = 30;
@@ -39,6 +38,15 @@ public class CreateRandomMap : MonoBehaviour
     [SerializeField]
     [Header("-Initial position designation of player-")]
     private GameObject _player;
+
+
+    //デバッグ用
+    [Header("-Debug-")]
+    //最初に作られた部屋の位置
+    [SerializeField] private GameObject _roomStart;
+    [SerializeField] private GameObject _roomWhidth;
+    [SerializeField] private GameObject _roomDepth;
+    [SerializeField] private GameObject _roomEnd;
 
     // Use this for initialization
     void Start()
@@ -136,10 +144,11 @@ public class CreateRandomMap : MonoBehaviour
         var startZ = _mapGenerator.GetStartZ(0);
         var endZ = _mapGenerator.GetEndZ(0);
 
-        //Debug.Log("startx:" + startX);
-        //Debug.Log("endx:" + endX);
-        //Debug.Log("startz:" + startZ);
-        //Debug.Log("endz:" + endZ);
+        //デバッグ用
+        _roomStart.transform.Translate(startX * _mapSize, 1, startZ * _mapSize);
+        _roomWhidth.transform.Translate(endX * _mapSize, 1, startZ * _mapSize);
+        _roomDepth.transform.Translate(startX * _mapSize, 1, endZ * _mapSize);
+        _roomEnd.transform.Translate(endX * _mapSize, 1, endZ * _mapSize);
 
         Position position;
         do
@@ -147,10 +156,8 @@ public class CreateRandomMap : MonoBehaviour
             //座標をランダムに決める
             //var x = RogueUtils.GetRandomInt(0, _width - 1);
             //var z = RogueUtils.GetRandomInt(0, _depth - 1);
-            var x = RogueUtils.GetRandomInt(0, endX);
-            var z = RogueUtils.GetRandomInt(0, endZ);
-            //Debug.Log("x:" + x);
-            //Debug.Log("z:" + z);
+            var x = RogueUtils.GetRandomInt(startX, endX);
+            var z = RogueUtils.GetRandomInt(startZ, endZ);
             position = new Position(x, z);
         }
         //床があるところに限定する

@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MapRenderController : MonoBehaviour {
-
+public class MapRenderController : MonoBehaviour
+{
     //カメラのタグ
     private const string CAMERA_TAG_NAME = "MainCamera";
     //カメラに映っているかどうか
