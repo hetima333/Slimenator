@@ -78,7 +78,7 @@ public class SlimeSpawner : MonoBehaviour {
 
     public GameObject GetSlimeFromPool(int type, Vector3 position = new Vector3())
     {
-        GameObject slime_obj = ObjectManager.Instance.InstantiateWithObjectPooling(_prefab, new Vector3(0, 0.5f, 0));
+        GameObject slime_obj = ObjectManager.Instance.InstantiateWithObjectPooling(_prefab, position);
         Stats temp = EnumHolder.Instance.GetStats(_prefab.name);
         SlimeBase temp_component = slime_obj.GetComponent<SlimeBase>();
 
