@@ -41,7 +41,7 @@ public class EnvironmentDestructible : EnvironmentBase, IDamageable {
     {
         gameObject.SetActive(false);
         EnvironmentBase temp = ObjectManager.Instance.InstantiateWithObjectPooling(_shatterObject, transform.position, transform.rotation).GetComponent<EnvironmentBase>();
-        temp.InitObjectWithLife(2, transform.position, transform.localScale);
+        temp.InitObjectWithLife(5);
     }
 
     public void TakeDamage(float Damage)

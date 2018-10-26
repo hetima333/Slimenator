@@ -13,5 +13,6 @@ public class EnvironmentShatterObjects : EnvironmentBase
     // Update is called once per frame
     protected override void Update()
     {
+        base.Update();
     }
 }

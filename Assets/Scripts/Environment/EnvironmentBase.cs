@@ -85,6 +85,15 @@ public abstract class EnvironmentBase : MonoBehaviour
     }
     #endregion
 
+    public virtual void InitObjectWithLife(float lifetime, bool isStatic = true)
+    {
+        _gameobject = gameObject;
+        _lifetime = lifetime;
+        _isStatic = isStatic;
+        _willExpire = true;
+        _lifeElapse = 0;
+    }
+
     public virtual void InitObjectWithLife(float lifetime, Vector3 pos, Vector3 size, bool isStatic = true)
     {
         _gameobject = gameObject;
