@@ -21,6 +21,12 @@ public class EnumHolder : SingletonMonoBehaviour<EnumHolder>
         DIE
     }
 
+    public enum EffectType
+    {
+        SPEED,
+        HEALTH,
+    }
+
     public Stats GetStats(string InstanceName)
     {
         foreach(Stats s in _Stat.GetList())

@@ -106,8 +106,9 @@ public class EntityPlayer : MonoBehaviour, IDamageable
     {
         _CurrentUseSkill.Engage(gameObject, _CastingPoint.transform.position, gameObject.transform.forward.normalized);
 
-        if(_CurrentUseSkill.IsSkillOver() && _CurrentUseSkill.IsTimeOver())
+        if(_CurrentUseSkill.IsSkillOver() && _CurrentUseSkill.IsTimeOver() || Input.GetKey(KeyCode.Mouse1))
         {
+            _CurrentUseSkill.Reset();
             _Player_State = EnumHolder.States.IDLE;
             DestroyImmediate(_CurrentUseSkill);
         }
@@ -264,7 +265,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable
                                 && s.GetCombinationElements()[1] == _OrbSlot.ToArray()[1]
                                 && s.GetCombinationElements()[2] == _OrbSlot.ToArray()[2])
                             {
-                                _CurrentSkillOutcome = Instantiate(s);
+                                _CurrentSkillOutcome = ScriptableObject.Instantiate(s);
                                 _CurrentSkillOutcome.name = s.name;
                                 break;
                             }
@@ -280,7 +281,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable
                             {
                                 int temp_tier = 0;
 
-                                _CurrentSkillOutcome = Instantiate(s);
+                                _CurrentSkillOutcome = ScriptableObject.Instantiate(s);
                                 _CurrentSkillOutcome.name = s.name;
 
                                 for(int i = 1; i < _OrbSlot.Count; ++i)

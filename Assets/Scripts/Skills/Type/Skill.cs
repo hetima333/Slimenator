@@ -49,26 +49,18 @@ public abstract class Skill : ScriptableObject
     {
         if (_ChannelingParticle != null)
         {
-            if (_ChannelingParticle.GetComponent<ParticleInterface>() != null)
-            {
-                _Timer = _ChannelingParticle.GetComponent<ParticleInterface>().GetLongestParticleEffect();
-                Debug.Log("Channeling Timer: " + _Timer);
-            }
-            else
-                _Timer = 0;
+            ParticleInterface ChannelingParticlePI = _ChannelingParticle.GetComponent<ParticleInterface>();
+            ChannelingParticlePI.Init();
+            _Timer = _ChannelingParticle.GetComponent<ParticleInterface>().GetLongestParticleEffect();
         }
         else
             _Timer = 0;
 
         if (_CastingParticle != null)
         {
-            if (_CastingParticle.GetComponent<ParticleInterface>() != null)
-            {
-                _UseTimer = _CastingParticle.GetComponent<ParticleInterface>().GetLongestParticleEffect();
-                Debug.Log("Casting Timer: " + _UseTimer);
-            }
-            else
-                _UseTimer = 0;
+            ParticleInterface CastingParticlePI = _CastingParticle.GetComponent<ParticleInterface>();
+            CastingParticlePI.Init();
+            _UseTimer = _CastingParticle.GetComponent<ParticleInterface>().GetLongestParticleEffect();
         }
         else
             _UseTimer = 0;
@@ -96,6 +88,7 @@ public abstract class Skill : ScriptableObject
             if (_ChannelingParticle != null && _ChannelingParticleCopy == null)
             {
                 _ChannelingParticleCopy = Instantiate(_ChannelingParticle, spawn_position, caster.transform.rotation, caster.transform);
+                _ChannelingParticleCopy.transform.localScale = new Vector3(_SkillTier.GetMultiplyer(), _SkillTier.GetMultiplyer(), _SkillTier.GetMultiplyer());
             }
         }
 
@@ -112,6 +105,7 @@ public abstract class Skill : ScriptableObject
             if (_CastingParticle != null && _CastingParticleCopy == null)
             {
                 _CastingParticleCopy = Instantiate(_CastingParticle, spawn_position, caster.transform.rotation, caster.transform);
+                _CastingParticleCopy.transform.localScale = new Vector3(_SkillTier.GetMultiplyer(), _SkillTier.GetMultiplyer(), _SkillTier.GetMultiplyer());
             }
         }
     }
@@ -149,5 +143,20 @@ public abstract class Skill : ScriptableObject
     public string GetDescription()
     {
         return _Description;
+    }
+
+    public void Reset()
+    {
+        if (_ChannelingParticleCopy != null)
+        {
+            DestroyImmediate(_ChannelingParticleCopy);
+            _ChannelingParticleCopy = null;
+        }
+
+        if (_CastingParticleCopy != null)
+        {
+            DestroyImmediate(_CastingParticleCopy);
+            _CastingParticleCopy = null;
+        }
     }
 }

@@ -2,7 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Effect : ScriptableObject
-{
-    public abstract int DoEffect(int multiplyer);
+[CreateAssetMenu(menuName = "Status Effect/Effect")]
+public class Effect : ScriptableObject {
+
+    [SerializeField]
+    private EnumHolder.EffectType
+      _EffectType;
+
+    [SerializeField]
+    private float
+        _Amount;
+
+    public EnumHolder.EffectType GetEffectType()
+    {
+        return _EffectType;
+    }
 }
