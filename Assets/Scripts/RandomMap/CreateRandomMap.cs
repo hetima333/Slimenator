@@ -28,7 +28,7 @@ public class CreateRandomMap : MonoBehaviour
     public int[,] _map;
 
     //マップ生成
-    private MapGenerator _mapGenerator;
+    public MapGenerator _mapGenerator;
 
     //マップサイズ
     [SerializeField]

@@ -106,6 +106,7 @@ public class Distribute : MonoBehaviour
             return;
         }
 
+        MapGenerator generator = GetComponent<CreateRandomMap>()._mapGenerator;
         Position position;
 
         //配置する数になるまで
@@ -113,9 +114,21 @@ public class Distribute : MonoBehaviour
         {
             do
             {
+                //部屋番号をランダムに決定
+                var roomNum = RogueUtils.GetRandomInt(0, generator.GetMaxRoom() - 1);
+                //Debug.Log("ROOM NUMBER : " + roomNum);
+
+                //最初に作られた部屋の位置取得
+                var startX = generator.GetStartX(roomNum);
+                var endX = generator.GetEndX(roomNum);
+                var startZ = generator.GetStartZ(roomNum);
+                var endZ = generator.GetEndZ(roomNum);
+
                 //座標をランダムに決める
-                var x = RogueUtils.GetRandomInt(0, _width - 1);
-                var z = RogueUtils.GetRandomInt(0, _depth - 1);
+                // var x = RogueUtils.GetRandomInt(0, _width - 1);
+                // var z = RogueUtils.GetRandomInt(0, _depth - 1);
+                var x = RogueUtils.GetRandomInt(startX, endX);
+                var z = RogueUtils.GetRandomInt(startZ, endZ);
                 position = new Position(x, z);
             }
             //床があるところに限定する

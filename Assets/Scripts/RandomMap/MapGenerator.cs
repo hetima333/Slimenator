@@ -485,4 +485,13 @@ public class MapGenerator
         return _room[num]._end._z;
     }
 
+    /// <summary>
+    /// 部屋の数の取得
+    /// </summary>
+    /// <returns></returns>
+    public int GetMaxRoom()
+    {
+        return _room.Count;
+    }
+
 }
