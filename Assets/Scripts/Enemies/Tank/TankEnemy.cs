@@ -123,8 +123,7 @@ public class TankEnemy : Enemy {
 
         if (_comboCount == 2) {
             if (_shockWave) {
-                GameObject shockWave = ObjectManager.Instance.InstantiateWithObjectPooling (_shockWave, Vector3.zero, _shockWave.transform.rotation);
-                shockWave.GetComponent<ShockWave> ().Initialize ();
+                GameObject shockWave = Instantiate (_shockWave);
                 shockWave.GetComponent<ShockWave> ().SetDamage (_comboDamage[3]);
                 Vector3 ShockPos = gameObject.transform.position + transform.forward;
                 ShockPos.y = 0.1f;
@@ -172,10 +171,11 @@ public class TankEnemy : Enemy {
         if (col.gameObject.tag == "Player") {
             if (_isSleeping) {
                 StartCoroutine (WakeUp ());
-            }
-            if (CurrentState != State.DEAD) {
+                _target = col.gameObject;
+            } else if (CurrentState != State.DEAD) {
                 //Set Target
                 _target = col.gameObject;
+                CurrentState = State.DISCOVERY;
             }
         }
     }

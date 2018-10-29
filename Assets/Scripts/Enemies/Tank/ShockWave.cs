@@ -17,21 +17,11 @@ public class ShockWave : MonoBehaviour {
     //ヒット時に与えるダメージ
     private float _damage;
 
-    public void Initialize () {
-        _aliveTime = ALIVE_TIME;
-        var par = gameObject.GetComponent<ParticleSystem> ();
-        par.Simulate (0, true, true);;
-        par.Play ();
-
-        var parCol = gameObject.GetComponent<ParticleSystem> ().collision;
-        parCol.enabled = true;
-    }
-
     void Update () {
         _aliveTime -= Time.deltaTime;
 
         if (_aliveTime <= 0) {
-            ObjectManager.Instance.ReleaseObject (gameObject);
+            Destroy (gameObject);
         }
     }
 
