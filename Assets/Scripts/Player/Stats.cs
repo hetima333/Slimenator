@@ -12,6 +12,7 @@ public class Stats : ScriptableObject
     [SerializeField]
     private float
         _MaxHealth,
+        _Health,
         _MaxDamage,
         _MaxSpeed,
 
@@ -26,11 +27,24 @@ public class Stats : ScriptableObject
     private bool
         _UsedByMultipleEntities = true;
 
-    public float HealthProperties
+    public float MaxHealthProperties
     {
         get
         {
             return _MaxHealth;
+        }
+    }
+
+    public float HealthProperties
+    {
+        get
+        {
+            return _Health;
+        }
+
+        set
+        {
+            _Health = value;
         }
     }
 

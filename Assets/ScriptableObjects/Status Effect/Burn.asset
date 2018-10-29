@@ -9,10 +9,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cb11f4b6b46274046a9f4b101880e130, type: 3}
-  m_Name: Frost
+  m_Name: Burn
   m_EditorClassIdentifier: 
   _EffectList:
-  - {fileID: 11400000, guid: 259cdd3fcee388f4996ebc4230b073ae, type: 2}
-  _Element: {fileID: 11400000, guid: 3598f9cad2b4e094e8abf6dc11ad1944, type: 2}
-  _Timer: 10
-  _Particle: {fileID: 1842664229368296, guid: e77da83b1249e6e4fb1132c45464e885, type: 2}
+  - {fileID: 11400000, guid: 8324c204632ee9b4b87859786042072c, type: 2}
+  _Element: {fileID: 11400000, guid: 753eac8bb53ca58458e5f20416ea0092, type: 2}
+  _Timer: 5
+  _Particle: {fileID: 1825173637339698, guid: d7bcc9d120ef295439d39fefa26c144c, type: 2}

@@ -33,31 +33,30 @@ public class EntityPlayerMovement : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (_EntityPlayer.GetPlayerState() != EnumHolder.States.DIE)
+        if (_EntityPlayer.GetPlayerState() != EnumHolder.States.DIE && _EntityPlayer.Speed > 0)
             Rotate();
     }
 
     void Move()
     {
         Vector3 movement = Vector3.zero;
-        Debug.Log(_EntityPlayer.GetPlayerStats().SpeedProperties);
 
         if (Input.GetKey(KeyCode.W))
         {
-            movement += _Camera.gameObject.transform.forward.normalized * _EntityPlayer.GetPlayerStats().SpeedProperties * Time.deltaTime;
+            movement += _Camera.gameObject.transform.forward.normalized * (_EntityPlayer.Speed * _EntityPlayer.GetPlayerStats().SpeedMultiplyerProperties) * Time.deltaTime;
         }
         else if (Input.GetKey(KeyCode.S))
         {
-            movement -= _Camera.gameObject.transform.forward.normalized * _EntityPlayer.GetPlayerStats().SpeedProperties * Time.deltaTime;
+            movement -= _Camera.gameObject.transform.forward.normalized * (_EntityPlayer.Speed * _EntityPlayer.GetPlayerStats().SpeedMultiplyerProperties) * Time.deltaTime;
         }
 
         if (Input.GetKey(KeyCode.A))
         {
-            movement -= _Camera.gameObject.transform.right.normalized * _EntityPlayer.GetPlayerStats().SpeedProperties * Time.deltaTime;
+            movement -= _Camera.gameObject.transform.right.normalized * (_EntityPlayer.Speed * _EntityPlayer.GetPlayerStats().SpeedMultiplyerProperties) * Time.deltaTime;
         }
         else if (Input.GetKey(KeyCode.D))
         {
-            movement += _Camera.gameObject.transform.right.normalized * _EntityPlayer.GetPlayerStats().SpeedProperties * Time.deltaTime;
+            movement += _Camera.gameObject.transform.right.normalized * (_EntityPlayer.Speed * _EntityPlayer.GetPlayerStats().SpeedMultiplyerProperties) * Time.deltaTime;
         }
 
         movement.y = 0;
