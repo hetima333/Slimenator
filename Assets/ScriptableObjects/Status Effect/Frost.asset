@@ -15,4 +15,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 259cdd3fcee388f4996ebc4230b073ae, type: 2}
   _Element: {fileID: 11400000, guid: 3598f9cad2b4e094e8abf6dc11ad1944, type: 2}
   _Timer: 10
-  _Particle: {fileID: 1842664229368296, guid: e77da83b1249e6e4fb1132c45464e885, type: 2}
+  _Particle: {fileID: 1794536406230326, guid: bdd4a1986ac8eb040bca6373e8c90b18, type: 2}
