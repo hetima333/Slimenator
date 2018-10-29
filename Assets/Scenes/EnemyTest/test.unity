@@ -562,6 +562,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 1586557958679214, guid: 8b74d6c1296f0ec449ef16ad6e601400, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8b74d6c1296f0ec449ef16ad6e601400, type: 2}
   m_IsPrefabParent: 0
@@ -1986,7 +1990,7 @@ MonoBehaviour:
   _freeMoveRange: 0
   _money: 0
   _freeMovePosition: {x: 0, y: 0, z: 0}
-  _staetPosition: {x: 0, y: 0, z: 0}
+  _startPosition: {x: 0, y: 0, z: 0}
   _isAction: 0
   _target: {fileID: 0}
   _anim: {fileID: 0}
@@ -2479,6 +2483,10 @@ Prefab:
     - target: {fileID: 4227644072461670, guid: c66f9e43e245ba24381bfcbed95102f8, type: 2}
       propertyPath: m_RootOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1242979852867002, guid: c66f9e43e245ba24381bfcbed95102f8, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c66f9e43e245ba24381bfcbed95102f8, type: 2}

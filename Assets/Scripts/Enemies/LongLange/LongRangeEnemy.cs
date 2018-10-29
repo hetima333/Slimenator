@@ -1,6 +1,6 @@
 ﻿/// 遠距離攻撃タイプの敵
 /// Enemy of Long Range Type
-/// Athor：　Yuhei Mastumura
+/// Athor：Yuhei Mastumura
 /// Last edit date：2018/10/25
 using System.Collections;
 using System.Collections.Generic;
@@ -106,7 +106,7 @@ public class LongRangeEnemy : Enemy {
 
         if (_bullet) {
             //make bullet 
-            GameObject bullet = Instantiate (_bullet) as GameObject;
+            GameObject bullet = ObjectManager.Instance.InstantiateWithObjectPooling (_bullet) as GameObject;
             //set bullet damage
             bullet.GetComponent<EnemyBullet> ().SetDamage (_outputDamage);
             //set bullet position

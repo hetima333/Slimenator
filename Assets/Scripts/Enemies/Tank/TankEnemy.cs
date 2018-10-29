@@ -23,6 +23,8 @@ public class TankEnemy : Enemy {
 
     private GameObject _shockWave;
 
+    private bool _isSleeping = true;
+
     [SerializeField]
     private List<GameObject> _weaponList;
 
@@ -55,36 +57,39 @@ public class TankEnemy : Enemy {
     // Update is called once per frame
     void Update () {
 
-        switch (CurrentState) {
+        if (!_isSleeping) {
+            switch (CurrentState) {
 
-            case State.IDLE:
-                //待機
-                StartCoroutine (_move.Idle ());
-                break;
+                case State.IDLE:
+                    //待機
+                    StartCoroutine (_move.Idle ());
+                    break;
 
-            case State.FREE:
-                //自由移動
-                _move.FreeMove ();
-                break;
-            case State.DISCOVERY:
-                //プレイヤー追従
-                _move.Move2Player ();
-                break;
+                case State.FREE:
+                    //自由移動
+                    _move.FreeMove ();
+                    break;
+                case State.DISCOVERY:
+                    //プレイヤー追従
+                    _move.Move2Player ();
+                    break;
 
-            case State.RETURN:
-                //初期位置に帰る
-                _move.Return2FirstPos ();
-                break;
+                case State.RETURN:
+                    //初期位置に帰る
+                    _move.Return2FirstPos ();
+                    break;
 
-            case State.ATTACK:
-                //攻撃開始
-                StartCoroutine (Attack ());
-                break;
+                case State.ATTACK:
+                    //攻撃開始
+                    StartCoroutine (Attack ());
+                    break;
 
-            default:
-                break;
+                default:
+                    break;
 
+            }
         }
+
     }
 
     //攻撃コルーチン
@@ -118,7 +123,8 @@ public class TankEnemy : Enemy {
 
         if (_comboCount == 2) {
             if (_shockWave) {
-                GameObject shockWave = Instantiate (_shockWave) as GameObject;
+                GameObject shockWave = ObjectManager.Instance.InstantiateWithObjectPooling (_shockWave, Vector3.zero, _shockWave.transform.rotation);
+                shockWave.GetComponent<ShockWave> ().Initialize ();
                 shockWave.GetComponent<ShockWave> ().SetDamage (_comboDamage[3]);
                 Vector3 ShockPos = gameObject.transform.position + transform.forward;
                 ShockPos.y = 0.1f;
@@ -143,7 +149,6 @@ public class TankEnemy : Enemy {
 
         //行動終了
         IsAction = false;
-
     }
 
     private void SetWeapons () {
@@ -161,5 +166,40 @@ public class TankEnemy : Enemy {
             }
 
         }
+    }
+
+    void OnTriggerEnter (Collider col) {
+        if (col.gameObject.tag == "Player") {
+            if (_isSleeping) {
+                StartCoroutine (WakeUp ());
+            }
+            if (CurrentState != State.DEAD) {
+                //Set Target
+                _target = col.gameObject;
+            }
+        }
+    }
+
+    //戦闘範囲離脱時の処理
+    void OnTriggerExit (Collider col) {
+        if (col.gameObject.tag == "Player") {
+            if (CurrentState != State.DEAD) {
+                //Set Target
+                _target = null;
+                //Change State
+                CurrentState = State.FREE;
+            }
+        }
+    }
+
+    private IEnumerator WakeUp () {
+
+        //_anim.CrossFade ("WakeUp", 0);
+
+        yield return new WaitForSeconds (1);
+
+        _isSleeping = false;
+        //Change State
+        CurrentState = State.DISCOVERY;
     }
 }

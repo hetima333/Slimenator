@@ -40,10 +40,8 @@ public class TestBoss : Enemy {
         SphereColliderProperties.radius = _searchRange;
         //自由移動ポジション設定
         _freeMovePosition = _move.SetMovePos ();
-
         //衝撃波オブジェクトのロード
         _shockField = Resources.Load ("EnemyItem/ShockField", typeof (GameObject)) as GameObject;
-
         //弾オブジェクトのロード
         _bullet = Resources.Load ("EnemyItem/EnemyBullet", typeof (GameObject)) as GameObject;
 
@@ -105,20 +103,22 @@ public class TestBoss : Enemy {
 
         if (distance <= 6.0f) {
             if (_shockField) {
-                GameObject shockField = Instantiate (_shockField) as GameObject;
+                GameObject shockField = ObjectManager.Instance.InstantiateWithObjectPooling (_shockField) as GameObject;
                 shockField.transform.position = gameObject.transform.position;
-                shockField.GetComponent<ShockField> ().SetDamage (10);
-                shockField.GetComponent<ShockField> ().SetScale (20);
+                var shockFieldComponemt = shockField.GetComponent<ShockField> ();
+                shockFieldComponemt.SetDamage (10);
+                shockFieldComponemt.SetScale (20);
             }
         } else {
             if (_bullet) {
                 //make bullet 
-                GameObject bullet = Instantiate (_bullet) as GameObject;
-                //set bullet damage
-                bullet.GetComponent<EnemyBullet> ().SetDamage (10);
-                bullet.GetComponent<EnemyBullet> ().SetScale (1);
+                GameObject bullet = ObjectManager.Instance.InstantiateWithObjectPooling (_bullet) as GameObject;;
                 //set bullet position
                 bullet.transform.position = gameObject.transform.position + transform.forward;
+                var bulletComponemt = bullet.GetComponent<EnemyBullet> ();
+                //set bullet damage
+                bulletComponemt.SetDamage (10);
+                bulletComponemt.SetScale (1);
                 //set bullet speed(TODO)
                 bullet.GetComponent<Rigidbody> ().velocity = gameObject.transform.forward * 10;
             }

@@ -23,7 +23,9 @@ public class EnemyMove : MonoBehaviour {
         _enemy = GetComponent<Enemy> ();
     }
 
-    // Update is called once per frame
+    void Update () {
+        RotFixed ();
+    }
 
     //待機コルーチン
     public IEnumerator Idle () {
@@ -75,15 +77,16 @@ public class EnemyMove : MonoBehaviour {
             _enemy.CurrentState = Enemy.State.IDLE;
         }
 
-        XRotFixed ();
-
     }
 
     //プレイヤーに向かっての移動
     public void Move2Player () {
         //移動速度のリセット
         _enemy.RigidbodyProperties.velocity = Vector3.zero;
-        if (!_enemy._target) return;
+        if (!_enemy._target) {
+            _enemy.CurrentState = Enemy.State.FREE;
+            return;
+        }
         //現在座標を取得
         Vector3 pos = gameObject.transform.position;
         //対象の座標取得
@@ -103,15 +106,16 @@ public class EnemyMove : MonoBehaviour {
             //攻撃状態に移行
             _enemy.CurrentState = Enemy.State.ATTACK;
         }
-
-        XRotFixed ();
     }
 
     public void Dash2Player () {
         //移動速度のリセット
         _enemy.RigidbodyProperties.velocity = Vector3.zero;
         //対象がいない場合は終了
-        if (!_enemy._target) return;
+        if (!_enemy._target) {
+            _enemy.CurrentState = Enemy.State.FREE;
+            return;
+        }
         //現在座標を取得
         Vector3 pos = gameObject.transform.position;
         //対象の座標取得
@@ -131,8 +135,6 @@ public class EnemyMove : MonoBehaviour {
             //攻撃状態に移行
             _enemy.CurrentState = Enemy.State.ATTACK;
         }
-        XRotFixed ();
-
     }
 
     //初期位置に戻る
@@ -160,8 +162,6 @@ public class EnemyMove : MonoBehaviour {
             _enemy.CurrentState = Enemy.State.IDLE;
         }
 
-        XRotFixed ();
-
     }
 
     //目的地のセット
@@ -182,10 +182,14 @@ public class EnemyMove : MonoBehaviour {
         return nextPos;
     }
 
-    void XRotFixed () {
+    void RotFixed () {
         //モデルの中心軸ずれによる傾きの防止
         var rot = gameObject.transform.rotation;
-        rot.x = 0;
-        gameObject.transform.rotation = rot;
+        if (rot.x != 0 || rot.z != 0) {
+            rot.x = 0;
+            rot.z = 0;
+            gameObject.transform.rotation = rot;
+        }
+
     }
 }

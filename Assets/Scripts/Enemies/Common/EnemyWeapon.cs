@@ -29,12 +29,12 @@ public class EnemyWeapon : MonoBehaviour {
     //自分の本体に何かが接触した場合
     void OnCollisionEnter (Collision col) {
         //Make sure the target has components
-        var hasIDamageable = col.gameObject.GetComponent<IDamageable> ();
+        var hasIDamageableObject = col.gameObject.GetComponent<IDamageable> ();
 
         //If have a component
-        if (hasIDamageable != null) {
+        if (hasIDamageableObject != null) {
             //ダメージ判定  
-            col.gameObject.GetComponent<IDamageable> ().TakeDamage (_damage);
+            hasIDamageableObject.TakeDamage (_damage);
         }
     }
 }

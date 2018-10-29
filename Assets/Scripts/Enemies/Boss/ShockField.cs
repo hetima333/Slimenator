@@ -7,10 +7,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ShockField : MonoBehaviour {
-    //パーティクルの生存時間
-    //Particle's living time
-    [SerializeField]
-    private float _aliveTime = 3.0f;
 
     [SerializeField]
     private float _maxScale;
@@ -22,12 +18,11 @@ public class ShockField : MonoBehaviour {
     [SerializeField]
     private float _damage;
 
-    void Update () {
-        _aliveTime -= Time.deltaTime;
+    void OnEnable () {
+        gameObject.transform.localScale = new Vector3 (0.1f, 0.1f, 0.1f);
+    }
 
-        if (_aliveTime <= 0) {
-            Destroy (gameObject);
-        }
+    void Update () {
 
         if (gameObject.transform.localScale.x < _maxScale) {
             //Change Scale
@@ -38,7 +33,7 @@ public class ShockField : MonoBehaviour {
 
             //Scale Over
             if (gameObject.transform.localScale.x >= _maxScale) {
-                Destroy (gameObject);
+                ObjectManager.Instance.ReleaseObject (gameObject);
             }
         }
     }
@@ -56,12 +51,12 @@ public class ShockField : MonoBehaviour {
     void OnTriggerEnter (Collider col) {
         Debug.Log (col.gameObject.name);
         //Make sure the target has components
-        var hasIDamageable = col.gameObject.GetComponent<IDamageable> ();
+        var hasIDamageableObject = col.gameObject.GetComponent<IDamageable> ();
         //If have a IDamageable component
-        if (hasIDamageable != null) {
+        if (hasIDamageableObject != null) {
             //ダメージ判定
             //TODO take damage   
-            col.gameObject.GetComponent<IDamageable> ().TakeDamage (_damage);
+            hasIDamageableObject.TakeDamage (_damage);
         }
     }
 }

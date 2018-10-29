@@ -8,76 +8,64 @@ using UnityEngine;
 
 public class ShockWave : MonoBehaviour {
 
+    private const float ALIVE_TIME = 3.0f;
+
     //パーティクルの生存時間
     //Particle's living time
-    private   float _aliveTime = 3.0f;
+    private float _aliveTime = 3.0f;
 
     //ヒット時に与えるダメージ
     private float _damage;
 
-    void Update()
-    {
+    public void Initialize () {
+        _aliveTime = ALIVE_TIME;
+        var par = gameObject.GetComponent<ParticleSystem> ();
+        par.Simulate (0, true, true);;
+        par.Play ();
+
+        var parCol = gameObject.GetComponent<ParticleSystem> ().collision;
+        parCol.enabled = true;
+    }
+
+    void Update () {
         _aliveTime -= Time.deltaTime;
 
-        if (_aliveTime <= 0)
-        {
-            Destroy(gameObject);
+        if (_aliveTime <= 0) {
+            ObjectManager.Instance.ReleaseObject (gameObject);
         }
     }
 
-
-    public void SetDamage(float damage)
-    {
+    public void SetDamage (float damage) {
         _damage = damage;
     }
 
-    public void SetScale(float scale)
-    {
+    public void SetScale (float scale) {
         //Change Particle Scale
-        gameObject.transform.localScale = new Vector3(scale, scale, scale);
+        gameObject.transform.localScale = new Vector3 (scale, scale, scale);
         //Change Particle collision radius
-        var parCol = gameObject.GetComponent<ParticleSystem>().collision;
+        var parCol = gameObject.GetComponent<ParticleSystem> ().collision;
         parCol.radiusScale = scale;
     }
 
-    void OnParticleCollision(GameObject obj)
-    {
+    void OnParticleCollision (GameObject obj) {
 
-        Debug.Log(obj.name);
+        Debug.Log (obj.name);
 
         //Make sure the target has components
-        var hasIDamageable = obj.gameObject.GetComponent<IDamageable>();
+        var hasIDamageableObject = obj.gameObject.GetComponent<IDamageable> ();
 
         //If have a IDamageable component
-        if (hasIDamageable != null)
-        {
+        if (hasIDamageableObject != null) {
             //ダメージ判定
             //TODO take damage   
-            obj.GetComponent<IDamageable>().TakeDamage(_damage);
-            
+            hasIDamageableObject.TakeDamage (_damage);
+
         }
 
         //パーティクルのコリジョンの解除（多段ヒット防止）
         //Release of particle community (multistage hit prevention)
-        var parCol = gameObject.GetComponent<ParticleSystem>().collision;
+        var parCol = gameObject.GetComponent<ParticleSystem> ().collision;
         parCol.enabled = false;
-    }
-
-    void OnTriggerEnter(Collider col)
-    {
-        if (col.gameObject.tag == "Player")
-        {
-            //Make sure the target has components
-            var hasIDamageable = col.gameObject.GetComponent<IDamageable>();
-
-            //If have a component
-            if (hasIDamageable != null)
-            {
-                //ダメージ判定
-                //TODO take damage   
-                col.gameObject.GetComponent<IDamageable>().TakeDamage(_damage);
-            }
-        }
     }
 
 }
