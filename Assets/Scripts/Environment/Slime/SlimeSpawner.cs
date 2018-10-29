@@ -52,26 +52,22 @@ public class SlimeSpawner : MonoBehaviour {
 
         if (_spawnTimer > _spawnRate)
         {
-            int random = Random.Range(0, _elements.GetList().Count);
-            //if ((ObjectManager.Instance.GetActiveObjects(_spawner) != null))
-            //{
-            //    if (ObjectManager.Instance.GetActiveObjects(_prefab) != null)
-            //    {
-            //        if (ObjectManager.Instance.GetActiveObjects(_prefab).Count < (_maxSpawnCount * ObjectManager.Instance.GetActiveObjects(_spawner).Count))
-            //        {
-            //            int random = Random.Range(0, EnumHolder.Instance._elements.Count);
-            //            GetSlimeFromPool(random, gameObject.transform.position);
-            //        }
-            //    }
-            //}
-            //    }
-            //    else
-            //    {
-            //        int random = Random.Range(0, EnumHolder.Instance._elements.Count);
-            //        GetSlimeFromPool(random, gameObject.transform.position);
-            //    }
-            //}
-            GetSlimeFromPool(random, gameObject.transform.position);
+            if ((ObjectManager.Instance.GetActiveObjects(_spawner) != null))
+            {
+                if (ObjectManager.Instance.GetActiveObjects(_prefab) != null)
+                {
+                    if (ObjectManager.Instance.GetActiveObjects(_prefab).Count < (_maxSpawnCount * ObjectManager.Instance.GetActiveObjects(_spawner).Count))
+                    {
+                        int random = Random.Range(0, _elements.GetList().Count);
+                        GetSlimeFromPool(random, gameObject.transform.position);
+                    }
+                }
+                else
+                {
+                    int random = Random.Range(0, _elements.GetList().Count);
+                    GetSlimeFromPool(random, gameObject.transform.position);
+                }
+            }
             _spawnTimer = 0;
         }
     }

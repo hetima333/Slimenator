@@ -14,7 +14,7 @@ MonoBehaviour:
   _Prefab: {fileID: 1294561646650140, guid: 2249c65a616e71048972fb35250b8b9d, type: 2}
   MaxHealth: 100
   MaxDamage: 1
-  MaxSpeed: 8
+  MaxSpeed: 18
   MaxSpeedMultiplyer: 1
   MaxDamageMultiplyer: 1
   MaxHealthMultiplyer: 1
