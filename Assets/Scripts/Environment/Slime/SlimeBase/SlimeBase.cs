@@ -13,8 +13,8 @@ public abstract class SlimeBase : MonoBehaviour, ISuckable, IDamageable, IElemen
     Stats _properties;
     Status _status;
 
-	public float MaxHitPoint { get { return _properties.HealthProperties; } }
-	public float HitPoint { get { return _stats.Health; } }
+	public float MaxHitPoint { get { return _properties.MaxHealthProperties; } }
+	public float HitPoint { get { return _properties.HealthProperties; } }
 
 	#region Getter/Setter
 	public SlimeStats Stats
@@ -79,10 +79,13 @@ public abstract class SlimeBase : MonoBehaviour, ISuckable, IDamageable, IElemen
         {
             _status = gameObject.GetComponent<Status>();
         }
+
+        _properties.HealthProperties = _properties.MaxHealthProperties;
     }
 
     protected virtual void Update () {
         _state.Tick();
+        TakeDamage(_status.GetValue(EnumHolder.EffectType.HEALTH));
     }
 
     protected virtual void LateUpdate()
@@ -93,9 +96,9 @@ public abstract class SlimeBase : MonoBehaviour, ISuckable, IDamageable, IElemen
   
     public void TakeDamage(float dmg)
     {
-        _stats.Health -= dmg;
-
-        if (_stats.Health <= 0)
+        _properties.HealthProperties -= dmg;
+            
+        if (_properties.HealthProperties <= 0)
         {
             Die();
         }
@@ -121,7 +124,7 @@ public abstract class SlimeBase : MonoBehaviour, ISuckable, IDamageable, IElemen
         _properties = newstats;
 
         _stats = new SlimeStats();
-        _stats.Health = _properties.HealthProperties;
+        _properties.HealthProperties = _properties.MaxHealthProperties;
         _properties.SpeedMultiplyerProperties = speedmultiplyer;
         _stats.Elementtype = type;
         _stats.IsDead = false;

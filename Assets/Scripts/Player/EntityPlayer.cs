@@ -143,6 +143,8 @@ public class EntityPlayer : MonoBehaviour, IDamageable
     // Update is called once per frame
     private void Update()
     {
+        TakeDamage(_Status.GetValue(EnumHolder.EffectType.HEALTH));
+
         _CheckFuntions[_Player_State]();
         _Animator.SetInteger("State", (int)_Player_State);
 
