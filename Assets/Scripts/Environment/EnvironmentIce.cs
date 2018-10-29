@@ -2,27 +2,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnvironmentFire : EnvironmentBase {
+public class EnvironmentIce : EnvironmentBase
+{
     [SerializeField]
     private ParticleSystem _pSystem;
     private ParticleSystem.MainModule _pSystemMain;
     private ParticleInterface _pInterface;
 
-    protected override void Awake() {
+    protected override void Awake()
+    {
         _pSystem = GetComponentInChildren<ParticleSystem>();
         _pInterface = GetComponent<ParticleInterface>();
         _pSystemMain = _pSystem.main;
     }
 
     // Use this for initialization
-    protected override void Start () {
+    protected override void Start()
+    {
         _pInterface.Init();
     }
 
     // Update is called once per frame
-    protected override void Update () {
+    protected override void Update()
+    {
         base.Update();
-	}
+    }
 
     public override void InitObjectWithLife(float lifetime, Vector3 pos, Vector3 size, bool isStatic = true)
     {

@@ -99,7 +99,8 @@ public class EntityPlayer : MonoBehaviour, IDamageable
 
     private void IdleCheckFunction()
     {
-        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+        //if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+        if (InputManager.LS_Joystick() != Vector3.zero)
         {
             _Player_State = EnumHolder.States.MOVING;
             return;
@@ -108,7 +109,8 @@ public class EntityPlayer : MonoBehaviour, IDamageable
 
     private void MovingCheckFunction()
     {
-        if (!(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)))
+        //if (!(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)))
+        if (InputManager.LS_Joystick() == Vector3.zero)
         {
             _Player_State = EnumHolder.States.IDLE;
             return;
@@ -149,7 +151,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable
             _Player_State != EnumHolder.States.DIE &&
             Speed > 0)
         {
-            if (Input.GetKey(KeyCode.Mouse0))
+            if (InputManager.Suck_Input())
             {
                 if (!_SuckingParticle.activeSelf)
                     _SuckingParticle.SetActive(true);
@@ -177,7 +179,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable
             }
 
             //Storing of skill
-            if (Input.GetKeyDown(KeyCode.LeftShift))
+            if (InputManager.CombineOrbs_Input())
             {
                 StoreSkills();
             }
@@ -186,7 +188,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable
             {
                 if (_Skills.Count > 1)
                 {
-                    float position = Input.GetAxis("Mouse ScrollWheel");
+                    float position = InputManager.SkillScroll_Input();
                     if (position > 0f)
                     {
                         --_CurrentSelection;                     
@@ -199,7 +201,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable
                 else
                     _CurrentSelection = 0;
 
-                if (Input.GetKeyDown(KeyCode.Mouse2))
+                if (InputManager.UseSkills_Input())
                 {
                     UseSkill();
                 }

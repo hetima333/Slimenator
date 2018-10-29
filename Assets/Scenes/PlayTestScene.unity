@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -336,6 +336,12 @@ Prefab:
       propertyPath: m_RootOrder
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 114217373760369310, guid: 2495d5732c3679a40a06bf08e5be9e30,
+        type: 2}
+      propertyPath: _Stat
+      value: 
+      objectReference: {fileID: 11400000, guid: 9114a6ffafdbaf1489aa4b02df6b0ad7,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2495d5732c3679a40a06bf08e5be9e30, type: 2}
   m_IsPrefabParent: 0
@@ -562,6 +568,24 @@ Prefab:
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 114429317269427306, guid: 2249c65a616e71048972fb35250b8b9d,
+        type: 2}
+      propertyPath: _skillTier
+      value: 
+      objectReference: {fileID: 11400000, guid: dcd849cc3d1479044834399c90986366,
+        type: 2}
+    - target: {fileID: 114429317269427306, guid: 2249c65a616e71048972fb35250b8b9d,
+        type: 2}
+      propertyPath: _baseSkill
+      value: 
+      objectReference: {fileID: 11400000, guid: 4f203488e8646e248a88079e91126339,
+        type: 2}
+    - target: {fileID: 114429317269427306, guid: 2249c65a616e71048972fb35250b8b9d,
+        type: 2}
+      propertyPath: _combiSkill
+      value: 
+      objectReference: {fileID: 11400000, guid: f99c96af4be7dbb41aadfb0eae2d5767,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2249c65a616e71048972fb35250b8b9d, type: 2}
   m_IsPrefabParent: 0

@@ -10,7 +10,7 @@ public class SlimeManager : SingletonMonoBehaviour<SlimeManager> {
 
     [SerializeField]
     public SOList
-       _elements;
+        _elements;
 
     private void Start()
     {
@@ -21,15 +21,16 @@ public class SlimeManager : SingletonMonoBehaviour<SlimeManager> {
         //Temporary
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            //ObjectManager.Instance.InstantiateWithObjectPooling(_prefab, transform.position, transform.rotation).GetComponent<EnvironmentBase>();
             int random = Random.Range(0, _elements.GetList().Count);
-            GetSlimeFromPool(random);
+            GetSlimeFromPool(random, Vector3.one);
         }
     }
 
-    public GameObject GetSlimeFromPool(int type)
+    public GameObject GetSlimeFromPool(int type, Vector3 position = new Vector3())
     {
-        GameObject slime_obj = ObjectManager.Instance.InstantiateWithObjectPooling(_prefab, new Vector3 (0,0.5f,0));
-        Stats temp = EnumHolder.instance.GetStats(_prefab.name);
+        GameObject slime_obj = ObjectManager.Instance.InstantiateWithObjectPooling(_prefab, position);
+        Stats temp = EnumHolder.Instance.GetStats(_prefab.name);
         SlimeBase temp_component = slime_obj.GetComponent<SlimeBase>();
 
         if (temp_component != null)

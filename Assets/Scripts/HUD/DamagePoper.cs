@@ -10,17 +10,15 @@ public class DamagePoper : SingletonMonoBehaviour<DamagePoper> {
 	/// <summary>
 	/// ダメージをポップする
 	/// </summary>
-	/// <param name="worldPosition">ポップするワールド座標</param>
+	/// <param name="trans">ポップする座標</param>
 	/// <param name="damage">ダメージ</param>
-	public void PopDamage(Vector3 worldPosition, int damage){
-		// ワールド座標をスクリーン座標に変換する
-		Vector3 pos = Camera.main.WorldToScreenPoint(worldPosition);
-
+	public void PopDamage(Transform trans, int damage) {
 		// TODO : オブジェクトプールを使ってインスタンス化する
-		// var ins = Instantiate(_dmgText, pos, Quaternion.identity);
-		var ins = ObjectManager.Instance.InstantiateWithObjectPooling(_dmgText.gameObject, pos);
+		var ins = ObjectManager.Instance.InstantiateWithObjectPooling(_dmgText.gameObject);
 		// 親子関係を設定
-		ins.transform.SetParent(this.transform);
+		ins.transform.SetParent(trans);
+		ins.transform.localPosition = Vector3.zero;
+		ins.transform.localScale = Vector3.one;
 
 		// ダメージをセットする
 		ins.GetComponent<DamageText>().SetDamage(damage);
