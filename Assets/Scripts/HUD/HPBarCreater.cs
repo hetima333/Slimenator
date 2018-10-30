@@ -10,16 +10,35 @@ using UnityEngine.UI;
 public class HPBarCreater : MonoBehaviour {
 
 	[SerializeField]
-	private GameObject _prefab;
+	private GameObject _hpbarCanvas;
 
 	[SerializeField]
 	private Vector3 _offset;
 
 	private Canvas _canvas;
 
+	// まとめて保管する親オブジェクト
+	private GameObject _parent;
+
+	// 親オブジェクトの名前
+	private string _parentName = "UIs";
+
 	// Use this for initialization
 	void Start() {
-		var obj = Instantiate(_prefab);
+		// 親オブジェクトが既に存在するか探索する
+		_parent = GameObject.Find(_parentName);
+		// 存在しなかったら
+		if (_parent == null) {
+			// 親オブジェクトの生成
+			_parent = Instantiate(new GameObject(_parentName), Vector3.zero, Quaternion.Euler(Vector3.zero));
+			// 生成タイミングが被った時に被ったほうを破棄して再設定
+			if (_parent.name != _parentName) {
+				Destroy(_parent);
+				_parent = GameObject.Find(_parentName);
+			}
+		}
+
+		var obj = Instantiate(_hpbarCanvas, _parent.transform);
 		obj.transform.position = this.transform.position + _offset;
 
 		_canvas = obj.GetComponent<Canvas>();
