@@ -81,7 +81,7 @@ public abstract class Skill : ScriptableObject
         {
             if (_ChannelingParticleCopy != null)
             {
-                DestroyImmediate(_ChannelingParticleCopy);
+                Destroy(_ChannelingParticleCopy);
                 _ChannelingParticleCopy = null;
             }
         }
@@ -98,7 +98,7 @@ public abstract class Skill : ScriptableObject
         {
             if (_CastingParticleCopy != null)
             {
-                DestroyImmediate(_CastingParticleCopy);
+                Destroy(_CastingParticleCopy);
                 _CastingParticleCopy = null;
             }
         }
@@ -151,13 +151,13 @@ public abstract class Skill : ScriptableObject
     {
         if (_ChannelingParticleCopy != null)
         {
-            DestroyImmediate(_ChannelingParticleCopy);
+            Destroy(_ChannelingParticleCopy);
             _ChannelingParticleCopy = null;
         }
 
         if (_CastingParticleCopy != null)
         {
-            DestroyImmediate(_CastingParticleCopy);
+            Destroy(_CastingParticleCopy);
             _CastingParticleCopy = null;
         }
     }

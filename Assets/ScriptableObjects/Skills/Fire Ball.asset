@@ -25,3 +25,4 @@ MonoBehaviour:
   _CastingParticle: {fileID: 0}
   _Projectile: {fileID: 1762178163839322, guid: ac48cf082fcd82843a04c8748fdaa940,
     type: 2}
+  _Range: 2
