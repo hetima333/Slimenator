@@ -40,7 +40,7 @@ public class EntityPlayerMovement : MonoBehaviour
     void Move()
     {
         Vector3 movement = Vector3.zero;
-
+        
         if (InputManager.LS_Joystick() != Vector3.zero)
         {
             movement += Vector3.Scale(_Camera.gameObject.transform.forward.normalized, InputManager.LS_Joystick()) * _EntityPlayer.Speed * Time.deltaTime;

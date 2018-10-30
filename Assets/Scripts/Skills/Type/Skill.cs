@@ -83,31 +83,38 @@ public abstract class Skill : ScriptableObject
             {
                 Destroy(_ChannelingParticleCopy);
                 _ChannelingParticleCopy = null;
+                Debug.Log("---CHANNELING SKILL---");
             }
         }
         else
         {
             if (_ChannelingParticle != null && _ChannelingParticleCopy == null)
             {
+                Debug.Log("+++CHANNELING SKILL+++");
                 _ChannelingParticleCopy = Instantiate(_ChannelingParticle, spawn_position, caster.transform.rotation, caster.transform);
                 _ChannelingParticleCopy.transform.localScale = new Vector3(_SkillTier.GetMultiplyer(), _SkillTier.GetMultiplyer(), _SkillTier.GetMultiplyer());
             }
         }
 
-        if(IsSkillOver())
+        if (IsTimeOver())
         {
-            if (_CastingParticleCopy != null)
+            if (IsSkillOver())
             {
-                Destroy(_CastingParticleCopy);
-                _CastingParticleCopy = null;
+                if (_CastingParticleCopy != null)
+                {
+                    Destroy(_CastingParticleCopy);
+                    _CastingParticleCopy = null;
+                    Debug.Log("---CASTING SKILL---");
+                }
             }
-        }
-        else
-        {
-            if (_CastingParticle != null && _CastingParticleCopy == null)
+            else
             {
-                _CastingParticleCopy = Instantiate(_CastingParticle, spawn_position, caster.transform.rotation, caster.transform);
-                _CastingParticleCopy.transform.localScale = new Vector3(_SkillTier.GetMultiplyer(), _SkillTier.GetMultiplyer(), _SkillTier.GetMultiplyer());
+                if (_CastingParticle != null && _CastingParticleCopy == null)
+                {
+                    _CastingParticleCopy = Instantiate(_CastingParticle, spawn_position, caster.transform.rotation, caster.transform);
+                    _CastingParticleCopy.transform.localScale = new Vector3(_SkillTier.GetMultiplyer(), _SkillTier.GetMultiplyer(), _SkillTier.GetMultiplyer());
+                    Debug.Log("+++CASTING SKILL+++");
+                }
             }
         }
     }

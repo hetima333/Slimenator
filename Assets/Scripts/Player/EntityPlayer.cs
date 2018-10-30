@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class EntityPlayer : MonoBehaviour, IDamageable
 {
+    private enum DIRECTION
+    {
+        FRONT = 0,
+        BACK,
+        RIGHT,
+        LEFT
+    }
+
     [SerializeField]
     private GameObject
         _SuckingParticle,
@@ -38,11 +46,17 @@ public class EntityPlayer : MonoBehaviour, IDamageable
         _CurrentSkillOutcome,
         _CurrentUseSkill;
 
+    private Vector3
+        _PrevPosition;
+
     private int
         _CurrentSelection;
 
     private EnumHolder.States
         _Player_State;
+
+    private DIRECTION
+        _Player_Dir;
 
     private Dictionary<EnumHolder.States, CheckFunctions> 
         _CheckFuntions = new Dictionary<EnumHolder.States, CheckFunctions>();
@@ -83,6 +97,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable
         _Money = 0;
 
         _Player_State = EnumHolder.States.IDLE;
+        _Player_Dir = DIRECTION.FRONT;
 
         _Animator = gameObject.GetComponentInChildren<Animator>();
         _Status = gameObject.GetComponent<Status>();
@@ -96,9 +111,12 @@ public class EntityPlayer : MonoBehaviour, IDamageable
 
     private void IdleCheckFunction()
     {
+        _PrevPosition = gameObject.transform.position;
+
         //if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
         if (InputManager.LS_Joystick() != Vector3.zero)
         {
+            _Player_Dir = DIRECTION.FRONT;
             _Player_State = EnumHolder.States.MOVING;
             return;
         }
@@ -112,6 +130,23 @@ public class EntityPlayer : MonoBehaviour, IDamageable
             _Player_State = EnumHolder.States.IDLE;
             return;
         }
+
+        float ForwardAngle = Vector3.Angle(gameObject.transform.forward.normalized, (_PrevPosition - gameObject.transform.position).normalized);
+        float RightAngle = Vector3.Angle(gameObject.transform.right.normalized, (_PrevPosition - gameObject.transform.position).normalized);
+
+        if (ForwardAngle < 30)
+            _Player_Dir = DIRECTION.BACK;
+        else if (ForwardAngle > 150)
+            _Player_Dir = DIRECTION.FRONT;
+        else if(ForwardAngle >= 30 && ForwardAngle <= 150)
+        {
+            if(RightAngle < 90)
+                _Player_Dir = DIRECTION.RIGHT;
+            else
+                _Player_Dir = DIRECTION.LEFT;
+        }
+
+        _PrevPosition = gameObject.transform.position;
     }
 
     private void KickingCheckFunction()
@@ -144,6 +179,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable
 
         _CheckFuntions[_Player_State]();
         _Animator.SetInteger("State", (int)_Player_State);
+        _Animator.SetInteger("Direction", (int)_Player_Dir);
 
         if (_Player_State != EnumHolder.States.CASTING && 
             _Player_State != EnumHolder.States.KICKING && 
