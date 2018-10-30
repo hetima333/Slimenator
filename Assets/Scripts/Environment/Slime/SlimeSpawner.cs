@@ -6,8 +6,11 @@ public class SlimeSpawner : MonoBehaviour {
 
     [SerializeField]
     private GameObject
-        _spawner,
         _prefab;
+
+    [SerializeField]
+    private PrefabHolder
+        _spawner;
 
     [SerializeField]
     private float
@@ -52,11 +55,11 @@ public class SlimeSpawner : MonoBehaviour {
 
         if (_spawnTimer > _spawnRate)
         {
-            if ((ObjectManager.Instance.GetActiveObjects(_spawner) != null))
+            if ((ObjectManager.Instance.GetActiveObjects(_spawner.GetPrefab()) != null))
             {
                 if (ObjectManager.Instance.GetActiveObjects(_prefab) != null)
                 {
-                    if (ObjectManager.Instance.GetActiveObjects(_prefab).Count < (_maxSpawnCount * ObjectManager.Instance.GetActiveObjects(_spawner).Count))
+                    if (ObjectManager.Instance.GetActiveObjects(_prefab).Count < (_maxSpawnCount * ObjectManager.Instance.GetActiveObjects(_spawner.GetPrefab()).Count))
                     {
                         int random = Random.Range(0, _elements.GetList().Count);
                         GetSlimeFromPool(random, gameObject.transform.position);
@@ -79,7 +82,7 @@ public class SlimeSpawner : MonoBehaviour {
         SlimeBase temp_component = slime_obj.GetComponent<SlimeBase>();
 
         if (temp_component != null)
-            DestroyImmediate(temp_component);
+            Destroy(temp_component);
 
         System.Type _MyScriptType = System.Type.GetType(((ElementType)_elements.GetList()[type]).GetSlimeScriptName());
         slime_obj.AddComponent(_MyScriptType);
