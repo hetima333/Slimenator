@@ -17,8 +17,10 @@ public class EntityPlayer : MonoBehaviour, IDamageable
         _Player_Stats;
 
     private float
-        _HP,
         _Money;
+
+    private Status
+        _Status;
 
     [SerializeField]
     private SOList
@@ -48,9 +50,24 @@ public class EntityPlayer : MonoBehaviour, IDamageable
     private Animator
         _Animator;
 
-	public float MaxHitPoint {get { return _Player_Stats.HealthProperties; } }
-	public float HitPoint {get { return _HP; } }
+	public float MaxHitPoint {get { return _Player_Stats.MaxHealthProperties; } }
+	public float HitPoint {get { return _Player_Stats.HealthProperties; } }
     public float MoneyAmount { get { return _Money; } }
+    public float Speed
+    {
+        get
+        {
+            if (_Status != null)
+            {
+                return _Player_Stats.SpeedProperties *
+                    ((100.0f - ((_Status.GetValue(EnumHolder.EffectType.SPEED) > 100) ? 100 :
+                    ((_Status.GetValue(EnumHolder.EffectType.SPEED) < 0) ? 0 :
+                    _Status.GetValue(EnumHolder.EffectType.SPEED)))) / 100.0f);
+            }
+            else
+                return _Player_Stats.SpeedProperties;
+        }
+    }
     [SerializeField]
     private GameObject
         _CastingPoint;
@@ -65,12 +82,13 @@ public class EntityPlayer : MonoBehaviour, IDamageable
 
         _Player_Stats = EnumHolder.Instance.GetStats(gameObject.name);
 
-        _HP = _Player_Stats.HealthProperties;
+        _Player_Stats.HealthProperties = _Player_Stats.MaxHealthProperties;
         _Money = 0;
 
         _Player_State = EnumHolder.States.IDLE;
 
         _Animator = gameObject.GetComponentInChildren<Animator>();
+        _Status = gameObject.GetComponent<Status>();
 
         _CheckFuntions.Add(EnumHolder.States.IDLE, IdleCheckFunction);
         _CheckFuntions.Add(EnumHolder.States.MOVING, MovingCheckFunction);
@@ -125,12 +143,15 @@ public class EntityPlayer : MonoBehaviour, IDamageable
     // Update is called once per frame
     private void Update()
     {
+        TakeDamage(_Status.GetValue(EnumHolder.EffectType.HEALTH));
+
         _CheckFuntions[_Player_State]();
         _Animator.SetInteger("State", (int)_Player_State);
 
         if (_Player_State != EnumHolder.States.CASTING && 
             _Player_State != EnumHolder.States.KICKING && 
-            _Player_State != EnumHolder.States.DIE)
+            _Player_State != EnumHolder.States.DIE &&
+            Speed > 0)
         {
             if (InputManager.Suck_Input())
             {
@@ -210,8 +231,8 @@ public class EntityPlayer : MonoBehaviour, IDamageable
 
     protected virtual void LateUpdate()
     {
-        if (_Animator.speed != _Player_Stats.SpeedMultiplyerProperties)
-            _Animator.speed = _Player_Stats.SpeedMultiplyerProperties;
+        if (_Animator.speed != (Speed / _Player_Stats.SpeedProperties) * _Player_Stats.SpeedMultiplyerProperties)
+            _Animator.speed = (Speed / _Player_Stats.SpeedProperties) * _Player_Stats.SpeedMultiplyerProperties;
     }
 
     public void StoreElementInOrb(ElementType type)
@@ -223,8 +244,8 @@ public class EntityPlayer : MonoBehaviour, IDamageable
                 break;
 
             case "Heal":
-                _HP += type.GetRandomAmount();
-                _HP = Mathf.Clamp(_HP, 0, _Player_Stats.HealthProperties);
+                _Player_Stats.HealthProperties += type.GetRandomAmount();
+                _Player_Stats.HealthProperties = Mathf.Clamp(_Player_Stats.HealthProperties, 0, _Player_Stats.MaxHealthProperties);
                 break;
 
             default:
@@ -351,7 +372,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable
 
     public bool IsDead()
     {
-        return _HP <= 0;
+        return _Player_Stats.HealthProperties <= 0;
     }
 
     void OnGUI()
@@ -382,7 +403,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable
 
     public void TakeDamage(float Damage)
     {
-        _HP -= Damage;
+        _Player_Stats.HealthProperties -= Damage;
     }
 
     public Queue<ElementType> GetOrbsInSlot()
@@ -403,6 +424,11 @@ public class EntityPlayer : MonoBehaviour, IDamageable
     public Skill CurrentSkillOutcome()
     {
         return _CurrentSkillOutcome;
+    }
+
+    public Status GetStatus()
+    {
+        return _Status;
     }
 
     delegate void CheckFunctions();

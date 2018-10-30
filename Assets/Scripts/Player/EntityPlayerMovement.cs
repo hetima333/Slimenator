@@ -33,7 +33,7 @@ public class EntityPlayerMovement : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (_EntityPlayer.GetPlayerState() != EnumHolder.States.DIE)
+        if (_EntityPlayer.GetPlayerState() != EnumHolder.States.DIE && _EntityPlayer.Speed > 0)
             Rotate();
     }
 

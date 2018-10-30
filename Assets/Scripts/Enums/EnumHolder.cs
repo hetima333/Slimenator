@@ -32,7 +32,12 @@ public class EnumHolder : SingletonMonoBehaviour<EnumHolder>
         foreach(Stats s in _Stat.GetList())
         {
             if (s.GetPrefabName().Equals(InstanceName))
-                return Instantiate(s);
+            {
+                if (s.IsUseByMultiple)
+                    return Instantiate(s);
+                else
+                    return s;
+            }
         }
 
         return null;

@@ -13,8 +13,8 @@ public abstract class Skill : ScriptableObject
         _Base;
 
     [SerializeField]
-    protected List<SkillProperties>
-        _Properties = new List<SkillProperties>();
+    protected List<StatusEffect>
+        _StatusEffect = new List<StatusEffect>();
 
     [SerializeField]
     protected GameObjectList

@@ -22,11 +22,11 @@ public class GameEvent : ScriptableObject
         }
     }
 
-    public void InvokeSpecificListner(string UUIDInput)
+    public void InvokeSpecificListner(int UUIDInput)
     {
         for (int i = Event_Listeners.Count - 1; i >= 0; i--)
         {
-            if (Event_Listeners[i].GetUUID().Equals(UUIDInput))
+            if (Event_Listeners[i].gameObject.GetInstanceID().Equals(UUIDInput))
             {
                 Event_Listeners[i].OnEventRaised(this.name);
                 break;

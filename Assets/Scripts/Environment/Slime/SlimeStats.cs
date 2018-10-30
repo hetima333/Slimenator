@@ -14,7 +14,6 @@ public class SlimeStats
     };
 
     float
-        _health,
         _movementRange,
         _maxMovementRange;
 
@@ -25,18 +24,6 @@ public class SlimeStats
     ElementType _elementtype;
 
     #region Getter/Setter
-    public float Health
-    {
-        get
-        {
-            return _health;
-        }
-
-        set
-        {
-            _health = value;
-        }
-    }
     public float MovementRange
     {
         get
