@@ -130,8 +130,9 @@ public class Distribute : MonoBehaviour
                 var z = RogueUtils.GetRandomInt(startZ, endZ);
                 position = new Position(x, z);
             }
-            //床があるところに限定する
-            while (_map[position._x, position._z] != (int)MapGenerator.MAP_STATUS.FLOOR);
+            //床があるところに限定し、プレイヤーと重ならないようにする
+            while ((_map[position._x, position._z] != (int)MapGenerator.MAP_STATUS.FLOOR) &&
+            (_map[position._x, position._z] == (int)MapGenerator.MAP_STATUS.PLAYER));
 
             //オブジェクトを生成する
             ObjectManager.Instance.InstantiateWithObjectPooling(type, new Vector3(position._x * _mapSize, 1, position._z * _mapSize), new Quaternion());

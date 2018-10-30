@@ -165,6 +165,35 @@ public class CreateRandomMap : MonoBehaviour
 
         //プレイヤーの位置設定
         _player.transform.position = new Vector3(position._x * _mapSize, 0, position._z * _mapSize);
+        //マップのプレイヤーの位置を追加
+        _map[position._x, position._z] = (int)MapGenerator.MAP_STATUS.PLAYER;
+        //上下左右もプレイヤーの位置として設定する
+        _map[position._x, position._z + 1] = (int)MapGenerator.MAP_STATUS.PLAYER;
+        _map[position._x, position._z - 1] = (int)MapGenerator.MAP_STATUS.PLAYER;
+        _map[position._x + 1, position._z] = (int)MapGenerator.MAP_STATUS.PLAYER;
+        _map[position._x - 1, position._z] = (int)MapGenerator.MAP_STATUS.PLAYER;
+        _map[position._x + 1, position._z + 1] = (int)MapGenerator.MAP_STATUS.PLAYER;
+        _map[position._x + 1, position._z - 1] = (int)MapGenerator.MAP_STATUS.PLAYER;
+        _map[position._x - 1, position._z + 1] = (int)MapGenerator.MAP_STATUS.PLAYER;
+        _map[position._x - 1, position._z - 1] = (int)MapGenerator.MAP_STATUS.PLAYER;
+
+        _map[position._x, position._z + 2] = (int)MapGenerator.MAP_STATUS.PLAYER;
+        _map[position._x, position._z - 2] = (int)MapGenerator.MAP_STATUS.PLAYER;
+        _map[position._x + 2, position._z] = (int)MapGenerator.MAP_STATUS.PLAYER;
+        _map[position._x - 2, position._z] = (int)MapGenerator.MAP_STATUS.PLAYER;
+        _map[position._x + 2, position._z + 1] = (int)MapGenerator.MAP_STATUS.PLAYER;
+        _map[position._x + 1, position._z + 2] = (int)MapGenerator.MAP_STATUS.PLAYER;
+        _map[position._x - 2, position._z + 1] = (int)MapGenerator.MAP_STATUS.PLAYER;
+        _map[position._x - 1, position._z + 2] = (int)MapGenerator.MAP_STATUS.PLAYER;
+        _map[position._x + 2, position._z - 1] = (int)MapGenerator.MAP_STATUS.PLAYER;
+        _map[position._x + 1, position._z - 2] = (int)MapGenerator.MAP_STATUS.PLAYER;
+        _map[position._x - 2, position._z - 1] = (int)MapGenerator.MAP_STATUS.PLAYER;
+        _map[position._x - 1, position._z - 2] = (int)MapGenerator.MAP_STATUS.PLAYER;
+        _map[position._x + 2, position._z + 2] = (int)MapGenerator.MAP_STATUS.PLAYER;
+        _map[position._x + 2, position._z - 2] = (int)MapGenerator.MAP_STATUS.PLAYER;
+        _map[position._x - 2, position._z + 2] = (int)MapGenerator.MAP_STATUS.PLAYER;
+        _map[position._x - 2, position._z - 2] = (int)MapGenerator.MAP_STATUS.PLAYER;
+
     }
 
 }
