@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class PauseTest : MonoBehaviour {
 
+	[SerializeField]
+	private GameObject _panelPrefab;
+
+	private GameObject _panel;
+
 	// Use this for initialization
 	void Start() {
 
@@ -11,8 +16,13 @@ public class PauseTest : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update() {
-		if (Input.GetKeyDown(KeyCode.P)) {
+		if (Input.GetKeyDown(KeyCode.Escape)) {
 			Pausable.Instance.Pausing = !Pausable.Instance.Pausing;
+			if (Pausable.Instance.Pausing) {
+				_panel = Instantiate(_panelPrefab);
+			} else {
+				Destroy(_panel);
+			}
 		}
 	}
 }
