@@ -34,7 +34,7 @@ public class SlimeManager : SingletonMonoBehaviour<SlimeManager> {
         SlimeBase temp_component = slime_obj.GetComponent<SlimeBase>();
 
         if (temp_component != null)
-            Destroy(temp_component);
+            DestroyImmediate(temp_component);
 
         System.Type _MyScriptType = System.Type.GetType(((ElementType)_elements.GetList()[type]).GetSlimeScriptName());
         slime_obj.AddComponent(_MyScriptType);

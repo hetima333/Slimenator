@@ -468,6 +468,12 @@ Prefab:
       value: 
       objectReference: {fileID: 11400000, guid: f99c96af4be7dbb41aadfb0eae2d5767,
         type: 2}
+    - target: {fileID: 114614517059951354, guid: 2249c65a616e71048972fb35250b8b9d,
+        type: 2}
+      propertyPath: _hpbarCanvas
+      value: 
+      objectReference: {fileID: 1883121316519442, guid: 07f82906bffcd4ba9831779e5e2ddb31,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2249c65a616e71048972fb35250b8b9d, type: 2}
   m_IsPrefabParent: 0
