@@ -51,24 +51,24 @@ public class LongRangeEnemy : Enemy {
             case State.IDLE:
                 //待機
                 StartCoroutine (_move.Idle ());
-                _anim.CrossFade ("Idle", 0);
+                _anim.CrossFade ("Idle", 0.5f);
                 break;
 
             case State.FREE:
                 //自由移動
                 _move.FreeMove ();
-                _anim.CrossFade ("Move", 0);
+                _anim.CrossFade ("Move", 0.5f);
                 break;
             case State.DISCOVERY:
                 //プレイヤー追従
                 _move.Move2Player ();
-                _anim.CrossFade ("Move", 0);
+                _anim.CrossFade ("Move", 0.5f);
                 break;
 
             case State.RETURN:
                 //初期位置に帰る
                 _move.Return2FirstPos ();
-                _anim.CrossFade ("Move", 0);
+                _anim.CrossFade ("Move", 0.5f);
                 break;
 
             case State.ATTACK:
@@ -99,7 +99,7 @@ public class LongRangeEnemy : Enemy {
         }
 
         //遠距離攻撃
-        _anim.CrossFade ("Attack", 0);
+        _anim.CrossFade ("Attack", 0.5f);
 
         //アニメーションとの時間調整
         yield return new WaitForSeconds (0.2f);

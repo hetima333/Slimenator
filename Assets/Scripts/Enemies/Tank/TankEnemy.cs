@@ -11,7 +11,7 @@ public class TankEnemy : Enemy {
     //TODO Enemy Performance
     const float MAX_HP = 250.0f;
     const float MOVE_SPEED = 2.0f;
-    const float SEARCH_RANGE = 4.0f;
+    const float SEARCH_RANGE = 11.0f;
     const float ATTACK_RANGE = 2.0f;
     const float MOVE_RANGE = 2.0f;
     const float MONEY = 150.0f;
@@ -30,6 +30,8 @@ public class TankEnemy : Enemy {
 
     [SerializeField]
     private float[] _comboDamage = { 10, 15, 20, 20 };
+
+    private float[] _comboDelay = { 1.5f, 0.8f, 1.5f };
 
     // Use this for initialization
     void Start () {
@@ -63,20 +65,24 @@ public class TankEnemy : Enemy {
                 case State.IDLE:
                     //待機
                     StartCoroutine (_move.Idle ());
+                    _anim.CrossFade ("Idle", 0);
                     break;
 
                 case State.FREE:
                     //自由移動
                     _move.FreeMove ();
+                    _anim.CrossFade ("Move", 0);
                     break;
                 case State.DISCOVERY:
                     //プレイヤー追従
                     _move.Move2Player ();
+                    _anim.CrossFade ("Move", 0);
                     break;
 
                 case State.RETURN:
                     //初期位置に帰る
                     _move.Return2FirstPos ();
+                    _anim.CrossFade ("Move", 0);
                     break;
 
                 case State.ATTACK:
@@ -112,7 +118,7 @@ public class TankEnemy : Enemy {
         //TODO 攻撃
         Debug.Log ("Combo" + (_comboCount + 1));
 
-        //_anim.CrossFade("Attack"+(_comboCount+1).ToString(),0);
+        _anim.CrossFade ("Attack" + (_comboCount + 1).ToString (), 0);
 
         _weaponList.ForEach (weapon => {
             //武器のダメージセット
@@ -132,10 +138,9 @@ public class TankEnemy : Enemy {
         }
 
         //TODO行動終了までの時間経過
-        yield return new WaitForSeconds (1);
+        yield return new WaitForSeconds (_comboDelay[_comboCount]);
 
         if (CurrentState == State.DEAD) yield break;
-        //_anim.CrossFade("Idle", 0);
 
         //コンボのカウント増加
         _comboCount++;
@@ -194,9 +199,9 @@ public class TankEnemy : Enemy {
 
     private IEnumerator WakeUp () {
 
-        //_anim.CrossFade ("WakeUp", 0);
+        _anim.CrossFade ("WakeUp", 0);
 
-        yield return new WaitForSeconds (1);
+        yield return new WaitForSeconds (6);
 
         _isSleeping = false;
         //Change State

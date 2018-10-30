@@ -1,6 +1,6 @@
 ﻿/// 敵の弾薬処理
 /// Processing enemy's bullets
-/// Athor：　Yuhei Mastumura
+/// Athor： Yuhei Mastumura
 /// Last edit date：2018/10/17
 
 using System.Collections;
@@ -24,7 +24,7 @@ public class EnemyBullet : MonoBehaviour {
         _aliveTime -= Time.deltaTime;
 
         if (_aliveTime <= 0) {
-            Destroy (gameObject);
+            ObjectManager.Instance.ReleaseObject (gameObject);
         }
     }
 
