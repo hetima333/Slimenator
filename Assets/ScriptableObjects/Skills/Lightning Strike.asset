@@ -16,12 +16,14 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   _Base: {fileID: 11400000, guid: 36f0bab903e87bc43a975a9ab8b5afd1, type: 2}
-  _Properties: []
+  _StatusEffect:
+  - {fileID: 11400000, guid: cb25ffbe128a58e4ea499cf97c1a51f3, type: 2}
   _Targetable: {fileID: 11400000, guid: 921fd2909285c1b40ac6aee462dd0d4a, type: 2}
-  _Damage: 100
+  _Damage: 20
   _Description: Strikes lightning down on your position
   _ChannelingParticle: {fileID: 1783820332162922, guid: 7c460cf7fffd6ce4d8c3b6f625ed6680,
     type: 2}
   _CastingParticle: {fileID: 1242461848233782, guid: 664f1451b9732a9499089f0494689818,
     type: 2}
   _CastingType: {fileID: 11400000, guid: 2e7805e5357b0af4699fb6b8109c705f, type: 2}
+  _percentage: 30

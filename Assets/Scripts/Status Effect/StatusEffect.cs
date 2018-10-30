@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [CreateAssetMenu(menuName = "Status Effect/Status")]
 public class StatusEffect : ScriptableObject
@@ -8,6 +9,10 @@ public class StatusEffect : ScriptableObject
     [SerializeField]
     private List<Effect>
         _EffectList = new List<Effect>();
+
+    [SerializeField]
+    private GameEvent
+        _Event;
 
     [SerializeField]
     private ElementType
@@ -39,5 +44,10 @@ public class StatusEffect : ScriptableObject
     public GameObject GetParticle()
     {
         return _Particle;
+    }
+
+    public GameEvent GetEvent()
+    {
+        return _Event;
     }
 }

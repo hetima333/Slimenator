@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public abstract class GenericList<T> : ScriptableObject
 {
     [SerializeField]

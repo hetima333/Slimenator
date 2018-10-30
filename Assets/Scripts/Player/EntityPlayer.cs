@@ -72,13 +72,10 @@ public class EntityPlayer : MonoBehaviour, IDamageable
     private GameObject
         _CastingPoint;
 
-    private void Start()
+    private void Awake()
     {
         _CurrentSkillOutcome = null;
         _CurrentSelection = 0;
-
-        if (_Player_Stats != null)
-            DestroyImmediate(_Player_Stats);
 
         _Player_Stats = EnumHolder.Instance.GetStats(gameObject.name);
 
@@ -130,7 +127,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable
         {
             _CurrentUseSkill.Reset();
             _Player_State = EnumHolder.States.IDLE;
-            DestroyImmediate(_CurrentUseSkill);
+            Destroy(_CurrentUseSkill);
         }
     }
 
@@ -252,7 +249,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable
                 {
                     if (_CurrentSkillOutcome != null)
                     {
-                        DestroyImmediate(_CurrentSkillOutcome);
+                        Destroy(_CurrentSkillOutcome);
                         _CurrentSkillOutcome = null;
                     }
                     

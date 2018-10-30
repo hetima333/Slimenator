@@ -15,7 +15,7 @@ public class Status : MonoBehaviour
             {
                 for (int i = st.Value.Count - 1; i >= 0; --i)
                 {
-                    DestroyImmediate(st.Value[i]);
+                    Destroy(st.Value[i]);
                     st.Value.RemoveAt(i);
                 }
             }
@@ -36,7 +36,7 @@ public class Status : MonoBehaviour
 
                     if (st.Value[i].IsEffectDone())
                     {
-                        DestroyImmediate(st.Value[i]);
+                        Destroy(st.Value[i]);
                         st.Value.RemoveAt(i);
                     }
                 }
@@ -52,9 +52,11 @@ public class Status : MonoBehaviour
         {
             foreach (Effect e in _Status[states])
             {
-                temp += e.GetAmount();
+                if(e.GetDelayOver())
+                    temp += e.GetAmount();
             }
         }
+
         return temp;
     }
 

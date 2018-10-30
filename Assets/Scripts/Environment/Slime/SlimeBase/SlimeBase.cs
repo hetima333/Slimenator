@@ -119,7 +119,7 @@ public abstract class SlimeBase : MonoBehaviour, ISuckable, IDamageable, IElemen
             CacheObject();
 
         if (_properties != null)
-            DestroyImmediate(_properties);
+            Destroy(_properties);
 
         _properties = newstats;
 

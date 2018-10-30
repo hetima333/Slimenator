@@ -9,11 +9,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cb11f4b6b46274046a9f4b101880e130, type: 3}
-  m_Name: Frost
+  m_Name: Stun
   m_EditorClassIdentifier: 
   _EffectList:
   - {fileID: 11400000, guid: 259cdd3fcee388f4996ebc4230b073ae, type: 2}
-  _Event: {fileID: 11400000, guid: 42c35453a99cb7d4f9acab8caf6d8c56, type: 2}
-  _Element: {fileID: 11400000, guid: 3598f9cad2b4e094e8abf6dc11ad1944, type: 2}
-  _Timer: 10
-  _Particle: {fileID: 1794536406230326, guid: bdd4a1986ac8eb040bca6373e8c90b18, type: 2}
+  - {fileID: 11400000, guid: 259cdd3fcee388f4996ebc4230b073ae, type: 2}
+  - {fileID: 11400000, guid: 259cdd3fcee388f4996ebc4230b073ae, type: 2}
+  _Event: {fileID: 11400000, guid: 2aae09e9ce58187459bc99c4cfa5e148, type: 2}
+  _Element: {fileID: 11400000, guid: 36f0bab903e87bc43a975a9ab8b5afd1, type: 2}
+  _Timer: 3
+  _Particle: {fileID: 1783820332162922, guid: 7c460cf7fffd6ce4d8c3b6f625ed6680, type: 2}
