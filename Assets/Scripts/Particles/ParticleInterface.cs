@@ -38,7 +38,7 @@ public class ParticleInterface : MonoBehaviour {
         for (int i = 0; i < _ps.Length; ++i)
         {
             ParticleSystem.MainModule main = _ps[i].main;
-            float duration = main.duration + main.startLifetime.constant + main.startDelay.constant;
+            float duration = main.duration;
             if (duration > tempMaxDuration)
                 tempMaxDuration = duration;
         }
