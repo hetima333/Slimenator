@@ -25,17 +25,13 @@ public class LongRangeEnemy : Enemy {
     // Use this for initialization
     void Start () {
         //ステータスのセット
-        SetStatus (MAX_HP, MOVE_SPEED, SEARCH_RANGE, ATTACK_RANGE, MOVE_RANGE, MONEY);
+        SetStatus (Enemy.Type.RANGE, MAX_HP, MOVE_SPEED, SEARCH_RANGE, ATTACK_RANGE, MOVE_RANGE, MONEY);
         //移動コンポーネントの取得
         _move = GetComponent<EnemyMove> ();
         //リジットボディの取得
         RigidbodyProperties = GetComponent<Rigidbody> ();
-        //索敵用コライダーの設定
-        SphereColliderProperties = GetComponent<SphereCollider> ();
-        //TriggerOn
-        SphereColliderProperties.isTrigger = true;
-        //範囲設定
-        SphereColliderProperties.radius = _searchRange;
+        _searchObj = transform.Find ("SearchRange").gameObject;
+        _searchObj.GetComponent<SearchPlayer> ().Initialize ();
         //自由移動ポジション設定
         _freeMovePosition = _move.SetMovePos ();
         //弾オブジェクトのロード
@@ -124,6 +120,15 @@ public class LongRangeEnemy : Enemy {
         //行動終了
         IsAction = false;
 
+    }
+
+    public override void Discover (GameObject obj) {
+        if (CurrentState != Enemy.State.DEAD) {
+            //Set Target
+            _target = obj.gameObject;
+            //Change State
+            CurrentState = Enemy.State.DISCOVERY;
+        }
     }
 
 }

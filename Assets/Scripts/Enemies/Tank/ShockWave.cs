@@ -39,7 +39,7 @@ public class ShockWave : MonoBehaviour {
 
     void OnParticleCollision (GameObject obj) {
 
-        Debug.Log (obj.name);
+        //Debug.Log (obj.name);
 
         //Make sure the target has components
         var hasIDamageableObject = obj.gameObject.GetComponent<IDamageable> ();

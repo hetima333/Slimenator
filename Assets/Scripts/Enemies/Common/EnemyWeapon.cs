@@ -11,6 +11,13 @@ public class EnemyWeapon : MonoBehaviour {
     [SerializeField]
     float _damage;
 
+    GameObject _shockWave;
+
+    void Start () {
+        //衝撃波オブジェクトのロード
+        _shockWave = Resources.Load ("EnemyItem/ShockWave", typeof (GameObject)) as GameObject;
+    }
+
     public void SetDamage (float damage) {
         _damage = damage;
     }
@@ -27,7 +34,9 @@ public class EnemyWeapon : MonoBehaviour {
     }
 
     //自分の本体に何かが接触した場合
-    void OnCollisionEnter (Collision col) {
+    void OnTriggerEnter (Collider col) {
+
+        //Debug.Log (col.gameObject.name);
         //Make sure the target has components
         var hasIDamageableObject = col.gameObject.GetComponent<IDamageable> ();
 
@@ -36,5 +45,23 @@ public class EnemyWeapon : MonoBehaviour {
             //ダメージ判定  
             hasIDamageableObject.TakeDamage (_damage);
         }
+
+        if (LayerMask.LayerToName (col.gameObject.layer) == "Ground") {
+
+            if (_shockWave) {
+                GameObject shockWave = Instantiate (_shockWave);
+                shockWave.GetComponent<ShockWave> ().SetDamage (10);
+                Vector3 ShockPos = col.ClosestPointOnBounds (this.transform.position);
+                ShockPos.y = 0.1f;
+                shockWave.transform.position = ShockPos;
+            }
+
+        }
+
     }
+
+    void OnTriggerExit (Collider col) {
+
+    }
+
 }

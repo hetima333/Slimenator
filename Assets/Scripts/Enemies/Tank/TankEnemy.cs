@@ -12,8 +12,8 @@ public class TankEnemy : Enemy {
     const float MAX_HP = 250.0f;
     const float MOVE_SPEED = 2.0f;
     const float SEARCH_RANGE = 11.0f;
-    const float ATTACK_RANGE = 2.0f;
-    const float MOVE_RANGE = 2.0f;
+    const float ATTACK_RANGE = 4.0f;
+    const float MOVE_RANGE = 4.0f;
     const float MONEY = 150.0f;
 
     //移動スクリプト
@@ -31,26 +31,22 @@ public class TankEnemy : Enemy {
     [SerializeField]
     private float[] _comboDamage = { 10, 15, 20, 20 };
 
-    private float[] _comboDelay = { 1.5f, 0.8f, 1.5f };
+    private float[] _comboDelay = { 1.5f, 0.8f, 1.7f };
 
     // Use this for initialization
     void Start () {
         //ステータスのセット
-        SetStatus (MAX_HP, MOVE_SPEED, SEARCH_RANGE, ATTACK_RANGE, MOVE_RANGE, MONEY);
+        SetStatus (Enemy.Type.TANK, MAX_HP, MOVE_SPEED, SEARCH_RANGE, ATTACK_RANGE, MOVE_RANGE, MONEY);
         //移動コンポーネントの取得
         _move = GetComponent<EnemyMove> ();
         //リジットボディの取得
         RigidbodyProperties = GetComponent<Rigidbody> ();
-        //索敵用コライダーの設定
-        SphereColliderProperties = GetComponent<SphereCollider> ();
-        //TriggerOn
-        SphereColliderProperties.isTrigger = true;
-        //範囲設定
-        SphereColliderProperties.radius = _searchRange;
+
+        _searchObj = transform.Find ("SearchRange").gameObject;
+        _searchObj.GetComponent<SearchPlayer> ().Initialize ();
         //自由移動ポジション設定
         _freeMovePosition = _move.SetMovePos ();
-        //衝撃波オブジェクトのロード
-        _shockWave = Resources.Load ("EnemyItem/ShockWave", typeof (GameObject)) as GameObject;
+
         //武器プレハブの取得
         SetWeapons ();
 
@@ -71,18 +67,18 @@ public class TankEnemy : Enemy {
                 case State.FREE:
                     //自由移動
                     _move.FreeMove ();
-                    _anim.CrossFade ("Move", 0);
+                    _anim.CrossFade ("Move", 0.5f);
                     break;
                 case State.DISCOVERY:
                     //プレイヤー追従
                     _move.Move2Player ();
-                    _anim.CrossFade ("Move", 0);
+                    _anim.CrossFade ("Move", 0.5f);
                     break;
 
                 case State.RETURN:
                     //初期位置に帰る
                     _move.Return2FirstPos ();
-                    _anim.CrossFade ("Move", 0);
+                    _anim.CrossFade ("Move", 0.5f);
                     break;
 
                 case State.ATTACK:
@@ -114,9 +110,7 @@ public class TankEnemy : Enemy {
             //相手の方向を見る。
             gameObject.transform.LookAt (targetPos);
         }
-
-        //TODO 攻撃
-        Debug.Log ("Combo" + (_comboCount + 1));
+        //Debug.Log ("Combo" + (_comboCount + 1));
 
         _anim.CrossFade ("Attack" + (_comboCount + 1).ToString (), 0);
 
@@ -126,16 +120,6 @@ public class TankEnemy : Enemy {
             //武器の当たり判定の実体化
             weapon.GetComponent<EnemyWeapon> ().ActiveCollision (true);
         });
-
-        if (_comboCount == 2) {
-            if (_shockWave) {
-                GameObject shockWave = Instantiate (_shockWave);
-                shockWave.GetComponent<ShockWave> ().SetDamage (_comboDamage[3]);
-                Vector3 ShockPos = gameObject.transform.position + transform.forward;
-                ShockPos.y = 0.1f;
-                shockWave.transform.position = ShockPos;
-            }
-        }
 
         //TODO行動終了までの時間経過
         yield return new WaitForSeconds (_comboDelay[_comboCount]);
@@ -158,42 +142,32 @@ public class TankEnemy : Enemy {
     private void SetWeapons () {
         _weaponList = new List<GameObject> ();
 
-        foreach (Transform child in transform) {
+        List<GameObject> childList = GetAllChildren.GetAll (gameObject);
+
+        foreach (GameObject obj in childList) {
             //child is your child transform
 
             //Make sure the target has components
-            var hasEnemyWeapon = child.gameObject.GetComponent<EnemyWeapon> ();
+            var hasEnemyWeapon = obj.GetComponent<EnemyWeapon> ();
 
             //If have a component
             if (hasEnemyWeapon != null) {
-                _weaponList.Add (child.gameObject);
+                _weaponList.Add (obj);
             }
 
         }
+
+        childList.Clear ();
     }
 
-    void OnTriggerEnter (Collider col) {
-        if (col.gameObject.tag == "Player") {
-            if (_isSleeping) {
-                StartCoroutine (WakeUp ());
-                _target = col.gameObject;
-            } else if (CurrentState != State.DEAD) {
-                //Set Target
-                _target = col.gameObject;
-                CurrentState = State.DISCOVERY;
-            }
-        }
-    }
-
-    //戦闘範囲離脱時の処理
-    void OnTriggerExit (Collider col) {
-        if (col.gameObject.tag == "Player") {
-            if (CurrentState != State.DEAD) {
-                //Set Target
-                _target = null;
-                //Change State
-                CurrentState = State.FREE;
-            }
+    public override void Discover (GameObject obj) {
+        if (_isSleeping) {
+            StartCoroutine (WakeUp ());
+            _target = obj;
+        } else if (CurrentState != State.DEAD && !IsAction) {
+            //Set Target
+            _target = obj.gameObject;
+            CurrentState = State.DISCOVERY;
         }
     }
 
@@ -207,4 +181,5 @@ public class TankEnemy : Enemy {
         //Change State
         CurrentState = State.DISCOVERY;
     }
+
 }

@@ -8,14 +8,20 @@ using UnityEngine;
 
 //必須コンポーネントの指定
 [RequireComponent (typeof (Rigidbody))]
-[RequireComponent (typeof (SphereCollider))]
 [RequireComponent (typeof (EnemyMove))]
 [RequireComponent (typeof (SimpleAnimation))]
 
 public class Enemy : MonoBehaviour, IDamageable {
 
+    //種類
+    public enum Type { MEEL, RANGE, TANK, BOSS }
+
+    private Type _enemyType;
+    public Type EnemyType { get { return _enemyType; } set { _enemyType = value; } }
+
     //状態一覧(待機、自由移動、発見、戻り、攻撃、死亡)
     public enum State { IDLE, FREE, DISCOVERY, RETURN, ATTACK, DEAD }
+
     //今の状態
     [SerializeField]
     private State _currentState;
@@ -53,9 +59,8 @@ public class Enemy : MonoBehaviour, IDamageable {
     //移動用リジットボディ
     private Rigidbody _rigidbody;
     public Rigidbody RigidbodyProperties { get { return _rigidbody; } set { _rigidbody = value; } }
-    //索敵用コライダー
-    private SphereCollider _sphereCol;
-    public SphereCollider SphereColliderProperties { get { return _sphereCol; } set { _sphereCol = value; } }
+    //索敵用ゲームオブジェクト
+    public GameObject _searchObj;
     //狙う対象
     public GameObject _target;
     //シンプルアニメーション
@@ -67,7 +72,9 @@ public class Enemy : MonoBehaviour, IDamageable {
     public float HitPoint { get { return _hp; } }
 
     //ステータスのセット関数
-    public void SetStatus (float maxHp, float speed, float searchRange, float attackRange, float moveRange, float money) {
+    public void SetStatus (Enemy.Type type, float maxHp, float speed, float searchRange, float attackRange, float moveRange, float money) {
+        //タイプセット
+        _enemyType = type;
         //初期はアイドル
         _currentState = State.IDLE;
         //最大体力
@@ -111,26 +118,6 @@ public class Enemy : MonoBehaviour, IDamageable {
         ObjectManager.Instance.ReleaseObject (gameObject);
     }
 
-    void OnTriggerEnter (Collider col) {
-        if (col.gameObject.tag == "Player") {
-            if (CurrentState != State.DEAD) {
-                //Set Target
-                _target = col.gameObject;
-                //Change State
-                CurrentState = State.DISCOVERY;
-            }
-        }
-    }
+    public virtual void Discover (GameObject obj) { }
 
-    //戦闘範囲離脱時の処理
-    void OnTriggerExit (Collider col) {
-        if (col.gameObject.tag == "Player") {
-            if (CurrentState != State.DEAD) {
-                //Set Target
-                _target = null;
-                //Change State
-                CurrentState = State.FREE;
-            }
-        }
-    }
 }
