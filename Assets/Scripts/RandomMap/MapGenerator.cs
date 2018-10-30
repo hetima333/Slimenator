@@ -4,6 +4,17 @@ using UnityEngine;
 
 public class MapGenerator
 {
+    //状態
+    public enum MAP_STATUS
+    {
+        WALL = 0,    //壁0
+        FLOOR = 1,   //床1
+        PLAYER,  //プレイヤー
+        SLIME,   //スライム
+        ENEMY,   //敵
+        KIND_NUM //種類の数
+    };
+
     //マップサイズX軸
     private int _mapSizeX;
     //マップサイズZ軸
@@ -52,7 +63,7 @@ public class MapGenerator
             {
                 for (int z = passage._start._z; z <= passage._end._z; z++)
                 {
-                    map[x, z] = 1;
+                    map[x, z] = (int)MAP_STATUS.FLOOR;
                 }
             }
         }
@@ -64,7 +75,7 @@ public class MapGenerator
             {
                 for (int z = roomPassage._start._z; z <= roomPassage._end._z; z++)
                 {
-                    map[x, z] = 1;
+                    map[x, z] = (int)MAP_STATUS.FLOOR;
                 }
             }
         }
@@ -76,7 +87,7 @@ public class MapGenerator
             {
                 for (int z = room._start._z; z <= room._end._z; z++)
                 {
-                    map[x, z] = 1;
+                    map[x, z] = (int)MAP_STATUS.FLOOR;
                 }
             }
         }
@@ -299,7 +310,7 @@ public class MapGenerator
                     random = room._start._z + RogueUtils.GetRandomInt(1, room.GetWidthZ()) - 1;
                     _roomPassage.Add(new Range(range._start._x, random, room._start._x - 1, random));
                     break;
-                case 1:　//右
+                case 1: //右
                     random = room._start._z + RogueUtils.GetRandomInt(1, room.GetWidthZ()) - 1;
                     _roomPassage.Add(new Range(room._end._x + 1, random, range._end._x, random));
                     break;
@@ -343,7 +354,7 @@ public class MapGenerator
                 for (int z = passage._start._z; z <= passage._end._z; z++)
                 {
                     //隣に部屋があるとき
-                    if (map[x - 1, z] == 1 || map[x + 1, z] == 1)
+                    if (map[x - 1, z] == (int)MAP_STATUS.FLOOR || map[x + 1, z] == (int)MAP_STATUS.FLOOR)
                     {
                         //削除しない
                         isTrimTarget = false;
@@ -357,7 +368,7 @@ public class MapGenerator
                 for (int x = passage._start._x; x <= passage._end._x; x++)
                 {
                     //隣に部屋があるとき
-                    if (map[x, z - 1] == 1 || map[x, z + 1] == 1)
+                    if (map[x, z - 1] == (int)MAP_STATUS.FLOOR || map[x, z + 1] == (int)MAP_STATUS.FLOOR)
                     {
                         //削除しない
                         isTrimTarget = false;
@@ -377,7 +388,7 @@ public class MapGenerator
                     int x = passage._start._x;
                     for (int z = passage._start._z; z <= passage._end._z; z++)
                     {
-                        map[x, z] = 0;
+                        map[x, z] = (int)MAP_STATUS.WALL;
                     }
                 }
                 else
@@ -385,7 +396,7 @@ public class MapGenerator
                     int z = passage._start._z;
                     for (int x = passage._start._x; x <= passage._end._x; x++)
                     {
-                        map[x, z] = 0;
+                        map[x, z] = (int)MAP_STATUS.WALL;
                     }
                 }
             }
@@ -396,25 +407,25 @@ public class MapGenerator
         for (int x = 0; x < _mapSizeX - 1; x++)
         {
             //奥
-            if (map[x, 0] == 1)
+            if (map[x, 0] == (int)MAP_STATUS.FLOOR)
             {
                 for (int z = 0; z < _mapSizeZ; z++)
                 {
-                    if (map[x - 1, z] == 1 || map[x + 1, z] == 1)
+                    if (map[x - 1, z] == (int)MAP_STATUS.FLOOR || map[x + 1, z] == (int)MAP_STATUS.FLOOR)
                         break;
                     //通路を塞ぐ
-                    map[x, z] = 0;
+                    map[x, z] = (int)MAP_STATUS.WALL;
                 }
             }
             //前
-            if (map[x, _mapSizeZ - 1] == 1)
+            if (map[x, _mapSizeZ - 1] == (int)MAP_STATUS.FLOOR)
             {
                 for (int z = _mapSizeZ - 1; z >= 0; z--)
                 {
-                    if (map[x - 1, z] == 1 || map[x + 1, z] == 1)
+                    if (map[x - 1, z] == (int)MAP_STATUS.FLOOR || map[x + 1, z] == (int)MAP_STATUS.FLOOR)
                         break;
                     //通路を塞ぐ
-                    map[x, z] = 0;
+                    map[x, z] = (int)MAP_STATUS.WALL;
                 }
             }
         }
@@ -423,25 +434,25 @@ public class MapGenerator
         for (int z = 0; z < _mapSizeZ - 1; z++)
         {
             //右端
-            if (map[0, z] == 1)
+            if (map[0, z] == (int)MAP_STATUS.FLOOR)
             {
                 for (int x = 0; x < _mapSizeZ; x++)
                 {
-                    if (map[x, z - 1] == 1 || map[x, z + 1] == 1)
+                    if (map[x, z - 1] == (int)MAP_STATUS.FLOOR || map[x, z + 1] == (int)MAP_STATUS.FLOOR)
                         break;
                     //通路を塞ぐ
-                    map[x, z] = 0;
+                    map[x, z] = (int)MAP_STATUS.WALL;
                 }
             }
             //左端
-            if (map[_mapSizeX - 1, z] == 1)
+            if (map[_mapSizeX - 1, z] == (int)MAP_STATUS.FLOOR)
             {
                 for (int x = _mapSizeX - 1; x >= 0; x--)
                 {
-                    if (map[x, z - 1] == 1 || map[x, z + 1] == 1)
+                    if (map[x, z - 1] == (int)MAP_STATUS.FLOOR || map[x, z + 1] == (int)MAP_STATUS.FLOOR)
                         break;
                     //通路を塞ぐ
-                    map[x, z] = 0;
+                    map[x, z] = (int)MAP_STATUS.WALL;
                 }
             }
         }

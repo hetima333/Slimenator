@@ -39,14 +39,14 @@ public class CreateRandomMap : MonoBehaviour
     [Header("-Initial position designation of player-")]
     private GameObject _player;
 
-
-    //デバッグ用
+    //デバッグ用===============================================
     [Header("-Debug-")]
     //最初に作られた部屋の位置
     [SerializeField] private GameObject _roomStart;
     [SerializeField] private GameObject _roomWhidth;
     [SerializeField] private GameObject _roomDepth;
     [SerializeField] private GameObject _roomEnd;
+    //==================================================ここまで
 
     // Use this for initialization
     void Start()
@@ -108,7 +108,7 @@ public class CreateRandomMap : MonoBehaviour
         {
             for (int x = 0; x < _width; x++)
             {
-                if (_map[x, z] == 1)
+                if (_map[x, z] == (int)MapGenerator.MAP_STATUS.FLOOR)
                 {
                     //Instantiate(_floorPrefab, new Vector3(x, 0, z), new Quaternion());
                     //部屋オブジェクトを生成する
@@ -161,7 +161,7 @@ public class CreateRandomMap : MonoBehaviour
             position = new Position(x, z);
         }
         //床があるところに限定する
-        while (_map[position._x, position._z] != 1);
+        while (_map[position._x, position._z] != (int)MapGenerator.MAP_STATUS.FLOOR);
 
         //プレイヤーの位置設定
         _player.transform.position = new Vector3(position._x * _mapSize, 0, position._z * _mapSize);

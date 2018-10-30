@@ -15,21 +15,20 @@ public class Distribute : MonoBehaviour
     //マップ
     private int[,] _map;
     //幅
-    private int _width;
+    //private int _width;
     //奥行き
-    private int _depth;
+    //private int _depth;
     //マップサイズ
     private int _mapSize;
 
     // Use this for initialization
     void Start()
     {
-
         //作られたマップの情報取得
         CreateRandomMap map = GetComponent<CreateRandomMap>();
         _map = map._map;
-        _width = map._width;
-        _depth = map._depth;
+        //_width = map._width;
+        //_depth = map._depth;
         _mapSize = map._mapSize;
 
         //スライム種類の数
@@ -102,7 +101,7 @@ public class Distribute : MonoBehaviour
         //オブジェクトが設定されていない場合は設定の必要なし
         if (!type)
         {
-            Debug.Log("Slime is not set!!");
+            Debug.Log("Object is not set!!");
             return;
         }
 
@@ -132,7 +131,7 @@ public class Distribute : MonoBehaviour
                 position = new Position(x, z);
             }
             //床があるところに限定する
-            while (_map[position._x, position._z] != 1);
+            while (_map[position._x, position._z] != (int)MapGenerator.MAP_STATUS.FLOOR);
 
             //オブジェクトを生成する
             ObjectManager.Instance.InstantiateWithObjectPooling(type, new Vector3(position._x * _mapSize, 1, position._z * _mapSize), new Quaternion());
