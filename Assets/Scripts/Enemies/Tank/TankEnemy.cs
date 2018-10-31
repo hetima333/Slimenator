@@ -15,6 +15,7 @@ public class TankEnemy : Enemy {
     const float ATTACK_RANGE = 4.0f;
     const float MOVE_RANGE = 4.0f;
     const float MONEY = 150.0f;
+    const float ERROR_RANGE = 10.0f;
 
     //移動スクリプト
     EnemyMove _move;
@@ -61,27 +62,23 @@ public class TankEnemy : Enemy {
                 case State.IDLE:
                     //待機
                     StartCoroutine (_move.Idle ());
-                    _comboCount = 0;
                     _anim.CrossFade ("Idle", 0);
                     break;
 
                 case State.FREE:
                     //自由移動
                     _move.FreeMove ();
-                    _comboCount = 0;
                     _anim.CrossFade ("Move", 0.5f);
                     break;
                 case State.DISCOVERY:
                     //プレイヤー追従
                     _move.Move2Player ();
-                    _comboCount = 0;
+
                     _anim.CrossFade ("Move", 0.5f);
                     break;
-
                 case State.RETURN:
                     //初期位置に帰る
                     _move.Return2FirstPos ();
-                    _comboCount = 0;
                     _anim.CrossFade ("Move", 0.5f);
                     break;
 
@@ -102,6 +99,12 @@ public class TankEnemy : Enemy {
     private IEnumerator Attack () {
         //行動中はreturn
         if (IsAction || CurrentState == State.DEAD) yield break;
+        //攻撃範囲から出れば攻撃をやめる
+        if ((gameObject.transform.position - _target.transform.position).sqrMagnitude > Mathf.Pow (_attackRange, 2) + ERROR_RANGE) {
+            CurrentState = State.DISCOVERY;
+            _comboCount = 0;
+            yield break;
+        }
         //行動開始
         IsAction = true;
 
@@ -127,8 +130,6 @@ public class TankEnemy : Enemy {
         if (_comboCount > 2) {
             _comboCount = 0;
         }
-
-        EndHit ();
 
         //行動終了
         IsAction = false;
@@ -183,6 +184,8 @@ public class TankEnemy : Enemy {
             weapon.GetComponent<EnemyWeapon> ().SetDamage (_comboDamage[_comboCount]);
             //武器の当たり判定の実体化
             weapon.GetComponent<EnemyWeapon> ().ActiveCollision (true);
+
+            weapon.GetComponent<EnemyWeapon> ().HashReset ();
         });
     }
 

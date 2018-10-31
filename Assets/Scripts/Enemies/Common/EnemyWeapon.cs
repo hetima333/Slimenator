@@ -30,11 +30,9 @@ public class EnemyWeapon : MonoBehaviour {
         var collider = GetComponent<BoxCollider> ();
         if (isActive == true) {
             collider.enabled = true;
-            HashReset ();
-
         } else if (isActive == false) {
             collider.enabled = false;
-
+            HashReset ();
         }
     }
 
