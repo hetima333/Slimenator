@@ -45,12 +45,12 @@ public class DamageText : MonoBehaviour {
 
 		// 落下速度の設定
 		_gravity = _velocity.y / 20.0f;
-
-		StartCoroutine(DestroyText());
 	}
 
 	public void SetDamage(int damage) {
 		GetComponent<Text>().text = damage.ToString();
+
+		StartCoroutine(DestroyText());
 	}
 
 	IEnumerator DestroyText() {

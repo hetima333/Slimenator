@@ -1,4 +1,5 @@
-﻿using System.Collections;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
@@ -15,8 +16,11 @@ public class HPBarCore : MonoBehaviour {
 	private IDamageable _target;
 
 	// HP減少の速度
-	[SerializeField, Range(0.3f, 2.0f)]
+	[SerializeField, Range(0.1f, 2.0f)]
 	private float _hpDecreaseSpeed = 0.5f;
+
+	[SerializeField, Range(0.0f, 5.0f)]
+	private float _overLifeTime = 0.2f;
 
 	[SerializeField]
 	private RectTransform _redHPBarTrans;
@@ -24,7 +28,6 @@ public class HPBarCore : MonoBehaviour {
 
 	private bool _initFlg = false;
 
-	// Use this for initialization
 	void InitAtOnce() {
 		// 初期化は一度だけ行なう
 		if (_initFlg) {
@@ -35,9 +38,11 @@ public class HPBarCore : MonoBehaviour {
 
 		// 緑HPの変化の監視
 		_greenHP
+			.DistinctUntilChanged()
 			.Subscribe(x => {
 				// ダメージのポップ
 				var dmg = _slider.value - x;
+				// ダメージが1以上なら表示する
 				if (dmg > 0) {
 					DamagePoper.Instance.PopDamage(transform.parent, (int) dmg);
 				}
@@ -52,9 +57,19 @@ public class HPBarCore : MonoBehaviour {
 
 		// 赤HPの変化の監視
 		_redHP
+			.DistinctUntilChanged()
 			.Subscribe(x => {
 				// HPバーにサイズを適用する
 				_redHPBarTrans.sizeDelta = new Vector2(x * _maxWidth / _slider.maxValue, _redHPBarTrans.sizeDelta.y);
+			});
+
+		// 赤HPがなくなったら非表示にする
+		_redHP
+			.Where(x => x <= 0)
+			// ディレイをかける
+			.Delay(TimeSpan.FromSeconds(_overLifeTime))
+			.Subscribe(_ => {
+				IsShow(false);
 			});
 
 		_initFlg = true;
@@ -79,6 +94,7 @@ public class HPBarCore : MonoBehaviour {
 	public void Init(IDamageable damageable) {
 		// スライダーの取得
 		_slider = GetComponent<Slider>();
+		IsShow(true);
 
 		// ターゲットの設定
 		_target = damageable;
@@ -94,5 +110,12 @@ public class HPBarCore : MonoBehaviour {
 
 		// 一度だけの初期化	
 		InitAtOnce();
+	}
+
+	/// <summary>
+	/// 表示・非表示
+	/// </summary>
+	void IsShow(bool flg) {
+		transform.GetComponentInParent<CanvasGroup>().alpha = flg ? 1.0f : 0.0f;
 	}
 }
