@@ -46,6 +46,7 @@ public class EnemyWeapon : MonoBehaviour {
             hasIDamageableObject.TakeDamage (_damage);
         }
 
+        //地面接触時に衝撃波を発生させる
         if (LayerMask.LayerToName (col.gameObject.layer) == "Ground") {
 
             if (_shockWave) {
