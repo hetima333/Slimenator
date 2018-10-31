@@ -29,7 +29,7 @@ public class TankEnemy : Enemy {
     private List<GameObject> _weaponList;
 
     [SerializeField]
-    private float[] _comboDamage = { 10, 15, 20, 20 };
+    private float[] _comboDamage = { 10, 15, 20 };
 
     private float[] _comboDelay = { 1.5f, 0.8f, 1.7f };
 
@@ -61,23 +61,27 @@ public class TankEnemy : Enemy {
                 case State.IDLE:
                     //待機
                     StartCoroutine (_move.Idle ());
+                    _comboCount = 0;
                     _anim.CrossFade ("Idle", 0);
                     break;
 
                 case State.FREE:
                     //自由移動
                     _move.FreeMove ();
+                    _comboCount = 0;
                     _anim.CrossFade ("Move", 0.5f);
                     break;
                 case State.DISCOVERY:
                     //プレイヤー追従
                     _move.Move2Player ();
+                    _comboCount = 0;
                     _anim.CrossFade ("Move", 0.5f);
                     break;
 
                 case State.RETURN:
                     //初期位置に帰る
                     _move.Return2FirstPos ();
+                    _comboCount = 0;
                     _anim.CrossFade ("Move", 0.5f);
                     break;
 
@@ -110,16 +114,8 @@ public class TankEnemy : Enemy {
             //相手の方向を見る。
             gameObject.transform.LookAt (targetPos);
         }
-        //Debug.Log ("Combo" + (_comboCount + 1));
 
         _anim.CrossFade ("Attack" + (_comboCount + 1).ToString (), 0);
-
-        _weaponList.ForEach (weapon => {
-            //武器のダメージセット
-            weapon.GetComponent<EnemyWeapon> ().SetDamage (_comboDamage[_comboCount]);
-            //武器の当たり判定の実体化
-            weapon.GetComponent<EnemyWeapon> ().ActiveCollision (true);
-        });
 
         //TODO行動終了までの時間経過
         yield return new WaitForSeconds (_comboDelay[_comboCount]);
@@ -132,8 +128,7 @@ public class TankEnemy : Enemy {
             _comboCount = 0;
         }
 
-        //武器の判定を消す
-        _weaponList.ForEach (weapon => weapon.GetComponent<EnemyWeapon> ().ActiveCollision (false));
+        EndHit ();
 
         //行動終了
         IsAction = false;
@@ -173,13 +168,27 @@ public class TankEnemy : Enemy {
 
     private IEnumerator WakeUp () {
 
-        _anim.CrossFade ("WakeUp", 0);
+        _anim.CrossFade ("WakeUp", 0.5f);
 
         yield return new WaitForSeconds (6);
 
         _isSleeping = false;
         //Change State
         CurrentState = State.DISCOVERY;
+    }
+
+    void StartHit () {
+        _weaponList.ForEach (weapon => {
+            //武器のダメージセット
+            weapon.GetComponent<EnemyWeapon> ().SetDamage (_comboDamage[_comboCount]);
+            //武器の当たり判定の実体化
+            weapon.GetComponent<EnemyWeapon> ().ActiveCollision (true);
+        });
+    }
+
+    void EndHit () {
+        //武器の判定を消す
+        _weaponList.ForEach (weapon => weapon.GetComponent<EnemyWeapon> ().ActiveCollision (false));
     }
 
 }

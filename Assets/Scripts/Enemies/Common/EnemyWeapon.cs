@@ -12,10 +12,13 @@ public class EnemyWeapon : MonoBehaviour {
     float _damage;
 
     GameObject _shockWave;
+    //一度当たったオブジェクトを記憶するHashSet（多段ヒット防止）
+    private HashSet<GameObject> _hitObjects;
 
     void Start () {
         //衝撃波オブジェクトのロード
         _shockWave = Resources.Load ("EnemyItem/ShockWave", typeof (GameObject)) as GameObject;
+        _hitObjects = new HashSet<GameObject> ();
     }
 
     public void SetDamage (float damage) {
@@ -27,9 +30,11 @@ public class EnemyWeapon : MonoBehaviour {
         var collider = GetComponent<BoxCollider> ();
         if (isActive == true) {
             collider.enabled = true;
+            HashReset ();
 
         } else if (isActive == false) {
             collider.enabled = false;
+
         }
     }
 
@@ -43,7 +48,16 @@ public class EnemyWeapon : MonoBehaviour {
         //If have a component
         if (hasIDamageableObject != null) {
             //ダメージ判定  
-            hasIDamageableObject.TakeDamage (_damage);
+            //当たったことの無いオブジェクトだった場合
+            if (!_hitObjects.Contains (col.gameObject)) {
+                //ダメージを与える
+                hasIDamageableObject.TakeDamage (_damage);
+                //一度当たったオブジェクトリストに追加
+                _hitObjects.Add (col.gameObject);
+            } else {
+                Debug.Log ("被ってるで");
+            }
+
         }
 
         //地面接触時に衝撃波を発生させる
@@ -64,6 +78,10 @@ public class EnemyWeapon : MonoBehaviour {
 
     void OnTriggerExit (Collider col) {
 
+    }
+
+    public void HashReset () {
+        _hitObjects.Clear ();
     }
 
 }
