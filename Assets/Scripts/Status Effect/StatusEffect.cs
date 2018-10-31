@@ -1,31 +1,53 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [CreateAssetMenu(menuName = "Status Effect/Status")]
 public class StatusEffect : ScriptableObject
 {
     [SerializeField]
-    private float
-        _Timer;
-
-    [SerializeField]
     private List<Effect>
         _EffectList = new List<Effect>();
 
     [SerializeField]
+    private GameEvent
+        _Event;
+
+    [SerializeField]
+    private ElementType
+        _Element;
+
+    [SerializeField]
+    private float
+       _Timer;
+
+    [SerializeField]
     private GameObject
-        _Particle;
+       _Particle;
 
-    public void UpdateStatusEffect()
+    public List<Effect> GetEffectList()
     {
-        if (_Timer > 0)
-            _Timer -= Time.deltaTime;
+        return _EffectList;
     }
 
-    public bool IsStatusEffectDone()
+    public ElementType GetElement()
     {
-        return _Timer <= 0;
+        return _Element;
     }
-	
+
+    public float GetTimer()
+    {
+        return _Timer;
+    }
+
+    public GameObject GetParticle()
+    {
+        return _Particle;
+    }
+
+    public GameEvent GetEvent()
+    {
+        return _Event;
+    }
 }

@@ -6,15 +6,17 @@ public class EnvironmentFire : EnvironmentBase {
     [SerializeField]
     private ParticleSystem _pSystem;
     private ParticleSystem.MainModule _pSystemMain;
+    private ParticleInterface _pInterface;
 
     protected override void Awake() {
         _pSystem = GetComponentInChildren<ParticleSystem>();
+        _pInterface = GetComponent<ParticleInterface>();
         _pSystemMain = _pSystem.main;
     }
 
     // Use this for initialization
     protected override void Start () {
-
+        _pInterface.Init();
     }
 
     // Update is called once per frame
@@ -26,6 +28,7 @@ public class EnvironmentFire : EnvironmentBase {
     {
         _pSystem.Stop();
         base.InitObjectWithLife(lifetime, pos, size);
+        _pInterface.SetParticleEffectSize(0.5f);
         _pSystemMain.duration = lifetime * 0.5f;
         _pSystem.Play();
     }

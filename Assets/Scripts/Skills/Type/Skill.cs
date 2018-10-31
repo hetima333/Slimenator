@@ -13,17 +13,15 @@ public abstract class Skill : ScriptableObject
         _Base;
 
     [SerializeField]
-    protected List<SkillProperties>
-        _Properties = new List<SkillProperties>();
+    protected List<StatusEffect>
+        _StatusEffect = new List<StatusEffect>();
 
     [SerializeField]
-    protected List<GameObject>
-        _Targetable = new List<GameObject>();
+    protected GameObjectList
+        _Targetable;
 
     [SerializeField]
     protected float
-        _CastTime, 
-        _CastLength,
         _Damage;
 
     [SerializeField]
@@ -49,8 +47,25 @@ public abstract class Skill : ScriptableObject
 
     public virtual void Init()
     {
-        _Timer = _CastTime;
-        _UseTimer = _CastLength;
+        if (_ChannelingParticle != null)
+        {
+            ParticleInterface ChannelingParticlePI = _ChannelingParticle.GetComponent<ParticleInterface>();
+            ChannelingParticlePI.Init();
+            _Timer = _ChannelingParticle.GetComponent<ParticleInterface>().GetLongestParticleEffect();
+            Debug.Log("Channeling Particle: " + _Timer);
+        }
+        else
+            _Timer = 0;
+
+        if (_CastingParticle != null)
+        {
+            ParticleInterface CastingParticlePI = _CastingParticle.GetComponent<ParticleInterface>();
+            CastingParticlePI.Init();
+            _UseTimer = _CastingParticle.GetComponent<ParticleInterface>().GetLongestParticleEffect();
+            Debug.Log("Casting Particle: " + _UseTimer);
+        }
+        else
+            _UseTimer = 0;
     }
 
     public virtual void Engage(GameObject caster, Vector3 spawn_position = new Vector3(), Vector3 dir = new Vector3())
@@ -66,31 +81,40 @@ public abstract class Skill : ScriptableObject
         {
             if (_ChannelingParticleCopy != null)
             {
-                DestroyImmediate(_ChannelingParticleCopy);
+                Destroy(_ChannelingParticleCopy);
                 _ChannelingParticleCopy = null;
+                Debug.Log("---CHANNELING SKILL---");
             }
         }
         else
         {
             if (_ChannelingParticle != null && _ChannelingParticleCopy == null)
             {
+                Debug.Log("+++CHANNELING SKILL+++");
                 _ChannelingParticleCopy = Instantiate(_ChannelingParticle, spawn_position, caster.transform.rotation, caster.transform);
+                _ChannelingParticleCopy.transform.localScale = new Vector3(_SkillTier.GetMultiplyer(), _SkillTier.GetMultiplyer(), _SkillTier.GetMultiplyer());
             }
         }
 
-        if(IsSkillOver())
+        if (IsTimeOver())
         {
-            if (_CastingParticleCopy != null)
+            if (IsSkillOver())
             {
-                DestroyImmediate(_CastingParticleCopy);
-                _CastingParticleCopy = null;
+                if (_CastingParticleCopy != null)
+                {
+                    Destroy(_CastingParticleCopy);
+                    _CastingParticleCopy = null;
+                    Debug.Log("---CASTING SKILL---");
+                }
             }
-        }
-        else
-        {
-            if (_CastingParticle != null && _CastingParticleCopy == null)
+            else
             {
-                _CastingParticleCopy = Instantiate(_CastingParticle, spawn_position, caster.transform.rotation, caster.transform);
+                if (_CastingParticle != null && _CastingParticleCopy == null)
+                {
+                    _CastingParticleCopy = Instantiate(_CastingParticle, spawn_position, caster.transform.rotation, caster.transform);
+                    _CastingParticleCopy.transform.localScale = new Vector3(_SkillTier.GetMultiplyer(), _SkillTier.GetMultiplyer(), _SkillTier.GetMultiplyer());
+                    Debug.Log("+++CASTING SKILL+++");
+                }
             }
         }
     }
@@ -128,5 +152,20 @@ public abstract class Skill : ScriptableObject
     public string GetDescription()
     {
         return _Description;
+    }
+
+    public void Reset()
+    {
+        if (_ChannelingParticleCopy != null)
+        {
+            Destroy(_ChannelingParticleCopy);
+            _ChannelingParticleCopy = null;
+        }
+
+        if (_CastingParticleCopy != null)
+        {
+            Destroy(_CastingParticleCopy);
+            _CastingParticleCopy = null;
+        }
     }
 }

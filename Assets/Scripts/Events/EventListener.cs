@@ -11,8 +11,6 @@ public class EventListener : MonoBehaviour
     [SerializeField]
     private List<UnityEvent>
         Response;
-    private string
-        UUID;
     
     private void OnEnable()
     {
@@ -42,15 +40,5 @@ public class EventListener : MonoBehaviour
                 break;
             }
         }
-    }
-
-    public void SetUUID(string UUIDInput)
-    {
-        UUID = UUIDInput;
-    }
-
-    public string GetUUID()
-    {
-        return UUID;
     }
 }

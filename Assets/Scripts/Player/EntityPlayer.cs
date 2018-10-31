@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class EntityPlayer : MonoBehaviour, IDamageable
 {
+    private enum DIRECTION
+    {
+        FRONT = 0,
+        BACK,
+        RIGHT,
+        LEFT
+    }
+
     [SerializeField]
     private GameObject
         _SuckingParticle,
@@ -17,8 +25,16 @@ public class EntityPlayer : MonoBehaviour, IDamageable
         _Player_Stats;
 
     private float
-        _HP,
         _Money;
+
+    private Status
+        _Status;
+
+    [SerializeField]
+    private SOList
+        _skillTier, 
+        _baseSkill,
+        _combiSkill;
 
     private Queue<ElementType>
         _OrbSlot = new Queue<ElementType>();
@@ -30,11 +46,17 @@ public class EntityPlayer : MonoBehaviour, IDamageable
         _CurrentSkillOutcome,
         _CurrentUseSkill;
 
+    private Vector3
+        _PrevPosition;
+
     private int
         _CurrentSelection;
 
     private EnumHolder.States
         _Player_State;
+
+    private DIRECTION
+        _Player_Dir;
 
     private Dictionary<EnumHolder.States, CheckFunctions> 
         _CheckFuntions = new Dictionary<EnumHolder.States, CheckFunctions>();
@@ -42,29 +64,43 @@ public class EntityPlayer : MonoBehaviour, IDamageable
     private Animator
         _Animator;
 
-	public float MaxHitPoint {get { return _Player_Stats.HealthProperties; } }
-	public float HitPoint {get { return _HP; } }
+	public float MaxHitPoint {get { return _Player_Stats.MaxHealthProperties; } }
+	public float HitPoint {get { return _Player_Stats.HealthProperties; } }
     public float MoneyAmount { get { return _Money; } }
+    public float Speed
+    {
+        get
+        {
+            if (_Status != null)
+            {
+                return _Player_Stats.SpeedProperties *
+                    ((100.0f - ((_Status.GetValue(EnumHolder.EffectType.SPEED) > 100) ? 100 :
+                    ((_Status.GetValue(EnumHolder.EffectType.SPEED) < 0) ? 0 :
+                    _Status.GetValue(EnumHolder.EffectType.SPEED)))) / 100.0f);
+            }
+            else
+                return _Player_Stats.SpeedProperties;
+        }
+    }
     [SerializeField]
     private GameObject
         _CastingPoint;
 
-    private void Start()
+    private void Awake()
     {
         _CurrentSkillOutcome = null;
         _CurrentSelection = 0;
 
-        if (_Player_Stats != null)
-            DestroyImmediate(_Player_Stats);
-
         _Player_Stats = EnumHolder.Instance.GetStats(gameObject.name);
 
-        _HP = _Player_Stats.HealthProperties;
+        _Player_Stats.HealthProperties = _Player_Stats.MaxHealthProperties;
         _Money = 0;
 
         _Player_State = EnumHolder.States.IDLE;
+        _Player_Dir = DIRECTION.FRONT;
 
         _Animator = gameObject.GetComponentInChildren<Animator>();
+        _Status = gameObject.GetComponent<Status>();
 
         _CheckFuntions.Add(EnumHolder.States.IDLE, IdleCheckFunction);
         _CheckFuntions.Add(EnumHolder.States.MOVING, MovingCheckFunction);
@@ -75,8 +111,12 @@ public class EntityPlayer : MonoBehaviour, IDamageable
 
     private void IdleCheckFunction()
     {
-        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+        _PrevPosition = gameObject.transform.position;
+
+        //if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+        if (InputManager.LS_Joystick() != Vector3.zero)
         {
+            _Player_Dir = DIRECTION.FRONT;
             _Player_State = EnumHolder.States.MOVING;
             return;
         }
@@ -84,11 +124,29 @@ public class EntityPlayer : MonoBehaviour, IDamageable
 
     private void MovingCheckFunction()
     {
-        if (!(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)))
+        //if (!(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)))
+        if (InputManager.LS_Joystick() == Vector3.zero)
         {
             _Player_State = EnumHolder.States.IDLE;
             return;
         }
+
+        float ForwardAngle = Vector3.Angle(gameObject.transform.forward.normalized, (_PrevPosition - gameObject.transform.position).normalized);
+        float RightAngle = Vector3.Angle(gameObject.transform.right.normalized, (_PrevPosition - gameObject.transform.position).normalized);
+
+        if (ForwardAngle < 30)
+            _Player_Dir = DIRECTION.BACK;
+        else if (ForwardAngle > 150)
+            _Player_Dir = DIRECTION.FRONT;
+        else if(ForwardAngle >= 30 && ForwardAngle <= 150)
+        {
+            if(RightAngle < 90)
+                _Player_Dir = DIRECTION.RIGHT;
+            else
+                _Player_Dir = DIRECTION.LEFT;
+        }
+
+        _PrevPosition = gameObject.transform.position;
     }
 
     private void KickingCheckFunction()
@@ -100,10 +158,11 @@ public class EntityPlayer : MonoBehaviour, IDamageable
     {
         _CurrentUseSkill.Engage(gameObject, _CastingPoint.transform.position, gameObject.transform.forward.normalized);
 
-        if(_CurrentUseSkill.IsSkillOver() && _CurrentUseSkill.IsTimeOver())
+        if(_CurrentUseSkill.IsSkillOver() && _CurrentUseSkill.IsTimeOver() || Input.GetKey(KeyCode.Mouse1))
         {
+            _CurrentUseSkill.Reset();
             _Player_State = EnumHolder.States.IDLE;
-            DestroyImmediate(_CurrentUseSkill);
+            Destroy(_CurrentUseSkill);
         }
     }
 
@@ -116,14 +175,18 @@ public class EntityPlayer : MonoBehaviour, IDamageable
     // Update is called once per frame
     private void Update()
     {
+        TakeDamage(_Status.GetValue(EnumHolder.EffectType.HEALTH));
+
         _CheckFuntions[_Player_State]();
         _Animator.SetInteger("State", (int)_Player_State);
+        _Animator.SetInteger("Direction", (int)_Player_Dir);
 
         if (_Player_State != EnumHolder.States.CASTING && 
             _Player_State != EnumHolder.States.KICKING && 
-            _Player_State != EnumHolder.States.DIE)
+            _Player_State != EnumHolder.States.DIE &&
+            Speed > 0)
         {
-            if (Input.GetKey(KeyCode.Mouse0))
+            if (InputManager.Suck_Input())
             {
                 if (!_SuckingParticle.activeSelf)
                     _SuckingParticle.SetActive(true);
@@ -151,7 +214,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable
             }
 
             //Storing of skill
-            if (Input.GetKeyDown(KeyCode.LeftShift))
+            if (InputManager.CombineOrbs_Input())
             {
                 StoreSkills();
             }
@@ -160,7 +223,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable
             {
                 if (_Skills.Count > 1)
                 {
-                    float position = Input.GetAxis("Mouse ScrollWheel");
+                    float position = InputManager.SkillScroll_Input();
                     if (position > 0f)
                     {
                         --_CurrentSelection;                     
@@ -173,7 +236,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable
                 else
                     _CurrentSelection = 0;
 
-                if (Input.GetKeyDown(KeyCode.Mouse2))
+                if (InputManager.UseSkills_Input())
                 {
                     UseSkill();
                 }
@@ -201,8 +264,8 @@ public class EntityPlayer : MonoBehaviour, IDamageable
 
     protected virtual void LateUpdate()
     {
-        if (_Animator.speed != _Player_Stats.SpeedMultiplyerProperties)
-            _Animator.speed = _Player_Stats.SpeedMultiplyerProperties;
+        if (_Animator.speed != (Speed / _Player_Stats.SpeedProperties) * _Player_Stats.SpeedMultiplyerProperties)
+            _Animator.speed = (Speed / _Player_Stats.SpeedProperties) * _Player_Stats.SpeedMultiplyerProperties;
     }
 
     public void StoreElementInOrb(ElementType type)
@@ -214,15 +277,15 @@ public class EntityPlayer : MonoBehaviour, IDamageable
                 break;
 
             case "Heal":
-                _HP += type.GetRandomAmount();
-                _HP = Mathf.Clamp(_HP, 0, _Player_Stats.HealthProperties);
+                _Player_Stats.HealthProperties += type.GetRandomAmount();
+                _Player_Stats.HealthProperties = Mathf.Clamp(_Player_Stats.HealthProperties, 0, _Player_Stats.MaxHealthProperties);
                 break;
 
             default:
                 {
                     if (_CurrentSkillOutcome != null)
                     {
-                        DestroyImmediate(_CurrentSkillOutcome);
+                        Destroy(_CurrentSkillOutcome);
                         _CurrentSkillOutcome = null;
                     }
                     
@@ -252,13 +315,13 @@ public class EntityPlayer : MonoBehaviour, IDamageable
 
                     if (HasUniqueCombination)
                     {
-                        foreach (Skill s in SkillsHolder.Instance.GetCombinationSkillList())
+                        foreach (Skill s in _combiSkill.GetList())
                         {
                             if (s.GetCombinationElements()[0] == _OrbSlot.ToArray()[0]
                                 && s.GetCombinationElements()[1] == _OrbSlot.ToArray()[1]
                                 && s.GetCombinationElements()[2] == _OrbSlot.ToArray()[2])
                             {
-                                _CurrentSkillOutcome = Instantiate(s);
+                                _CurrentSkillOutcome = ScriptableObject.Instantiate(s);
                                 _CurrentSkillOutcome.name = s.name;
                                 break;
                             }
@@ -268,13 +331,13 @@ public class EntityPlayer : MonoBehaviour, IDamageable
                     }
                     else
                     {
-                        foreach (Skill s in SkillsHolder.Instance.GetBaseSkillList())
+                        foreach (Skill s in _baseSkill.GetList())
                         {
                             if (s.GetBaseElement().Equals(_OrbSlot.ToArray()[0]))
                             {
                                 int temp_tier = 0;
 
-                                _CurrentSkillOutcome = Instantiate(s);
+                                _CurrentSkillOutcome = ScriptableObject.Instantiate(s);
                                 _CurrentSkillOutcome.name = s.name;
 
                                 for(int i = 1; i < _OrbSlot.Count; ++i)
@@ -285,7 +348,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable
                                         break;
                                 }
 
-                                _CurrentSkillOutcome.SetSkillTier(EnumHolder.Instance._skillTier[temp_tier]);
+                                _CurrentSkillOutcome.SetSkillTier((SkillTier)_skillTier.GetList()[temp_tier]);
 
                                 break;
                             }
@@ -342,7 +405,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable
 
     public bool IsDead()
     {
-        return _HP <= 0;
+        return _Player_Stats.HealthProperties <= 0;
     }
 
     void OnGUI()
@@ -373,7 +436,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable
 
     public void TakeDamage(float Damage)
     {
-        _HP -= Damage;
+        _Player_Stats.HealthProperties -= Damage;
     }
 
     public Queue<ElementType> GetOrbsInSlot()
@@ -394,6 +457,11 @@ public class EntityPlayer : MonoBehaviour, IDamageable
     public Skill CurrentSkillOutcome()
     {
         return _CurrentSkillOutcome;
+    }
+
+    public Status GetStatus()
+    {
+        return _Status;
     }
 
     delegate void CheckFunctions();

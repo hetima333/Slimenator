@@ -12,9 +12,6 @@ public class HUDManager : MonoBehaviour {
 	// プレイヤーへの参照
 	private EntityPlayer _player;
 
-	// HPBarへの参照
-	private HPBarCore _hpbar;
-
 	// スロットへの参照
 	private OrbSlot[] _orbSlots = new OrbSlot[3];
 
@@ -25,11 +22,7 @@ public class HUDManager : MonoBehaviour {
 	void Awake() {
 		// プレイヤーへの参照を取得する
 		_player = GameObject.Find("Player").GetComponent<EntityPlayer>();
-		_hpbar = GameObject.Find("PlayerHPBar").GetComponent<HPBarCore>();
 		_orbSlots = GameObject.Find("OrbSlot").GetComponentsInChildren<OrbSlot>();
-
-		// HPBarのターゲットを指定
-		_hpbar.Target = _player.GetComponent<IDamageable>();
 	}
 
 	// Use this for initialization
@@ -64,10 +57,10 @@ public class HUDManager : MonoBehaviour {
 					orb = Orbs.FIRE;
 					break;
 				case "Ice":
-					orb = Orbs.WATER;
+					orb = Orbs.ICE;
 					break;
 				case "Lightning":
-					orb = Orbs.THUNDER;
+					orb = Orbs.LIGHTNING;
 					break;
 			}
 			// スロットにデータを代入

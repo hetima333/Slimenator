@@ -36,6 +36,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4315347690583982}
+  - component: {fileID: 114079322678188576}
   m_Layer: 0
   m_Name: Effect_Fireball
   m_TagString: Untagged
@@ -101,6 +102,17 @@ Transform:
   m_Father: {fileID: 4315347690583982}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114079322678188576
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1108898740286488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf4c19401c6b33e40a1ef7cc49d49490, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!198 &198031720379335110
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -160,7 +172,7 @@ ParticleSystem:
       m_RotationOrder: 4
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
-  scalingMode: 1
+  scalingMode: 0
   randomSeed: 19141134
   InitialModule:
     serializedVersion: 3
@@ -721,7 +733,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 3
+      scalar: 30
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -762,7 +774,7 @@ ParticleSystem:
     rateOverDistance:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5
+      scalar: 0
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -933,7 +945,7 @@ ParticleSystem:
     x:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.7853981
+      scalar: 1.5707963
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -3521,8 +3533,8 @@ ParticleSystem:
       m_RotationOrder: 4
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
-  scalingMode: 1
-  randomSeed: 518905504
+  scalingMode: 0
+  randomSeed: -362626638
   InitialModule:
     serializedVersion: 3
     enabled: 1

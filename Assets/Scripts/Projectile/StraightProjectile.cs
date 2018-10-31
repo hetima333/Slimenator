@@ -8,16 +8,16 @@ public class StraightProjectile : Projectile
         _Dir;
 
     private float
-        _speed;
+        _speed,
+        _timer,
+        _damage;
 
-    private float
-        _timer;
-
-    public override void Init(Vector3 dir, float speed)
+    public override void Init(Vector3 dir, float speed, float timer = 5, float damage = 1)
     {
         _Dir = dir;
         _speed = speed;
-        _timer = 5;
+        _timer = timer;
+        _damage = damage;
     }
 
     // Update is called once per frame

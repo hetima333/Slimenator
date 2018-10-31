@@ -11,21 +11,40 @@ public class Stats : ScriptableObject
 
     [SerializeField]
     private float
-        MaxHealth,
-        MaxDamage,
-        MaxSpeed,
+        _MaxHealth,
+        _Health,
+        _MaxDamage,
+        _MaxSpeed,
 
-        MaxSpeedMultiplyer,
-        MaxDamageMultiplyer,
-        MaxHealthMultiplyer,
+        _MaxSpeedMultiplyer,
+        _MaxDamageMultiplyer,
+        _MaxHealthMultiplyer,
 
-        Sucking_Power;
+        _SuckingPower;
+
+
+    [SerializeField]
+    private bool
+        _UsedByMultipleEntities = true;
+
+    public float MaxHealthProperties
+    {
+        get
+        {
+            return _MaxHealth;
+        }
+    }
 
     public float HealthProperties
     {
         get
         {
-            return MaxHealth;
+            return _Health;
+        }
+
+        set
+        {
+            _Health = value;
         }
     }
 
@@ -33,7 +52,7 @@ public class Stats : ScriptableObject
     {
         get
         {
-            return MaxDamage;
+            return _MaxDamage;
         }
     }
 
@@ -41,7 +60,7 @@ public class Stats : ScriptableObject
     {
         get
         {
-            return MaxSpeed;
+            return _MaxSpeed;
         }
     }
 
@@ -49,12 +68,12 @@ public class Stats : ScriptableObject
     {
         get
         {
-            return MaxHealthMultiplyer;
+            return _MaxHealthMultiplyer;
         }
 
         set
         {
-            MaxHealthMultiplyer = Mathf.Clamp(value, 0, 100);
+            _MaxHealthMultiplyer = Mathf.Clamp(value, 0, 100);
         }
     }
 
@@ -62,12 +81,12 @@ public class Stats : ScriptableObject
     {
         get
         {
-            return MaxDamageMultiplyer;
+            return _MaxDamageMultiplyer;
         }
 
         set
         {
-            MaxDamageMultiplyer = Mathf.Clamp(value, 0, 100);
+            _MaxDamageMultiplyer = Mathf.Clamp(value, 0, 100);
         }
     }
 
@@ -75,12 +94,12 @@ public class Stats : ScriptableObject
     {
         get
         {
-            return MaxSpeedMultiplyer;
+            return _MaxSpeedMultiplyer;
         }
 
         set
         {
-            MaxSpeedMultiplyer = Mathf.Clamp(value, 0, 100);
+            _MaxSpeedMultiplyer = Mathf.Clamp(value, 0, 100);
         }
     }
 
@@ -88,7 +107,15 @@ public class Stats : ScriptableObject
     {
         get
         {
-            return Sucking_Power;
+            return _SuckingPower;
+        }
+    }
+
+    public bool IsUseByMultiple
+    {
+        get
+        {
+            return _UsedByMultipleEntities;
         }
     }
 
