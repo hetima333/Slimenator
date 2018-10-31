@@ -3,20 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class OrbSlot : MonoBehaviour {
-
-	private Orbs _orb = Orbs.NONE;
-	public Orbs Orb {
-		get { return _orb; }
-		set {
-			if (_orb == value) {
-				return;
-			}
-			_orb = value;
-			// ここから(画像の変更)
-			ChangeOrbImage(value);
-		}
-	}
+public class OrbSlotView : MonoBehaviour {
 
 	private Image _image;
 	[SerializeField]
@@ -36,7 +23,7 @@ public class OrbSlot : MonoBehaviour {
 	/// オーブの種類によって画像を変更する
 	/// </summary>
 	/// <param name="orb"></param>
-	private void ChangeOrbImage(Orbs orb) {
+	public void ChangeOrbImage(Orbs orb) {
 		Sprite sprite = null;
 		switch (orb) {
 			case Orbs.FIRE:

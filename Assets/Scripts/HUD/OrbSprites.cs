@@ -22,8 +22,8 @@ public class OrbSprites : ScriptableObject{
 }
 
 public enum Orbs {
-	NONE,
-	FIRE,
+	NONE = -1,
+	FIRE = 0,
 	ICE,
 	LIGHTNING
 }
