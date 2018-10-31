@@ -19,14 +19,12 @@ public class HUDManager : MonoBehaviour {
 	[SerializeField]
 	private Text _moneyText;
 
-	void Awake() {
+	// Use this for initialization
+	void Start() {
 		// プレイヤーへの参照を取得する
 		_player = GameObject.Find("Player").GetComponent<EntityPlayer>();
 		_orbSlots = GameObject.Find("OrbSlot").GetComponentsInChildren<OrbSlot>();
-	}
 
-	// Use this for initialization
-	void Start() {
 		// 所持金が変化したら表示に反映する
 		this.ObserveEveryValueChanged(x => _player.MoneyAmount)
 			.DistinctUntilChanged()
