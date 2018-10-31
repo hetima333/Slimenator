@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UniRx;
+using UniRx.Triggers;
 using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
 /// ダメージ関連のUIを生成する
 /// </summary>
-[RequireComponent(typeof(IDamageable))]
+// [RequireComponent(typeof(IDamageable))]
 public class HPBarCreater : MonoBehaviour {
 
 	[SerializeField]
@@ -22,6 +24,9 @@ public class HPBarCreater : MonoBehaviour {
 
 	// 親オブジェクトの名前
 	private string _parentName = "UIs";
+
+	// 追従するターゲット
+	private IDamageable _target;
 
 	// Use this for initialization
 	void Start() {
@@ -47,12 +52,16 @@ public class HPBarCreater : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update() {
-		// 追従する
-		_canvas.transform.position = this.transform.position + _offset;
-		_canvas.transform.rotation = Quaternion.Euler(0, 0, 0);
+		// ターゲットが生存していら追従する
+		if(_target.HitPoint > 0){
+			// 追従する
+			_canvas.transform.position = this.transform.position + _offset;
+			_canvas.transform.rotation = Quaternion.Euler(0, 0, 0);
+		}
 	}
 
 	void OnEnable() {
+		// 有効化された時に初期化を行なう
 		Init();
 	}
 
@@ -60,7 +69,20 @@ public class HPBarCreater : MonoBehaviour {
 		if (_canvas == null) {
 			return;
 		}
+
+		// HPが設定されるまで待機する
+		StartCoroutine(WaitForSetHitPoint());
+	}
+
+	IEnumerator WaitForSetHitPoint() {
+		// HPが設定されるまで待機
+		while (GetComponent<IDamageable>().HitPoint <= 0) {
+			yield return new WaitForEndOfFrame();
+		}
+
+		_target = GetComponent<IDamageable>();
+
 		// 各パラメータの初期化
-		_canvas.GetComponentInChildren<HPBarCore>().Init(GetComponent<IDamageable>());
+		_canvas.GetComponentInChildren<HPBarCore>().Init(_target);
 	}
 }
