@@ -1,7 +1,7 @@
 ﻿/// 衝撃波の処理
 /// Processing enemy's shockwave
 /// Athor： Yuhei Mastumura
-/// Last edit date：2018/10/17
+/// Last edit date：2018/10/31
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,6 +16,12 @@ public class ShockWave : MonoBehaviour {
 
     //ヒット時に与えるダメージ
     private float _damage;
+
+    private HashSet<GameObject> _hitObjects;
+
+    void Start () {
+        _hitObjects = new HashSet<GameObject> ();
+    }
 
     void Update () {
         _aliveTime -= Time.deltaTime;
@@ -47,15 +53,15 @@ public class ShockWave : MonoBehaviour {
         //If have a IDamageable component
         if (hasIDamageableObject != null) {
             //ダメージ判定
-            //TODO take damage   
-            hasIDamageableObject.TakeDamage (_damage);
+            if (!_hitObjects.Contains (obj)) {
+                //ダメージを与える
+                hasIDamageableObject.TakeDamage (_damage);
+                //一度当たったオブジェクトリストに追加
+                _hitObjects.Add (obj);
+            }
 
         }
 
-        //パーティクルのコリジョンの解除（多段ヒット防止）
-        //Release of particle community (multistage hit prevention)
-        var parCol = gameObject.GetComponent<ParticleSystem> ().collision;
-        parCol.enabled = false;
     }
 
 }

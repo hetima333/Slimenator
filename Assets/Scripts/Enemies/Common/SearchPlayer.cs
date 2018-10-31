@@ -1,4 +1,8 @@
-﻿using System.Collections;
+﻿/// 索敵用スフィアの処理
+/// Processing of Spear of Searching Spots
+/// Athor： Yuhei Mastumura
+/// Last edit date：2018/10/31
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 

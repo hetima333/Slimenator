@@ -314,7 +314,7 @@ GameObject:
   - component: {fileID: 114764713969013314}
   - component: {fileID: 114918707493086396}
   - component: {fileID: 114775938092829680}
-  - component: {fileID: 114130539681874588}
+  - component: {fileID: 114734001464578518}
   m_Layer: 11
   m_Name: TankEnemy
   m_TagString: Untagged
@@ -1633,7 +1633,19 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114130539681874588
+--- !u!114 &114589033513184786
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1089360035067546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66ddc8e61bbcb2047b1e61782b8c9c2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _damage: 0
+--- !u!114 &114734001464578518
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -1647,18 +1659,6 @@ MonoBehaviour:
   _hpbarCanvas: {fileID: 1883121316519442, guid: 07f82906bffcd4ba9831779e5e2ddb31,
     type: 2}
   _offset: {x: 0, y: 7.53, z: 3.4}
---- !u!114 &114589033513184786
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1089360035067546}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66ddc8e61bbcb2047b1e61782b8c9c2e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _damage: 0
 --- !u!114 &114764713969013314
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -1,7 +1,7 @@
 ﻿/// 敵の武器（爪なども含む）の判定スクリプト
 /// Enemy Weapon
 /// Athor：Yuhei Mastumura
-/// Last edit date：2018/10/24
+/// Last edit date：2018/10/31
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -52,10 +52,7 @@ public class EnemyWeapon : MonoBehaviour {
                 hasIDamageableObject.TakeDamage (_damage);
                 //一度当たったオブジェクトリストに追加
                 _hitObjects.Add (col.gameObject);
-            } else {
-                Debug.Log ("被ってるで");
             }
-
         }
 
         //地面接触時に衝撃波を発生させる
@@ -65,19 +62,19 @@ public class EnemyWeapon : MonoBehaviour {
                 GameObject shockWave = Instantiate (_shockWave);
                 shockWave.GetComponent<ShockWave> ().SetScale (20);
                 shockWave.GetComponent<ShockWave> ().SetDamage (10);
+                //接触地点を取得
                 Vector3 ShockPos = col.ClosestPointOnBounds (this.transform.position);
                 ShockPos.y = 0.1f;
                 shockWave.transform.position = ShockPos;
             }
-
         }
-
     }
 
     void OnTriggerExit (Collider col) {
 
     }
 
+    //Reset HashSet
     public void HashReset () {
         _hitObjects.Clear ();
     }

@@ -1,7 +1,7 @@
 ﻿/// Tankタイプの敵
 /// Enemy of Tank Type
 /// Athor：Yuhei Mastumura
-/// Last edit date：2018/10/24
+/// Last edit date：2018/10/31
 
 using System.Collections;
 using System.Collections.Generic;
@@ -42,7 +42,7 @@ public class TankEnemy : Enemy {
         _move = GetComponent<EnemyMove> ();
         //リジットボディの取得
         RigidbodyProperties = GetComponent<Rigidbody> ();
-
+        //索敵用オブジェクトの設定
         _searchObj = transform.Find ("SearchRange").gameObject;
         _searchObj.GetComponent<SearchPlayer> ().Initialize ();
         //自由移動ポジション設定
@@ -70,12 +70,13 @@ public class TankEnemy : Enemy {
                     _move.FreeMove ();
                     _anim.CrossFade ("Move", 0.5f);
                     break;
+
                 case State.DISCOVERY:
                     //プレイヤー追従
                     _move.Move2Player ();
-
                     _anim.CrossFade ("Move", 0.5f);
                     break;
+
                 case State.RETURN:
                     //初期位置に帰る
                     _move.Return2FirstPos ();
@@ -157,20 +158,23 @@ public class TankEnemy : Enemy {
     }
 
     public override void Discover (GameObject obj) {
+        //Set Target
+        _target = obj;
         if (_isSleeping) {
             StartCoroutine (WakeUp ());
-            _target = obj;
         } else if (CurrentState != State.DEAD && !IsAction) {
-            //Set Target
-            _target = obj.gameObject;
             CurrentState = State.DISCOVERY;
+            _comboCount = 0;
         }
     }
 
     private IEnumerator WakeUp () {
-
+        //起き上がりアニメーション
+        //WakeUp Animation
         _anim.CrossFade ("WakeUp", 0.5f);
 
+        //起き上がるまで待つ
+        //wait for end wakeup
         yield return new WaitForSeconds (6);
 
         _isSleeping = false;
@@ -184,7 +188,7 @@ public class TankEnemy : Enemy {
             weapon.GetComponent<EnemyWeapon> ().SetDamage (_comboDamage[_comboCount]);
             //武器の当たり判定の実体化
             weapon.GetComponent<EnemyWeapon> ().ActiveCollision (true);
-
+            //武器の既当たり判定をリセット
             weapon.GetComponent<EnemyWeapon> ().HashReset ();
         });
     }

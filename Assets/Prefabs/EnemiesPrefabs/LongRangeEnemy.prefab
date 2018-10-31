@@ -673,7 +673,7 @@ GameObject:
   - component: {fileID: 114818048047124142}
   - component: {fileID: 114115328178690596}
   - component: {fileID: 114201432571733168}
-  - component: {fileID: 114351767071284242}
+  - component: {fileID: 114030653470189432}
   m_Layer: 11
   m_Name: LongRangeEnemy
   m_TagString: Untagged
@@ -1862,6 +1862,20 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114030653470189432
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1772466507498902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a9afa2bc112e47d688b392b5032afa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _hpbarCanvas: {fileID: 1883121316519442, guid: 07f82906bffcd4ba9831779e5e2ddb31,
+    type: 2}
+  _offset: {x: 0, y: 3.4, z: 1.71}
 --- !u!114 &114115328178690596
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1905,20 +1919,6 @@ MonoBehaviour:
   - clip: {fileID: 7400000, guid: 9f0357c42801d1247a0c19b32c890608, type: 3}
     name: Dead
     defaultState: 0
---- !u!114 &114351767071284242
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1772466507498902}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a9afa2bc112e47d688b392b5032afa1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _hpbarCanvas: {fileID: 1883121316519442, guid: 07f82906bffcd4ba9831779e5e2ddb31,
-    type: 2}
-  _offset: {x: 0, y: 3.4, z: 1.71}
 --- !u!114 &114659920188471094
 MonoBehaviour:
   m_ObjectHideFlags: 1
