@@ -13,10 +13,6 @@ public abstract class Skill : ScriptableObject
         _Base;
 
     [SerializeField]
-    protected List<StatusEffect>
-        _StatusEffect = new List<StatusEffect>();
-
-    [SerializeField]
     protected GameObjectList
         _Targetable;
 
@@ -42,8 +38,8 @@ public abstract class Skill : ScriptableObject
         _SkillTier;
 
     protected float
-        _Timer,
-        _UseTimer;
+        _ChannelingTimer,
+        _CastingTimer;
 
     public virtual void Init()
     {
@@ -51,31 +47,31 @@ public abstract class Skill : ScriptableObject
         {
             ParticleInterface ChannelingParticlePI = _ChannelingParticle.GetComponent<ParticleInterface>();
             ChannelingParticlePI.Init();
-            _Timer = _ChannelingParticle.GetComponent<ParticleInterface>().GetLongestParticleEffect();
-            Debug.Log("Channeling Particle: " + _Timer);
+            _ChannelingTimer = _ChannelingParticle.GetComponent<ParticleInterface>().GetLongestParticleEffect();
+            Debug.Log("Channeling Particle: " + _ChannelingTimer);
         }
         else
-            _Timer = 0;
+            _ChannelingTimer = 0;
 
         if (_CastingParticle != null)
         {
             ParticleInterface CastingParticlePI = _CastingParticle.GetComponent<ParticleInterface>();
             CastingParticlePI.Init();
-            _UseTimer = _CastingParticle.GetComponent<ParticleInterface>().GetLongestParticleEffect();
-            Debug.Log("Casting Particle: " + _UseTimer);
+            _CastingTimer = _CastingParticle.GetComponent<ParticleInterface>().GetLongestParticleEffect();
+            Debug.Log("Casting Particle: " + _CastingTimer);
         }
         else
-            _UseTimer = 0;
+            _CastingTimer = 0;
     }
 
     public virtual void Engage(GameObject caster, Vector3 spawn_position = new Vector3(), Vector3 dir = new Vector3())
     {
-        _Timer -= Time.deltaTime;
+        _ChannelingTimer -= Time.deltaTime;
 
-        if (_Timer <= 0)
-            _UseTimer -= Time.deltaTime;
+        if (_ChannelingTimer <= 0)
+            _CastingTimer -= Time.deltaTime;
         else
-            _Timer -= Time.deltaTime;
+            _ChannelingTimer -= Time.deltaTime;
 
         if (IsTimeOver())
         {
@@ -131,12 +127,12 @@ public abstract class Skill : ScriptableObject
 
     public bool IsTimeOver()
     {
-        return _Timer <= 0;
+        return _ChannelingTimer <= 0;
     }
 
     public bool IsSkillOver()
     {
-        return _UseTimer <= 0;
+        return _CastingTimer <= 0;
     }
 
     public void SetSkillTier(SkillTier tier)

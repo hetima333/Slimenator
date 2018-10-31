@@ -101,6 +101,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable
 
         _Animator = gameObject.GetComponentInChildren<Animator>();
         _Status = gameObject.GetComponent<Status>();
+        _Status.Init();
 
         _CheckFuntions.Add(EnumHolder.States.IDLE, IdleCheckFunction);
         _CheckFuntions.Add(EnumHolder.States.MOVING, MovingCheckFunction);
@@ -197,6 +198,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable
 
                 _SuckingParticle.transform.Rotate(Vector3.up, 15);
 
+                _Animator.SetBool("IsSucking", true);
             }
             else
             {
@@ -205,6 +207,8 @@ public class EntityPlayer : MonoBehaviour, IDamageable
 
                 if (_SuckingRadius.activeSelf)
                     _SuckingRadius.SetActive(false);
+
+                _Animator.SetBool("IsSucking", false);
             }
 
             //Reset
@@ -436,7 +440,11 @@ public class EntityPlayer : MonoBehaviour, IDamageable
 
     public void TakeDamage(float Damage)
     {
-        _Player_Stats.HealthProperties -= Damage;
+        if (Damage > 0)
+        {
+            _Animator.SetTrigger("IsDamage");
+            _Player_Stats.HealthProperties -= Damage;
+        }
     }
 
     public Queue<ElementType> GetOrbsInSlot()

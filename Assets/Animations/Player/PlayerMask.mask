@@ -1,0 +1,180 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!319 &31900000
+AvatarMask:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: PlayerMask
+  m_Mask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+  m_Elements:
+  - m_Path: 
+    m_Weight: 1
+  - m_Path: BezierCircle
+    m_Weight: 1
+  - m_Path: BezierCircle/Armature
+    m_Weight: 1
+  - m_Path: BezierCircle/Armature/LanternWiggle
+    m_Weight: 1
+  - m_Path: BezierCircle/Armature/LanternWiggle/LanternWiggle_end
+    m_Weight: 1
+  - m_Path: BezierCircle/Armature/Left_Arm_IK
+    m_Weight: 1
+  - m_Path: BezierCircle/Armature/Left_Arm_IK/Left_Arm
+    m_Weight: 1
+  - m_Path: BezierCircle/Armature/Left_Arm_IK/Left_Arm/Left_Hand
+    m_Weight: 1
+  - m_Path: BezierCircle/Armature/Left_Arm_IK/Left_Arm/Left_Hand/Left_Fingers1
+    m_Weight: 1
+  - m_Path: BezierCircle/Armature/Left_Arm_IK/Left_Arm/Left_Hand/Left_Fingers1/Left_Fingers1_end
+    m_Weight: 1
+  - m_Path: BezierCircle/Armature/Left_Arm_IK/Left_Arm/Left_Hand2
+    m_Weight: 1
+  - m_Path: BezierCircle/Armature/Left_Arm_IK/Left_Arm/Left_Hand2/Left_Fingers2
+    m_Weight: 1
+  - m_Path: BezierCircle/Armature/Left_Arm_IK/Left_Arm/Left_Hand2/Left_Fingers2/Left_Fingers2_end
+    m_Weight: 1
+  - m_Path: BezierCircle/Armature/Left_Arm_IK/Left_Arm/Left_Thumb
+    m_Weight: 1
+  - m_Path: BezierCircle/Armature/Left_Arm_IK/Left_Arm/Left_Thumb/Left_Thumb2
+    m_Weight: 1
+  - m_Path: BezierCircle/Armature/Left_Arm_IK/Left_Arm/Left_Thumb/Left_Thumb2/Left_Thumb2_end
+    m_Weight: 1
+  - m_Path: BezierCircle/Armature/Left_Arm_Pole
+    m_Weight: 1
+  - m_Path: BezierCircle/Armature/Left_Arm_Pole/Left_Arm_Pole_end
+    m_Weight: 1
+  - m_Path: BezierCircle/Armature/Left_Leg_IK
+    m_Weight: 0
+  - m_Path: BezierCircle/Armature/Left_Leg_IK/Left_Foot
+    m_Weight: 0
+  - m_Path: BezierCircle/Armature/Left_Leg_IK/Left_Foot/Left_Feet
+    m_Weight: 0
+  - m_Path: BezierCircle/Armature/Left_Leg_IK/Left_Foot/Left_Feet/Left_Toe
+    m_Weight: 0
+  - m_Path: BezierCircle/Armature/Left_Leg_IK/Left_Foot/Left_Feet/Left_Toe/Left_Toe_end
+    m_Weight: 0
+  - m_Path: BezierCircle/Armature/Left_Leg_Pole
+    m_Weight: 1
+  - m_Path: BezierCircle/Armature/Left_Leg_Pole/Left_Leg_Pole_end
+    m_Weight: 1
+  - m_Path: BezierCircle/Armature/Pelvis
+    m_Weight: 1
+  - m_Path: BezierCircle/Armature/Pelvis/Left_Hip
+    m_Weight: 0
+  - m_Path: BezierCircle/Armature/Pelvis/Left_Hip/Left_Knee
+    m_Weight: 0
+  - m_Path: BezierCircle/Armature/Pelvis/Left_Hip/Left_Knee/Left_Knee_end
+    m_Weight: 0
+  - m_Path: BezierCircle/Armature/Pelvis/Right_Hip
+    m_Weight: 0
+  - m_Path: BezierCircle/Armature/Pelvis/Right_Hip/Right_Knee
+    m_Weight: 0
+  - m_Path: BezierCircle/Armature/Pelvis/Right_Hip/Right_Knee/Right_Knee_end
+    m_Weight: 0
+  - m_Path: BezierCircle/Armature/Pelvis/Stomach
+    m_Weight: 1
+  - m_Path: BezierCircle/Armature/Pelvis/Stomach/Chest
+    m_Weight: 1
+  - m_Path: BezierCircle/Armature/Pelvis/Stomach/Chest/Belt
+    m_Weight: 1
+  - m_Path: BezierCircle/Armature/Pelvis/Stomach/Chest/Belt/Tank1
+    m_Weight: 1
+  - m_Path: BezierCircle/Armature/Pelvis/Stomach/Chest/Belt/Tank1/Tank2
+    m_Weight: 1
+  - m_Path: BezierCircle/Armature/Pelvis/Stomach/Chest/Belt/Tank1/Tank2/Stick1
+    m_Weight: 1
+  - m_Path: BezierCircle/Armature/Pelvis/Stomach/Chest/Belt/Tank1/Tank2/Stick1/Stick2
+    m_Weight: 1
+  - m_Path: BezierCircle/Armature/Pelvis/Stomach/Chest/Belt/Tank1/Tank2/Stick1/Stick2/Stick3
+    m_Weight: 1
+  - m_Path: BezierCircle/Armature/Pelvis/Stomach/Chest/Belt/Tank1/Tank2/Stick1/Stick2/Stick3/Lantern
+    m_Weight: 1
+  - m_Path: BezierCircle/Armature/Pelvis/Stomach/Chest/Belt/Tank1/Tank2/Stick1/Stick2/Stick3/Lantern/Lantern_end
+    m_Weight: 1
+  - m_Path: BezierCircle/Armature/Pelvis/Stomach/Chest/Belt/Tank3
+    m_Weight: 1
+  - m_Path: BezierCircle/Armature/Pelvis/Stomach/Chest/Belt/Tank3/Tube1
+    m_Weight: 1
+  - m_Path: BezierCircle/Armature/Pelvis/Stomach/Chest/Belt/Tank3/Tube1/Tube2
+    m_Weight: 1
+  - m_Path: BezierCircle/Armature/Pelvis/Stomach/Chest/Belt/Tank3/Tube1/Tube2/Tube3
+    m_Weight: 1
+  - m_Path: BezierCircle/Armature/Pelvis/Stomach/Chest/Belt/Tank3/Tube1/Tube2/Tube3/Vacuum
+    m_Weight: 1
+  - m_Path: BezierCircle/Armature/Pelvis/Stomach/Chest/Belt/Tank3/Tube1/Tube2/Tube3/Vacuum/VacuumHandle
+    m_Weight: 1
+  - m_Path: BezierCircle/Armature/Pelvis/Stomach/Chest/Belt/Tank3/Tube1/Tube2/Tube3/Vacuum/VacuumHandle/VacuumHandle_end
+    m_Weight: 1
+  - m_Path: BezierCircle/Armature/Pelvis/Stomach/Chest/Belt/Tank3/Tube1/Tube2/Tube3/Vacuum/VacuumHandle1
+    m_Weight: 1
+  - m_Path: BezierCircle/Armature/Pelvis/Stomach/Chest/Belt/Tank3/Tube1/Tube2/Tube3/Vacuum/VacuumHandle1/VacuumHandle1_end
+    m_Weight: 1
+  - m_Path: BezierCircle/Armature/Pelvis/Stomach/Chest/Left_Clavicle
+    m_Weight: 1
+  - m_Path: BezierCircle/Armature/Pelvis/Stomach/Chest/Left_Clavicle/Left_Shoulder
+    m_Weight: 1
+  - m_Path: BezierCircle/Armature/Pelvis/Stomach/Chest/Left_Clavicle/Left_Shoulder/Left_Elbow
+    m_Weight: 1
+  - m_Path: BezierCircle/Armature/Pelvis/Stomach/Chest/Left_Clavicle/Left_Shoulder/Left_Elbow/Left_Elbow_end
+    m_Weight: 1
+  - m_Path: BezierCircle/Armature/Pelvis/Stomach/Chest/Neck
+    m_Weight: 1
+  - m_Path: BezierCircle/Armature/Pelvis/Stomach/Chest/Neck/Head
+    m_Weight: 1
+  - m_Path: BezierCircle/Armature/Pelvis/Stomach/Chest/Neck/Head/Head_end
+    m_Weight: 1
+  - m_Path: BezierCircle/Armature/Pelvis/Stomach/Chest/Right_Clavicle
+    m_Weight: 1
+  - m_Path: BezierCircle/Armature/Pelvis/Stomach/Chest/Right_Clavicle/Right_Shoulder
+    m_Weight: 1
+  - m_Path: BezierCircle/Armature/Pelvis/Stomach/Chest/Right_Clavicle/Right_Shoulder/Right_Elbow
+    m_Weight: 1
+  - m_Path: BezierCircle/Armature/Pelvis/Stomach/Chest/Right_Clavicle/Right_Shoulder/Right_Elbow/Right_Elbow_end
+    m_Weight: 1
+  - m_Path: BezierCircle/Armature/Right_Arm_IK
+    m_Weight: 1
+  - m_Path: BezierCircle/Armature/Right_Arm_IK/Right_Arm
+    m_Weight: 1
+  - m_Path: BezierCircle/Armature/Right_Arm_IK/Right_Arm/Right_Hand
+    m_Weight: 1
+  - m_Path: BezierCircle/Armature/Right_Arm_IK/Right_Arm/Right_Hand/Right_Finger1
+    m_Weight: 1
+  - m_Path: BezierCircle/Armature/Right_Arm_IK/Right_Arm/Right_Hand/Right_Finger1/Right_Finger1_end
+    m_Weight: 1
+  - m_Path: BezierCircle/Armature/Right_Arm_IK/Right_Arm/Right_Hand2
+    m_Weight: 1
+  - m_Path: BezierCircle/Armature/Right_Arm_IK/Right_Arm/Right_Hand2/Right_Finger2
+    m_Weight: 1
+  - m_Path: BezierCircle/Armature/Right_Arm_IK/Right_Arm/Right_Hand2/Right_Finger2/Right_Finger2_end
+    m_Weight: 1
+  - m_Path: BezierCircle/Armature/Right_Arm_IK/Right_Arm/Right_Thumb
+    m_Weight: 1
+  - m_Path: BezierCircle/Armature/Right_Arm_IK/Right_Arm/Right_Thumb/Right_Thumb2
+    m_Weight: 1
+  - m_Path: BezierCircle/Armature/Right_Arm_IK/Right_Arm/Right_Thumb/Right_Thumb2/Right_Thumb2_end
+    m_Weight: 1
+  - m_Path: BezierCircle/Armature/Right_Arm_Pole
+    m_Weight: 1
+  - m_Path: BezierCircle/Armature/Right_Arm_Pole/Right_Arm_Pole_end
+    m_Weight: 1
+  - m_Path: BezierCircle/Armature/Right_Leg_IK
+    m_Weight: 0
+  - m_Path: BezierCircle/Armature/Right_Leg_IK/Right_Feet
+    m_Weight: 0
+  - m_Path: BezierCircle/Armature/Right_Leg_IK/Right_Feet/Right_Foot
+    m_Weight: 0
+  - m_Path: BezierCircle/Armature/Right_Leg_IK/Right_Feet/Right_Foot/Right_Toe
+    m_Weight: 0
+  - m_Path: BezierCircle/Armature/Right_Leg_IK/Right_Feet/Right_Foot/Right_Toe/Right_Toe_end
+    m_Weight: 0
+  - m_Path: BezierCircle/Armature/Right_Leg_Pole
+    m_Weight: 1
+  - m_Path: BezierCircle/Armature/Right_Leg_Pole/Right_Leg_Pole_end
+    m_Weight: 1
+  - m_Path: BezierCircle/Armature/VacHandle
+    m_Weight: 1
+  - m_Path: BezierCircle/Armature/VacHandle/VacHandle_end
+    m_Weight: 1
+  - m_Path: Cube.006
+    m_Weight: 1

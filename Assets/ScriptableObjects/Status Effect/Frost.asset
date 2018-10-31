@@ -15,5 +15,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 259cdd3fcee388f4996ebc4230b073ae, type: 2}
   _Event: {fileID: 11400000, guid: 42c35453a99cb7d4f9acab8caf6d8c56, type: 2}
   _Element: {fileID: 11400000, guid: 3598f9cad2b4e094e8abf6dc11ad1944, type: 2}
-  _Timer: 10
-  _Particle: {fileID: 1794536406230326, guid: bdd4a1986ac8eb040bca6373e8c90b18, type: 2}
+  _Timer: 5
+  _Particle: {fileID: 1530665628880970, guid: 3745f4e1d06955841b2f462e35682b95, type: 2}

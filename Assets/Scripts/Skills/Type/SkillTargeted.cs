@@ -11,6 +11,10 @@ public class SkillTargeted : Skill
         _CastingType;
 
     [SerializeField]
+    private List<StatusEffect>
+        _StatusEffect = new List<StatusEffect>();
+
+    [SerializeField]
     private float
         _percentage;
 
@@ -20,7 +24,7 @@ public class SkillTargeted : Skill
 
         if (IsTimeOver())
         {
-            if (!IsSkillOver() || _UseTimer == 0)
+            if (!IsSkillOver() || _CastingTimer == 0)
             {
                 foreach (GameObject obj in _CastingType.GetTargets(ref spawn_position, ref _SkillTier, _Targetable.GetList(), ref caster))
                 {                   

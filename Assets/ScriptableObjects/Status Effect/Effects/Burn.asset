@@ -13,4 +13,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _delay: 0.5
   _EffectType: 1
-  _Amount: 2
+  _Amount: 1
