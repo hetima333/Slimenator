@@ -13,7 +13,7 @@ public class DamagePoper : SingletonMonoBehaviour<DamagePoper> {
 	/// <param name="trans">ポップする座標</param>
 	/// <param name="damage">ダメージ</param>
 	public void PopDamage(Transform trans, int damage) {
-		if (damage == 0) {
+		if (damage <= 0) {
 			return;
 		}
 		// TODO : オブジェクトプールを使ってインスタンス化する

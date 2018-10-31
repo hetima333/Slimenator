@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
@@ -35,9 +35,11 @@ public class HPBarCore : MonoBehaviour {
 
 		// 緑HPの変化の監視
 		_greenHP
+			.DistinctUntilChanged()
 			.Subscribe(x => {
 				// ダメージのポップ
 				var dmg = _slider.value - x;
+				// ダメージが1以上なら表示する
 				if (dmg > 0) {
 					DamagePoper.Instance.PopDamage(transform.parent, (int) dmg);
 				}
@@ -52,6 +54,7 @@ public class HPBarCore : MonoBehaviour {
 
 		// 赤HPの変化の監視
 		_redHP
+			.DistinctUntilChanged()
 			.Subscribe(x => {
 				// HPバーにサイズを適用する
 				_redHPBarTrans.sizeDelta = new Vector2(x * _maxWidth / _slider.maxValue, _redHPBarTrans.sizeDelta.y);
