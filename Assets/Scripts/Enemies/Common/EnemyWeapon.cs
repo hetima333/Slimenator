@@ -51,6 +51,7 @@ public class EnemyWeapon : MonoBehaviour {
 
             if (_shockWave) {
                 GameObject shockWave = Instantiate (_shockWave);
+                shockWave.GetComponent<ShockWave> ().SetScale (20);
                 shockWave.GetComponent<ShockWave> ().SetDamage (10);
                 Vector3 ShockPos = col.ClosestPointOnBounds (this.transform.position);
                 ShockPos.y = 0.1f;
