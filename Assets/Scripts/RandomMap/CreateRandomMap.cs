@@ -144,11 +144,15 @@ public class CreateRandomMap : MonoBehaviour
         var startZ = _mapGenerator.GetStartZ(0);
         var endZ = _mapGenerator.GetEndZ(0);
 
-        //デバッグ用
-        _roomStart.transform.Translate(startX * _mapSize, 1, startZ * _mapSize);
-        _roomWhidth.transform.Translate(endX * _mapSize, 1, startZ * _mapSize);
-        _roomDepth.transform.Translate(startX * _mapSize, 1, endZ * _mapSize);
-        _roomEnd.transform.Translate(endX * _mapSize, 1, endZ * _mapSize);
+        //デバッグ用=================================================================================================================
+        //最後に生成された部屋
+        var maxRoom = _mapGenerator.GetMaxRoom();
+        _roomStart.transform.Translate(_mapGenerator.GetStartX(maxRoom - 1) * _mapSize, 1, _mapGenerator.GetStartZ(maxRoom - 1) * _mapSize);
+        _roomWhidth.transform.Translate(_mapGenerator.GetEndX(maxRoom - 1) * _mapSize, 1, _mapGenerator.GetStartZ(maxRoom - 1) * _mapSize);
+        _roomDepth.transform.Translate(_mapGenerator.GetStartX(maxRoom - 1) * _mapSize, 1, _mapGenerator.GetEndZ(maxRoom - 1) * _mapSize);
+        _roomEnd.transform.Translate(_mapGenerator.GetEndX(maxRoom - 1) * _mapSize, 1, _mapGenerator.GetEndZ(maxRoom - 1) * _mapSize);
+
+        //==================================================================================================================ここまで
 
         Position position;
         do

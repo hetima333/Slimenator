@@ -1312,12 +1312,12 @@ Prefab:
     - target: {fileID: 114902232243251302, guid: 318191eb825d4b242a20a8cb6c5ac270,
         type: 2}
       propertyPath: _depth
-      value: 30
+      value: 33
       objectReference: {fileID: 0}
     - target: {fileID: 114902232243251302, guid: 318191eb825d4b242a20a8cb6c5ac270,
         type: 2}
       propertyPath: _minRangeWidth
-      value: 12
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 114902232243251302, guid: 318191eb825d4b242a20a8cb6c5ac270,
         type: 2}

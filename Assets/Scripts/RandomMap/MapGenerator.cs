@@ -95,6 +95,9 @@ public class MapGenerator
         //通路の作成
         TrimPassage(ref map);
 
+        //ボス部屋の確立
+        EstablishBossRoom(ref map);
+
         return map;
     }
 
@@ -503,6 +506,53 @@ public class MapGenerator
     public int GetMaxRoom()
     {
         return _room.Count;
+    }
+
+    /// <summary>
+    /// ボス部屋の確立
+    /// </summary>
+    private void EstablishBossRoom(ref int[,] map)
+    {
+        //最初に作られた部屋
+        var maxRoom = _room.Count;
+        var lastRoom = _room[maxRoom - 1];
+
+        var startX = lastRoom._start._x;
+        var endX = lastRoom._end._x;
+        var startZ = lastRoom._start._z;
+        var endZ = lastRoom._end._z;
+
+        //通路がある座標を探す
+        for (int i = startX; i <= endX; i++)
+        {
+            //下幅
+            if (map[i, startZ - 1] == (int)MAP_STATUS.FLOOR)
+            {
+                Debug.Log("down width Passage!!");
+            }
+
+            //上幅
+            if (map[i, endZ + 1] == (int)MAP_STATUS.FLOOR)
+            {
+                Debug.Log("up width Passage!!");
+            }
+
+        }
+        for (int i = startZ; i <= endZ; i++)
+        {
+            //左奥行き
+            if (map[startX - 1, i] == (int)MAP_STATUS.FLOOR)
+            {
+                Debug.Log("left depth Passage!!");
+            }
+
+            //右奥行き
+            if (map[endX + 1, i] == (int)MAP_STATUS.FLOOR)
+            {
+                Debug.Log("right depth Passage!!");
+            }
+        }
+
     }
 
 }
