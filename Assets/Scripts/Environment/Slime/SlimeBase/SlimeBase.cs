@@ -68,17 +68,12 @@ public abstract class SlimeBase : MonoBehaviour, ISuckable, IDamageable, IElemen
 
     #endregion
 
-    protected virtual void Start () {
+    protected virtual void Start()
+    {
         SetState(new SlimeIdleState(this));
 
-        if(_status != null)
-        {
-            _status.Init();
-        }
-        else
-        {
-            _status = gameObject.GetComponent<Status>();
-        }
+        _status = gameObject.GetComponent<Status>();
+        _status.Init();
 
         _properties.HealthProperties = _properties.MaxHealthProperties;
     }
@@ -96,11 +91,14 @@ public abstract class SlimeBase : MonoBehaviour, ISuckable, IDamageable, IElemen
   
     public void TakeDamage(float dmg)
     {
-        _properties.HealthProperties -= dmg;
-            
-        if (_properties.HealthProperties <= 0)
+        if (dmg > 0)
         {
-            Die();
+            _properties.HealthProperties -= dmg;
+
+            if (_properties.HealthProperties <= 0)
+            {
+                Die();
+            }
         }
     }
 
