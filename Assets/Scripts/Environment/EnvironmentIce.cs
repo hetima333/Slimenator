@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class EnvironmentIce : EnvironmentBase
 {
-    [SerializeField]
     private ParticleSystem _pSystem;
     private ParticleSystem.MainModule _pSystemMain;
     private ParticleInterface _pInterface;
+
+    [SerializeField]
+    private GameEvent _frostEvent;
 
     protected override void Awake()
     {
@@ -42,6 +44,6 @@ public class EnvironmentIce : EnvironmentBase
         if (other.GetComponent<SlimeBase>() != null)
             return;
         if (other.GetComponent<IDamageable>() != null)
-            other.GetComponent<IDamageable>().TakeDamage(2.0f);
+            _frostEvent.InvokeSpecificListner(other.gameObject.GetInstanceID());
     }
 }

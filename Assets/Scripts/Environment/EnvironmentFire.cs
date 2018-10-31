@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnvironmentFire : EnvironmentBase {
-    [SerializeField]
     private ParticleSystem _pSystem;
     private ParticleSystem.MainModule _pSystemMain;
     private ParticleInterface _pInterface;
+
+    [SerializeField]
+    private GameEvent _burnEvent;
 
     protected override void Awake() {
         _pSystem = GetComponentInChildren<ParticleSystem>();
@@ -38,6 +40,6 @@ public class EnvironmentFire : EnvironmentBase {
         if (other.GetComponent<SlimeBase>() != null)
             return;
         if (other.GetComponent<IDamageable>() != null)
-            other.GetComponent<IDamageable>().TakeDamage(2.0f);
+            _burnEvent.InvokeSpecificListner(other.gameObject.GetInstanceID());
     }
 }
