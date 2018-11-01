@@ -17,6 +17,14 @@ public abstract class Skill : ScriptableObject
         _Targetable;
 
     [SerializeField]
+    protected List<StatusEffect>
+        _StatusEffect = new List<StatusEffect>();
+
+    [SerializeField]
+    protected float
+        _StatusApplyPercentage;
+
+    [SerializeField]
     protected float
         _Damage;
 
@@ -69,7 +77,10 @@ public abstract class Skill : ScriptableObject
         _ChannelingTimer -= Time.deltaTime;
 
         if (_ChannelingTimer <= 0)
-            _CastingTimer -= Time.deltaTime;
+        {
+            if(_CastingTimer > 0)
+                _CastingTimer -= Time.deltaTime;
+        }
         else
             _ChannelingTimer -= Time.deltaTime;
 
@@ -138,6 +149,15 @@ public abstract class Skill : ScriptableObject
     public void SetSkillTier(SkillTier tier)
     {
         _SkillTier = tier;
+    }
+
+    public void SetElementType(List<ElementType> type)
+    {
+        foreach(ElementType et in type)
+        {
+            if(et.GetStatusEffect() != null)
+                _StatusEffect.Add(et.GetStatusEffect());
+        }
     }
 
     public SkillTier GetSkillTier()

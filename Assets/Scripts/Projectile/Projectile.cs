@@ -10,7 +10,8 @@ public abstract class Projectile : MonoBehaviour
     protected float
         _speed,
         _timer,
-        _damage;
+        _damage, 
+        _percentage;
 
     protected List<StatusEffect>
         _StatusEffects = new List<StatusEffect>();
@@ -28,7 +29,7 @@ public abstract class Projectile : MonoBehaviour
         _impact_particle_timer, 
         _multiplyer;
 
-    public abstract void Init(Vector3 dir, float speed, ProjectileProperties projectile_properties, GameObjectList Targetable, float timer = 5, float damage = 1, float multiplyer = 1);
+    public abstract void Init(Vector3 dir, float speed, ProjectileProperties projectile_properties, List<StatusEffect> Status, GameObjectList Targetable, float timer = 5, float damage = 1, float multiplyer = 1, float percentage = 0);
 
     public void SetStatusEffect(List<StatusEffect> statusEffects)
     {
@@ -64,11 +65,20 @@ public abstract class Projectile : MonoBehaviour
 
                         if (dmg != null)
                         {
-                            dmg.TakeDamage(_damage);
+                            dmg.TakeDamage(_damage * _multiplyer);
 
-                            foreach (StatusEffect se in _StatusEffects)
+                            Debug.Log("[Damaging (" + _damage * _multiplyer + ")] " + obj.name);
+
+                            if (_StatusEffects.Count > 0)
                             {
-                                se.GetEvent().InvokeSpecificListner(obj.GetInstanceID());
+                                if (Random.Range(0, 100) < _percentage * _multiplyer)
+                                {
+                                    foreach (StatusEffect se in _StatusEffects)
+                                    {
+                                        Debug.Log("[Applying (" + se.name + ")] " + obj.name);
+                                        se.GetEvent().InvokeSpecificListner(obj.GetInstanceID());
+                                    }
+                                }
                             }
                         }
                     }

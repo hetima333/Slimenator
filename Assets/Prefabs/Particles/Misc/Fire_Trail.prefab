@@ -40,7 +40,7 @@ GameObject:
   - component: {fileID: 65823005300227188}
   - component: {fileID: 114922729101970016}
   m_Layer: 0
-  m_Name: FireEffect
+  m_Name: Fire_Trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

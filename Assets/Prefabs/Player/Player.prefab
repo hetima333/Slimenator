@@ -433,7 +433,7 @@ GameObject:
   - component: {fileID: 114429317269427306}
   - component: {fileID: 114275097617145868}
   - component: {fileID: 114969676855271460}
-  - component: {fileID: 114614517059951354}
+  - component: {fileID: 114676391800284422}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -2878,7 +2878,7 @@ MonoBehaviour:
   _baseSkill: {fileID: 11400000, guid: 4f203488e8646e248a88079e91126339, type: 2}
   _combiSkill: {fileID: 11400000, guid: f99c96af4be7dbb41aadfb0eae2d5767, type: 2}
   _CastingPoint: {fileID: 1600906898397308}
---- !u!114 &114614517059951354
+--- !u!114 &114676391800284422
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
