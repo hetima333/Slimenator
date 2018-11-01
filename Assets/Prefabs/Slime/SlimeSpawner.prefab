@@ -52,5 +52,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _prefab: {fileID: 1437516636120426, guid: 8c639dfa589184546938f1eaa7bdaa6f, type: 2}
+  _spawner: {fileID: 11400000, guid: f5b26b6ec512f23469c282afce72c243, type: 2}
   _spawnTimer: 0
   _spawnRate: 3
+  _maxSpawnCount: 0
+  _elements: {fileID: 11400000, guid: dafcf0a15e8eadb4fa33c1a792f407fa, type: 2}
