@@ -15,7 +15,6 @@ public class Enemy : MonoBehaviour, IDamageable {
 
     //種類
     public enum Type { MEEL, RANGE, TANK, BOSS }
-
     private Type _enemyType;
     public Type EnemyType { get { return _enemyType; } set { _enemyType = value; } }
 
@@ -26,6 +25,11 @@ public class Enemy : MonoBehaviour, IDamageable {
     [SerializeField]
     private State _currentState;
     public State CurrentState { get { return _currentState; } set { _currentState = value; } }
+    //状態異常
+    public enum BadState { NONE, FIRE, FREEZ, PARALYSIS }
+    private BadState _badState;
+    public BadState CurrentBadState { get { return _badState; } set { _badState = value; } }
+
     //最大値
     [SerializeField]
     private float _maxHp;
@@ -77,6 +81,8 @@ public class Enemy : MonoBehaviour, IDamageable {
         _enemyType = type;
         //初期はアイドル
         _currentState = State.IDLE;
+        //状態異常はなし
+        _badState = BadState.NONE;
         //最大体力
         if (_maxHp == 0) { _maxHp = maxHp; }
         //体力

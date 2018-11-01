@@ -1,6 +1,6 @@
 ﻿/// ボスのテストタイプ
 /// Boss Test type
-/// Athor：　Yuhei Mastumura
+/// Athor： Yuhei Mastumura
 /// Last edit date：2018/10/17
 using System.Collections;
 using System.Collections.Generic;
@@ -97,13 +97,13 @@ public class TestBoss : Enemy {
         //距離を算出
         float distance = Vector3.Distance (_target.transform.position, gameObject.transform.position);
 
-        if (distance <= 6.0f) {
+        if (distance <= 10.0f) {
             if (_shockField) {
                 GameObject shockField = ObjectManager.Instance.InstantiateWithObjectPooling (_shockField) as GameObject;
                 shockField.transform.position = gameObject.transform.position;
                 var shockFieldComponemt = shockField.GetComponent<ShockField> ();
                 shockFieldComponemt.SetDamage (10);
-                shockFieldComponemt.SetScale (20);
+                shockFieldComponemt.SetScale (40);
             }
         } else {
             if (_bullet) {
@@ -125,4 +125,14 @@ public class TestBoss : Enemy {
         //行動終了
         IsAction = false;
     }
+
+    public override void Discover (GameObject obj) {
+        //Set Target
+        _target = obj;
+
+        if (CurrentState != State.DEAD && !IsAction) {
+            CurrentState = State.DISCOVERY;
+        }
+    }
+
 }
