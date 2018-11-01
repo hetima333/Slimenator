@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class OrbSlotView : MonoBehaviour {
+/// <summary>
+/// オーブスロットの情報を表示する
+/// </summary>
+public class OrbSlotIndicater : MonoBehaviour {
 
 	private Image _image;
 	[SerializeField]

@@ -6,6 +6,9 @@ using UniRx.Triggers;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// オーブスロットのコア
+/// </summary>
 public class OrbSlotCore : MonoBehaviour {
 
 	// オーブスロットの大きさ
