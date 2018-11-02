@@ -20,7 +20,7 @@ MonoBehaviour:
   _StatusEffect:
   - {fileID: 11400000, guid: cb25ffbe128a58e4ea499cf97c1a51f3, type: 2}
   _StatusApplyPercentage: 30
-  _Damage: 20
+  _Damage: 5
   _Description: Strikes lightning down on your position
   _ChannelingParticle: {fileID: 1783820332162922, guid: 7c460cf7fffd6ce4d8c3b6f625ed6680,
     type: 2}

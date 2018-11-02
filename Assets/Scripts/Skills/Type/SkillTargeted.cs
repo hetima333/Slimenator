@@ -24,6 +24,8 @@ public class SkillTargeted : Skill
 
                     if (dmg != null)
                     {
+                        Debug.DrawLine(spawn_position, obj.transform.position, Color.yellow, 1f);
+
                         dmg.TakeDamage(_Damage * ((_SkillTier != null) ? _SkillTier.GetMultiplyer() : 1));
                         Debug.Log("[Damaging (" + _Damage * ((_SkillTier != null) ? _SkillTier.GetMultiplyer() : 1) + ")] " + obj.name);
 
