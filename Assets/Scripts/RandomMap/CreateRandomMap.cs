@@ -40,12 +40,12 @@ public class CreateRandomMap : MonoBehaviour
     private GameObject _player;
 
     //デバッグ用===============================================
-    [Header("-Debug-")]
-    //最初に作られた部屋の位置
-    [SerializeField] private GameObject _roomStart;
-    [SerializeField] private GameObject _roomWhidth;
-    [SerializeField] private GameObject _roomDepth;
-    [SerializeField] private GameObject _roomEnd;
+    // [Header("-Debug-")]
+    // //最初に作られた部屋の位置
+    // [SerializeField] private GameObject _roomStart;
+    // [SerializeField] private GameObject _roomWhidth;
+    // [SerializeField] private GameObject _roomDepth;
+    // [SerializeField] private GameObject _roomEnd;
     //==================================================ここまで
 
     // Use this for initialization
@@ -146,12 +146,11 @@ public class CreateRandomMap : MonoBehaviour
 
         //デバッグ用=================================================================================================================
         //最後に生成された部屋
-        var maxRoom = _mapGenerator.GetMaxRoom();
-        _roomStart.transform.Translate(_mapGenerator.GetStartX(maxRoom - 1) * _mapSize, 1, _mapGenerator.GetStartZ(maxRoom - 1) * _mapSize);
-        _roomWhidth.transform.Translate(_mapGenerator.GetEndX(maxRoom - 1) * _mapSize, 1, _mapGenerator.GetStartZ(maxRoom - 1) * _mapSize);
-        _roomDepth.transform.Translate(_mapGenerator.GetStartX(maxRoom - 1) * _mapSize, 1, _mapGenerator.GetEndZ(maxRoom - 1) * _mapSize);
-        _roomEnd.transform.Translate(_mapGenerator.GetEndX(maxRoom - 1) * _mapSize, 1, _mapGenerator.GetEndZ(maxRoom - 1) * _mapSize);
-
+        // var maxRoom = _mapGenerator.GetMaxRoom();
+        // _roomStart.transform.Translate(_mapGenerator.GetStartX(maxRoom - 1) * _mapSize, 1, _mapGenerator.GetStartZ(maxRoom - 1) * _mapSize);
+        // _roomWhidth.transform.Translate(_mapGenerator.GetEndX(maxRoom - 1) * _mapSize, 1, _mapGenerator.GetStartZ(maxRoom - 1) * _mapSize);
+        // _roomDepth.transform.Translate(_mapGenerator.GetStartX(maxRoom - 1) * _mapSize, 1, _mapGenerator.GetEndZ(maxRoom - 1) * _mapSize);
+        // _roomEnd.transform.Translate(_mapGenerator.GetEndX(maxRoom - 1) * _mapSize, 1, _mapGenerator.GetEndZ(maxRoom - 1) * _mapSize);
         //==================================================================================================================ここまで
 
         Position position;

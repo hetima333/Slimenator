@@ -208,3 +208,7 @@ MonoBehaviour:
     type: 2}
   _mapSize: 4
   _player: {fileID: 0}
+  _roomStart: {fileID: 0}
+  _roomWhidth: {fileID: 0}
+  _roomDepth: {fileID: 0}
+  _roomEnd: {fileID: 0}

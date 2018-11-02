@@ -113,9 +113,8 @@ public class Distribute : MonoBehaviour
         {
             do
             {
-                //部屋番号をランダムに決定
-                var roomNum = RogueUtils.GetRandomInt(0, generator.GetMaxRoom() - 1);
-                //Debug.Log("ROOM NUMBER : " + roomNum);
+                //部屋番号をランダムに決定(ボス部屋には生成しない)
+                var roomNum = RogueUtils.GetRandomInt(0, generator.GetMaxRoom() - 2);
 
                 //最初に作られた部屋の位置取得
                 var startX = generator.GetStartX(roomNum);
