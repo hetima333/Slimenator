@@ -23,6 +23,9 @@ public class CreateRandomMap : MonoBehaviour
     //壁のプレハブ
     [SerializeField]
     private GameObject _wallPrefab;
+    //ボス部屋への通路プレハブ
+    [SerializeField]
+    private GameObject _bossRoomPassagePrefab;
 
     //マップ
     public int[,] _map;
@@ -108,21 +111,18 @@ public class CreateRandomMap : MonoBehaviour
         {
             for (int x = 0; x < _width; x++)
             {
-                if (_map[x, z] == (int)MapGenerator.MAP_STATUS.FLOOR)
+                if (_map[x, z] == (int)MapGenerator.MAP_STATUS.WALL)
                 {
-                    //Instantiate(_floorPrefab, new Vector3(x, 0, z), new Quaternion());
-                    //部屋オブジェクトを生成する
-                    //GameObject floor = Instantiate(_floorPrefab, new Vector3(x, 0, z), new Quaternion());
-                    //floor.transform.SetParent(transform);
-                    //Debug.Log("Create floorPrefab map!!");
-                }
-                else
-                {
-                    //Instantiate(_wallPrefab, new Vector3(x, 0, z), new Quaternion());
                     //壁オブジェクトを生成する
                     GameObject wall = Instantiate(_wallPrefab, new Vector3(x, 0, z), new Quaternion());
                     wall.transform.SetParent(transform);
                     //Debug.Log("Create wallPrefab map!!");
+                }
+                else if (_map[x, z] == (int)MapGenerator.MAP_STATUS.BOOS_ROOM_PASSAGE)
+                {
+                    //壁(通路を塞ぐ用)オブジェクトを生成する
+                    GameObject passage = Instantiate(_bossRoomPassagePrefab, new Vector3(x, 0, z), new Quaternion());
+                    passage.transform.SetParent(transform);
                 }
             }
         }

@@ -1324,6 +1324,12 @@ Prefab:
       propertyPath: _maxRoomNum
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 114902232243251302, guid: 318191eb825d4b242a20a8cb6c5ac270,
+        type: 2}
+      propertyPath: _bossRoomPassagePrefab
+      value: 
+      objectReference: {fileID: 1417232500447472, guid: 33471a5fb44842e4fb9d488e9c82db6d,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 318191eb825d4b242a20a8cb6c5ac270, type: 2}
   m_IsPrefabParent: 0
