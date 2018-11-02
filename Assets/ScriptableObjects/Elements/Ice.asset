@@ -15,4 +15,6 @@ MonoBehaviour:
   _maxAmount: 0
   _color: {r: 0, g: 0.87586236, b: 1, a: 0}
   _classname: IceSlime
-  _effect: {fileID: 1794536406230326, guid: bdd4a1986ac8eb040bca6373e8c90b18, type: 2}
+  _ParticleEffect: {fileID: 1794536406230326, guid: bdd4a1986ac8eb040bca6373e8c90b18,
+    type: 2}
+  _StatusEffect: {fileID: 11400000, guid: a983e4dbbcbe3714fb3bab69798f84e7, type: 2}

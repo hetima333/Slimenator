@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class StraightProjectile : Projectile
 {
-    public override void Init(Vector3 dir, float speed, ProjectileProperties projectile_properties, GameObjectList Targetable, float timer = 5, float damage = 1, float multiplyer = 1)
+    public override void Init(Vector3 dir, float speed, ProjectileProperties projectile_properties, List<StatusEffect> Status, GameObjectList Targetable, float timer = 5, float damage = 1, float multiplyer = 1, float percentage = 0)
     {
         _Dir = dir;
         _speed = speed;
         _timer = timer;
         _damage = damage;
         _multiplyer = multiplyer;
+        _percentage = percentage;
         _ProjectileProperties = projectile_properties;
 
         if (projectile_properties.GetMovingParticle() != null)
@@ -28,6 +29,14 @@ public class StraightProjectile : Projectile
         if (_Targetable.Count > 0)
             _Targetable.Clear();
         _Targetable.AddRange(Targetable.GetList());
+
+        if (_StatusEffects.Count > 0)
+            _StatusEffects.Clear();
+
+        if(Status.Count > 0)
+        {
+            _StatusEffects.AddRange(Status);
+        }
     }
 
     // Update is called once per frame

@@ -27,11 +27,14 @@ public class SkillProjectile : Skill
 
         if (IsTimeOver())
         {
-            float multiplyer = ((_SkillTier != null) ? _SkillTier.GetMultiplyer() : 1);
+            if (!IsSkillOver() || _CastingTimer == 0)
+            {
+                float multiplyer = ((_SkillTier != null) ? _SkillTier.GetMultiplyer() : 1);
 
-            GameObject temp = ObjectManager.Instance.InstantiateWithObjectPooling(_Projectile, spawn_position, caster.transform.rotation);
-            temp.GetComponent<Projectile>().Init(dir, _Speed, _properties, _Targetable, _Range * multiplyer, _Damage * multiplyer, multiplyer);
-            temp.transform.localScale = new Vector3(multiplyer, multiplyer, multiplyer);
+                GameObject temp = ObjectManager.Instance.InstantiateWithObjectPooling(_Projectile, spawn_position, caster.transform.rotation);
+                temp.GetComponent<Projectile>().Init(dir, _Speed, _properties, _StatusEffect, _Targetable, _Range * multiplyer, _Damage * multiplyer, multiplyer);
+                temp.transform.localScale = new Vector3(multiplyer, multiplyer, multiplyer);
+            }
         }
     }
 }

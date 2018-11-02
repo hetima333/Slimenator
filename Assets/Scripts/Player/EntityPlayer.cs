@@ -353,6 +353,12 @@ public class EntityPlayer : MonoBehaviour, IDamageable
                                 }
 
                                 _CurrentSkillOutcome.SetSkillTier((SkillTier)_skillTier.GetList()[temp_tier]);
+                                List<ElementType> temp = new List<ElementType>();
+                                temp.AddRange(_OrbSlot.ToArray());
+                                temp.RemoveAt(0);
+
+                                if (temp.Count > 0)
+                                    _CurrentSkillOutcome.SetElementType(temp);
 
                                 break;
                             }

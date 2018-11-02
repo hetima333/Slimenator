@@ -20,7 +20,11 @@ public class ElementType : ScriptableObject
 
     [SerializeField]
     private GameObject
-        _effect;
+        _ParticleEffect;
+
+    [SerializeField]
+    private StatusEffect
+        _StatusEffect;
 
     public int GetRandomAmount()
     {
@@ -39,6 +43,11 @@ public class ElementType : ScriptableObject
 
     public GameObject GetEffect()
     {
-        return _effect;
+        return _ParticleEffect;
+    }
+
+    public StatusEffect GetStatusEffect()
+    {
+        return _StatusEffect;
     }
 }
