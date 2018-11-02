@@ -185,7 +185,6 @@ GameObject:
   - component: {fileID: 419553807}
   - component: {fileID: 419553809}
   - component: {fileID: 419553808}
-  - component: {fileID: 419553810}
   m_Layer: 5
   m_Name: Image (2)
   m_TagString: Untagged
@@ -244,18 +243,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 419553806}
---- !u!114 &419553810
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 419553806}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc227386799ef4add90d8c963ee9f178, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _sprites: {fileID: 0}
 --- !u!1 &428749983
 GameObject:
   m_ObjectHideFlags: 0
@@ -474,7 +461,6 @@ GameObject:
   - component: {fileID: 1343430602}
   - component: {fileID: 1343430604}
   - component: {fileID: 1343430603}
-  - component: {fileID: 1343430605}
   m_Layer: 5
   m_Name: Image (1)
   m_TagString: Untagged
@@ -533,18 +519,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1343430601}
---- !u!114 &1343430605
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1343430601}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc227386799ef4add90d8c963ee9f178, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _sprites: {fileID: 0}
 --- !u!1 &1520271097
 GameObject:
   m_ObjectHideFlags: 0
@@ -738,6 +712,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56b74f40dff1f48bd93d6dbca1be17d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _slots:
+  - {fileID: 1867993070}
+  - {fileID: 1343430603}
+  - {fileID: 419553808}
+  _sprites: {fileID: 11400000, guid: 5f07dce3e087c46d68ec7cd96c19cbb3, type: 2}
 --- !u!114 &1663156110
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -834,7 +813,6 @@ GameObject:
   - component: {fileID: 1867993069}
   - component: {fileID: 1867993071}
   - component: {fileID: 1867993070}
-  - component: {fileID: 1867993072}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -893,18 +871,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1867993068}
---- !u!114 &1867993072
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1867993068}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc227386799ef4add90d8c963ee9f178, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _sprites: {fileID: 0}
 --- !u!1 &2020623276
 GameObject:
   m_ObjectHideFlags: 0

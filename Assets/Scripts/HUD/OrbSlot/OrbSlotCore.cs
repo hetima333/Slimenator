@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UniRx;
@@ -12,7 +12,7 @@ using UnityEngine.UI;
 public class OrbSlotCore : MonoBehaviour {
 
 	// オーブスロットの大きさ
-	private const int SLOT_SIZE = 3;
+	public static readonly int SLOT_SIZE = 3;
 
 	// スロットのリアクティブコレクション
 	private ReactiveCollection<Orbs> _slot = new ReactiveCollection<Orbs>();
