@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
@@ -42,6 +43,34 @@ public class OrbSlotPresenter : MonoBehaviour {
 					// スプライトが設定されていたら不透明にする
 					else {
 						slot.color = Color.white;
+					}
+				});
+
+			// スロットが変更されたら組み合わせを再計算して表示を更新
+			core.Slot.ObserveReplace()
+				.Where(x => x.NewValue != x.OldValue)
+				.Subscribe(_ => {
+					var orbList = core.Slot.ToReactiveCollection().ToArray();
+					
+					// 1つ目のスロットが空ならスキルがない
+					if (orbList[0] == Orbs.NONE) {
+						// TODO : 表示をリセットする
+						return;
+					}
+
+					var combinationSkillList = SkillsHolder.Instance.GetCombinationSkillList();
+
+					var skillList = combinationSkillList
+						.Select(x => x.GetCombinationElements())
+						.Select((value, index) => new { value, index });
+
+					foreach (var skill in skillList) {
+						if (skill.value[0].ToOrbs() == orbList[0] &&
+							skill.value[1].ToOrbs() == orbList[1] &&
+							skill.value[2].ToOrbs() == orbList[2]) {
+							// スキル情報の取得
+							var data = combinationSkillList[skill.index];
+						}
 					}
 				});
 		}

@@ -36,7 +36,7 @@ public class OrbSlotCore : MonoBehaviour {
 		this.UpdateAsObservable()
 			.Subscribe(_ => {
 				var orbs = player.GetOrbsInSlot()
-					.Select(x => ElementTypeToOrbs(x))
+					.Select(x => x.ToOrbs())
 					.ToArray();
 
 				// スロット1つ1つに対して処理
@@ -47,25 +47,4 @@ public class OrbSlotCore : MonoBehaviour {
 			});
 	}
 
-	/// <summary>
-	/// ElementTypeからオーブ型への変換
-	/// </summary>
-	private Orbs ElementTypeToOrbs(ElementType element) {
-		var result = Orbs.NONE;
-
-		// 名前で分類
-		switch (element.name) {
-			case "Fire":
-				result = Orbs.FIRE;
-				break;
-			case "Ice":
-				result = Orbs.ICE;
-				break;
-			case "Lightning":
-				result = Orbs.LIGHTNING;
-				break;
-		}
-
-		return result;
-	}
 }
