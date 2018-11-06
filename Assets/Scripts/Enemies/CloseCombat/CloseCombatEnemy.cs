@@ -10,8 +10,8 @@ public class CloseCombatEnemy : Enemy {
     //TODO Enemy Performance
     const float MAX_HP = 40.0f;
     const float MOVE_SPEED = 3.0f;
-    const float SEARCH_RANGE = 3.5f;
-    const float ATTACK_RANGE = 2.0f;
+    const float SEARCH_RANGE = 6.0f;
+    const float ATTACK_RANGE = 4f;
     const float MOVE_RANGE = 3.0f;
     const float MONEY = 10.0f;
 
@@ -20,6 +20,9 @@ public class CloseCombatEnemy : Enemy {
 
     [SerializeField]
     float _outputDamage = 25;
+
+    [SerializeField]
+    private List<GameObject> _weaponList;
 
     // Use this for initialization
     void Start () {
@@ -34,6 +37,9 @@ public class CloseCombatEnemy : Enemy {
         //自由移動ポジション設定
         _freeMovePosition = _move.SetMovePos ();
 
+        //武器プレハブの取得
+        SetWeapons ();
+
     }
 
     // Update is called once per frame
@@ -44,20 +50,25 @@ public class CloseCombatEnemy : Enemy {
             case State.IDLE:
                 //待機
                 StartCoroutine (_move.Idle ());
+                _anim.CrossFade ("Idle", 0);
                 break;
 
             case State.FREE:
                 //自由移動
                 _move.FreeMove ();
+                _anim.CrossFade ("Move", 0.5f);
                 break;
+
             case State.DISCOVERY:
                 //プレイヤー追従
                 _move.Dash2Player ();
+                _anim.CrossFade ("Dash", 0.5f);
                 break;
 
             case State.RETURN:
                 //初期位置に帰る
                 _move.Return2FirstPos ();
+                _anim.CrossFade ("Move", 0.5f);
                 break;
 
             case State.ATTACK:
@@ -88,11 +99,17 @@ public class CloseCombatEnemy : Enemy {
             gameObject.transform.LookAt (targetPos);
         }
 
-        //TODO 攻撃
-        Debug.Log ("Attack");
+        int attackNum = Random.Range (1, 3);
+        Debug.Log (attackNum); {
+
+        }
+
+        _anim.CrossFade ("Attack" + attackNum.ToString (), 0);
 
         //TODO行動終了までの時間経過
-        yield return new WaitForSeconds (1);
+        yield return new WaitForSeconds (3);
+
+        _anim.CrossFade ("Idle", 0);
 
         //行動終了
         IsAction = false;
@@ -105,5 +122,40 @@ public class CloseCombatEnemy : Enemy {
             //Change State
             CurrentState = Enemy.State.DISCOVERY;
         }
+    }
+
+    private void SetWeapons () {
+        _weaponList = new List<GameObject> ();
+
+        List<GameObject> childList = GetAllChildren.GetAll (gameObject);
+
+        foreach (GameObject obj in childList) {
+            //child is your child transform
+
+            //Make sure the target has components
+            var hasEnemyWeapon = obj.GetComponent<EnemyWeapon> ();
+
+            //If have a component
+            if (hasEnemyWeapon != null) {
+                _weaponList.Add (obj);
+            }
+
+        }
+
+        childList.Clear ();
+    }
+
+    void StartHit () {
+        _weaponList.ForEach (weapon => {
+            //武器の当たり判定の実体化
+            weapon.GetComponent<EnemyWeapon> ().ActiveCollision (true);
+            //武器の既当たり判定をリセット
+            weapon.GetComponent<EnemyWeapon> ().HashReset ();
+        });
+    }
+
+    void EndHit () {
+        //武器の判定を消す
+        _weaponList.ForEach (weapon => weapon.GetComponent<EnemyWeapon> ().ActiveCollision (false));
     }
 }

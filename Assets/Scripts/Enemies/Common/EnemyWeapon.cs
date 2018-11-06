@@ -9,7 +9,10 @@ using UnityEngine;
 
 public class EnemyWeapon : MonoBehaviour {
     [SerializeField]
-    float _damage;
+    private float _damage;
+
+    [SerializeField]
+    private bool _groundHit = false;
 
     GameObject _shockWave;
     //一度当たったオブジェクトを記憶するHashSet（多段ヒット防止）
@@ -56,7 +59,7 @@ public class EnemyWeapon : MonoBehaviour {
         }
 
         //地面接触時に衝撃波を発生させる
-        if (LayerMask.LayerToName (col.gameObject.layer) == "Ground") {
+        if (LayerMask.LayerToName (col.gameObject.layer) == "Ground" && _groundHit) {
 
             if (_shockWave) {
                 GameObject shockWave = Instantiate (_shockWave);
