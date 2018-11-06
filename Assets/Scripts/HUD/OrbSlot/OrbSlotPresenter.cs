@@ -18,6 +18,13 @@ public class OrbSlotPresenter : MonoBehaviour {
 	[SerializeField]
 	private OrbSprites _sprites;
 
+	[SerializeField, Header("ExpectedSkill")]
+	private Image _baseElementImage;
+	[SerializeField]
+	private Text _tierText;
+	[SerializeField]
+	private Image _enchantmentImage;
+
 	void Start() {
 		var core = GetComponent<OrbSlotCore>();
 
@@ -34,7 +41,7 @@ public class OrbSlotPresenter : MonoBehaviour {
 				.Subscribe(x => {
 					var slot = _slots[x.Index];
 					// 該当の画像の読み込み
-					slot.sprite = OrbsToSprite(x.NewValue);
+					slot.sprite = OrbToSprite(x.NewValue);
 
 					// スプライトが設定されなければ透明にする
 					if (slot.sprite == null) {
@@ -46,49 +53,50 @@ public class OrbSlotPresenter : MonoBehaviour {
 					}
 				});
 
-			// スロットが変更されたら組み合わせを再計算して表示を更新
-			core.Slot.ObserveReplace()
-				.Where(x => x.NewValue != x.OldValue)
-				.Subscribe(_ => {
-					var orbList = core.Slot.ToReactiveCollection().ToArray();
-					
-					// 1つ目のスロットが空ならスキルがない
-					if (orbList[0] == Orbs.NONE) {
-						// TODO : 表示をリセットする
-						return;
+			// 生成されるスキルが更新されたら
+			core.ExpectedSkill
+				.Subscribe(skill => {
+					// スキルがなければSpriteを空にする
+					if (skill == null) {
+						_baseElementImage.sprite = null;
+						_tierText.text = "";
+						_enchantmentImage.sprite = null;
 					}
+					// ユニークスキル
+					else if (skill.IsUnique()) {
+						// TODO : スキル画像が来たら変更する
+						_baseElementImage.sprite = null;
+						_tierText.text = "unique";
+						_enchantmentImage.sprite = null;
+					}
+					// ユニークでないスキル
+					else {
+						var tier = skill.GetSkillTier().GetMultiplyer();
+						var baseOrb = skill.ToOrb().First();
 
-					var combinationSkillList = SkillsHolder.Instance.GetCombinationSkillList();
-
-					var skillList = combinationSkillList
-						.Select(x => x.GetCombinationElements())
-						.Select((value, index) => new { value, index });
-
-					foreach (var skill in skillList) {
-						if (skill.value[0].ToOrbs() == orbList[0] &&
-							skill.value[1].ToOrbs() == orbList[1] &&
-							skill.value[2].ToOrbs() == orbList[2]) {
-							// スキル情報の取得
-							var data = combinationSkillList[skill.index];
-						}
+						_baseElementImage.sprite = OrbToSprite(baseOrb);
+						_tierText.text = tier.ToString();
+						_enchantmentImage.sprite = OrbToSprite(core.Slot.FirstOrDefault(x => x != baseOrb));
 					}
 				});
+
 		}
+
 	}
 
 	/// <summary>
 	/// オーブから対応するスプライトへの変換
 	/// </summary>
-	Sprite OrbsToSprite(Orbs orb) {
+	Sprite OrbToSprite(Orb orb) {
 		Sprite sprite;
 		switch (orb) {
-			case Orbs.FIRE:
+			case Orb.FIRE:
 				sprite = _sprites.Fire;
 				break;
-			case Orbs.ICE:
+			case Orb.ICE:
 				sprite = _sprites.Ice;
 				break;
-			case Orbs.LIGHTNING:
+			case Orb.LIGHTNING:
 				sprite = _sprites.Lightning;
 				break;
 			default:
