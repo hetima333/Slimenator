@@ -14,6 +14,6 @@ MonoBehaviour:
   _minAmount: 0
   _maxAmount: 0
   _color: {r: 1, g: 0, b: 0.972414, a: 0}
-  _classname: LightningSlime
+  _ClassName: LightningSlime
   _ParticleEffect: {fileID: 0}
   _StatusEffect: {fileID: 0}

@@ -25,3 +25,4 @@ MonoBehaviour:
     type: 2}
   _CastingParticle: {fileID: 0}
   _CastingType: {fileID: 11400000, guid: 704f805a729bbfd46a8ea24f7c9a7878, type: 2}
+  _AttackDelay: 1

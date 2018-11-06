@@ -10,6 +10,13 @@ public class SkillTargeted : Skill
     private SkillCastingType
         _CastingType;
 
+    [SerializeField]
+    private float
+        _AttackDelay;
+
+    private float
+        _Timer = 0;
+
     public override void Engage(GameObject caster, Vector3 spawn_position = new Vector3(), Vector3 dir = new Vector3())
     {
         base.Engage(caster, spawn_position, dir);
@@ -18,30 +25,36 @@ public class SkillTargeted : Skill
         {
             if (!IsSkillOver() || _CastingTimer == 0)
             {
-                foreach (GameObject obj in _CastingType.GetTargets(ref spawn_position, ref _SkillTier, _Targetable.GetList(), ref caster))
+                if (_Timer <= 0)
                 {
-                    IDamageable dmg = obj.GetComponent<IDamageable>();
-
-                    if (dmg != null)
+                    foreach (GameObject obj in _CastingType.GetTargets(ref spawn_position, ref _SkillTier, _Targetable.GetList(), ref caster))
                     {
-                        Debug.DrawLine(spawn_position, obj.transform.position, Color.yellow, 1f);
+                        IDamageable dmg = obj.GetComponent<IDamageable>();
 
-                        dmg.TakeDamage(_Damage * ((_SkillTier != null) ? _SkillTier.GetMultiplyer() : 1));
-                        Debug.Log("[Damaging (" + _Damage * ((_SkillTier != null) ? _SkillTier.GetMultiplyer() : 1) + ")] " + obj.name);
-
-                        if (_StatusEffect.Count > 0)
+                        if (dmg != null)
                         {
-                            if (Random.Range(0, 100) < _StatusApplyPercentage * ((_SkillTier != null) ? _SkillTier.GetMultiplyer() : 1))
+                            Debug.DrawLine(spawn_position, obj.transform.position, Color.yellow, 1f);
+
+                            dmg.TakeDamage(_Damage * ((_SkillTier != null) ? _SkillTier.GetMultiplyer() : 1));
+                            Debug.Log("[Damaging (" + _Damage * ((_SkillTier != null) ? _SkillTier.GetMultiplyer() : 1) + ")] " + obj.name);
+
+                            if (_StatusEffect.Count > 0)
                             {
-                                foreach (StatusEffect se in _StatusEffect)
+                                if (Random.Range(0, 100) < _StatusApplyPercentage * ((_SkillTier != null) ? _SkillTier.GetMultiplyer() : 1))
                                 {
-                                    Debug.Log("[Applying (" + se.name + ")] " + obj.name);
-                                    se.GetEvent().InvokeSpecificListner(obj.GetInstanceID());
+                                    foreach (StatusEffect se in _StatusEffect)
+                                    {
+                                        Debug.Log("[Applying (" + se.name + ")] " + obj.name);
+                                        se.GetEvent().InvokeSpecificListner(obj.GetInstanceID());
+                                    }
                                 }
                             }
                         }
                     }
+                    _Timer = _AttackDelay;
                 }
+                else
+                    _Timer -= Time.deltaTime;
             }
         }
     }

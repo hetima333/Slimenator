@@ -16,7 +16,7 @@ public class ElementType : ScriptableObject
 
     [SerializeField]
     private string
-        _classname;
+        _ClassName;
 
     [SerializeField]
     private GameObject
@@ -38,7 +38,7 @@ public class ElementType : ScriptableObject
 
     public string GetSlimeScriptName()
     {
-        return _classname;
+        return _ClassName;
     }
 
     public GameObject GetEffect()
