@@ -14,10 +14,6 @@ public class Distribute : MonoBehaviour
 
     //マップ
     private int[,] _map;
-    //幅
-    //private int _width;
-    //奥行き
-    //private int _depth;
     //マップサイズ
     private int _mapSize;
 
@@ -27,8 +23,6 @@ public class Distribute : MonoBehaviour
         //作られたマップの情報取得
         CreateRandomMap map = GetComponent<CreateRandomMap>();
         _map = map._map;
-        //_width = map._width;
-        //_depth = map._depth;
         _mapSize = map._mapSize;
 
         //スライム種類の数
@@ -53,43 +47,52 @@ public class Distribute : MonoBehaviour
 
     }
 
-    ///// <summary>
-    ///// スライムを配置する
-    ///// </summary>
-    ///// <param name="slime">スライムの種類</param>
-    ///// <param name="num">配置する数</param>
-    //private void CreateSlime(GameObject slime, int num)
-    //{
-    //    //スライムが設定されていない場合は設定の必要なし
-    //    if (!slime)
-    //    {
-    //        Debug.Log("Slime is not set!!");
-    //        return;
-    //    }
+    // /// <summary>
+    // /// オブジェクトを配置する
+    // /// </summary>
+    // /// <param name="type">生成するオブジェクトの種類</param>
+    // /// <param name="num">配置する数</param>
+    // private void CreateObject(GameObject type, int num, MapGenerator.MAP_STATUS status)
+    // {
+    //     //オブジェクトが設定されていない場合は設定の必要なし
+    //     if (!type)
+    //     {
+    //         Debug.Log("Object is not set!!");
+    //         return;
+    //     }
 
-    //    Position position;
+    //     MapGenerator generator = GetComponent<CreateRandomMap>()._mapGenerator;
+    //     Position position;
 
-    //    //配置する数になるまで
-    //    for (int i = 0; i < num; i++)
-    //    {
-    //        do
-    //        {
-    //            //座標をランダムに決める
-    //            var x = RogueUtils.GetRandomInt(0, _width - 1);
-    //            var z = RogueUtils.GetRandomInt(0, _depth - 1);
-    //            position = new Position(x, z);
-    //        }
-    //        //床があるところに限定する
-    //        while (_map[position._x, position._z] != 1);
+    //     //配置する数になるまで
+    //     for (int i = 0; i < num; i++)
+    //     {
+    //         do
+    //         {
+    //             //部屋番号をランダムに決定(プレイヤーがいる部屋(0)とボス部屋(最後)には生成しない)
+    //             var roomNum = RogueUtils.GetRandomInt(1, generator.GetMaxRoom() - 2);
 
-    //        //スライムを生成する
-    //        Instantiate(slime, new Vector3(position._x * _mapSize, 0, position._z * _mapSize), new Quaternion());
-    //        //GameObject slimes = Instantiate(slime, new Vector3(position._x, 0, position._z), new Quaternion());
-    //        //slimes.transform.position = new Vector3(position._x, 0, position._z);
-    //        //slimes.transform.SetParent(transform);
-    //    }
+    //             //最初に作られた部屋の位置取得
+    //             var startX = generator.GetStartX(roomNum);
+    //             var endX = generator.GetEndX(roomNum);
+    //             var startZ = generator.GetStartZ(roomNum);
+    //             var endZ = generator.GetEndZ(roomNum);
 
-    //}
+    //             //座標をランダムに決める
+    //             var x = RogueUtils.GetRandomInt(startX, endX);
+    //             var z = RogueUtils.GetRandomInt(startZ, endZ);
+    //             position = new Position(x, z);
+    //         }
+    //         //床があるところに限定し、自分以外のオブジェクトと重ならないようにする
+    //         while ((_map[position._x, position._z] != (int)MapGenerator.MAP_STATUS.FLOOR));
+
+    //         //オブジェクトを生成する
+    //         ObjectManager.Instance.InstantiateWithObjectPooling(type, new Vector3(position._x * _mapSize, 1, position._z * _mapSize), new Quaternion());
+    //         //マップに情報を登録する
+    //         _map[position._x, position._z] = (int)status;
+    //     }
+
+    // }
 
     /// <summary>
     /// オブジェクトを配置する
@@ -106,36 +109,37 @@ public class Distribute : MonoBehaviour
         }
 
         MapGenerator generator = GetComponent<CreateRandomMap>()._mapGenerator;
-        Position position;
+        Position position = new Position();
 
-        //配置する数になるまで
-        for (int i = 0; i < num; i++)
+        //部屋の番号順にランダムにオブジェクトを配置する(プレイヤーがいる部屋(0)とボス部屋(最後)には生成しない)
+        for (int roomNum = 1; roomNum < generator.GetMaxRoom() - 1; roomNum++)
         {
-            do
+            //配置する数になるまで
+            for (int i = 0; i < num; i++)
             {
-                //部屋番号をランダムに決定(ボス部屋には生成しない)
-                var roomNum = RogueUtils.GetRandomInt(0, generator.GetMaxRoom() - 2);
+                do
+                {
+                    //最初に作られた部屋の位置取得
+                    var startX = generator.GetStartX(roomNum);
+                    var endX = generator.GetEndX(roomNum);
+                    var startZ = generator.GetStartZ(roomNum);
+                    var endZ = generator.GetEndZ(roomNum);
 
-                //最初に作られた部屋の位置取得
-                var startX = generator.GetStartX(roomNum);
-                var endX = generator.GetEndX(roomNum);
-                var startZ = generator.GetStartZ(roomNum);
-                var endZ = generator.GetEndZ(roomNum);
+                    //座標をランダムに決める
+                    var x = RogueUtils.GetRandomInt(startX, endX);
+                    var z = RogueUtils.GetRandomInt(startZ, endZ);
+                    position = new Position(x, z);
+                }
+                //床があるところに限定し、自分以外のオブジェクトと重ならないようにする
+                while (_map[position._x, position._z] != (int)MapGenerator.MAP_STATUS.FLOOR);
 
-                //座標をランダムに決める
-                // var x = RogueUtils.GetRandomInt(0, _width - 1);
-                // var z = RogueUtils.GetRandomInt(0, _depth - 1);
-                var x = RogueUtils.GetRandomInt(startX, endX);
-                var z = RogueUtils.GetRandomInt(startZ, endZ);
-                position = new Position(x, z);
+                //オブジェクトを生成する
+                ObjectManager.Instance.InstantiateWithObjectPooling(type, new Vector3(position._x * _mapSize, 1, position._z * _mapSize), new Quaternion());
+                //マップに情報を登録する
+                _map[position._x, position._z] = (int)status;
+
             }
-            //床があるところに限定し、自分以外のオブジェクトと重ならないようにする
-            while ((_map[position._x, position._z] != (int)MapGenerator.MAP_STATUS.FLOOR));
 
-            //オブジェクトを生成する
-            ObjectManager.Instance.InstantiateWithObjectPooling(type, new Vector3(position._x * _mapSize, 1, position._z * _mapSize), new Quaternion());
-            //マップに情報を登録する
-            _map[position._x, position._z] = (int)status;
         }
 
     }
