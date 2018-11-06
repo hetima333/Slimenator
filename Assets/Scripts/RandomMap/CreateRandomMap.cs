@@ -84,6 +84,12 @@ public class CreateRandomMap : MonoBehaviour
         //マップサイズをスケールの基準に設定
         transform.localScale = new Vector3(_mapSize, _mapSize, _mapSize);
 
+        if (Input.GetKey(KeyCode.Space))
+        {
+            Debug.Log("Space");
+            this.OpenBossRoom();
+        }
+
     }
 
     /// <summary>
@@ -115,6 +121,7 @@ public class CreateRandomMap : MonoBehaviour
                 {
                     //壁オブジェクトを生成する
                     GameObject wall = Instantiate(_wallPrefab, new Vector3(x, 0, z), new Quaternion());
+                    wall.tag = "Wall";
                     wall.transform.SetParent(transform);
                     //Debug.Log("Create wallPrefab map!!");
                 }
@@ -212,6 +219,22 @@ public class CreateRandomMap : MonoBehaviour
                 //(-1,-2),(2,-1),(1,2),(-2,1)
                 _map[position._x + x, position._z + z] = (int)MapGenerator.MAP_STATUS.PLAYER;
             }
+        }
+
+    }
+
+    /// <summary>
+    /// ボス部屋への通路を開く
+    /// </summary>
+    public void OpenBossRoom()
+    {
+        //タグのついている壁を取得
+        var bossRoomPassageObjs = GameObject.FindGameObjectsWithTag("BossRoomPassage");
+
+        foreach (var bossRoom in bossRoomPassageObjs)
+        {
+            //通路に変わった座標の床のみ削除する
+            Destroy(bossRoom);
         }
 
     }

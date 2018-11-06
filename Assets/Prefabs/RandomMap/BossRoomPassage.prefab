@@ -22,9 +22,9 @@ GameObject:
   - component: {fileID: 33304853648708316}
   - component: {fileID: 65346393864470992}
   - component: {fileID: 23435884576487036}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: BossRoomPassage
-  m_TagString: Untagged
+  m_TagString: BossRoomPassage
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
