@@ -34,14 +34,12 @@ public abstract class MenuButtonBase : MonoBehaviour {
 		// フォーカスが入った時
 		button.OnSelectAsObservable()
 			.Subscribe(e => {
-				Debug.Log("Select : " + this.gameObject.name);
 				// TODO : 色を変えるなどの効果
 			});
 
 		// フォーカスが外れた時
 		button.OnDeselectAsObservable()
 			.Subscribe(e => {
-				Debug.Log("DeSelect : " + this.gameObject.name);
 				// TODO : フォーカス時の効果削除
 			});
 
@@ -49,7 +47,6 @@ public abstract class MenuButtonBase : MonoBehaviour {
 		// TODO : 別途コントローラー用の設定も必要？
 		button.OnPointerClickAsObservable()
 			.Subscribe(e => {
-				Debug.Log("Execute : " + this.gameObject.name);
 				OnExecute(e);
 			});
 	}
