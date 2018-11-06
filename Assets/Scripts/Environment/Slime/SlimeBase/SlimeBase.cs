@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class SlimeBase : MonoBehaviour, ISuckable, IDamageable, IElement
+public abstract class SlimeBase : MonoBehaviour, ISuckable, IDamageable, IElement, IExplodable
 {
     SlimeStats _stats;
     SlimeBaseState _state;
@@ -12,6 +12,7 @@ public abstract class SlimeBase : MonoBehaviour, ISuckable, IDamageable, IElemen
     Rigidbody _rigidbody;
     Stats _properties;
     Status _status;
+    SkillTier _tier;
 
 	public float MaxHitPoint { get { return _properties.MaxHealthProperties; } }
 	public float HitPoint { get { return _properties.HealthProperties; } }
@@ -81,6 +82,11 @@ public abstract class SlimeBase : MonoBehaviour, ISuckable, IDamageable, IElemen
     protected virtual void Update () {
         _state.Tick();
         TakeDamage(_status.GetValue(EnumHolder.EffectType.HEALTH));
+
+        if(gameObject.transform.localScale.x != _tier.GetMultiplyer())
+        {
+            gameObject.transform.localScale = new Vector3(_tier.GetMultiplyer(), _tier.GetMultiplyer(), _tier.GetMultiplyer());
+        }
     }
 
     protected virtual void LateUpdate()
@@ -111,7 +117,7 @@ public abstract class SlimeBase : MonoBehaviour, ISuckable, IDamageable, IElemen
 
     // ENG: Initialization 
     // JAP: 初期化。
-    public virtual void Init(Stats newstats, float speedmultiplyer, ElementType type)
+    public virtual void Init(Stats newstats, float speedmultiplyer, ElementType type, SkillTier tier)
     {
         if (_rigidbody == null)
             CacheObject();
@@ -129,6 +135,7 @@ public abstract class SlimeBase : MonoBehaviour, ISuckable, IDamageable, IElemen
         _stats.MovementRange = UnityEngine.Random.Range(5.0f, 10.0f);
         _stats.MaxMovementRange = 3.0f;
         _rigidbody.velocity = Vector3.zero;
+        _tier = tier;
 
         Material.SetColor("_Color", _stats.Elementtype.GetColor());
     }
@@ -206,6 +213,12 @@ public abstract class SlimeBase : MonoBehaviour, ISuckable, IDamageable, IElemen
     }
 
 
+    public void SetTier(SkillTier newTier)
+    {
+        _tier = newTier;
+    }
+
+
     public void Sacking()
     {
         return;
@@ -214,5 +227,10 @@ public abstract class SlimeBase : MonoBehaviour, ISuckable, IDamageable, IElemen
     public ElementType GetElementType()
     {
         return _stats.Elementtype;
+    }
+
+    public void OnExplode()
+    {
+        throw new NotImplementedException();
     }
 }
