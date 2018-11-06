@@ -8,12 +8,13 @@ using UnityEngine;
 [RequireComponent (typeof (BoxCollider))]
 
 public class EnemyWeapon : MonoBehaviour {
+    //与えるダメージ
     [SerializeField]
     private float _damage;
-
+    //地面との判定を取るか否か
     [SerializeField]
     private bool _groundHit = false;
-
+    //衝撃波
     GameObject _shockWave;
     //一度当たったオブジェクトを記憶するHashSet（多段ヒット防止）
     private HashSet<GameObject> _hitObjects;

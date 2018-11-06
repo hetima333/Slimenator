@@ -100,7 +100,6 @@ public class CloseCombatEnemy : Enemy {
         }
 
         int attackNum = Random.Range (1, 3);
-        Debug.Log (attackNum);
 
         _anim.CrossFade ("Attack" + attackNum.ToString (), 0);
 
