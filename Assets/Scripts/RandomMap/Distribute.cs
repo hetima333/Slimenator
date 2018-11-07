@@ -227,4 +227,17 @@ public class Distribute : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// 敵が全滅しているか
+    /// </summary>
+    /// <returns></returns>
+    public bool IsEnemyAnnihilated()
+    {
+        //敵を取得
+        var enemy = GameObject.FindGameObjectsWithTag("Enemy");
+        //敵が1体も存在していなかったら全滅を確認
+        if (enemy.Length <= 0) return true;
+        return false;
+    }
+
 }

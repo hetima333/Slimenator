@@ -84,9 +84,12 @@ public class CreateRandomMap : MonoBehaviour
         //マップサイズをスケールの基準に設定
         transform.localScale = new Vector3(_mapSize, _mapSize, _mapSize);
 
-        if (Input.GetKey(KeyCode.Space))
+        //敵が全滅していたら
+        var distribute = GetComponent<Distribute>();
+        if (Input.GetKey(KeyCode.Space))// || distribute.IsEnemyAnnihilated())
         {
-            Debug.Log("Space");
+            Debug.Log("Open boss room passage!");
+            //ボス部屋への通路を開く
             this.OpenBossRoom();
         }
 
