@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: BOOM COMBI 2
   m_EditorClassIdentifier: 
   _Combination:
-  - {fileID: 11400000, guid: 753eac8bb53ca58458e5f20416ea0092, type: 2}
   - {fileID: 11400000, guid: 3598f9cad2b4e094e8abf6dc11ad1944, type: 2}
+  - {fileID: 11400000, guid: 753eac8bb53ca58458e5f20416ea0092, type: 2}
   - {fileID: 11400000, guid: 36f0bab903e87bc43a975a9ab8b5afd1, type: 2}
   _Base: {fileID: 0}
   _Targetable: {fileID: 0}
@@ -25,7 +25,8 @@ MonoBehaviour:
   _CastingParticle: {fileID: 0}
   _CastingType: {fileID: 11400000, guid: 9c57f7cfbf3bc204b908973b51b79a3b, type: 2}
   _SpawningDelay: 0
-  _Iteration: 0
-  _AreaEffectProperties: {fileID: 0}
+  _Iteration: 1
+  _AreaEffectProperties: {fileID: 11400000, guid: 4cbc1577dc7a8bc4fa1564bc7e945761,
+    type: 2}
   _SpawnedObject: {fileID: 1674626514068560, guid: 76796459c1b6f354d99ea82704357cbd,
     type: 2}

@@ -27,7 +27,8 @@ public class EntityPlayerMovement : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (_EntityPlayer.GetPlayerState() != EnumHolder.States.DIE)
+        if (_EntityPlayer.GetPlayerState() != EnumHolder.States.DIE && 
+            !(_EntityPlayer.GetPlayerState() == EnumHolder.States.CASTING && _EntityPlayer.RestrictMovement))
             Move();
     }
 

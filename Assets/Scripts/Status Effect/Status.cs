@@ -85,4 +85,49 @@ public class Status : MonoBehaviour
         GameObject go_temp = Instantiate(se.GetParticle(), gameObject.transform);
         Destroy(go_temp, se.GetTimer());
     }
+
+
+    public void UpdateStatMultiplyer(ref Stats stats)
+    {
+        foreach (var st in _Status)
+        {
+            float temp = 0;
+
+            foreach(Effect e in st.Value)
+            {
+                temp += e.GetAmount();
+            }
+
+            switch(st.Key)
+            {
+                case EnumHolder.EffectType.HEALTH:
+                    {
+                        stats.HealthMultiplyerProperties = Mathf.Clamp(1 + temp, 0, int.MaxValue);
+                    }
+                    break;
+
+                case EnumHolder.EffectType.SPEED:
+                    {
+                        stats.SpeedMultiplyerProperties = Mathf.Clamp(1 + temp, 0, int.MaxValue);
+                    }
+                    break;
+
+                case EnumHolder.EffectType.DAMAGE:
+                    {
+                        stats.DamageMultiplyerProperties = Mathf.Clamp(1 + temp, 0, int.MaxValue);
+                    }
+                    break;
+
+                case EnumHolder.EffectType.SUCKING:
+                    {
+                        stats.SuckingPowerMultiplyerProperties = Mathf.Clamp(1 + temp, 0, int.MaxValue);
+                    }
+                    break;
+
+                default:
+                    stats.HealthMultiplyerProperties = Mathf.Clamp(1 + temp, 0, int.MaxValue);
+                    break;
+            }
+        }
+    }
 }

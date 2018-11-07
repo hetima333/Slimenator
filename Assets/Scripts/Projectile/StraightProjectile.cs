@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class StraightProjectile : Projectile
 {
+    [SerializeField]
+    private StringList
+        _TagList;
+
     public override void Init(Vector3 dir, float speed, ProjectileProperties projectile_properties, List<StatusEffect> Status, GameObjectList Targetable, float timer = 5, float damage = 1, float multiplyer = 1, float percentage = 0)
     {
         _Dir = dir;
@@ -53,7 +57,7 @@ public class StraightProjectile : Projectile
 
     private void OnTriggerEnter(Collider collision)
     {
-        if(!collision.gameObject.tag.Equals("Player") && !collision.gameObject.tag.Equals("Projectile"))
+        if(!_TagList.IsTagNotHitable(collision.gameObject.tag))
             Dead();
     }
 }

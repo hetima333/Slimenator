@@ -20,6 +20,7 @@ MonoBehaviour:
   _StatusEffect: []
   _StatusApplyPercentage: 0
   _Damage: 0
+  _RestrictUserMovement: 0
   _Description: BLACK HOLEEE
   _ChannelingParticle: {fileID: 0}
   _CastingParticle: {fileID: 0}

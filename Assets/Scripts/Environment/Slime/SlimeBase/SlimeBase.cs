@@ -80,13 +80,14 @@ public abstract class SlimeBase : MonoBehaviour, ISuckable, IDamageable, IElemen
 
     protected virtual void Update () {
         _state.Tick();
-        TakeDamage(_status.GetValue(EnumHolder.EffectType.HEALTH));
+        _status.UpdateStatMultiplyer(ref _properties);
+        TakeDamage(_status.GetValue(EnumHolder.EffectType.TAKEDAMAGE));
     }
 
     protected virtual void LateUpdate()
     {
-        if (_animator.speed != (Speed / _properties.SpeedProperties) * _properties.SpeedMultiplyerProperties)
-            _animator.speed = (Speed / _properties.SpeedProperties) * _properties.SpeedMultiplyerProperties;
+        if (_animator.speed != _properties.SpeedMultiplyerProperties)
+            _animator.speed = _properties.SpeedMultiplyerProperties;
     }
   
     public void TakeDamage(float dmg)
@@ -122,7 +123,7 @@ public abstract class SlimeBase : MonoBehaviour, ISuckable, IDamageable, IElemen
         _properties = newstats;
 
         _stats = new SlimeStats();
-        _properties.HealthProperties = _properties.MaxHealthProperties;
+        _properties.HealthProperties = _properties.MaxHealthProperties * _properties.HealthMultiplyerProperties;
         _properties.SpeedMultiplyerProperties = speedmultiplyer;
         _stats.Elementtype = type;
         _stats.IsDead = false;
@@ -137,15 +138,7 @@ public abstract class SlimeBase : MonoBehaviour, ISuckable, IDamageable, IElemen
     {
         get
         {
-            if (_status != null)
-            {
-                return _properties.SpeedProperties *
-                    ((100.0f - ((_status.GetValue(EnumHolder.EffectType.SPEED) > 100) ? 100 :
-                    ((_status.GetValue(EnumHolder.EffectType.SPEED) < 0) ? 0 :
-                    _status.GetValue(EnumHolder.EffectType.SPEED)))) / 100.0f);
-            }
-            else
-                return _properties.SpeedProperties;
+            return _properties.SpeedProperties * _properties.SpeedMultiplyerProperties;
         }
     }
 

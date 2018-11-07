@@ -3,33 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-[CreateAssetMenu(menuName = "Skills/Spawning Skill")]
-public class SkillSpawning : Skill
+[CreateAssetMenu(menuName = "Skills/Event Skill")]
+public class SkillEvent : Skill
 {
-    [BackgroundColor(1f, 1f, 0f, 0.5f)]
-    [Header("Spawning Type Skill")]
+    [BackgroundColor(0f, 0f, 0f, 0.5f)]
+    [Header("Event Type Skill")]
     [SerializeField]
     private SkillCastingType
         _CastingType;
 
     [SerializeField]
+    private List<GameEvent>
+       _SingleCallEvents;
+
+    [SerializeField]
+    private List<GameEvent>
+        _MultipleCallEvents;
+
+    [SerializeField]
     private float
-        _SpawningDelay;
-
-    [SerializeField]
-    private uint
-        _Iteration;
-
-    [SerializeField]
-    private SpawningProperties
-        _AreaEffectProperties;
+        _CallDelay;
 
     private float
         _Timer = 0;
 
-    [SerializeField]
-    private GameObject
-        _SpawnedObject;
+    private bool
+        _SingleEventCalled = false;
 
     public override void Engage(GameObject caster, Vector3 spawn_position = new Vector3(), Vector3 dir = new Vector3())
     {
@@ -43,19 +42,22 @@ public class SkillSpawning : Skill
                 {
                     foreach (GameObject obj in _CastingType.GetTargets(ref spawn_position, ref _SkillTier, ref _Targetable, ref caster))
                     {
-                        for (int i = 0; i < _Iteration; ++i)
+                        foreach (GameEvent ge in _MultipleCallEvents)
                         {
-                            Debug.DrawLine(spawn_position, obj.transform.position, Color.yellow, 1f);
+                            ge.InvokeSpecificListner(obj.GetInstanceID());
+                        }
 
-                            GameObject temp = ObjectManager.Instance.InstantiateWithObjectPooling(_SpawnedObject, obj.transform.position, obj.transform.rotation);
-
-                            if (temp.GetComponent<AreaEffect>() != null)
+                        if (!_SingleEventCalled)
+                        {
+                            foreach (GameEvent ge in _SingleCallEvents)
                             {
-                                temp.GetComponent<AreaEffect>().Init(_AreaEffectProperties);
+                                ge.InvokeSpecificListner(obj.GetInstanceID());
                             }
+
+                            _SingleEventCalled = true;
                         }
                     }
-                    _Timer = _SpawningDelay;
+                    _Timer = _CallDelay;
                 }
                 else
                     _Timer -= Time.deltaTime;

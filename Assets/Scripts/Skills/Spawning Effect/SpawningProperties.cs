@@ -9,7 +9,8 @@ public class SpawningProperties : ScriptableObject
     [Header("Area Effect Properties")]
     [SerializeField]
     private GameObject
-     _Particle;
+        _StartingParticle,
+        _EndingParticle;
 
     [SerializeField]
     private float
@@ -20,7 +21,8 @@ public class SpawningProperties : ScriptableObject
 
     [SerializeField]
     private EnumHolder.AreaEffectType
-       _Type;
+        _StartingType,
+        _EndingType;
 
     [SerializeField]
     private SOList
@@ -30,9 +32,14 @@ public class SpawningProperties : ScriptableObject
     protected GameObjectList
         _Objects;
 
-    public GameObject GetParticle()
+    public GameObject GetStartingParticle()
     {
-        return _Particle;
+        return _StartingParticle;
+    }
+
+    public GameObject GetEndingParticle()
+    {
+        return _EndingParticle;
     }
 
     public float GetRadius()
@@ -55,10 +62,13 @@ public class SpawningProperties : ScriptableObject
         return _Damage;
     }
 
-    public EnumHolder.AreaEffectType GetEffectType()
+    public EnumHolder.AreaEffectType GetEffectType(bool IsEnding)
     {
-        return _Type;
+        if(!IsEnding)
+            return _StartingType;
+        return _EndingType;
     }
+
 
     public GameObjectList GetTargetable()
     {

@@ -436,9 +436,13 @@ Prefab:
       propertyPath: _Camera
       value: 
       objectReference: {fileID: 1353723394}
-    - target: {fileID: 1294561646650140, guid: 2249c65a616e71048972fb35250b8b9d, type: 2}
-      propertyPath: m_TagString
-      value: Player
+    - target: {fileID: 1944767245314202, guid: 2249c65a616e71048972fb35250b8b9d, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1929610641034208, guid: 2249c65a616e71048972fb35250b8b9d, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2249c65a616e71048972fb35250b8b9d, type: 2}

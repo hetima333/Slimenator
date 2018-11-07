@@ -8,7 +8,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e782602dc0afa141bd2a29c323c94df, type: 3}
-  m_Name: TargetableNothing
+  m_Script: {fileID: 11500000, guid: 706c2c60d450e9742a4c0ae70bfc65cb, type: 3}
+  m_Name: CallSuckingFunction
   m_EditorClassIdentifier: 
-  _List: []
+  Event_Listeners: []

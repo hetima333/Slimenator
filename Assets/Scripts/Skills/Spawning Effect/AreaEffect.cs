@@ -8,28 +8,54 @@ public class AreaEffect : MonoBehaviour
         _Properties;
 
     private float
-        _LifeTime, 
+        _StartingTime, 
+        _EndingTime,
         _Delay;
+
+    private bool
+        _SpawnedEnding;
 
     public void Init(SpawningProperties Properties)
     {
+        _SpawnedEnding = false;
+
         _Properties = Properties;
-        ParticleInterface ParticlePI = _Properties.GetParticle().GetComponent<ParticleInterface>();
+        ParticleInterface ParticlePI = _Properties.GetStartingParticle().GetComponent<ParticleInterface>();
         ParticlePI.Init();
-        _LifeTime = ParticlePI.GetLongestParticleEffect();
-        GameObject temp = Instantiate(_Properties.GetParticle(), gameObject.transform);
-        Destroy(temp, _LifeTime);
+        _StartingTime = ParticlePI.GetLongestParticleEffect();
+        GameObject temp = Instantiate(_Properties.GetStartingParticle(), gameObject.transform);
+        Destroy(temp, _StartingTime);
+
+        if (_Properties.GetEndingParticle() != null)
+        {
+            _Properties = Properties;
+            ParticlePI = _Properties.GetEndingParticle().GetComponent<ParticleInterface>();
+            ParticlePI.Init();
+            _EndingTime = ParticlePI.GetLongestParticleEffect();
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (_LifeTime <= 0)
-            gameObject.SetActive(false);
-        else
-            _LifeTime -= Time.deltaTime;
+        if (_StartingTime <= 0)
+        {
+            if(!_SpawnedEnding && _Properties.GetEndingParticle() != null)
+            {
+                GameObject temp = Instantiate(_Properties.GetEndingParticle(), gameObject.transform);
+                Destroy(temp, _EndingTime);
+                _SpawnedEnding = true;
+            }
 
-        switch (_Properties.GetEffectType())
+            if (_EndingTime <= 0)
+                gameObject.SetActive(false);
+            else
+                _EndingTime -= Time.deltaTime;
+        }
+        else
+            _StartingTime -= Time.deltaTime;
+
+        switch (_Properties.GetEffectType(_StartingTime <= 0))
         {
             case EnumHolder.AreaEffectType.SPAWNING:
                 {
@@ -79,6 +105,42 @@ public class AreaEffect : MonoBehaviour
                                 if (Vector3.Distance(gameObject.transform.position, entity.transform.position) < _Properties.GetRadius())
                                 {
                                     entity.transform.position = Vector3.Slerp(entity.transform.position, new Vector3(gameObject.transform.position.x, entity.transform.position.y, gameObject.transform.position.z), (1.0f - (Vector3.Distance(gameObject.transform.position, entity.transform.position) / _Properties.GetRadius())) * 0.5f);
+                                }
+                            }
+                        }
+                    }
+                }
+                break;
+
+            case EnumHolder.AreaEffectType.PUSHING:
+                {
+                    foreach (GameObject obj in _Properties.GetTargetable().GetList())
+                    {
+                        if (ObjectManager.Instance.GetActiveObjects(obj) != null)
+                        {
+                            foreach (GameObject entity in ObjectManager.Instance.GetActiveObjects(obj))
+                            {
+                                if (Vector3.Distance(gameObject.transform.position, entity.transform.position) < _Properties.GetRadius())
+                                {
+                                    entity.transform.position += (
+                                        new Vector3(entity.transform.position.x, entity.transform.position.y, entity.transform.position.z) -
+                                        new Vector3(gameObject.transform.position.x, entity.transform.position.y, gameObject.transform.position.z)).normalized *
+                                        (1.0f - (Vector3.Distance(gameObject.transform.position, entity.transform.position) / _Properties.GetRadius()));
+
+                                    if (_Delay <= 0)
+                                    {
+                                        IDamageable dmg = entity.GetComponent<IDamageable>();
+                                        if (dmg != null)
+                                        {
+                                            if (Vector3.Distance(gameObject.transform.position, entity.transform.position) < _Properties.GetRadius())
+                                            {
+                                                dmg.TakeDamage(_Properties.GetDamage());
+                                            }
+                                        }
+                                        _Delay = _Properties.GetDelay();
+                                    }
+                                    else
+                                        _Delay -= Time.deltaTime;
                                 }
                             }
                         }

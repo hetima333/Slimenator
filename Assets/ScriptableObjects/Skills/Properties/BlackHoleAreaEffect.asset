@@ -11,11 +11,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca731fcea334a8446926bd4b3f24015d, type: 3}
   m_Name: BlackHoleAreaEffect
   m_EditorClassIdentifier: 
-  _Particle: {fileID: 1242461848233782, guid: 664f1451b9732a9499089f0494689818, type: 2}
+  _StartingParticle: {fileID: 1242461848233782, guid: 664f1451b9732a9499089f0494689818,
+    type: 2}
+  _EndingParticle: {fileID: 1783820332162922, guid: 7c460cf7fffd6ce4d8c3b6f625ed6680,
+    type: 2}
   _Radius: 20
-  _Delay: 0
+  _Delay: 0.2
   _YOffset: 0
-  _Damage: 0
-  _Type: 0
+  _Damage: 5
+  _StartingType: 0
+  _EndingType: 1
   _ElementType: {fileID: 11400000, guid: dafcf0a15e8eadb4fa33c1a792f407fa, type: 2}
   _Objects: {fileID: 11400000, guid: 921fd2909285c1b40ac6aee462dd0d4a, type: 2}

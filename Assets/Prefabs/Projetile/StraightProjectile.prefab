@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 23706397302872860}
   - component: {fileID: 114992655577325026}
   m_Layer: 0
-  m_Name: Fireball
+  m_Name: StraightProjectile
   m_TagString: Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -115,3 +115,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3881002352764dd4fa8b6b27a1b7693c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _TagList: {fileID: 11400000, guid: 002a8335ba235de469f2672ed8d39f66, type: 2}
