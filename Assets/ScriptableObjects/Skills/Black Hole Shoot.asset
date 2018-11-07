@@ -9,24 +9,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b4f745ea35a19d14c94dfa52e1e271e7, type: 3}
-  m_Name: Fire Ball
+  m_Name: Black Hole Shoot
   m_EditorClassIdentifier: 
   _Combination:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  _Base: {fileID: 11400000, guid: 753eac8bb53ca58458e5f20416ea0092, type: 2}
+  - {fileID: 11400000, guid: 3598f9cad2b4e094e8abf6dc11ad1944, type: 2}
+  - {fileID: 11400000, guid: 36f0bab903e87bc43a975a9ab8b5afd1, type: 2}
+  - {fileID: 11400000, guid: 753eac8bb53ca58458e5f20416ea0092, type: 2}
+  _Base: {fileID: 0}
   _Targetable: {fileID: 11400000, guid: 921fd2909285c1b40ac6aee462dd0d4a, type: 2}
-  _StatusEffect:
-  - {fileID: 11400000, guid: 82823a8632fe1e846b6ac8ebf4100ca7, type: 2}
-  _StatusApplyPercentage: 30
-  _Damage: 10
-  _Description: Shoots a fire ball
+  _StatusEffect: []
+  _StatusApplyPercentage: 0
+  _Damage: 0
+  _Description: BLACK HOLEEE
   _ChannelingParticle: {fileID: 0}
-  _CastingParticle: {fileID: 1842664229368296, guid: e77da83b1249e6e4fb1132c45464e885,
-    type: 2}
+  _CastingParticle: {fileID: 0}
   _Projectile: {fileID: 1762178163839322, guid: ac48cf082fcd82843a04c8748fdaa940,
     type: 2}
-  _properties: {fileID: 11400000, guid: d874422f599e62c4f84d2336096b5be4, type: 2}
-  _Range: 2
-  _Speed: 20
+  _properties: {fileID: 11400000, guid: 6e2b50610000ed64d8e631247c7f9a56, type: 2}
+  _Range: 10
+  _Speed: 3

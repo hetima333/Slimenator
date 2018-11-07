@@ -53,35 +53,71 @@ public abstract class Projectile : MonoBehaviour
             Destroy(temp, _impact_particle_timer);
         }
 
-        foreach (GameObject obj in _Targetable)
+        if (_damage > 0)
         {
-            if (ObjectManager.Instance.GetActiveObjects(obj) != null)
+            foreach (GameObject obj in _Targetable)
             {
-                foreach (GameObject entity in ObjectManager.Instance.GetActiveObjects(obj))
+                if (ObjectManager.Instance.GetActiveObjects(obj) != null)
                 {
-                    if (Vector3.Distance(gameObject.transform.position, entity.transform.position) < _ProjectileProperties.GetImpactRadius() * _multiplyer)
+                    foreach (GameObject entity in ObjectManager.Instance.GetActiveObjects(obj))
                     {
-                        IDamageable dmg = entity.GetComponent<IDamageable>();
-
-                        if (dmg != null)
+                        if (Vector3.Distance(gameObject.transform.position, entity.transform.position) < _ProjectileProperties.GetImpactRadius() * _multiplyer)
                         {
-                            dmg.TakeDamage(_damage * _multiplyer);
+                            IDamageable dmg = entity.GetComponent<IDamageable>();
 
-                            Debug.Log("[Damaging (" + _damage * _multiplyer + ")] " + obj.name);
-
-                            if (_StatusEffects.Count > 0)
+                            if (dmg != null)
                             {
-                                if (Random.Range(0, 100) < _percentage * _multiplyer)
+                                dmg.TakeDamage(_damage * _multiplyer);
+
+                                Debug.Log("[Damaging (" + _damage * _multiplyer + ")] " + obj.name);
+
+                                if (_StatusEffects.Count > 0)
                                 {
-                                    foreach (StatusEffect se in _StatusEffects)
+                                    if (Random.Range(0, 100) < _percentage * _multiplyer)
                                     {
-                                        Debug.Log("[Applying (" + se.name + ")] " + obj.name);
-                                        se.GetEvent().InvokeSpecificListner(obj.GetInstanceID());
+                                        foreach (StatusEffect se in _StatusEffects)
+                                        {
+                                            Debug.Log("[Applying (" + se.name + ")] " + obj.name);
+                                            se.GetEvent().InvokeSpecificListner(obj.GetInstanceID());
+                                        }
                                     }
                                 }
                             }
                         }
                     }
+                }
+            }
+        }
+
+        //SPAWNING
+        if (_ProjectileProperties.GetObjectsToSpawn() != null)
+        {
+            foreach (GameObject obj in _ProjectileProperties.GetObjectsToSpawn().GetList())
+            {
+                for(int i = 0; i < _ProjectileProperties.GetIteration(); ++i)
+                {
+                    GameObject temp_obj = ObjectManager.Instance.InstantiateWithObjectPooling(obj, gameObject.transform.position);
+
+                    if (temp_obj.GetComponent<AreaEffect>() != null)
+                    {
+                        temp_obj.GetComponent<AreaEffect>().Init(_ProjectileProperties.GetProperties());
+                    }
+                    else if (temp_obj.tag.Equals("Slime"))
+                    {
+                        Stats temp = EnumHolder.Instance.GetStats(obj.name);
+                        SlimeBase temp_component = temp_obj.GetComponent<SlimeBase>();
+
+                        if (temp_component != null)
+                            DestroyImmediate(temp_component);
+
+                        int type = Random.Range(0, _ProjectileProperties.GetProperties().GetElement().GetList().Count);
+
+                        System.Type _MyScriptType = System.Type.GetType(((ElementType)_ProjectileProperties.GetProperties().GetElement().GetList()[type]).GetSlimeScriptName());
+                        temp_obj.AddComponent(_MyScriptType);
+
+                        temp_obj.GetComponent<SlimeBase>().Init(temp, ((((ElementType)_ProjectileProperties.GetProperties().GetElement().GetList()[type]).name.Equals("Lightning")) ? 2 : 1), ((ElementType)_ProjectileProperties.GetProperties().GetElement().GetList()[type]));
+                    }
+
                 }
             }
         }

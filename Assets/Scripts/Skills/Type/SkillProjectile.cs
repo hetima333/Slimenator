@@ -5,6 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Skills/Projectile Skill")]
 public class SkillProjectile : Skill
 {
+    [BackgroundColor(1f, 0f, 1f, 0.5f)]
+    [Header("Projectile Type Skill")]
     [SerializeField]
     private GameObject
         _Projectile;

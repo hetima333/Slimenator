@@ -53,9 +53,7 @@ public class StraightProjectile : Projectile
 
     private void OnTriggerEnter(Collider collision)
     {
-        if(collision.gameObject.tag.Equals("Hittable"))
-        {
+        if(!collision.gameObject.tag.Equals("Player") && !collision.gameObject.tag.Equals("Projectile"))
             Dead();
-        }
     }
 }

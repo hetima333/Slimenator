@@ -5,6 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Skills/Properties/Projectile")]
 public class ProjectileProperties : ScriptableObject
 {
+    [BackgroundColor(0.5f, 0.5f, 0f, 0.5f)]
+    [Header("Projectile Properties")]
     [SerializeField]
     private GameObject
      _MovingParticle,
@@ -12,7 +14,17 @@ public class ProjectileProperties : ScriptableObject
 
     [SerializeField]
     private float
-        _ImpactRadius;
+        _ImpactRadius, 
+        _SpawningIteration;
+
+    [Tooltip("Only if the object you are spawning is an [Area Effect]")]
+    [SerializeField]
+    private SpawningProperties
+        _AreaEffectProperties;
+
+    [SerializeField]
+    private GameObjectList
+        _SpawningObjects;
 
     public GameObject GetMovingParticle()
     {
@@ -27,5 +39,20 @@ public class ProjectileProperties : ScriptableObject
     public float GetImpactRadius()
     {
         return _ImpactRadius;
+    }
+
+    public float GetIteration()
+    {
+        return _SpawningIteration;
+    }
+
+    public SpawningProperties GetProperties()
+    {
+        return _AreaEffectProperties;
+    }
+
+    public GameObjectList GetObjectsToSpawn()
+    {
+        return _SpawningObjects;
     }
 }

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public abstract class Skill : ScriptableObject
 {
+    [BackgroundColor(0f, 1f, 0f, 0.5f)]
+    [Header("Skills Properties")]
     [SerializeField]
     private ElementType[]
          _Combination = new ElementType[3];
@@ -55,7 +57,7 @@ public abstract class Skill : ScriptableObject
         {
             ParticleInterface ChannelingParticlePI = _ChannelingParticle.GetComponent<ParticleInterface>();
             ChannelingParticlePI.Init();
-            _ChannelingTimer = _ChannelingParticle.GetComponent<ParticleInterface>().GetLongestParticleEffect();
+            _ChannelingTimer = ChannelingParticlePI.GetLongestParticleEffect();
             Debug.Log("Channeling Particle: " + _ChannelingTimer);
         }
         else
@@ -65,7 +67,7 @@ public abstract class Skill : ScriptableObject
         {
             ParticleInterface CastingParticlePI = _CastingParticle.GetComponent<ParticleInterface>();
             CastingParticlePI.Init();
-            _CastingTimer = _CastingParticle.GetComponent<ParticleInterface>().GetLongestParticleEffect();
+            _CastingTimer = CastingParticlePI.GetLongestParticleEffect();
             Debug.Log("Casting Particle: " + _CastingTimer);
         }
         else
@@ -163,6 +165,11 @@ public abstract class Skill : ScriptableObject
     public SkillTier GetSkillTier()
     {
         return _SkillTier;
+    }
+
+    public List<StatusEffect> GetStatusEffects()
+    {
+        return _StatusEffect;
     }
 
     public string GetDescription()

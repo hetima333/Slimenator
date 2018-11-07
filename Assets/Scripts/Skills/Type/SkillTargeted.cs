@@ -6,6 +6,8 @@ using UnityEngine.Events;
 [CreateAssetMenu(menuName = "Skills/Targeted Skill")]
 public class SkillTargeted : Skill
 {
+    [BackgroundColor(0f, 1f, 1f, 1f)]
+    [Header("Targeted Type Skill")]
     [SerializeField]
     private SkillCastingType
         _CastingType;

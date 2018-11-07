@@ -188,7 +188,10 @@ MonoBehaviour:
   _enemys:
   - _object: {fileID: 1772466507498902, guid: 36548978b6c2a0e4d9ce1c93145a8506, type: 2}
     _minGenerate: 10
-    _maxGenerate: 40
+    _maxGenerate: 10
+  - _object: {fileID: 1368410216600654, guid: 065392f26bf24bb4883cc37b354c59b5, type: 2}
+    _minGenerate: 10
+    _maxGenerate: 10
 --- !u!114 &114902232243251302
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -206,5 +209,9 @@ MonoBehaviour:
   _minRangeWidth: 10
   _wallPrefab: {fileID: 1520048981918090, guid: c8780ffdd371ce349808f98bb29b3b17,
     type: 2}
-  _mapSize: 4
+  _mapSize: 6
   _player: {fileID: 0}
+  _roomStart: {fileID: 0}
+  _roomWhidth: {fileID: 0}
+  _roomDepth: {fileID: 0}
+  _roomEnd: {fileID: 0}

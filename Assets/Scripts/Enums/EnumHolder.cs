@@ -27,6 +27,13 @@ public class EnumHolder : SingletonMonoBehaviour<EnumHolder>
         HEALTH,
     }
 
+    public enum AreaEffectType
+    {
+        SUCKING,
+        SPAWNING,
+        DAMAGE,
+    }
+
     public Stats GetStats(string InstanceName)
     {
         foreach(Stats s in _Stat.GetList())

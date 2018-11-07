@@ -8,8 +8,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df076bddc5fb8d7478747696daf49921, type: 3}
-  m_Name: Combination Skill
+  m_Script: {fileID: 11500000, guid: 2e782602dc0afa141bd2a29c323c94df, type: 3}
+  m_Name: SpawnSlime
   m_EditorClassIdentifier: 
   _List:
-  - {fileID: 11400000, guid: 86dda70d891738b48a08cb706e43ea29, type: 2}
+  - {fileID: 1437516636120426, guid: 8c639dfa589184546938f1eaa7bdaa6f, type: 2}

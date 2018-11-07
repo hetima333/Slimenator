@@ -20,4 +20,5 @@ MonoBehaviour:
   _MaxDamageMultiplyer: 1
   _MaxHealthMultiplyer: 1
   _SuckingPower: 10
+  _SuckingPowerMultiplyer: 1
   _UsedByMultipleEntities: 0
