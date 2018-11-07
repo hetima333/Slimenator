@@ -28,6 +28,7 @@ public class SpawningProperties : ScriptableObject
     private SOList
         _ElementType;
 
+    [Tooltip("Objects to be spawned/affected")]
     [SerializeField]
     protected GameObjectList
         _Objects;

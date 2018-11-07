@@ -6,30 +6,37 @@ public abstract class Skill : ScriptableObject
 {
     [BackgroundColor(0f, 1f, 0f, 0.5f)]
     [Header("Skills Properties")]
+    [Tooltip("Skill is created via Combinations")]
     [SerializeField]
     private ElementType[]
          _Combination = new ElementType[3];
 
+    [Tooltip("Skill is created via Base Element")]
     [SerializeField]
     private ElementType
         _Base;
 
+    [Tooltip("Targets that can be targeted")]
     [SerializeField]
     protected GameObjectList
         _Targetable;
 
+    [Tooltip("Status Effect to apply to Target")]
     [SerializeField]
     protected List<StatusEffect>
         _StatusEffect = new List<StatusEffect>();
 
+    [Tooltip("Chance of Status effect being applied to Target [Tier will multiply the chance]")]
     [SerializeField]
     protected float
         _StatusApplyPercentage;
 
+    [Tooltip("Damage Dealt to Target")]
     [SerializeField]
     protected float
         _Damage;
 
+    [Tooltip("Does skill Restrict user Movements")]
     [SerializeField]
     private bool
         _RestrictUserMovement;

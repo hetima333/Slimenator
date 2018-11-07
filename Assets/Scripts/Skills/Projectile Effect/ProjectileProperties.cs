@@ -22,6 +22,7 @@ public class ProjectileProperties : ScriptableObject
     private SpawningProperties
         _AreaEffectProperties;
 
+    [Tooltip("Object to be spawned on Impact")]
     [SerializeField]
     private GameObjectList
         _SpawningObjects;

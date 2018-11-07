@@ -32,6 +32,7 @@ public class EnumHolder : SingletonMonoBehaviour<EnumHolder>
 
     public enum AreaEffectType
     {
+        NONE,
         SUCKING,
         PUSHING,
         SPAWNING,
