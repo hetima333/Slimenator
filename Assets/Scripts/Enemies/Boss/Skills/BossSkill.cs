@@ -18,7 +18,7 @@ public class BossSkill : MonoBehaviour {
 
 		_coolTime = _maxCoolTime;
 
-		_target = _boss.GetComponent<TestBoss> ()._target;
+		_target = _boss.GetComponent<BossBase> ()._target;
 
 	}
 
@@ -38,7 +38,7 @@ public class BossSkill : MonoBehaviour {
 
 	void ActEnd () {
 		_isActive = false;
-		_boss.GetComponent<TestBoss> ()._isAction = false;
+		_boss.GetComponent<BossBase> ()._isAction = false;
 
 	}
 }

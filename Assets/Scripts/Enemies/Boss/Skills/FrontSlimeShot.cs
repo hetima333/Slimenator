@@ -16,7 +16,7 @@ public class FrontSlimeShot : BossSkill {
 		CreateShotObject (30f);
 		CreateShotObject (-30f);
 		_canActive = false;
-		_boss.GetComponent<TestBoss> ()._isAction = true;
+		_boss.GetComponent<BossBase> ()._isAction = true;
 
 	}
 

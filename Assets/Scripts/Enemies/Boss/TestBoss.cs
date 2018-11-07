@@ -7,45 +7,18 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class TestBoss : MonoBehaviour, IDamageable {
+public class TestBoss : BossBase, IDamageable {
 
     //TODO Boss Performance
     const float MAX_HP = 3000.0f;
     const float MONEY = 2000.0f;
-    const float ACT_INTERVAL = 1.0f;
-    private int _phase = 0;
-
-    private float _actInterval = ACT_INTERVAL;
-    private float _maxHp;
-    private float _hp;
-    //インタフェース用最大Hp取得
-    public float MaxHitPoint { get { return _maxHp; } }
-    //インタフェース用現在Hp取得
-    public float HitPoint { get { return _hp; } }
-
-    public GameObject _target;
-    //アニメーション
-    private SimpleAnimation _anim;
-
-    //Object for long range attack
-    private GameObject _slimeBullet;
-
-    private BossSkill _previousSkill;
-
-    public bool _isAction = false;
 
     //分裂時生成するボスオブジェクト
     [SerializeField]
-    GameObject Boss1;
+    private GameObject Boss1;
 
     [SerializeField]
-    GameObject Boss2;
-
-    [SerializeField]
-    //発動できるスキルリスト
-    List<BossSkill> _skillList = new List<BossSkill> ();
-
-    List<BossSkill> _canUseSkillList = new List<BossSkill> ();
+    private GameObject Boss2;
 
     // Use this for initialization
     void Start () {
@@ -80,7 +53,7 @@ public class TestBoss : MonoBehaviour, IDamageable {
         _hp -= damage;
 
         if (_hp <= 0) {
-
+            PhaseUp ();
         }
     }
 
@@ -158,6 +131,11 @@ public class TestBoss : MonoBehaviour, IDamageable {
 
         GameObject BossB = Instantiate (Boss2);
         BossA.transform.position = Pos - OffSet;
+
+        BossA.GetComponent<BossTwins> ()._target = _target;
+        BossA.GetComponent<BossTwins> ().SetAvatar (BossB);
+        BossB.GetComponent<BossTwins> ()._target = _target;
+        BossB.GetComponent<BossTwins> ().SetAvatar (BossA);
 
         Destroy (gameObject);
     }

@@ -17,7 +17,7 @@ public class AroundSlimeShot : BossSkill {
 
 		}
 		_canActive = false;
-		_boss.GetComponent<TestBoss> ()._isAction = true;
+		_boss.GetComponent<BossBase> ()._isAction = true;
 
 	}
 

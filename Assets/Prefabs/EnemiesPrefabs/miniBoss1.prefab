@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 65638214155447014}
   - component: {fileID: 23179483030620244}
   - component: {fileID: 54242222833351096}
+  - component: {fileID: 114094637349096802}
   m_Layer: 11
   m_Name: miniBoss1
   m_TagString: Untagged
@@ -196,3 +197,23 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114094637349096802
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1140803224203266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6073a623bc82644f9c5640013d18ecd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxHp: 0
+  _hp: 0
+  _target: {fileID: 0}
+  _isAction: 0
+  _anim: {fileID: 0}
+  _slimeBullet: {fileID: 0}
+  _previousSkill: {fileID: 0}
+  _skillList: []
+  _canUseSkillList: []

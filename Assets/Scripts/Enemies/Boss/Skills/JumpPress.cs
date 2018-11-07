@@ -14,15 +14,16 @@ public class JumpPress : BossSkill {
 		//_marker = Resources.Load ("EnemyItem/Marker", typeof (GameObject)) as GameObject;
 		_target = GameObject.Find ("Player");
 
-		_maxCoolTime = 4.0f;
-
+		_maxCoolTime = Random.Range (3, 6);
 		_coolTime = _maxCoolTime;
 	}
 
 	override public void Action () {
+		_maxCoolTime = Random.Range (3, 6);
+		_coolTime = _maxCoolTime;
 		Jump ();
 		_canActive = false;
-		_boss.GetComponent<TestBoss> ()._isAction = true;
+		_boss.GetComponent<BossBase> ()._isAction = true;
 
 	}
 
@@ -32,7 +33,7 @@ public class JumpPress : BossSkill {
 		Vector3 targetPosition = _target.transform.position;
 		//_marker.SetActive (true);
 		//_marker.transform.position = new Vector3 (targetPosition.x, 0.1f, targetPosition.z)
-		JumpFixedTime (targetPosition, 4);
+		JumpFixedTime (targetPosition, _coolTime);
 
 	}
 
@@ -99,7 +100,7 @@ public class JumpPress : BossSkill {
 	}
 
 	private Vector2 ComputeVectorXYFromTime (Vector3 targetPos, float time) {
-		// 瞬間移動はちょっと……。
+		// 瞬間移動は無し
 		if (time <= 0.0f) {
 			return Vector2.zero;
 		}
@@ -107,7 +108,7 @@ public class JumpPress : BossSkill {
 		// xz平面の距離を計算。
 		Vector2 startPosition = new Vector2 (gameObject.transform.position.x, gameObject.transform.position.z);
 		Vector2 targetPositon = new Vector2 (targetPos.x, targetPos.z);
-		float distance = Vector2.Distance (targetPos, startPosition);
+		float distance = Vector2.Distance (targetPositon, startPosition);
 
 		float x = distance;
 		// な、なぜ重力を反転せねばならないのだ...
