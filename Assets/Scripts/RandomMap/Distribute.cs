@@ -12,10 +12,23 @@ public class Distribute : MonoBehaviour
     [SerializeField]
     private AddObject[] _enemys;
 
+    //ボススライムオブジェクト
+    [SerializeField]
+    private GameObject _bossSlime;
+
     //マップ
     private int[,] _map;
     //マップサイズ
     private int _mapSize;
+
+    //床がある座標
+    private int _floorStartX = 0;
+    private int _floorEndX = 0;
+    private int _floorStartZ = 0;
+    private int _floorEndZ = 0;
+
+    //敵の生成数
+    //private int _maxEnemys = 0;
 
     // Use this for initialization
     void Start()
@@ -28,16 +41,25 @@ public class Distribute : MonoBehaviour
         //スライム種類の数
         for (int i = 0; i < _slimes.Length; i++)
         {
-            //最小値から最大値までのランダムの数のスライムを配置する
-            CreateObject(_slimes[i]._object, RogueUtils.GetRandomInt(_slimes[i]._minGenerate, _slimes[i]._maxGenerate), MapGenerator.MAP_STATUS.SLIME);
+            //配置する数をランダムで決める
+            var deploy = RogueUtils.GetRandomInt(_slimes[i]._minGenerate, _slimes[i]._maxGenerate);
+            //スライムを配置する
+            CreateObject(_slimes[i]._object, deploy, MapGenerator.MAP_STATUS.SLIME);
         }
 
         //敵種類の数
         for (int i = 0; i < _enemys.Length; i++)
         {
+            //配置する敵をランダムで決める
+            var deploy = RogueUtils.GetRandomInt(_enemys[i]._minGenerate, _enemys[i]._maxGenerate);
+            //マップ全体での敵の数(最大数)
+            //_maxEnemys += deploy;
             //最小値から最大値までのランダムの数の敵を配置する
-            CreateObject(_enemys[i]._object, RogueUtils.GetRandomInt(_enemys[i]._minGenerate, _enemys[i]._maxGenerate), MapGenerator.MAP_STATUS.ENEMY);
+            CreateObject(_enemys[i]._object, deploy, MapGenerator.MAP_STATUS.ENEMY);
         }
+
+        //ボスを(生成)配置する
+        CreateBoss();
 
     }
 
@@ -141,6 +163,67 @@ public class Distribute : MonoBehaviour
             }
 
         }
+
+    }
+
+    /// <summary>
+    /// ボスをボス部屋の中央に生成する
+    /// </summary>
+    private void CreateBoss()
+    {
+        //オブジェクトが設定されていない場合は設定の必要なし
+        if (!_bossSlime)
+        {
+            Debug.Log("Object is not set!!");
+            return;
+        }
+
+        //最後に生成された部屋(ボス部屋)
+        MapGenerator generator = GetComponent<CreateRandomMap>()._mapGenerator;
+        var roomNum = generator.GetMaxRoom() - 1;
+
+        //ボス部屋の位置取得
+        var startX = generator.GetStartX(roomNum);
+        var endX = generator.GetEndX(roomNum);
+        var startZ = generator.GetStartZ(roomNum);
+        var endZ = generator.GetEndZ(roomNum);
+
+        //床がある最初の座標
+        for (var floorX = startX; floorX < endX; floorX++)
+        {
+            for (var floorZ = startZ; floorZ < endZ; floorZ++)
+            {
+                if (_map[floorX, floorZ] == (int)MapGenerator.MAP_STATUS.FLOOR)
+                {
+                    _floorStartX = floorX;
+                    _floorStartZ = floorZ;
+                    goto END;
+                }
+            }
+        }
+    END:;
+        //床がある最後の座標
+        for (var floorX = startX; floorX < endX; floorX++)
+        {
+            for (var floorZ = startZ; floorZ < endZ; floorZ++)
+            {
+                if (_map[floorX, floorZ] == (int)MapGenerator.MAP_STATUS.FLOOR)
+                {
+                    _floorEndX = floorX;
+                    _floorEndZ = floorZ;
+                }
+            }
+        }
+
+        //座標を中央にする
+        var x = _floorStartX + ((_floorEndX - _floorStartX) / 2);
+        var z = _floorStartZ + ((_floorEndZ - _floorStartZ) / 2);
+        Position position = new Position(x, z);
+
+        //オブジェクトを生成する
+        ObjectManager.Instance.InstantiateWithObjectPooling(_bossSlime, new Vector3(position._x * _mapSize, 1, position._z * _mapSize), new Quaternion());
+        //マップに情報を登録する
+        _map[position._x, position._z] = (int)MapGenerator.MAP_STATUS.BOSS;
 
     }
 

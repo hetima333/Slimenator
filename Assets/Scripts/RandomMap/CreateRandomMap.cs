@@ -177,48 +177,51 @@ public class CreateRandomMap : MonoBehaviour
         _player.transform.position = new Vector3(position._x * _mapSize, 0, position._z * _mapSize);
         //マップのプレイヤーの位置を追加
         _map[position._x, position._z] = (int)MapGenerator.MAP_STATUS.PLAYER;
-        //プレイヤーから1マス目(隣)の範囲
+
         {
-            //前後左右
-            for (int i = 0, x = 0, z = -1; i < 4; x += z, z = x - z, x = z - x, i++)
-            {
-                //Debug.Log("x,y:" + new Vector2(x, z));
-                //(0,1),(0,-1),(1,0),(-1,-0)
-                _map[position._x + x, position._z + z] = (int)MapGenerator.MAP_STATUS.PLAYER;
-            }
-            //プレイヤーから見た斜め4方向
-            for (int i = 0, x = -1, z = -1; i < 4; x += z, z = x - z, x = z - x, i++)
-            {
-                //(1,1),(1,-1),(-1,1),(-1,-1)
-                _map[position._x + x, position._z + z] = (int)MapGenerator.MAP_STATUS.PLAYER;
-            }
-        }
+            // //プレイヤーから1マス目(隣)の範囲
+            // {
+            //     //前後左右
+            //     for (int i = 0, x = 0, z = -1; i < 4; x += z, z = x - z, x = z - x, i++)
+            //     {
+            //         //Debug.Log("x,y:" + new Vector2(x, z));
+            //         //(0,1),(0,-1),(1,0),(-1,-0)
+            //         _map[position._x + x, position._z + z] = (int)MapGenerator.MAP_STATUS.PLAYER;
+            //     }
+            //     //プレイヤーから見た斜め4方向
+            //     for (int i = 0, x = -1, z = -1; i < 4; x += z, z = x - z, x = z - x, i++)
+            //     {
+            //         //(1,1),(1,-1),(-1,1),(-1,-1)
+            //         _map[position._x + x, position._z + z] = (int)MapGenerator.MAP_STATUS.PLAYER;
+            //     }
+            // }
 
-        //プレイヤーから2個マス目の範囲
-        {
-            for (int i = 0, x = 0, z = -2; i < 4; x += z, z = x - z, x = z - x, i++)
-            {
-                //(0,-2),(2,0),(0,2),(-2,0)
-                _map[position._x + x, position._z + z] = (int)MapGenerator.MAP_STATUS.PLAYER;
-            }
+            // //プレイヤーから2個マス目の範囲
+            // {
+            //     for (int i = 0, x = 0, z = -2; i < 4; x += z, z = x - z, x = z - x, i++)
+            //     {
+            //         //(0,-2),(2,0),(0,2),(-2,0)
+            //         _map[position._x + x, position._z + z] = (int)MapGenerator.MAP_STATUS.PLAYER;
+            //     }
 
-            for (int i = 0, x = -2, z = -1; i < 4; x += z, z = x - z, x = z - x, i++)
-            {
-                //(-2,-1),(1,-2),(2,1),(-1,2)
-                _map[position._x + x, position._z + z] = (int)MapGenerator.MAP_STATUS.PLAYER;
-            }
+            //     for (int i = 0, x = -2, z = -1; i < 4; x += z, z = x - z, x = z - x, i++)
+            //     {
+            //         //(-2,-1),(1,-2),(2,1),(-1,2)
+            //         _map[position._x + x, position._z + z] = (int)MapGenerator.MAP_STATUS.PLAYER;
+            //     }
 
-            for (int i = 0, x = -2, z = -2; i < 4; x += z, z = x - z, x = z - x, i++)
-            {
-                //(-2,-2),(2,-2),(2,2),(-2,2)
-                _map[position._x + x, position._z + z] = (int)MapGenerator.MAP_STATUS.PLAYER;
-            }
+            //     for (int i = 0, x = -2, z = -2; i < 4; x += z, z = x - z, x = z - x, i++)
+            //     {
+            //         //(-2,-2),(2,-2),(2,2),(-2,2)
+            //         _map[position._x + x, position._z + z] = (int)MapGenerator.MAP_STATUS.PLAYER;
+            //     }
 
-            for (int i = 0, x = -1, z = -2; i < 4; x += z, z = x - z, x = z - x, i++)
-            {
-                //(-1,-2),(2,-1),(1,2),(-2,1)
-                _map[position._x + x, position._z + z] = (int)MapGenerator.MAP_STATUS.PLAYER;
-            }
+            //     for (int i = 0, x = -1, z = -2; i < 4; x += z, z = x - z, x = z - x, i++)
+            //     {
+            //         //(-1,-2),(2,-1),(1,2),(-2,1)
+            //         _map[position._x + x, position._z + z] = (int)MapGenerator.MAP_STATUS.PLAYER;
+            //     }
+            // }
         }
 
     }

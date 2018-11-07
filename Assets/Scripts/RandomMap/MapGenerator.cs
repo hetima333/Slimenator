@@ -12,6 +12,7 @@ public class MapGenerator
         PLAYER,  //プレイヤー
         SLIME,   //スライム
         ENEMY,   //敵
+        BOSS,    //ボス
         BOOS_ROOM_PASSAGE, //ボス部屋への通路
         KIND_NUM //種類の数
     };
