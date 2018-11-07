@@ -16,17 +16,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 36f0bab903e87bc43a975a9ab8b5afd1, type: 2}
   - {fileID: 11400000, guid: 3598f9cad2b4e094e8abf6dc11ad1944, type: 2}
   _Base: {fileID: 0}
-  _Properties: []
-  _Targetable:
-  - {fileID: 1437516636120426, guid: 8c639dfa589184546938f1eaa7bdaa6f, type: 2}
-  - {fileID: 1748272800313294, guid: 1fbfca09e354bb749aa17ca1d24d4ff7, type: 2}
-  - {fileID: 1772466507498902, guid: 36548978b6c2a0e4d9ce1c93145a8506, type: 2}
-  - {fileID: 1586557958679214, guid: 8b74d6c1296f0ec449ef16ad6e601400, type: 2}
-  _CastTime: 10
-  _CastLength: 0
-  _Damage: 50
+  _Targetable: {fileID: 11400000, guid: 921fd2909285c1b40ac6aee462dd0d4a, type: 2}
+  _StatusEffect: []
+  _StatusApplyPercentage: 40
+  _Damage: 40
   _Description: A Combination skill
   _ChannelingParticle: {fileID: 1224654138171122, guid: 777d630388bee1244b930e59722f4a86,
     type: 2}
   _CastingParticle: {fileID: 0}
   _CastingType: {fileID: 11400000, guid: 704f805a729bbfd46a8ea24f7c9a7878, type: 2}
+  _AttackDelay: 1

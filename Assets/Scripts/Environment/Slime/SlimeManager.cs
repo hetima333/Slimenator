@@ -8,6 +8,10 @@ public class SlimeManager : SingletonMonoBehaviour<SlimeManager> {
     private GameObject
         _prefab;
 
+    [SerializeField]
+    public SOList
+        _elements;
+
     private void Start()
     {
     }
@@ -17,24 +21,25 @@ public class SlimeManager : SingletonMonoBehaviour<SlimeManager> {
         //Temporary
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            int random = Random.Range(0, EnumHolder.Instance._elements.Count);
-            GetSlimeFromPool(random);
+            //ObjectManager.Instance.InstantiateWithObjectPooling(_prefab, transform.position, transform.rotation).GetComponent<EnvironmentBase>();
+            int random = Random.Range(0, _elements.GetList().Count);
+            GetSlimeFromPool(random, Vector3.one);
         }
     }
 
-    public GameObject GetSlimeFromPool(int type)
+    public GameObject GetSlimeFromPool(int type, Vector3 position = new Vector3())
     {
-        GameObject slime_obj = ObjectManager.Instance.InstantiateWithObjectPooling(_prefab, new Vector3 (0,0.5f,0));
-        Stats temp = EnumHolder.instance.GetStats(_prefab.name);
+        GameObject slime_obj = ObjectManager.Instance.InstantiateWithObjectPooling(_prefab, position);
+        Stats temp = EnumHolder.Instance.GetStats(_prefab.name);
         SlimeBase temp_component = slime_obj.GetComponent<SlimeBase>();
 
         if (temp_component != null)
             DestroyImmediate(temp_component);
 
-        System.Type _MyScriptType = System.Type.GetType(EnumHolder.Instance._elements[type].GetSlimeScriptName());
+        System.Type _MyScriptType = System.Type.GetType(((ElementType)_elements.GetList()[type]).GetSlimeScriptName());
         slime_obj.AddComponent(_MyScriptType);
 
-        slime_obj.GetComponent<SlimeBase>().Init(temp, ((EnumHolder.Instance._elements[type].name.Equals("Lightning")) ? 2 : 1), EnumHolder.Instance._elements[type]);
+        slime_obj.GetComponent<SlimeBase>().Init(temp, ((((ElementType)_elements.GetList()[type]).name.Equals("Lightning")) ? 2 : 1), ((ElementType)_elements.GetList()[type]));
         slime_obj.SetActive(true);
 
         return slime_obj;

@@ -1,6 +1,6 @@
 ﻿/// 敵の弾薬処理
 /// Processing enemy's bullets
-/// Athor：　Yuhei Mastumura
+/// Athor： Yuhei Mastumura
 /// Last edit date：2018/10/17
 
 using System.Collections;
@@ -9,48 +9,47 @@ using UnityEngine;
 
 public class EnemyBullet : MonoBehaviour {
 
-    float _aliveTime = 3.0f;
+    private const float ALIVE_TIME = 3.0f;
 
-    float _damage;
+    private float _aliveTime = ALIVE_TIME;
 
-    void Update()
-    {
+    [SerializeField]
+    private float _damage;
+
+    void OnEnable () {
+        _aliveTime = ALIVE_TIME;
+    }
+
+    void Update () {
         _aliveTime -= Time.deltaTime;
 
-        if (_aliveTime <= 0)
-        {
-            Destroy(gameObject);
+        if (_aliveTime <= 0) {
+            ObjectManager.Instance.ReleaseObject (gameObject);
         }
     }
 
-
-    public void SetDamage(float damage)
-    {
+    public void SetDamage (float damage) {
         _damage = damage;
     }
 
-    public void SetScale(float scale)
-    {
-        gameObject.transform.localScale = new Vector3(scale, scale, scale);
+    public void SetScale (float scale) {
+        gameObject.transform.localScale = new Vector3 (scale, scale, scale);
     }
 
-
     //自分の本体に何かが接触した場合
-    void OnCollisionEnter(Collision col)
-    {
+    void OnCollisionEnter (Collision col) {
 
         //Make sure the target has components
-        var hasIDamageable = col.gameObject.GetComponent<IDamageable>();
+        var hasIDamageableObject = col.gameObject.GetComponent<IDamageable> ();
 
         //If have a component
-        if (hasIDamageable!=null)
-        {
+        if (hasIDamageableObject != null) {
             //ダメージ判定
             //TODO take damage   
-            col.gameObject.GetComponent<IDamageable>().TakeDamage(_damage);
+            hasIDamageableObject.TakeDamage (_damage);
         }
 
-        //Delete bullet
-        Destroy(gameObject);
+        //Release bullet
+        ObjectManager.Instance.ReleaseObject (gameObject);
     }
 }

@@ -2,7 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MapGenerator {
+public class MapGenerator
+{
+    //状態
+    public enum MAP_STATUS
+    {
+        WALL = 0,    //壁0
+        FLOOR = 1,   //床1
+        PLAYER,  //プレイヤー
+        SLIME,   //スライム
+        ENEMY,   //敵
+        KIND_NUM //種類の数
+    };
 
     //マップサイズX軸
     private int _mapSizeX;
@@ -52,7 +63,7 @@ public class MapGenerator {
             {
                 for (int z = passage._start._z; z <= passage._end._z; z++)
                 {
-                    map[x, z] = 1;
+                    map[x, z] = (int)MAP_STATUS.FLOOR;
                 }
             }
         }
@@ -64,7 +75,7 @@ public class MapGenerator {
             {
                 for (int z = roomPassage._start._z; z <= roomPassage._end._z; z++)
                 {
-                    map[x, z] = 1;
+                    map[x, z] = (int)MAP_STATUS.FLOOR;
                 }
             }
         }
@@ -76,13 +87,16 @@ public class MapGenerator {
             {
                 for (int z = room._start._z; z <= room._end._z; z++)
                 {
-                    map[x, z] = 1;
+                    map[x, z] = (int)MAP_STATUS.FLOOR;
                 }
             }
         }
 
         //通路の作成
         TrimPassage(ref map);
+
+        //ボス部屋の確立
+        EstablishBossRoom(ref map);
 
         return map;
     }
@@ -169,7 +183,7 @@ public class MapGenerator {
 
             Range newRange = new Range();
             //垂直なら
-            if(isVertical)
+            if (isVertical)
             {
                 //横の範囲
                 _passage.Add(new Range(range._start._x, devideIndex, range._end._x, devideIndex));
@@ -209,7 +223,7 @@ public class MapGenerator {
         rangeList.Sort((a, b) => RogueUtils.GetRandomInt(0, 1) - 1);
 
         //1区間毎に1部屋作る
-        foreach(Range range in rangeList)
+        foreach (Range range in rangeList)
         {
             System.Threading.Thread.Sleep(1);
 
@@ -239,7 +253,7 @@ public class MapGenerator {
             _room.Add(room);
 
             //通路を作る
-            CreatePassage(range,room);
+            CreatePassage(range, room);
         }
 
     }
@@ -249,7 +263,7 @@ public class MapGenerator {
     /// </summary>
     /// <param name="range"></param>
     /// <param name="room"></param>
-    private void CreatePassage(Range range,Range room)
+    private void CreatePassage(Range range, Range room)
     {
         List<int> direction = new List<int>();
         //範囲Xの最小値を0と設定(左)
@@ -277,12 +291,12 @@ public class MapGenerator {
         direction.Sort((a, b) => RogueUtils.GetRandomInt(0, 1) - 1);
 
         bool isFirst = true;
-        foreach(int dir in direction)
+        foreach (int dir in direction)
         {
             System.Threading.Thread.Sleep(1);
 
             //80%の確立で通路を作らない
-            if(!isFirst && RogueUtils.RandomJadge(0.8f))
+            if (!isFirst && RogueUtils.RandomJadge(0.8f))
             {
                 continue;
             }
@@ -299,14 +313,14 @@ public class MapGenerator {
                     random = room._start._z + RogueUtils.GetRandomInt(1, room.GetWidthZ()) - 1;
                     _roomPassage.Add(new Range(range._start._x, random, room._start._x - 1, random));
                     break;
-                case 1:　//右
+                case 1: //右
                     random = room._start._z + RogueUtils.GetRandomInt(1, room.GetWidthZ()) - 1;
                     _roomPassage.Add(new Range(room._end._x + 1, random, range._end._x, random));
                     break;
 
                 case 2: //奥
                     random = room._start._x + RogueUtils.GetRandomInt(1, room.GetWidthX()) - 1;
-                    _roomPassage.Add(new Range(random, range._start._z, random, room._start._z- 1));
+                    _roomPassage.Add(new Range(random, range._start._z, random, room._start._z - 1));
                     break;
 
                 case 3: //前
@@ -343,7 +357,7 @@ public class MapGenerator {
                 for (int z = passage._start._z; z <= passage._end._z; z++)
                 {
                     //隣に部屋があるとき
-                    if (map[x - 1, z] == 1 || map[x + 1, z] == 1)
+                    if (map[x - 1, z] == (int)MAP_STATUS.FLOOR || map[x + 1, z] == (int)MAP_STATUS.FLOOR)
                     {
                         //削除しない
                         isTrimTarget = false;
@@ -357,7 +371,7 @@ public class MapGenerator {
                 for (int x = passage._start._x; x <= passage._end._x; x++)
                 {
                     //隣に部屋があるとき
-                    if (map[x, z - 1] == 1 || map[x, z + 1] == 1)
+                    if (map[x, z - 1] == (int)MAP_STATUS.FLOOR || map[x, z + 1] == (int)MAP_STATUS.FLOOR)
                     {
                         //削除しない
                         isTrimTarget = false;
@@ -377,7 +391,7 @@ public class MapGenerator {
                     int x = passage._start._x;
                     for (int z = passage._start._z; z <= passage._end._z; z++)
                     {
-                        map[x, z] = 0;
+                        map[x, z] = (int)MAP_STATUS.WALL;
                     }
                 }
                 else
@@ -385,7 +399,7 @@ public class MapGenerator {
                     int z = passage._start._z;
                     for (int x = passage._start._x; x <= passage._end._x; x++)
                     {
-                        map[x, z] = 0;
+                        map[x, z] = (int)MAP_STATUS.WALL;
                     }
                 }
             }
@@ -396,25 +410,25 @@ public class MapGenerator {
         for (int x = 0; x < _mapSizeX - 1; x++)
         {
             //奥
-            if (map[x, 0] == 1)
+            if (map[x, 0] == (int)MAP_STATUS.FLOOR)
             {
                 for (int z = 0; z < _mapSizeZ; z++)
                 {
-                    if (map[x - 1, z] == 1 || map[x + 1, z] == 1)
+                    if (map[x - 1, z] == (int)MAP_STATUS.FLOOR || map[x + 1, z] == (int)MAP_STATUS.FLOOR)
                         break;
                     //通路を塞ぐ
-                    map[x, z] = 0;
+                    map[x, z] = (int)MAP_STATUS.WALL;
                 }
             }
             //前
-            if (map[x, _mapSizeZ - 1] == 1)
+            if (map[x, _mapSizeZ - 1] == (int)MAP_STATUS.FLOOR)
             {
                 for (int z = _mapSizeZ - 1; z >= 0; z--)
                 {
-                    if (map[x - 1, z] == 1 || map[x + 1, z] == 1)
+                    if (map[x - 1, z] == (int)MAP_STATUS.FLOOR || map[x + 1, z] == (int)MAP_STATUS.FLOOR)
                         break;
                     //通路を塞ぐ
-                    map[x, z] = 0;
+                    map[x, z] = (int)MAP_STATUS.WALL;
                 }
             }
         }
@@ -423,25 +437,25 @@ public class MapGenerator {
         for (int z = 0; z < _mapSizeZ - 1; z++)
         {
             //右端
-            if (map[0, z] == 1)
+            if (map[0, z] == (int)MAP_STATUS.FLOOR)
             {
                 for (int x = 0; x < _mapSizeZ; x++)
                 {
-                    if (map[x, z - 1] == 1 || map[x, z + 1] == 1)
+                    if (map[x, z - 1] == (int)MAP_STATUS.FLOOR || map[x, z + 1] == (int)MAP_STATUS.FLOOR)
                         break;
                     //通路を塞ぐ
-                    map[x, z] = 0;
+                    map[x, z] = (int)MAP_STATUS.WALL;
                 }
             }
             //左端
-            if (map[_mapSizeX - 1, z] == 1)
+            if (map[_mapSizeX - 1, z] == (int)MAP_STATUS.FLOOR)
             {
                 for (int x = _mapSizeX - 1; x >= 0; x--)
                 {
-                    if (map[x, z - 1] == 1 || map[x, z + 1] == 1)
+                    if (map[x, z - 1] == (int)MAP_STATUS.FLOOR || map[x, z + 1] == (int)MAP_STATUS.FLOOR)
                         break;
                     //通路を塞ぐ
-                    map[x, z] = 0;
+                    map[x, z] = (int)MAP_STATUS.WALL;
                 }
             }
         }
@@ -483,6 +497,62 @@ public class MapGenerator {
     public int GetEndZ(int num)
     {
         return _room[num]._end._z;
+    }
+
+    /// <summary>
+    /// 部屋の数の取得
+    /// </summary>
+    /// <returns></returns>
+    public int GetMaxRoom()
+    {
+        return _room.Count;
+    }
+
+    /// <summary>
+    /// ボス部屋の確立
+    /// </summary>
+    private void EstablishBossRoom(ref int[,] map)
+    {
+        //最初に作られた部屋
+        var maxRoom = _room.Count;
+        var lastRoom = _room[maxRoom - 1];
+
+        var startX = lastRoom._start._x;
+        var endX = lastRoom._end._x;
+        var startZ = lastRoom._start._z;
+        var endZ = lastRoom._end._z;
+
+        //通路がある座標を探す
+        for (int i = startX; i <= endX; i++)
+        {
+            //下幅
+            if (map[i, startZ - 1] == (int)MAP_STATUS.FLOOR)
+            {
+                Debug.Log("down width Passage!!");
+            }
+
+            //上幅
+            if (map[i, endZ + 1] == (int)MAP_STATUS.FLOOR)
+            {
+                Debug.Log("up width Passage!!");
+            }
+
+        }
+        for (int i = startZ; i <= endZ; i++)
+        {
+            //左奥行き
+            if (map[startX - 1, i] == (int)MAP_STATUS.FLOOR)
+            {
+                Debug.Log("left depth Passage!!");
+            }
+
+            //右奥行き
+            if (map[endX + 1, i] == (int)MAP_STATUS.FLOOR)
+            {
+                Debug.Log("right depth Passage!!");
+            }
+        }
+
     }
 
 }

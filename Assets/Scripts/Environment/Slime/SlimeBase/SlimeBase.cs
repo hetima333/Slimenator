@@ -11,9 +11,10 @@ public abstract class SlimeBase : MonoBehaviour, ISuckable, IDamageable, IElemen
     Animator _animator;
     Rigidbody _rigidbody;
     Stats _properties;
+    Status _status;
 
-	public float MaxHitPoint { get { return _properties.HealthProperties; } }
-	public float HitPoint { get { return _stats.Health; } }
+	public float MaxHitPoint { get { return _properties.MaxHealthProperties; } }
+	public float HitPoint { get { return _properties.HealthProperties; } }
 
 	#region Getter/Setter
 	public SlimeStats Stats
@@ -67,27 +68,37 @@ public abstract class SlimeBase : MonoBehaviour, ISuckable, IDamageable, IElemen
 
     #endregion
 
-    protected virtual void Start () {
+    protected virtual void Start()
+    {
         SetState(new SlimeIdleState(this));
+
+        _status = gameObject.GetComponent<Status>();
+        _status.Init();
+
+        _properties.HealthProperties = _properties.MaxHealthProperties;
     }
 
     protected virtual void Update () {
         _state.Tick();
+        TakeDamage(_status.GetValue(EnumHolder.EffectType.HEALTH));
     }
 
     protected virtual void LateUpdate()
     {
-        if (_animator.speed != _properties.SpeedMultiplyerProperties)
-            _animator.speed = _properties.SpeedMultiplyerProperties;
+        if (_animator.speed != (Speed / _properties.SpeedProperties) * _properties.SpeedMultiplyerProperties)
+            _animator.speed = (Speed / _properties.SpeedProperties) * _properties.SpeedMultiplyerProperties;
     }
   
     public void TakeDamage(float dmg)
     {
-        _stats.Health -= dmg;
-
-        if (_stats.Health <= 0)
+        if (dmg > 0)
         {
-            Die();
+            _properties.HealthProperties -= dmg;
+
+            if (_properties.HealthProperties <= 0)
+            {
+                Die();
+            }
         }
     }
 
@@ -106,12 +117,12 @@ public abstract class SlimeBase : MonoBehaviour, ISuckable, IDamageable, IElemen
             CacheObject();
 
         if (_properties != null)
-            DestroyImmediate(_properties);
+            Destroy(_properties);
 
         _properties = newstats;
 
         _stats = new SlimeStats();
-        _stats.Health = _properties.HealthProperties;
+        _properties.HealthProperties = _properties.MaxHealthProperties;
         _properties.SpeedMultiplyerProperties = speedmultiplyer;
         _stats.Elementtype = type;
         _stats.IsDead = false;
@@ -120,6 +131,22 @@ public abstract class SlimeBase : MonoBehaviour, ISuckable, IDamageable, IElemen
         _rigidbody.velocity = Vector3.zero;
 
         Material.SetColor("_Color", _stats.Elementtype.GetColor());
+    }
+
+    public float Speed
+    {
+        get
+        {
+            if (_status != null)
+            {
+                return _properties.SpeedProperties *
+                    ((100.0f - ((_status.GetValue(EnumHolder.EffectType.SPEED) > 100) ? 100 :
+                    ((_status.GetValue(EnumHolder.EffectType.SPEED) < 0) ? 0 :
+                    _status.GetValue(EnumHolder.EffectType.SPEED)))) / 100.0f);
+            }
+            else
+                return _properties.SpeedProperties;
+        }
     }
 
     public void CacheObject()
@@ -154,8 +181,8 @@ public abstract class SlimeBase : MonoBehaviour, ISuckable, IDamageable, IElemen
         Vector3 direction = GetDirection(destination);
         direction.y = 0;
         Quaternion rotation = Quaternion.LookRotation(direction);
-        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, (_properties.SpeedProperties * _properties.SpeedMultiplyerProperties) * Time.deltaTime);
-        transform.Translate(Vector3.forward * Time.deltaTime * (_properties.SpeedProperties * _properties.SpeedMultiplyerProperties));
+        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, (Speed * _properties.SpeedMultiplyerProperties) * Time.deltaTime);
+        transform.Translate(Vector3.forward * Time.deltaTime * (Speed * _properties.SpeedMultiplyerProperties));
     }
 
     // ENG: Returns the direction vector between slime and the destination.

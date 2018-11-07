@@ -14,5 +14,6 @@ MonoBehaviour:
   _minAmount: 20
   _maxAmount: 40
   _color: {r: 0, g: 1, b: 0.08965516, a: 0}
-  _classname: HealthSlime
-  _effect: {fileID: 0}
+  _ClassName: HealthSlime
+  _ParticleEffect: {fileID: 0}
+  _StatusEffect: {fileID: 0}
