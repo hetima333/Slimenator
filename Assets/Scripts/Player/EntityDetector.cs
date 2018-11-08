@@ -26,12 +26,14 @@ public class EntityDetector : MonoBehaviour
             if (RB != null && RB.mass < _Player.GetPlayerStats().SuckingPowerProperties * _Player.GetPlayerStats().SuckingPowerMultiplyerProperties)
                 RB.AddForce(-GAcceleration(_Owner.transform.position, RB.mass, RB));
 
-            if (Vector3.Distance(other.gameObject.transform.position, _Owner.gameObject.transform.position) < 3)
+            IElement element_temp = other.gameObject.GetComponent<IElement>();
+
+            if (Vector3.Distance(other.gameObject.transform.position, _Owner.gameObject.transform.position) < 3 + ((element_temp != null) ? element_temp.GetTier().GetMultiplyer() : 0))
             {
-                IElement element_temp = other.gameObject.GetComponent<IElement>();
                 if (element_temp != null)
                 {
-                    _Player.StoreElementInOrb(element_temp.GetElementType());            
+                    for (int i = 0; i < ((element_temp.GetTier() != null) ? element_temp.GetTier().GetMultiplyer() : 1); ++i)
+                        _Player.StoreElementInOrb(element_temp.GetElementType());
                 }
 
                 IDamageable damage_temp = other.gameObject.GetComponent<IDamageable>();

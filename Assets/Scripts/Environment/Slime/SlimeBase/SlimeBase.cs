@@ -222,6 +222,11 @@ public abstract class SlimeBase : MonoBehaviour, ISuckable, IDamageable, IElemen
         return _stats.Elementtype;
     }
 
+    public SkillTier GetTier()
+    {
+        return _tier;
+    }
+
     public void OnExplode()
     {
         //Instantiate(_ChannelingParticle, spawn_position, caster.transform.rotation, caster.transform);
