@@ -674,6 +674,8 @@ GameObject:
   - component: {fileID: 114115328178690596}
   - component: {fileID: 114201432571733168}
   - component: {fileID: 114030653470189432}
+  - component: {fileID: 114126107200465468}
+  - component: {fileID: 114816622446289150}
   m_Layer: 11
   m_Name: LongRangeEnemy
   m_TagString: Untagged
@@ -1887,6 +1889,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0eb75abe96c22c64c8127393c68618ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114126107200465468
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1772466507498902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99409bc9a5f0a2a48a165bc4e8debd9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114201432571733168
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1930,6 +1943,70 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09feba1ae63e2414aba5c809cc326bbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114816622446289150
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1772466507498902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceec13eca0bd91c439345395882152d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GameEvent:
+  - {fileID: 11400000, guid: 42c35453a99cb7d4f9acab8caf6d8c56, type: 2}
+  - {fileID: 11400000, guid: 6cb34600d6a8aee4d9e1895cee46c513, type: 2}
+  - {fileID: 11400000, guid: 2aae09e9ce58187459bc99c4cfa5e148, type: 2}
+  Response:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 114126107200465468}
+        m_MethodName: AddStatus
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: a983e4dbbcbe3714fb3bab69798f84e7,
+            type: 2}
+          m_ObjectArgumentAssemblyTypeName: StatusEffect, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 10000
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 114126107200465468}
+        m_MethodName: AddStatus
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: 82823a8632fe1e846b6ac8ebf4100ca7,
+            type: 2}
+          m_ObjectArgumentAssemblyTypeName: StatusEffect, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 10000
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 114126107200465468}
+        m_MethodName: AddStatus
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: cb25ffbe128a58e4ea499cf97c1a51f3,
+            type: 2}
+          m_ObjectArgumentAssemblyTypeName: StatusEffect, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 10000
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114818048047124142
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1942,9 +2019,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _currentState: 0
-  _maxHp: 0
-  _hp: 0
-  _moveSpeed: 0
   _searchRange: 0
   _attackRange: 0
   _freeMoveRange: 0
@@ -1955,6 +2029,7 @@ MonoBehaviour:
   _searchObj: {fileID: 0}
   _target: {fileID: 0}
   _anim: {fileID: 0}
+  _animator: {fileID: 95080418584295858}
   _outputDamage: 25
 --- !u!135 &135938273041699394
 SphereCollider:

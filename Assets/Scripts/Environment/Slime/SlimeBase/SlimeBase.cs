@@ -14,7 +14,7 @@ public abstract class SlimeBase : MonoBehaviour, ISuckable, IDamageable, IElemen
     Status _status;
     SkillTier _tier;
 
-	public float MaxHitPoint { get { return _properties.MaxHealthProperties; } }
+	public float MaxHitPoint { get { return _properties.MaxHealthProperties * _properties.HealthMultiplyerProperties; } }
 	public float HitPoint { get { return _properties.HealthProperties; } }
 
 	#region Getter/Setter
@@ -76,7 +76,7 @@ public abstract class SlimeBase : MonoBehaviour, ISuckable, IDamageable, IElemen
         _status = gameObject.GetComponent<Status>();
         _status.Init();
 
-        _properties.HealthProperties = _properties.MaxHealthProperties;
+        _properties.HealthProperties = MaxHitPoint;
     }
 
     protected virtual void Update () {
@@ -129,7 +129,7 @@ public abstract class SlimeBase : MonoBehaviour, ISuckable, IDamageable, IElemen
         _properties = newstats;
 
         _stats = new SlimeStats();
-        _properties.HealthProperties = _properties.MaxHealthProperties * _properties.HealthMultiplyerProperties;
+        _properties.HealthProperties = MaxHitPoint;
         _properties.SpeedMultiplyerProperties = speedmultiplyer;
         _stats.Elementtype = type;
         _stats.IsDead = false;

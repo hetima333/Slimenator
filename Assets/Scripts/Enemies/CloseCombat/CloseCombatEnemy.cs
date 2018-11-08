@@ -6,10 +6,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public class CloseCombatEnemy : Enemy {
+public class CloseCombatEnemy : Enemy
+{
+
     //TODO Enemy Performance
-    const float MAX_HP = 40.0f;
-    const float MOVE_SPEED = 3.0f;
+    //const float MAX_HP = 40.0f;
+    //const float MOVE_SPEED = 3.0f;
     const float SEARCH_RANGE = 6.0f;
     const float ATTACK_RANGE = 4f;
     const float MOVE_RANGE = 3.0f;
@@ -25,9 +27,11 @@ public class CloseCombatEnemy : Enemy {
     private List<GameObject> _weaponList;
 
     // Use this for initialization
-    void Start () {
+    public override void Init (Stats _stat) {
+        _properties = _stat;
+
         //ステータスのセット
-        SetStatus (Enemy.Type.MEEL, MAX_HP, MOVE_SPEED, SEARCH_RANGE, ATTACK_RANGE, MOVE_RANGE, MONEY);
+        SetStatus (Enemy.Type.MEEL, MaxHitPoint, Speed, SEARCH_RANGE, ATTACK_RANGE, MOVE_RANGE, MONEY);
         //移動コンポーネントの取得
         _move = GetComponent<EnemyMove> ();
         //リジットボディの取得
@@ -36,7 +40,6 @@ public class CloseCombatEnemy : Enemy {
         _searchObj.GetComponent<SearchPlayer> ().Initialize ();
         //自由移動ポジション設定
         _freeMovePosition = _move.SetMovePos ();
-
         //武器プレハブの取得
         SetWeapons ();
 
@@ -44,6 +47,9 @@ public class CloseCombatEnemy : Enemy {
 
     // Update is called once per frame
     void Update () {
+
+        _status.UpdateStatMultiplyer(ref _properties);
+        TakeDamage(_status.GetValue(EnumHolder.EffectType.TAKEDAMAGE));
 
         switch (CurrentState) {
 

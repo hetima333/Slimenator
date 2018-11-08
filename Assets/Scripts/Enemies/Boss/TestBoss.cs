@@ -24,23 +24,24 @@ public class TestBoss : Enemy {
     //Object for short range attack
     private GameObject _shockField;
 
-    // Use this for initialization
-    void Start () {
-        //ステータスのセット
-        SetStatus (Enemy.Type.BOSS, MAX_HP, MOVE_SPEED, SEARCH_RANGE, ATTACK_RANGE, MOVE_RANGE, MONEY);
-        //移動コンポーネントの取得
-        _move = GetComponent<EnemyMove> ();
-        //リジットボディの取得
-        RigidbodyProperties = GetComponent<Rigidbody> ();
-        _searchObj = transform.Find ("SearchRange").gameObject;
-        _searchObj.GetComponent<SearchPlayer> ().Initialize ();
-        //自由移動ポジション設定
-        _freeMovePosition = _move.SetMovePos ();
-        //衝撃波オブジェクトのロード
-        _shockField = Resources.Load ("EnemyItem/ShockField", typeof (GameObject)) as GameObject;
-        //弾オブジェクトのロード
-        _bullet = Resources.Load ("EnemyItem/EnemyBullet", typeof (GameObject)) as GameObject;
+    public override void Init(Stats _stat)
+    {
+        _properties = _stat;
 
+        //ステータスのセット
+        SetStatus(Enemy.Type.BOSS, MaxHitPoint, Speed, SEARCH_RANGE, ATTACK_RANGE, MOVE_RANGE, MONEY);
+        //移動コンポーネントの取得
+        _move = GetComponent<EnemyMove>();
+        //リジットボディの取得
+        RigidbodyProperties = GetComponent<Rigidbody>();
+        _searchObj = transform.Find("SearchRange").gameObject;
+        _searchObj.GetComponent<SearchPlayer>().Initialize();
+        //自由移動ポジション設定
+        _freeMovePosition = _move.SetMovePos();
+        //衝撃波オブジェクトのロード
+        _shockField = Resources.Load("EnemyItem/ShockField", typeof(GameObject)) as GameObject;
+        //弾オブジェクトのロード
+        _bullet = Resources.Load("EnemyItem/EnemyBullet", typeof(GameObject)) as GameObject;
     }
 
     // Update is called once per frame

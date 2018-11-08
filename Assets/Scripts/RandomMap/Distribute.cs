@@ -156,7 +156,12 @@ public class Distribute : MonoBehaviour
                 while (_map[position._x, position._z] != (int)MapGenerator.MAP_STATUS.FLOOR);
 
                 //オブジェクトを生成する
-                ObjectManager.Instance.InstantiateWithObjectPooling(type, new Vector3(position._x * _mapSize, 1, position._z * _mapSize), new Quaternion());
+                GameObject temp = ObjectManager.Instance.InstantiateWithObjectPooling(type, new Vector3(position._x * _mapSize, 1, position._z * _mapSize), new Quaternion());
+                Enemy temp_enemy = temp.GetComponent<Enemy>();
+                if (temp_enemy != null)
+                {
+                    temp_enemy.Init(EnumHolder.Instance.GetStats(type.name));
+                }
                 //マップに情報を登録する
                 _map[position._x, position._z] = (int)status;
 
