@@ -7,6 +7,9 @@ TagManager:
   - Suckable
   - Wall
   - BossRoomPassage
+  - Helper
+  - Projectile
+  - Slime
   layers:
   - Default
   - TransparentFX
@@ -24,7 +27,7 @@ TagManager:
   - 
   - Wall
   - BossRoomPassage
-  - 
+  - Slime
   - 
   - 
   - 
