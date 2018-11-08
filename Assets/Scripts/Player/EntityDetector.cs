@@ -18,21 +18,23 @@ public class EntityDetector : MonoBehaviour
     protected void OnTriggerStay(Collider other)
     {
         ISuckable suckable_temp = other.gameObject.GetComponent<ISuckable>();
+        IElement element_temp = other.gameObject.GetComponent<IElement>();
+
+        float multiplyer = ((element_temp != null) ? element_temp.GetTier().GetMultiplyer() : 1);
+
         if (suckable_temp != null)
         {
             Rigidbody RB = other.GetComponent<Rigidbody>();
             suckable_temp.Sacking();
 
             if (RB != null && RB.mass < _Player.GetPlayerStats().SuckingPowerProperties * _Player.GetPlayerStats().SuckingPowerMultiplyerProperties)
-                RB.AddForce(-GAcceleration(_Owner.transform.position, RB.mass, RB));
+                RB.AddForce(-GAcceleration(_Owner.transform.position, RB.mass * multiplyer, RB));
 
-            IElement element_temp = other.gameObject.GetComponent<IElement>();
-
-            if (Vector3.Distance(other.gameObject.transform.position, _Owner.gameObject.transform.position) < 3 + ((element_temp != null) ? element_temp.GetTier().GetMultiplyer() : 0))
+            if (Vector3.Distance(other.gameObject.transform.position, _Owner.gameObject.transform.position) < 3 + multiplyer)
             {
                 if (element_temp != null)
                 {
-                    for (int i = 0; i < ((element_temp.GetTier() != null) ? element_temp.GetTier().GetMultiplyer() : 1); ++i)
+                    for (int i = 0; i < multiplyer; ++i)
                         _Player.StoreElementInOrb(element_temp.GetElementType());
                 }
 
