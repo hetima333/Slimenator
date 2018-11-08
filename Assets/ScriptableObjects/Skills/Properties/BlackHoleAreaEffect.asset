@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca731fcea334a8446926bd4b3f24015d, type: 3}
   m_Name: BlackHoleAreaEffect
   m_EditorClassIdentifier: 
-  _StartingParticle: {fileID: 1242461848233782, guid: 664f1451b9732a9499089f0494689818,
+  _StartingParticle: {fileID: 1155875014567528, guid: efe022173a7e6024088934f7c4b7b0b0,
     type: 2}
   _EndingParticle: {fileID: 1783820332162922, guid: 7c460cf7fffd6ce4d8c3b6f625ed6680,
     type: 2}
