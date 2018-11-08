@@ -71,8 +71,8 @@ public abstract class Enemy : MonoBehaviour, IDamageable, ISuckable
     protected Status _status;
     protected Stats _properties;
 
-    [SerializeField]
-    protected Animator _animator;
+    //[SerializeField]
+    //protected Animator _animator;
 
     //最大値
     public float MaxHitPoint { get { return _properties.MaxHealthProperties * _properties.HealthMultiplyerProperties; } }
@@ -126,8 +126,8 @@ public abstract class Enemy : MonoBehaviour, IDamageable, ISuckable
 
     protected virtual void LateUpdate()
     {
-        if (_animator.speed != _properties.SpeedMultiplyerProperties)
-            _animator.speed = _properties.SpeedMultiplyerProperties;
+        //if (_animator.speed != _properties.SpeedMultiplyerProperties)
+        //    _animator.speed = _properties.SpeedMultiplyerProperties;
     }
 
     //死亡コルーチン
