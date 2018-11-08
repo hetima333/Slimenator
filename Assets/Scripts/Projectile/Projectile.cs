@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class Projectile : MonoBehaviour
 {
     protected Vector3
-     _Dir;
+        _Dir;
 
     protected float
         _speed,

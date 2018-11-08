@@ -231,6 +231,6 @@ public abstract class SlimeBase : MonoBehaviour, ISuckable, IDamageable, IElemen
 
     public void OnExplode()
     {
-        throw new NotImplementedException();
+        //Instantiate(_ChannelingParticle, spawn_position, caster.transform.rotation, caster.transform);
     }
 }
