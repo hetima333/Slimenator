@@ -8,9 +8,13 @@ using UnityEngine;
 [RequireComponent (typeof (BoxCollider))]
 
 public class EnemyWeapon : MonoBehaviour {
+    //与えるダメージ
     [SerializeField]
-    float _damage;
-
+    private float _damage;
+    //地面との判定を取るか否か
+    [SerializeField]
+    private bool _groundHit = false;
+    //衝撃波
     GameObject _shockWave;
     //一度当たったオブジェクトを記憶するHashSet（多段ヒット防止）
     private HashSet<GameObject> _hitObjects;
@@ -56,7 +60,7 @@ public class EnemyWeapon : MonoBehaviour {
         }
 
         //地面接触時に衝撃波を発生させる
-        if (LayerMask.LayerToName (col.gameObject.layer) == "Ground") {
+        if (LayerMask.LayerToName (col.gameObject.layer) == "Ground" && _groundHit) {
 
             if (_shockWave) {
                 GameObject shockWave = Instantiate (_shockWave);

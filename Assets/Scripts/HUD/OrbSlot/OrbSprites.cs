@@ -20,10 +20,3 @@ public class OrbSprites : ScriptableObject{
 		get { return _lightning; }
 	}
 }
-
-public enum Orbs {
-	NONE,
-	FIRE,
-	ICE,
-	LIGHTNING
-}

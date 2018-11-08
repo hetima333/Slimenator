@@ -11,7 +11,8 @@ using UnityEngine;
 [RequireComponent (typeof (EnemyMove))]
 [RequireComponent (typeof (SimpleAnimation))]
 
-public class Enemy : MonoBehaviour, IDamageable {
+public abstract class Enemy : MonoBehaviour, IDamageable, ISuckable
+{
 
     //種類
     public enum Type { MEEL, RANGE, TANK, BOSS }
@@ -30,17 +31,14 @@ public class Enemy : MonoBehaviour, IDamageable {
     private BadState _badState;
     public BadState CurrentBadState { get { return _badState; } set { _badState = value; } }
 
-    //最大値
-    [SerializeField]
-    private float _maxHp;
-    //体力
-    [SerializeField]
-    private float _hp;
-    public float HP { get { return _hp; } set { _hp = value; } }
     //移動速度
-    [SerializeField]
-    private float _moveSpeed;
-    public float Speed { get { return _moveSpeed; } set { _moveSpeed = value; } }
+    public float Speed
+    {
+        get
+        {
+            return _properties.SpeedProperties * _properties.SpeedMultiplyerProperties;
+        }
+    }
     //索敵範囲
     public float _searchRange;
     //攻撃範囲
@@ -70,10 +68,18 @@ public class Enemy : MonoBehaviour, IDamageable {
     //シンプルアニメーション
     public SimpleAnimation _anim;
 
-    //インタフェース用最大Hp取得
-    public float MaxHitPoint { get { return _maxHp; } }
-    //インタフェース用現在Hp取得
-    public float HitPoint { get { return _hp; } }
+    protected Status _status;
+    protected Stats _properties;
+
+    [SerializeField]
+    protected Animator _animator;
+
+    //最大値
+    public float MaxHitPoint { get { return _properties.MaxHealthProperties * _properties.HealthMultiplyerProperties; } }
+    //体力
+    public float HitPoint { get { return _properties.HealthProperties; } }
+
+    public abstract void Init(Stats stat);
 
     //ステータスのセット関数
     public void SetStatus (Enemy.Type type, float maxHp, float speed, float searchRange, float attackRange, float moveRange, float money) {
@@ -83,12 +89,8 @@ public class Enemy : MonoBehaviour, IDamageable {
         _currentState = State.IDLE;
         //状態異常はなし
         _badState = BadState.NONE;
-        //最大体力
-        if (_maxHp == 0) { _maxHp = maxHp; }
         //体力
-        _hp = _maxHp;
-        //移動速度
-        if (_moveSpeed == 0) { _moveSpeed = speed; }
+        _properties.HealthProperties = MaxHitPoint;
         //索敵範囲
         if (_searchRange == 0) { _searchRange = searchRange; }
         //攻撃範囲
@@ -101,17 +103,31 @@ public class Enemy : MonoBehaviour, IDamageable {
         _startPosition = gameObject.transform.position;
         //animationSystem Set
         _anim = GetComponent<SimpleAnimation> ();
+
+        _status = gameObject.GetComponent<Status>();
+        _status.Init();
     }
 
     //ダメージを受ける
     public void TakeDamage (float damage) {
         if (_currentState == State.DEAD) return;
-        _hp -= damage;
+    
+        if (damage > 0)
+        {
+            _properties.HealthProperties -= damage;
 
-        if (_hp <= 0) {
-            _currentState = State.DEAD;
-            StartCoroutine (Dying ());
+            if (_properties.HealthProperties <= 0)
+            {
+                _currentState = State.DEAD;
+                StartCoroutine(Dying());
+            }
         }
+    }
+
+    protected virtual void LateUpdate()
+    {
+        if (_animator.speed != _properties.SpeedMultiplyerProperties)
+            _animator.speed = _properties.SpeedMultiplyerProperties;
     }
 
     //死亡コルーチン
@@ -126,4 +142,8 @@ public class Enemy : MonoBehaviour, IDamageable {
 
     public virtual void Discover (GameObject obj) { }
 
+    public void Sacking()
+    {
+        return;
+    }
 }
