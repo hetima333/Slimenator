@@ -220,7 +220,7 @@ GameObject:
   - component: {fileID: 114829319801204374}
   m_Layer: 11
   m_Name: SearchRange
-  m_TagString: Untagged
+  m_TagString: Helper
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

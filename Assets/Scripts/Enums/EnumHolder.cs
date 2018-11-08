@@ -25,6 +25,18 @@ public class EnumHolder : SingletonMonoBehaviour<EnumHolder>
     {
         SPEED,
         HEALTH,
+        SUCKING, 
+        DAMAGE,
+        TAKEDAMAGE
+    }
+
+    public enum AreaEffectType
+    {
+        NONE,
+        SUCKING,
+        PUSHING,
+        SPAWNING,
+        DAMAGE,
     }
 
     public Stats GetStats(string InstanceName)

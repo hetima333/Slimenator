@@ -20,7 +20,8 @@ public class Stats : ScriptableObject
         _MaxDamageMultiplyer,
         _MaxHealthMultiplyer,
 
-        _SuckingPower;
+        _SuckingPower,
+        _SuckingPowerMultiplyer;
 
 
     [SerializeField]
@@ -31,7 +32,7 @@ public class Stats : ScriptableObject
     {
         get
         {
-            return _MaxHealth;
+            return _MaxHealth * _MaxHealthMultiplyer;
         }
     }
 
@@ -52,7 +53,7 @@ public class Stats : ScriptableObject
     {
         get
         {
-            return _MaxDamage;
+            return _MaxDamage * _MaxDamageMultiplyer;
         }
     }
 
@@ -60,7 +61,7 @@ public class Stats : ScriptableObject
     {
         get
         {
-            return _MaxSpeed;
+            return _MaxSpeed * _MaxSpeedMultiplyer;
         }
     }
 
@@ -107,7 +108,20 @@ public class Stats : ScriptableObject
     {
         get
         {
-            return _SuckingPower;
+            return _SuckingPower * _SuckingPowerMultiplyer;
+        }
+    }
+
+    public float SuckingPowerMultiplyerProperties
+    {
+        get
+        {
+            return _SuckingPowerMultiplyer;
+        }
+
+        set
+        {
+            _SuckingPowerMultiplyer = Mathf.Clamp(value, 0, 100);
         }
     }
 

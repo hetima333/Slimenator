@@ -23,22 +23,21 @@ public class EntityDetector : MonoBehaviour
             Rigidbody RB = other.GetComponent<Rigidbody>();
             suckable_temp.Sacking();
 
-            if (RB != null && RB.mass < _Player.GetPlayerStats().SuckingPowerProperties)
+            if (RB != null && RB.mass < _Player.GetPlayerStats().SuckingPowerProperties * _Player.GetPlayerStats().SuckingPowerMultiplyerProperties)
                 RB.AddForce(-GAcceleration(_Owner.transform.position, RB.mass, RB));
 
-            IElement element_temp = other.gameObject.GetComponent<IElement>();
-            if (element_temp != null)
+            if (Vector3.Distance(other.gameObject.transform.position, _Owner.gameObject.transform.position) < 3)
             {
-                if (Vector3.Distance(other.gameObject.transform.position, _Owner.gameObject.transform.position) < 3)
+                IElement element_temp = other.gameObject.GetComponent<IElement>();
+                if (element_temp != null)
                 {
-                    _Player.StoreElementInOrb(element_temp.GetElementType());
-                    
-                    IDamageable damage_temp = other.gameObject.GetComponent<IDamageable>();
+                    _Player.StoreElementInOrb(element_temp.GetElementType());            
+                }
 
-                    if(damage_temp != null)
-                    {
-                        damage_temp.TakeDamage(1000);
-                    }
+                IDamageable damage_temp = other.gameObject.GetComponent<IDamageable>();
+                if (damage_temp != null)
+                {
+                    damage_temp.TakeDamage(1000);
                 }
             }
         }

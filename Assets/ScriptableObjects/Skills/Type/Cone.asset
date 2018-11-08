@@ -12,3 +12,4 @@ MonoBehaviour:
   m_Name: Cone
   m_EditorClassIdentifier: 
   _Range: 10
+  _Radius: 30

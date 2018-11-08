@@ -4,21 +4,42 @@ using UnityEngine;
 
 public abstract class Skill : ScriptableObject
 {
+    [BackgroundColor(0f, 1f, 0f, 0.5f)]
+    [Header("Skills Properties")]
+    [Tooltip("Skill is created via Combinations")]
     [SerializeField]
     private ElementType[]
          _Combination = new ElementType[3];
 
+    [Tooltip("Skill is created via Base Element")]
     [SerializeField]
     private ElementType
         _Base;
 
+    [Tooltip("Targets that can be targeted")]
     [SerializeField]
     protected GameObjectList
         _Targetable;
 
+    [Tooltip("Status Effect to apply to Target")]
+    [SerializeField]
+    protected List<StatusEffect>
+        _StatusEffect = new List<StatusEffect>();
+
+    [Tooltip("Chance of Status effect being applied to Target [Tier will multiply the chance]")]
+    [SerializeField]
+    protected float
+        _StatusApplyPercentage;
+
+    [Tooltip("Damage Dealt to Target")]
     [SerializeField]
     protected float
         _Damage;
+
+    [Tooltip("Does skill Restrict user Movements")]
+    [SerializeField]
+    private bool
+        _RestrictUserMovement;
 
     [SerializeField]
     [TextArea(15, 20)]
@@ -39,7 +60,8 @@ public abstract class Skill : ScriptableObject
 
     protected float
         _ChannelingTimer,
-        _CastingTimer;
+        _CastingTimer, 
+        _Multiplyer;
 
     public virtual void Init()
     {
@@ -47,8 +69,8 @@ public abstract class Skill : ScriptableObject
         {
             ParticleInterface ChannelingParticlePI = _ChannelingParticle.GetComponent<ParticleInterface>();
             ChannelingParticlePI.Init();
-            _ChannelingTimer = _ChannelingParticle.GetComponent<ParticleInterface>().GetLongestParticleEffect();
-            Debug.Log("Channeling Particle: " + _ChannelingTimer);
+            _ChannelingTimer = ChannelingParticlePI.GetLongestParticleEffect();
+            //Debug.Log("Channeling Particle: " + _ChannelingTimer);
         }
         else
             _ChannelingTimer = 0;
@@ -57,11 +79,13 @@ public abstract class Skill : ScriptableObject
         {
             ParticleInterface CastingParticlePI = _CastingParticle.GetComponent<ParticleInterface>();
             CastingParticlePI.Init();
-            _CastingTimer = _CastingParticle.GetComponent<ParticleInterface>().GetLongestParticleEffect();
-            Debug.Log("Casting Particle: " + _CastingTimer);
+            _CastingTimer = CastingParticlePI.GetLongestParticleEffect();
+            //Debug.Log("Casting Particle: " + _CastingTimer);
         }
         else
             _CastingTimer = 0;
+
+        _Multiplyer = ((_SkillTier != null) ? _SkillTier.GetMultiplyer() : 1);
     }
 
     public virtual void Engage(GameObject caster, Vector3 spawn_position = new Vector3(), Vector3 dir = new Vector3())
@@ -69,7 +93,10 @@ public abstract class Skill : ScriptableObject
         _ChannelingTimer -= Time.deltaTime;
 
         if (_ChannelingTimer <= 0)
-            _CastingTimer -= Time.deltaTime;
+        {
+            if(_CastingTimer > 0)
+                _CastingTimer -= Time.deltaTime;
+        }
         else
             _ChannelingTimer -= Time.deltaTime;
 
@@ -88,7 +115,7 @@ public abstract class Skill : ScriptableObject
             {
                 Debug.Log("+++CHANNELING SKILL+++");
                 _ChannelingParticleCopy = Instantiate(_ChannelingParticle, spawn_position, caster.transform.rotation, caster.transform);
-                _ChannelingParticleCopy.transform.localScale = new Vector3(_SkillTier.GetMultiplyer(), _SkillTier.GetMultiplyer(), _SkillTier.GetMultiplyer());
+                _ChannelingParticleCopy.transform.localScale = new Vector3(_Multiplyer, _Multiplyer, _Multiplyer);
             }
         }
 
@@ -108,7 +135,7 @@ public abstract class Skill : ScriptableObject
                 if (_CastingParticle != null && _CastingParticleCopy == null)
                 {
                     _CastingParticleCopy = Instantiate(_CastingParticle, spawn_position, caster.transform.rotation, caster.transform);
-                    _CastingParticleCopy.transform.localScale = new Vector3(_SkillTier.GetMultiplyer(), _SkillTier.GetMultiplyer(), _SkillTier.GetMultiplyer());
+                    _CastingParticleCopy.transform.localScale = new Vector3(_Multiplyer, _Multiplyer, _Multiplyer);
                     Debug.Log("+++CASTING SKILL+++");
                 }
             }
@@ -140,14 +167,33 @@ public abstract class Skill : ScriptableObject
         _SkillTier = tier;
     }
 
+    public void SetElementType(List<ElementType> type)
+    {
+        foreach(ElementType et in type)
+        {
+            if(et.GetStatusEffect() != null)
+                _StatusEffect.Add(et.GetStatusEffect());
+        }
+    }
+
     public SkillTier GetSkillTier()
     {
         return _SkillTier;
     }
 
+    public List<StatusEffect> GetStatusEffects()
+    {
+        return _StatusEffect;
+    }
+
     public string GetDescription()
     {
         return _Description;
+    }
+
+    public bool IsMoveOnCast()
+    {
+        return _RestrictUserMovement;
     }
 
     public void Reset()

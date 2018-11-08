@@ -8,8 +8,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df076bddc5fb8d7478747696daf49921, type: 3}
-  m_Name: Combination Skill
+  m_Script: {fileID: 11500000, guid: 917c4ac7d9be9714da6c5dd1452b67c8, type: 3}
+  m_Name: Damage
   m_EditorClassIdentifier: 
-  _List:
-  - {fileID: 11400000, guid: 86dda70d891738b48a08cb706e43ea29, type: 2}
+  _delay: 0.5
+  _EffectType: 4
+  _Amount: 1

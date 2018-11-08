@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c65c188f4e6a30419aa87e60efe5c63, type: 3}
+  m_Name: Blackhole properies
+  m_EditorClassIdentifier: 
+  _MovingParticle: {fileID: 1783820332162922, guid: 7c460cf7fffd6ce4d8c3b6f625ed6680,
+    type: 2}
+  _ImpactParticle: {fileID: 0}
+  _ImpactRadius: 0
+  _SpawningIteration: 1
+  _AreaEffectProperties: {fileID: 11400000, guid: 4cbc1577dc7a8bc4fa1564bc7e945761,
+    type: 2}
+  _SpawningObjects: {fileID: 11400000, guid: 04a4afc9e526b5a4c973eea57cfc65bb, type: 2}
