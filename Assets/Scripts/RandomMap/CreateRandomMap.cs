@@ -23,6 +23,9 @@ public class CreateRandomMap : MonoBehaviour
     //壁のプレハブ
     [SerializeField]
     private GameObject _wallPrefab;
+    //ボス部屋への通路プレハブ
+    [SerializeField]
+    private GameObject _bossRoomPassagePrefab;
 
     //マップ
     public int[,] _map;
@@ -40,12 +43,12 @@ public class CreateRandomMap : MonoBehaviour
     private GameObject _player;
 
     //デバッグ用===============================================
-    [Header("-Debug-")]
-    //最初に作られた部屋の位置
-    [SerializeField] private GameObject _roomStart;
-    [SerializeField] private GameObject _roomWhidth;
-    [SerializeField] private GameObject _roomDepth;
-    [SerializeField] private GameObject _roomEnd;
+    // [Header("-Debug-")]
+    // //最初に作られた部屋の位置
+    // [SerializeField] private GameObject _roomStart;
+    // [SerializeField] private GameObject _roomWhidth;
+    // [SerializeField] private GameObject _roomDepth;
+    // [SerializeField] private GameObject _roomEnd;
     //==================================================ここまで
 
     // Use this for initialization
@@ -81,6 +84,15 @@ public class CreateRandomMap : MonoBehaviour
         //マップサイズをスケールの基準に設定
         transform.localScale = new Vector3(_mapSize, _mapSize, _mapSize);
 
+        //敵が全滅していたら
+        var distribute = GetComponent<Distribute>();
+        if (Input.GetKey(KeyCode.Space))// || distribute.IsEnemyAnnihilated())
+        {
+            Debug.Log("Open boss room passage!");
+            //ボス部屋への通路を開く
+            this.OpenBossRoom();
+        }
+
     }
 
     /// <summary>
@@ -108,21 +120,19 @@ public class CreateRandomMap : MonoBehaviour
         {
             for (int x = 0; x < _width; x++)
             {
-                if (_map[x, z] == (int)MapGenerator.MAP_STATUS.FLOOR)
+                if (_map[x, z] == (int)MapGenerator.MAP_STATUS.WALL)
                 {
-                    //Instantiate(_floorPrefab, new Vector3(x, 0, z), new Quaternion());
-                    //部屋オブジェクトを生成する
-                    //GameObject floor = Instantiate(_floorPrefab, new Vector3(x, 0, z), new Quaternion());
-                    //floor.transform.SetParent(transform);
-                    //Debug.Log("Create floorPrefab map!!");
-                }
-                else
-                {
-                    //Instantiate(_wallPrefab, new Vector3(x, 0, z), new Quaternion());
                     //壁オブジェクトを生成する
                     GameObject wall = Instantiate(_wallPrefab, new Vector3(x, 0, z), new Quaternion());
+                    wall.tag = "Wall";
                     wall.transform.SetParent(transform);
                     //Debug.Log("Create wallPrefab map!!");
+                }
+                else if (_map[x, z] == (int)MapGenerator.MAP_STATUS.BOOS_ROOM_PASSAGE)
+                {
+                    //壁(通路を塞ぐ用)オブジェクトを生成する
+                    GameObject passage = Instantiate(_bossRoomPassagePrefab, new Vector3(x, 0, z), new Quaternion());
+                    passage.transform.SetParent(transform);
                 }
             }
         }
@@ -146,12 +156,11 @@ public class CreateRandomMap : MonoBehaviour
 
         //デバッグ用=================================================================================================================
         //最後に生成された部屋
-        var maxRoom = _mapGenerator.GetMaxRoom();
-        _roomStart.transform.Translate(_mapGenerator.GetStartX(maxRoom - 1) * _mapSize, 1, _mapGenerator.GetStartZ(maxRoom - 1) * _mapSize);
-        _roomWhidth.transform.Translate(_mapGenerator.GetEndX(maxRoom - 1) * _mapSize, 1, _mapGenerator.GetStartZ(maxRoom - 1) * _mapSize);
-        _roomDepth.transform.Translate(_mapGenerator.GetStartX(maxRoom - 1) * _mapSize, 1, _mapGenerator.GetEndZ(maxRoom - 1) * _mapSize);
-        _roomEnd.transform.Translate(_mapGenerator.GetEndX(maxRoom - 1) * _mapSize, 1, _mapGenerator.GetEndZ(maxRoom - 1) * _mapSize);
-
+        // var maxRoom = _mapGenerator.GetMaxRoom();
+        // _roomStart.transform.Translate(_mapGenerator.GetStartX(maxRoom - 1) * _mapSize, 1, _mapGenerator.GetStartZ(maxRoom - 1) * _mapSize);
+        // _roomWhidth.transform.Translate(_mapGenerator.GetEndX(maxRoom - 1) * _mapSize, 1, _mapGenerator.GetStartZ(maxRoom - 1) * _mapSize);
+        // _roomDepth.transform.Translate(_mapGenerator.GetStartX(maxRoom - 1) * _mapSize, 1, _mapGenerator.GetEndZ(maxRoom - 1) * _mapSize);
+        // _roomEnd.transform.Translate(_mapGenerator.GetEndX(maxRoom - 1) * _mapSize, 1, _mapGenerator.GetEndZ(maxRoom - 1) * _mapSize);
         //==================================================================================================================ここまで
 
         Position position;
@@ -171,48 +180,67 @@ public class CreateRandomMap : MonoBehaviour
         _player.transform.position = new Vector3(position._x * _mapSize, 0, position._z * _mapSize);
         //マップのプレイヤーの位置を追加
         _map[position._x, position._z] = (int)MapGenerator.MAP_STATUS.PLAYER;
-        //プレイヤーから1マス目(隣)の範囲
+
         {
-            //前後左右
-            for (int i = 0, x = 0, z = -1; i < 4; x += z, z = x - z, x = z - x, i++)
-            {
-                //Debug.Log("x,y:" + new Vector2(x, z));
-                //(0,1),(0,-1),(1,0),(-1,-0)
-                _map[position._x + x, position._z + z] = (int)MapGenerator.MAP_STATUS.PLAYER;
-            }
-            //プレイヤーから見た斜め4方向
-            for (int i = 0, x = -1, z = -1; i < 4; x += z, z = x - z, x = z - x, i++)
-            {
-                //(1,1),(1,-1),(-1,1),(-1,-1)
-                _map[position._x + x, position._z + z] = (int)MapGenerator.MAP_STATUS.PLAYER;
-            }
+            // //プレイヤーから1マス目(隣)の範囲
+            // {
+            //     //前後左右
+            //     for (int i = 0, x = 0, z = -1; i < 4; x += z, z = x - z, x = z - x, i++)
+            //     {
+            //         //Debug.Log("x,y:" + new Vector2(x, z));
+            //         //(0,1),(0,-1),(1,0),(-1,-0)
+            //         _map[position._x + x, position._z + z] = (int)MapGenerator.MAP_STATUS.PLAYER;
+            //     }
+            //     //プレイヤーから見た斜め4方向
+            //     for (int i = 0, x = -1, z = -1; i < 4; x += z, z = x - z, x = z - x, i++)
+            //     {
+            //         //(1,1),(1,-1),(-1,1),(-1,-1)
+            //         _map[position._x + x, position._z + z] = (int)MapGenerator.MAP_STATUS.PLAYER;
+            //     }
+            // }
+
+            // //プレイヤーから2個マス目の範囲
+            // {
+            //     for (int i = 0, x = 0, z = -2; i < 4; x += z, z = x - z, x = z - x, i++)
+            //     {
+            //         //(0,-2),(2,0),(0,2),(-2,0)
+            //         _map[position._x + x, position._z + z] = (int)MapGenerator.MAP_STATUS.PLAYER;
+            //     }
+
+            //     for (int i = 0, x = -2, z = -1; i < 4; x += z, z = x - z, x = z - x, i++)
+            //     {
+            //         //(-2,-1),(1,-2),(2,1),(-1,2)
+            //         _map[position._x + x, position._z + z] = (int)MapGenerator.MAP_STATUS.PLAYER;
+            //     }
+
+            //     for (int i = 0, x = -2, z = -2; i < 4; x += z, z = x - z, x = z - x, i++)
+            //     {
+            //         //(-2,-2),(2,-2),(2,2),(-2,2)
+            //         _map[position._x + x, position._z + z] = (int)MapGenerator.MAP_STATUS.PLAYER;
+            //     }
+
+            //     for (int i = 0, x = -1, z = -2; i < 4; x += z, z = x - z, x = z - x, i++)
+            //     {
+            //         //(-1,-2),(2,-1),(1,2),(-2,1)
+            //         _map[position._x + x, position._z + z] = (int)MapGenerator.MAP_STATUS.PLAYER;
+            //     }
+            // }
         }
 
-        //プレイヤーから2個マス目の範囲
+    }
+
+    /// <summary>
+    /// ボス部屋への通路を開く
+    /// </summary>
+    public void OpenBossRoom()
+    {
+        //タグのついている壁を取得
+        var bossRoomPassageObjs = GameObject.FindGameObjectsWithTag("BossRoomPassage");
+
+        foreach (var bossRoom in bossRoomPassageObjs)
         {
-            for (int i = 0, x = 0, z = -2; i < 4; x += z, z = x - z, x = z - x, i++)
-            {
-                //(0,-2),(2,0),(0,2),(-2,0)
-                _map[position._x + x, position._z + z] = (int)MapGenerator.MAP_STATUS.PLAYER;
-            }
-
-            for (int i = 0, x = -2, z = -1; i < 4; x += z, z = x - z, x = z - x, i++)
-            {
-                //(-2,-1),(1,-2),(2,1),(-1,2)
-                _map[position._x + x, position._z + z] = (int)MapGenerator.MAP_STATUS.PLAYER;
-            }
-
-            for (int i = 0, x = -2, z = -2; i < 4; x += z, z = x - z, x = z - x, i++)
-            {
-                //(-2,-2),(2,-2),(2,2),(-2,2)
-                _map[position._x + x, position._z + z] = (int)MapGenerator.MAP_STATUS.PLAYER;
-            }
-
-            for (int i = 0, x = -1, z = -2; i < 4; x += z, z = x - z, x = z - x, i++)
-            {
-                //(-1,-2),(2,-1),(1,2),(-2,1)
-                _map[position._x + x, position._z + z] = (int)MapGenerator.MAP_STATUS.PLAYER;
-            }
+            //通路に変わった座標の床のみ削除する
+            Destroy(bossRoom);
         }
 
     }

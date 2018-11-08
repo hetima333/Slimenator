@@ -5,9 +5,14 @@ TagManager:
   serializedVersion: 2
   tags:
   - Suckable
+<<<<<<< HEAD
   - Slime
   - Projectile
   - Helper
+=======
+  - Wall
+  - BossRoomPassage
+>>>>>>> feature/namiScene
   layers:
   - Default
   - TransparentFX
@@ -24,7 +29,7 @@ TagManager:
   - EnemyAttack
   - 
   - Wall
-  - 
+  - BossRoomPassage
   - 
   - 
   - 
