@@ -33,6 +33,11 @@ public class SpawningProperties : ScriptableObject
     protected GameObjectList
         _Objects;
 
+    [Tooltip("[FOR SPAWNING] Tier determines the size and power of spawned Object")]
+    [SerializeField]
+    public SkillTier
+     _startingTier;
+
     public GameObject GetStartingParticle()
     {
         return _StartingParticle;
@@ -70,6 +75,10 @@ public class SpawningProperties : ScriptableObject
         return _EndingType;
     }
 
+    public SkillTier GetTier()
+    {
+        return _startingTier;
+    }
 
     public GameObjectList GetTargetable()
     {

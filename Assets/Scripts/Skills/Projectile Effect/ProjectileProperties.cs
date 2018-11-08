@@ -27,6 +27,11 @@ public class ProjectileProperties : ScriptableObject
     private GameObjectList
         _SpawningObjects;
 
+    [Tooltip("Tier determines the size and power of spawned Object")]
+    [SerializeField]
+    public SkillTier
+     _startingTier;
+
     public GameObject GetMovingParticle()
     {
         return _MovingParticle;
@@ -50,6 +55,11 @@ public class ProjectileProperties : ScriptableObject
     public SpawningProperties GetProperties()
     {
         return _AreaEffectProperties;
+    }
+
+    public SkillTier GetTier()
+    {
+        return _startingTier;
     }
 
     public GameObjectList GetObjectsToSpawn()

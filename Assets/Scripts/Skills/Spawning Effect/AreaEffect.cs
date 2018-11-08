@@ -84,7 +84,7 @@ public class AreaEffect : MonoBehaviour
                             System.Type _MyScriptType = System.Type.GetType(((ElementType)_Properties.GetElement().GetList()[type]).GetSlimeScriptName());
                             temp_obj.AddComponent(_MyScriptType);
 
-                            temp_obj.GetComponent<SlimeBase>().Init(temp, ((((ElementType)_Properties.GetElement().GetList()[type]).name.Equals("Lightning")) ? 2 : 1), ((ElementType)_Properties.GetElement().GetList()[type]));
+                            temp_obj.GetComponent<SlimeBase>().Init(temp, ((((ElementType)_Properties.GetElement().GetList()[type]).name.Equals("Lightning")) ? 2 : 1), ((ElementType)_Properties.GetElement().GetList()[type]), _Properties.GetTier());
                         }
 
                         _Delay = _Properties.GetDelay();
