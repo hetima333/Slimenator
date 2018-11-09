@@ -13,7 +13,7 @@ public enum Orb {
 public static class OrbExtensions {
 
 	/// <summary>
-	/// ElementTypeからオーブ型への変換
+	/// ElementTypeからオーブへの変換
 	/// </summary>
 	public static Orb ToOrb(this ElementType self) {
 		// 名前で分類
@@ -27,6 +27,34 @@ public static class OrbExtensions {
 		}
 
 		return Orb.NONE;
+	}
+
+	/// <summary>
+	/// StatusEffectからオーブへの変換
+	/// </summary>
+	public static Orb ToOrb(this StatusEffect self) {
+		switch (self.name) {
+			case "Burn":
+				return Orb.FIRE;
+			case "Freeze":
+				return Orb.ICE;
+			case "Stan":
+				return Orb.LIGHTNING;
+		}
+		return Orb.NONE;
+	}
+
+	/// <summary>
+	/// エンチャントのTierを取得する
+	/// </summary>
+	public static int GetEnchantmentTier(this Skill self) {
+		// ユニークスキルにエンチャントは存在しない
+		if (self.IsUnique()) {
+			return 0;
+		}
+
+		var firstEnchantment = self.GetStatusEffects().First();
+		return self.GetStatusEffects().TakeWhile(x => x == firstEnchantment).Count();
 	}
 
 	/// <summary>
