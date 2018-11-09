@@ -33,15 +33,7 @@ public static class OrbExtensions {
 	/// StatusEffectからオーブへの変換
 	/// </summary>
 	public static Orb ToOrb(this StatusEffect self) {
-		switch (self.name) {
-			case "Burn":
-				return Orb.FIRE;
-			case "Freeze":
-				return Orb.ICE;
-			case "Stan":
-				return Orb.LIGHTNING;
-		}
-		return Orb.NONE;
+		return self.GetElement().ToOrb();
 	}
 
 	/// <summary>
