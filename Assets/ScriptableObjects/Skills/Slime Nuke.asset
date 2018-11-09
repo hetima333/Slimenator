@@ -8,24 +8,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4f745ea35a19d14c94dfa52e1e271e7, type: 3}
-  m_Name: Black Hole Shoot
+  m_Script: {fileID: 11500000, guid: 6a62d70063ef38b49aaad8107fc11876, type: 3}
+  m_Name: Slime Nuke
   m_EditorClassIdentifier: 
   _Combination:
+  - {fileID: 11400000, guid: 753eac8bb53ca58458e5f20416ea0092, type: 2}
   - {fileID: 11400000, guid: 36f0bab903e87bc43a975a9ab8b5afd1, type: 2}
   - {fileID: 11400000, guid: 3598f9cad2b4e094e8abf6dc11ad1944, type: 2}
-  - {fileID: 11400000, guid: 753eac8bb53ca58458e5f20416ea0092, type: 2}
   _Base: {fileID: 0}
-  _Targetable: {fileID: 11400000, guid: 921fd2909285c1b40ac6aee462dd0d4a, type: 2}
+  _Targetable: {fileID: 11400000, guid: 0af16483d2acb014fb644cf71b79ce3f, type: 2}
   _StatusEffect: []
   _StatusApplyPercentage: 0
   _Damage: 0
   _RestrictUserMovement: 0
-  _Description: Shoots out a projectile that upon impact, spawns a blackhole
+  _Description: Explode nearby slimes
   _ChannelingParticle: {fileID: 0}
   _CastingParticle: {fileID: 0}
-  _Projectile: {fileID: 1762178163839322, guid: ac48cf082fcd82843a04c8748fdaa940,
+  _CastingType: {fileID: 11400000, guid: 2e7805e5357b0af4699fb6b8109c705f, type: 2}
+  _SpawningDelay: 0
+  _Iteration: 1
+  _AreaEffectProperties: {fileID: 11400000, guid: 461ea68aaf099204e827c36b77c15d58,
     type: 2}
-  _properties: {fileID: 11400000, guid: 6e2b50610000ed64d8e631247c7f9a56, type: 2}
-  _Range: 10
-  _Speed: 3
+  _SpawnedObject: {fileID: 1674626514068560, guid: 76796459c1b6f354d99ea82704357cbd,
+    type: 2}

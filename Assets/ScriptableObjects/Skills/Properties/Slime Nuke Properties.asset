@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca731fcea334a8446926bd4b3f24015d, type: 3}
+  m_Name: Slime Nuke Properties
+  m_EditorClassIdentifier: 
+  _StartingParticle: {fileID: 1609091412045728, guid: 256489c086de3354c8463714da03a14c,
+    type: 2}
+  _EndingParticle: {fileID: 0}
+  _Radius: 30
+  _Delay: 10
+  _YOffset: 0
+  _Damage: 40
+  _StartingType: 4
+  _EndingType: 0
+  _ElementType: {fileID: 11400000, guid: dafcf0a15e8eadb4fa33c1a792f407fa, type: 2}
+  _Objects: {fileID: 11400000, guid: 921fd2909285c1b40ac6aee462dd0d4a, type: 2}
+  _startingTier: {fileID: 0}

@@ -280,11 +280,13 @@ public class EntityPlayer : MonoBehaviour, IDamageable
 
             case "Heal":
                 _Player_Stats.HealthProperties += type.GetRandomAmount();
-                _Player_Stats.HealthProperties = Mathf.Clamp(_Player_Stats.HealthProperties, 0, _Player_Stats.MaxHealthProperties * _Player_Stats.HealthMultiplyerProperties);
+                _Player_Stats.HealthProperties = Mathf.Clamp(_Player_Stats.HealthProperties, 0, MaxHitPoint);
                 break;
 
             default:
                 {
+                    string debug = "";
+
                     if (_CurrentSkillOutcome != null)
                     {
                         Destroy(_CurrentSkillOutcome);
@@ -325,6 +327,10 @@ public class EntityPlayer : MonoBehaviour, IDamageable
                             {
                                 _CurrentSkillOutcome = ScriptableObject.Instantiate(s);
                                 _CurrentSkillOutcome.name = s.name;
+                                debug += "------------------------------------------------\n";
+                                debug += "[Created Skill] " + _CurrentSkillOutcome.name + "\n";
+                                debug += "------------------------------------------------";
+
                                 break;
                             }
                             else
@@ -342,7 +348,10 @@ public class EntityPlayer : MonoBehaviour, IDamageable
                                 _CurrentSkillOutcome = ScriptableObject.Instantiate(s);
                                 _CurrentSkillOutcome.name = s.name;
 
-                                for(int i = 1; i < _OrbSlot.Count; ++i)
+                                debug += "------------------------------------------------\n";
+                                debug += "[Created Skill] " + _CurrentSkillOutcome.name + "\n";
+
+                                for (int i = 1; i < _OrbSlot.Count; ++i)
                                 {
                                     if (s.GetBaseElement().Equals(_OrbSlot.ToArray()[i]))
                                         ++temp_tier;
@@ -351,19 +360,27 @@ public class EntityPlayer : MonoBehaviour, IDamageable
                                 }
 
                                 _CurrentSkillOutcome.SetSkillTier((SkillTier)_skillTier.GetList()[temp_tier]);
+                                debug += "[Setting Tier] " + _CurrentSkillOutcome.GetSkillTier() + "\n";
                                 List<ElementType> temp = new List<ElementType>();
                                 temp.AddRange(_OrbSlot.ToArray());
                                 temp.RemoveAt(0);
 
                                 if (temp.Count > 0)
+                                {
                                     _CurrentSkillOutcome.SetElementType(temp);
 
+                                    foreach (ElementType et in temp)
+                                        debug += "[Skill (" + _CurrentSkillOutcome.name + ") Status Added] " + et.name + "\n";
+                                }
+                                debug += "------------------------------------------------";
                                 break;
                             }
                             else
                                 _CurrentSkillOutcome = null;
                         }
                     }
+
+                    Debug.Log(debug);
                 }
                 break;
         }      

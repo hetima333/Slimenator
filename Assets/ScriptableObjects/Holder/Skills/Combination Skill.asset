@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Combination Skill
   m_EditorClassIdentifier: 
   _List:
-  - {fileID: 11400000, guid: 86dda70d891738b48a08cb706e43ea29, type: 2}
-  - {fileID: 11400000, guid: af5a8f314a7c887438099d62ca10345f, type: 2}
-  - {fileID: 11400000, guid: 705c181fa27a69a48af1a3b3d9d69a09, type: 2}
+  - {fileID: 11400000, guid: ddec98c1e3e83db4594640dd942701c0, type: 2}
   - {fileID: 11400000, guid: 9d899c906a1672641a2873dbf20846a4, type: 2}
+  - {fileID: 11400000, guid: 705c181fa27a69a48af1a3b3d9d69a09, type: 2}
+  - {fileID: 11400000, guid: 013a9bd269c562f4aaa0d0e8cfe3a5bf, type: 2}
