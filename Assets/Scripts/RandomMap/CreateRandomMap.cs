@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CreateRandomMap : MonoBehaviour {
-
+public class CreateRandomMap : MonoBehaviour
+{
     //幅
     [SerializeField]
     public int _width = 30;
@@ -28,7 +28,7 @@ public class CreateRandomMap : MonoBehaviour {
     public int[,] _map;
 
     //マップ生成
-    private MapGenerator _mapGenerator;
+    public MapGenerator _mapGenerator;
 
     //マップサイズ
     [SerializeField]
@@ -39,8 +39,18 @@ public class CreateRandomMap : MonoBehaviour {
     [Header("-Initial position designation of player-")]
     private GameObject _player;
 
+    //デバッグ用===============================================
+    [Header("-Debug-")]
+    //最初に作られた部屋の位置
+    [SerializeField] private GameObject _roomStart;
+    [SerializeField] private GameObject _roomWhidth;
+    [SerializeField] private GameObject _roomDepth;
+    [SerializeField] private GameObject _roomEnd;
+    //==================================================ここまで
+
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         //マップサイズをスケールの基準に設定
         //transform.localScale = new Vector3(_mapSize, _mapSize, _mapSize);
 
@@ -64,9 +74,10 @@ public class CreateRandomMap : MonoBehaviour {
         InitialPositionPlayer();
 
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update()
+    {
         //マップサイズをスケールの基準に設定
         transform.localScale = new Vector3(_mapSize, _mapSize, _mapSize);
 
@@ -97,7 +108,7 @@ public class CreateRandomMap : MonoBehaviour {
         {
             for (int x = 0; x < _width; x++)
             {
-                if (_map[x, z] == 1)
+                if (_map[x, z] == (int)MapGenerator.MAP_STATUS.FLOOR)
                 {
                     //Instantiate(_floorPrefab, new Vector3(x, 0, z), new Quaternion());
                     //部屋オブジェクトを生成する
@@ -133,10 +144,15 @@ public class CreateRandomMap : MonoBehaviour {
         var startZ = _mapGenerator.GetStartZ(0);
         var endZ = _mapGenerator.GetEndZ(0);
 
-        //Debug.Log("startx:" + startX);
-        //Debug.Log("endx:" + endX);
-        //Debug.Log("startz:" + startZ);
-        //Debug.Log("endz:" + endZ);
+        //デバッグ用=================================================================================================================
+        //最後に生成された部屋
+        var maxRoom = _mapGenerator.GetMaxRoom();
+        _roomStart.transform.Translate(_mapGenerator.GetStartX(maxRoom - 1) * _mapSize, 1, _mapGenerator.GetStartZ(maxRoom - 1) * _mapSize);
+        _roomWhidth.transform.Translate(_mapGenerator.GetEndX(maxRoom - 1) * _mapSize, 1, _mapGenerator.GetStartZ(maxRoom - 1) * _mapSize);
+        _roomDepth.transform.Translate(_mapGenerator.GetStartX(maxRoom - 1) * _mapSize, 1, _mapGenerator.GetEndZ(maxRoom - 1) * _mapSize);
+        _roomEnd.transform.Translate(_mapGenerator.GetEndX(maxRoom - 1) * _mapSize, 1, _mapGenerator.GetEndZ(maxRoom - 1) * _mapSize);
+
+        //==================================================================================================================ここまで
 
         Position position;
         do
@@ -144,17 +160,61 @@ public class CreateRandomMap : MonoBehaviour {
             //座標をランダムに決める
             //var x = RogueUtils.GetRandomInt(0, _width - 1);
             //var z = RogueUtils.GetRandomInt(0, _depth - 1);
-            var x = RogueUtils.GetRandomInt(0, endX);
-            var z = RogueUtils.GetRandomInt(0, endZ);
-            //Debug.Log("x:" + x);
-            //Debug.Log("z:" + z);
+            var x = RogueUtils.GetRandomInt(startX, endX);
+            var z = RogueUtils.GetRandomInt(startZ, endZ);
             position = new Position(x, z);
         }
         //床があるところに限定する
-        while (_map[position._x, position._z] != 1);
+        while (_map[position._x, position._z] != (int)MapGenerator.MAP_STATUS.FLOOR);
 
         //プレイヤーの位置設定
         _player.transform.position = new Vector3(position._x * _mapSize, 0, position._z * _mapSize);
+        //マップのプレイヤーの位置を追加
+        _map[position._x, position._z] = (int)MapGenerator.MAP_STATUS.PLAYER;
+        //プレイヤーから1マス目(隣)の範囲
+        {
+            //前後左右
+            for (int i = 0, x = 0, z = -1; i < 4; x += z, z = x - z, x = z - x, i++)
+            {
+                //Debug.Log("x,y:" + new Vector2(x, z));
+                //(0,1),(0,-1),(1,0),(-1,-0)
+                _map[position._x + x, position._z + z] = (int)MapGenerator.MAP_STATUS.PLAYER;
+            }
+            //プレイヤーから見た斜め4方向
+            for (int i = 0, x = -1, z = -1; i < 4; x += z, z = x - z, x = z - x, i++)
+            {
+                //(1,1),(1,-1),(-1,1),(-1,-1)
+                _map[position._x + x, position._z + z] = (int)MapGenerator.MAP_STATUS.PLAYER;
+            }
+        }
+
+        //プレイヤーから2個マス目の範囲
+        {
+            for (int i = 0, x = 0, z = -2; i < 4; x += z, z = x - z, x = z - x, i++)
+            {
+                //(0,-2),(2,0),(0,2),(-2,0)
+                _map[position._x + x, position._z + z] = (int)MapGenerator.MAP_STATUS.PLAYER;
+            }
+
+            for (int i = 0, x = -2, z = -1; i < 4; x += z, z = x - z, x = z - x, i++)
+            {
+                //(-2,-1),(1,-2),(2,1),(-1,2)
+                _map[position._x + x, position._z + z] = (int)MapGenerator.MAP_STATUS.PLAYER;
+            }
+
+            for (int i = 0, x = -2, z = -2; i < 4; x += z, z = x - z, x = z - x, i++)
+            {
+                //(-2,-2),(2,-2),(2,2),(-2,2)
+                _map[position._x + x, position._z + z] = (int)MapGenerator.MAP_STATUS.PLAYER;
+            }
+
+            for (int i = 0, x = -1, z = -2; i < 4; x += z, z = x - z, x = z - x, i++)
+            {
+                //(-1,-2),(2,-1),(1,2),(-2,1)
+                _map[position._x + x, position._z + z] = (int)MapGenerator.MAP_STATUS.PLAYER;
+            }
+        }
+
     }
 
 }

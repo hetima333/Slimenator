@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df076bddc5fb8d7478747696daf49921, type: 3}
+  m_Name: Combination Skill
+  m_EditorClassIdentifier: 
+  _List:
+  - {fileID: 11400000, guid: 86dda70d891738b48a08cb706e43ea29, type: 2}
+  - {fileID: 11400000, guid: af5a8f314a7c887438099d62ca10345f, type: 2}
+  - {fileID: 11400000, guid: 705c181fa27a69a48af1a3b3d9d69a09, type: 2}

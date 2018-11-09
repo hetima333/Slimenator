@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Suckable
+  - Hittable
+  - Slime
+  - Projectile
   layers:
   - Default
   - TransparentFX
