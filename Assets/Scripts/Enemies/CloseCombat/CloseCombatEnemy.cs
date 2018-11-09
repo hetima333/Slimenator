@@ -6,6 +6,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 public class CloseCombatEnemy : Enemy {
 
     //TODO Enemy Performance

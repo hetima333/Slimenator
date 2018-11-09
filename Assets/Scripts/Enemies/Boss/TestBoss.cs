@@ -1,139 +1,143 @@
 ﻿/// ボスのテストタイプ
 /// Boss Test type
 /// Athor： Yuhei Mastumura
-/// Last edit date：2018/10/17
+/// Last edit date：2018/11/07
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public class TestBoss : Enemy {
-
-    EnemyMove _move;
+public class TestBoss : BossBase, IDamageable {
 
     //TODO Boss Performance
     const float MAX_HP = 3000.0f;
-    const float MOVE_SPEED = 2.0f;
-    const float SEARCH_RANGE = 3.0f;
-    const float ATTACK_RANGE = 9.0f;
-    const float MOVE_RANGE = 10.0f;
     const float MONEY = 2000.0f;
 
-    //Object for long range attack
-    private GameObject _bullet;
+    //分裂時生成するボスオブジェクト
+    [SerializeField]
+    private GameObject Boss1;
 
-    //Object for short range attack
-    private GameObject _shockField;
+    [SerializeField]
+    private GameObject Boss2;
 
-    public override void Init(Stats _stat)
-    {
-        _properties = _stat;
+    // Use this for initialization
+    void Start () {
+        SetStatus ();
+        PhaseUp ();
+        _target = GameObject.Find ("Player");
 
-        //ステータスのセット
-        SetStatus(Enemy.Type.BOSS, MaxHitPoint, Speed, SEARCH_RANGE, ATTACK_RANGE, MOVE_RANGE, MONEY);
-        //移動コンポーネントの取得
-        _move = GetComponent<EnemyMove>();
-        //リジットボディの取得
-        RigidbodyProperties = GetComponent<Rigidbody>();
-        _searchObj = transform.Find("SearchRange").gameObject;
-        _searchObj.GetComponent<SearchPlayer>().Initialize();
-        //自由移動ポジション設定
-        _freeMovePosition = _move.SetMovePos();
-        //衝撃波オブジェクトのロード
-        _shockField = Resources.Load("EnemyItem/ShockField", typeof(GameObject)) as GameObject;
-        //弾オブジェクトのロード
-        _bullet = Resources.Load("EnemyItem/EnemyBullet", typeof(GameObject)) as GameObject;
     }
 
     // Update is called once per frame
     void Update () {
 
-        switch (CurrentState) {
+        _actInterval -= Time.deltaTime; {
+            if (_actInterval <= 0) {
+                _actInterval = ACT_INTERVAL;
+                UseSkill ();
+            }
+        }
 
-            case State.IDLE:
-                //待機
-                StartCoroutine (_move.Idle ());
-                break;
+        if (Input.GetKeyDown (KeyCode.C)) {
+            PhaseUp ();
+        }
 
-            case State.FREE:
-                //自由移動
-                _move.FreeMove ();
-                break;
-            case State.DISCOVERY:
-                //プレイヤー追従
-                _move.Move2Player ();
-                break;
+    }
 
-            case State.RETURN:
-                //初期位置に帰る
-                _move.Return2FirstPos ();
-                break;
+    private void SetStatus () {
+        _hp = _maxHp;
+    }
 
-            case State.ATTACK:
-                //攻撃開始
-                StartCoroutine (Attack ());
-                break;
+    //ダメージを受ける
+    public void TakeDamage (float damage) {
+        _hp -= damage;
 
+        if (_hp <= 0) {
+            PhaseUp ();
+        }
+    }
+
+    private void UseSkill () {
+
+        if (_isAction) { Debug.Log ("今忙しい"); return; }
+
+        foreach (var skill in _skillList) {
+            if (skill._canActive == true) {
+                _canUseSkillList.Add (skill);
+            }
+        }
+
+        if (_canUseSkillList.Count == 0) { Debug.Log ("今使えるの無い"); return; }
+
+        Vector3 lookPos = _target.transform.position;
+
+        lookPos.y = gameObject.transform.position.y;
+
+        transform.LookAt (lookPos);
+
+        //ランダムなスキルを呼び出す。
+        if (_canUseSkillList.Count != 0) {
+            var skill = _canUseSkillList[Random.Range (0, _canUseSkillList.Count)];
+            //一回前に使ったスキルではない。かつ発動できる場合実行
+            if (skill != _previousSkill) {
+                skill.Action ();
+                _previousSkill = skill;
+                _canUseSkillList.Remove (skill);
+
+            } else {
+                Debug.Log ("被っとるんじゃ");
+            }
+        }
+
+        _canUseSkillList.Clear ();
+    }
+
+    private void PhaseUp () {
+        _phase++;
+        Debug.Log ("Phase" + _phase);
+
+        switch (_phase) {
+            case 1:
+                //新しいコンポーネントの追加
+                _skillList.Add (gameObject.AddComponent<JumpPress> ());
+                _skillList.Add (gameObject.AddComponent<FrontSlimeShot> ());
+                break;
+            case 2:
+                _skillList.Add (gameObject.AddComponent<AroundSlimeShot> ());
+                _skillList.Add (gameObject.AddComponent<Tackle> ());
+                break;
+            case 3:
+                //分裂
+                StartCoroutine (Split ());
+                break;
             default:
+
                 break;
         }
+
     }
 
-    //攻撃コルーチン
-    private IEnumerator Attack () {
-        //行動中はreturn
-        if (IsAction) yield break;
-        //行動開始
-        IsAction = true;
+    private IEnumerator Split () {
 
-        //対象の方向を見る
-        if (_target) {
-            //対象の位置を取得
-            Vector3 targetPos = _target.transform.position;
-            //高さ合わせ
-            targetPos.y = gameObject.transform.position.y;
-            //相手の方向を見る。
-            gameObject.transform.LookAt (targetPos);
-        }
+        Debug.Log ("分裂");
 
-        //距離を算出
-        float distance = Vector3.Distance (_target.transform.position, gameObject.transform.position);
+        yield return new WaitForSeconds (3);
+        Vector3 Pos = gameObject.transform.position;
 
-        if (distance <= 10.0f) {
-            if (_shockField) {
-                GameObject shockField = ObjectManager.Instance.InstantiateWithObjectPooling (_shockField) as GameObject;
-                shockField.transform.position = gameObject.transform.position;
-                var shockFieldComponemt = shockField.GetComponent<ShockField> ();
-                shockFieldComponemt.SetDamage (10);
-                shockFieldComponemt.SetScale (40);
-            }
-        } else {
-            if (_bullet) {
-                //make bullet 
-                GameObject bullet = ObjectManager.Instance.InstantiateWithObjectPooling (_bullet) as GameObject;;
-                //set bullet position
-                bullet.transform.position = gameObject.transform.position + transform.forward;
-                var bulletComponemt = bullet.GetComponent<EnemyBullet> ();
-                //set bullet damage
-                bulletComponemt.SetDamage (10);
-                bulletComponemt.SetScale (1);
-                //set bullet speed(TODO)
-                bullet.GetComponent<Rigidbody> ().velocity = gameObject.transform.forward * 10;
-            }
-        }
+        Vector3 OffSet = new Vector3 (3, 0, 0);
 
-        //TODO行動終了までの時間経過
-        yield return new WaitForSeconds (1);
-        //行動終了
-        IsAction = false;
-    }
+        GameObject BossA = Instantiate (Boss1);
+        BossA.transform.position = Pos + OffSet;
 
-    public override void Discover (GameObject obj) {
-        //Set Target
-        _target = obj;
+        GameObject BossB = Instantiate (Boss2);
+        BossA.transform.position = Pos - OffSet;
 
-        if (CurrentState != State.DEAD && !IsAction) {
-            CurrentState = State.DISCOVERY;
-        }
+        BossA.GetComponent<BossTwins> ()._target = _target;
+        BossA.GetComponent<BossTwins> ().SetAvatar (BossB);
+        BossB.GetComponent<BossTwins> ()._target = _target;
+        BossB.GetComponent<BossTwins> ().SetAvatar (BossA);
+
+        Destroy (gameObject);
     }
 
 }

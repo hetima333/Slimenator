@@ -8,13 +8,13 @@ using UnityEngine;
 
 //必須コンポーネントの指定
 [RequireComponent (typeof (Rigidbody))]
-[RequireComponent (typeof (EnemyMove))]
 [RequireComponent (typeof (SimpleAnimation))]
+[RequireComponent (typeof (EnemyMove))]
 
 public abstract class Enemy : MonoBehaviour, IDamageable, ISuckable {
 
     //種類
-    public enum Type { MEEL, RANGE, TANK, BOSS }
+    public enum Type { MEEL, RANGE, TANK }
     private Type _enemyType;
     public Type EnemyType { get { return _enemyType; } set { _enemyType = value; } }
 
