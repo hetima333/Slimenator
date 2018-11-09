@@ -38,8 +38,8 @@ public class CreateRandomMap : MonoBehaviour
     public int _mapSize = 1;
 
     //プレイヤーの初期位置指定
-    [SerializeField]
-    [Header("-Initial position designation of player-")]
+    //[SerializeField]
+    //[Header("-Initial position designation of player-")]
     private GameObject _player;
 
     //デバッグ用===============================================
@@ -54,6 +54,9 @@ public class CreateRandomMap : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        //プレイヤーの取得
+        _player = GameObject.FindGameObjectWithTag("Player");
+
         //マップサイズをスケールの基準に設定
         //transform.localScale = new Vector3(_mapSize, _mapSize, _mapSize);
 

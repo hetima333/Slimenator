@@ -154,7 +154,8 @@ public class MapGenerator
             System.Threading.Thread.Sleep(1);
 
             //40%の確立で分割しない(区画の数が1のときのみ必ず分割する)
-            if (_range.Count > 1 && RogueUtils.RandomJadge(0.4f))
+            // if (_range.Count > 1 && RogueUtils.RandomJadge(0.4f))
+            if (_range.Count > 2 && RogueUtils.RandomJadge(0.4f))
             {
                 continue;
             }
@@ -300,7 +301,7 @@ public class MapGenerator
             System.Threading.Thread.Sleep(1);
 
             //80%の確立で通路を作らない
-            if (!isFirst && RogueUtils.RandomJadge(0.8f))
+            if (!isFirst && RogueUtils.RandomJadge(0.5f))
             {
                 continue;
             }

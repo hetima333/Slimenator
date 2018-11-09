@@ -170,14 +170,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _width: 50
   _depth: 30
-  _maxRoomNum: 18
-  _minRangeWidth: 10
+  _maxRoomNum: 12
+  _minRangeWidth: 11
   _wallPrefab: {fileID: 1520048981918090, guid: c8780ffdd371ce349808f98bb29b3b17,
     type: 2}
   _bossRoomPassagePrefab: {fileID: 1417232500447472, guid: 33471a5fb44842e4fb9d488e9c82db6d,
     type: 2}
   _mapSize: 6
-  _player: {fileID: 0}
 --- !u!114 &114796563089005924
 MonoBehaviour:
   m_ObjectHideFlags: 1
