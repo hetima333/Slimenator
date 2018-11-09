@@ -46,6 +46,7 @@ public class OrbSlotCore : MonoBehaviour {
 		// Update毎にスロット内の情報を更新
 		this.UpdateAsObservable()
 			.Subscribe(_ => {
+				// MARK : 配列使わないいい方法あるかも
 				var orbs = player.GetOrbsInSlot()
 					.Select(x => x.ToOrb())
 					.ToArray();
