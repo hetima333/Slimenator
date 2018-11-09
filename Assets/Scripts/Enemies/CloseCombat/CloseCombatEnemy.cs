@@ -6,8 +6,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public class CloseCombatEnemy : Enemy
-{
+public class CloseCombatEnemy : Enemy {
 
     //TODO Enemy Performance
     //const float MAX_HP = 40.0f;
@@ -48,8 +47,8 @@ public class CloseCombatEnemy : Enemy
     // Update is called once per frame
     void Update () {
 
-        _status.UpdateStatMultiplyer(ref _properties);
-        TakeDamage(_status.GetValue(EnumHolder.EffectType.TAKEDAMAGE));
+        _status.UpdateStatMultiplyer (ref _properties);
+        TakeDamage (_status.GetValue (EnumHolder.EffectType.TAKEDAMAGE));
 
         switch (CurrentState) {
 
@@ -57,24 +56,28 @@ public class CloseCombatEnemy : Enemy
                 //待機
                 StartCoroutine (_move.Idle ());
                 _anim.CrossFade ("Idle", 0);
+                _animName = "Idle";
                 break;
 
             case State.FREE:
                 //自由移動
                 _move.FreeMove ();
                 _anim.CrossFade ("Move", 0.5f);
+                _animName = "Move";
                 break;
 
             case State.DISCOVERY:
                 //プレイヤー追従
                 _move.Dash2Player ();
                 _anim.CrossFade ("Dash", 0.5f);
+                _animName = "Dash";
                 break;
 
             case State.RETURN:
                 //初期位置に帰る
                 _move.Return2FirstPos ();
                 _anim.CrossFade ("Move", 0.5f);
+                _animName = "Move";
                 break;
 
             case State.ATTACK:
@@ -108,6 +111,8 @@ public class CloseCombatEnemy : Enemy
         int attackNum = Random.Range (1, 3);
 
         _anim.CrossFade ("Attack" + attackNum.ToString (), 0);
+
+        _animName = "Attack" + attackNum.ToString ();
 
         //TODO行動終了までの時間経過
         yield return new WaitForSeconds (3);

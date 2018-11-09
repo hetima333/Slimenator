@@ -34,29 +34,28 @@ public class TankEnemy : Enemy {
 
     private float[] _comboDelay = { 1.5f, 0.8f, 1.7f };
 
-    public override void Init(Stats _stat)
-    {
+    public override void Init (Stats _stat) {
         _properties = _stat;
 
         //ステータスのセット
-        SetStatus(Enemy.Type.TANK, MaxHitPoint, Speed, SEARCH_RANGE, ATTACK_RANGE, MOVE_RANGE, MONEY);
+        SetStatus (Enemy.Type.TANK, MaxHitPoint, Speed, SEARCH_RANGE, ATTACK_RANGE, MOVE_RANGE, MONEY);
         //移動コンポーネントの取得
-        _move = GetComponent<EnemyMove>();
+        _move = GetComponent<EnemyMove> ();
         //リジットボディの取得
-        RigidbodyProperties = GetComponent<Rigidbody>();
-        _searchObj = transform.Find("SearchRange").gameObject;
-        _searchObj.GetComponent<SearchPlayer>().Initialize();
+        RigidbodyProperties = GetComponent<Rigidbody> ();
+        _searchObj = transform.Find ("SearchRange").gameObject;
+        _searchObj.GetComponent<SearchPlayer> ().Initialize ();
         //自由移動ポジション設定
-        _freeMovePosition = _move.SetMovePos();
+        _freeMovePosition = _move.SetMovePos ();
         //武器プレハブの取得
-        SetWeapons();
+        SetWeapons ();
     }
 
     // Update is called once per frame
     void Update () {
 
-        _status.UpdateStatMultiplyer(ref _properties);
-        TakeDamage(_status.GetValue(EnumHolder.EffectType.TAKEDAMAGE));
+        _status.UpdateStatMultiplyer (ref _properties);
+        TakeDamage (_status.GetValue (EnumHolder.EffectType.TAKEDAMAGE));
 
         if (!_isSleeping) {
             switch (CurrentState) {
@@ -65,24 +64,28 @@ public class TankEnemy : Enemy {
                     //待機
                     StartCoroutine (_move.Idle ());
                     _anim.CrossFade ("Idle", 0);
+                    _animName = "Idle";
                     break;
 
                 case State.FREE:
                     //自由移動
                     _move.FreeMove ();
                     _anim.CrossFade ("Move", 0.5f);
+                    _animName = "Move";
                     break;
 
                 case State.DISCOVERY:
                     //プレイヤー追従
                     _move.Move2Player ();
                     _anim.CrossFade ("Move", 0.5f);
+                    _animName = "Move";
                     break;
 
                 case State.RETURN:
                     //初期位置に帰る
                     _move.Return2FirstPos ();
                     _anim.CrossFade ("Move", 0.5f);
+                    _animName = "Move";
                     break;
 
                 case State.ATTACK:
@@ -122,6 +125,8 @@ public class TankEnemy : Enemy {
         }
 
         _anim.CrossFade ("Attack" + (_comboCount + 1).ToString (), 0);
+
+        _animName = "Attack" + (_comboCount + 1).ToString ();
 
         //TODO行動終了までの時間経過
         yield return new WaitForSeconds (_comboDelay[_comboCount]);

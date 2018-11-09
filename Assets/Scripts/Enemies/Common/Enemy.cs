@@ -11,8 +11,7 @@ using UnityEngine;
 [RequireComponent (typeof (EnemyMove))]
 [RequireComponent (typeof (SimpleAnimation))]
 
-public abstract class Enemy : MonoBehaviour, IDamageable, ISuckable
-{
+public abstract class Enemy : MonoBehaviour, IDamageable, ISuckable {
 
     //種類
     public enum Type { MEEL, RANGE, TANK, BOSS }
@@ -32,10 +31,8 @@ public abstract class Enemy : MonoBehaviour, IDamageable, ISuckable
     public BadState CurrentBadState { get { return _badState; } set { _badState = value; } }
 
     //移動速度
-    public float Speed
-    {
-        get
-        {
+    public float Speed {
+        get {
             return _properties.SpeedProperties * _properties.SpeedMultiplyerProperties;
         }
     }
@@ -68,6 +65,8 @@ public abstract class Enemy : MonoBehaviour, IDamageable, ISuckable
     //シンプルアニメーション
     public SimpleAnimation _anim;
 
+    public string _animName;
+
     protected Status _status;
     protected Stats _properties;
 
@@ -79,7 +78,7 @@ public abstract class Enemy : MonoBehaviour, IDamageable, ISuckable
     //体力
     public float HitPoint { get { return _properties.HealthProperties; } }
 
-    public abstract void Init(Stats stat);
+    public abstract void Init (Stats stat);
 
     //ステータスのセット関数
     public void SetStatus (Enemy.Type type, float maxHp, float speed, float searchRange, float attackRange, float moveRange, float money) {
@@ -104,30 +103,32 @@ public abstract class Enemy : MonoBehaviour, IDamageable, ISuckable
         //animationSystem Set
         _anim = GetComponent<SimpleAnimation> ();
 
-        _status = gameObject.GetComponent<Status>();
-        _status.Init();
+        _status = gameObject.GetComponent<Status> ();
+        _status.Init ();
     }
 
     //ダメージを受ける
     public void TakeDamage (float damage) {
         if (_currentState == State.DEAD) return;
-    
-        if (damage > 0)
-        {
+
+        if (damage > 0) {
             _properties.HealthProperties -= damage;
 
-            if (_properties.HealthProperties <= 0)
-            {
+            if (_properties.HealthProperties <= 0) {
                 _currentState = State.DEAD;
-                StartCoroutine(Dying());
+                StartCoroutine (Dying ());
             }
         }
     }
 
-    protected virtual void LateUpdate()
-    {
-        //if (_animator.speed != _properties.SpeedMultiplyerProperties)
-        //    _animator.speed = _properties.SpeedMultiplyerProperties;
+    protected virtual void LateUpdate () {
+        if (_anim.GetState (_animName) != null)
+            if (_anim.GetState (_animName).speed != _properties.SpeedMultiplyerProperties) {
+                _anim.GetState (_animName).speed = _properties.SpeedMultiplyerProperties;
+            }
+
+        //_anim.animator.speed = _properties.SpeedMultiplyerProperties;
+
     }
 
     //死亡コルーチン
@@ -142,8 +143,7 @@ public abstract class Enemy : MonoBehaviour, IDamageable, ISuckable
 
     public virtual void Discover (GameObject obj) { }
 
-    public void Sacking()
-    {
+    public void Sacking () {
         return;
     }
 }

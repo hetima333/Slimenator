@@ -23,30 +23,29 @@ public class LongRangeEnemy : Enemy {
     private GameObject _bullet;
 
     // Use this for initialization
-    public override void Init(Stats _stat)
-    {
+    public override void Init (Stats _stat) {
         _properties = _stat;
 
         //ステータスのセット
-        SetStatus(Enemy.Type.RANGE, MaxHitPoint, Speed, SEARCH_RANGE, ATTACK_RANGE, MOVE_RANGE, MONEY);
+        SetStatus (Enemy.Type.RANGE, MaxHitPoint, Speed, SEARCH_RANGE, ATTACK_RANGE, MOVE_RANGE, MONEY);
         //移動コンポーネントの取得
-        _move = GetComponent<EnemyMove>();
+        _move = GetComponent<EnemyMove> ();
         //リジットボディの取得
-        RigidbodyProperties = GetComponent<Rigidbody>();
-        _searchObj = transform.Find("SearchRange").gameObject;
-        _searchObj.GetComponent<SearchPlayer>().Initialize();
+        RigidbodyProperties = GetComponent<Rigidbody> ();
+        _searchObj = transform.Find ("SearchRange").gameObject;
+        _searchObj.GetComponent<SearchPlayer> ().Initialize ();
         //自由移動ポジション設定
-        _freeMovePosition = _move.SetMovePos();
+        _freeMovePosition = _move.SetMovePos ();
         //弾オブジェクトのロード
-        _bullet = Resources.Load("EnemyItem/EnemyBullet", typeof(GameObject)) as GameObject;
+        _bullet = Resources.Load ("EnemyItem/EnemyBullet", typeof (GameObject)) as GameObject;
 
     }
 
     // Update is called once per frame
     void Update () {
 
-        _status.UpdateStatMultiplyer(ref _properties);
-        TakeDamage(_status.GetValue(EnumHolder.EffectType.TAKEDAMAGE));
+        _status.UpdateStatMultiplyer (ref _properties);
+        TakeDamage (_status.GetValue (EnumHolder.EffectType.TAKEDAMAGE));
 
         switch (CurrentState) {
 
@@ -54,23 +53,27 @@ public class LongRangeEnemy : Enemy {
                 //待機
                 StartCoroutine (_move.Idle ());
                 _anim.CrossFade ("Idle", 0.5f);
+                _animName = "Idle";
                 break;
 
             case State.FREE:
                 //自由移動
                 _move.FreeMove ();
                 _anim.CrossFade ("Move", 0.5f);
+                _animName = "Move";
                 break;
             case State.DISCOVERY:
                 //プレイヤー追従
                 _move.Move2Player ();
                 _anim.CrossFade ("Move", 0.5f);
+                _animName = "Move";
                 break;
 
             case State.RETURN:
                 //初期位置に帰る
                 _move.Return2FirstPos ();
                 _anim.CrossFade ("Move", 0.5f);
+                _animName = "Move";
                 break;
 
             case State.ATTACK:
@@ -102,6 +105,7 @@ public class LongRangeEnemy : Enemy {
 
         //遠距離攻撃
         _anim.CrossFade ("Attack", 0.5f);
+        _animName = "Attack";
 
         //アニメーションとの時間調整
         yield return new WaitForSeconds (0.2f);
