@@ -363,7 +363,9 @@ public class EntityPlayer : MonoBehaviour, IDamageable
                                 debug += "[Setting Tier] " + _CurrentSkillOutcome.GetSkillTier() + "\n";
                                 List<ElementType> temp = new List<ElementType>();
                                 temp.AddRange(_OrbSlot.ToArray());
-                                temp.RemoveAt(0);
+
+                                for(int i = 0; i <= temp_tier; ++i)
+                                    temp.RemoveAt(0);
 
                                 if (temp.Count > 0)
                                 {
