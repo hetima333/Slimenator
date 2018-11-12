@@ -12,7 +12,7 @@ public class StraightProjectile : Projectile
     {
         _Dir = dir;
         _speed = speed;
-        _timer = timer;
+        _timer = timer * multiplyer;
         _damage = damage;
         _multiplyer = multiplyer;
         _percentage = percentage;
