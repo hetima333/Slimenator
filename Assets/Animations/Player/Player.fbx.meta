@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b84613ed4d752144e9a2c459aab29bee
+guid: c0f5d8895ccc760478025d55b5f8be3f
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
@@ -173,22 +173,20 @@ ModelImporter:
     400164: VacuumHandle1
     400166: VacuumHandle1_end
     400168: VacuumHandle_end
-    2100000: Base
+    2100000: Player
     2300000: BezierCircle
     3300000: BezierCircle
     4300000: BezierCircle
     4300002: Cube.006
-    7400000: BezierCircle|BezierCircleAction
-    7400002: Armature|BezierCircleAction
-    7400004: Armature|Blow
-    7400006: Armature|Damaged
-    7400008: Armature|Death
-    7400010: Armature|Idle
-    7400012: Armature|Run
-    7400014: Armature|ShootUp
-    7400016: Armature|StrafeLeft
-    7400018: Armature|StrafeRight
-    7400020: Armature|Suck
+    7400000: Armature|Blow
+    7400002: Armature|Damaged
+    7400004: Armature|Death
+    7400006: Armature|Idle
+    7400008: Armature|Run
+    7400010: Armature|ShootUp
+    7400012: Armature|StrafeLeft
+    7400014: Armature|StrafeRight
+    7400016: Armature|Suck
     9500000: //RootNode
     13700000: Cube.006
   externalObjects: {}
@@ -218,62 +216,6 @@ ModelImporter:
     extraExposedTransformPaths: []
     extraUserProperties: []
     clipAnimations:
-    - serializedVersion: 16
-      name: BezierCircle|BezierCircleAction
-      takeName: BezierCircle|BezierCircleAction
-      firstFrame: 0
-      lastFrame: 1
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: Armature|BezierCircleAction
-      takeName: Armature|BezierCircleAction
-      firstFrame: 0
-      lastFrame: 1
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
     - serializedVersion: 16
       name: Armature|Blow
       takeName: Armature|Blow
@@ -342,34 +284,6 @@ ModelImporter:
       loop: 0
       hasAdditiveReferencePose: 0
       loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: Armature|Idle
-      takeName: Armature|Idle
-      firstFrame: 0
-      lastFrame: 153
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
