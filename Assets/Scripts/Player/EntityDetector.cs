@@ -29,19 +29,20 @@ public class EntityDetector : MonoBehaviour
 
             if (RB != null && RB.mass < _Player.GetPlayerStats().SuckingPowerProperties * _Player.GetPlayerStats().SuckingPowerMultiplyerProperties)
                 RB.AddForce(-GAcceleration(_Owner.transform.position, RB.mass * multiplyer, RB));
-
-            if (Vector3.Distance(other.gameObject.transform.position, _Owner.gameObject.transform.position) < 3 + multiplyer)
             {
-                if (element_temp != null)
+                if (Vector3.Distance(other.gameObject.transform.position, _Owner.gameObject.transform.position) < 3 + multiplyer)
                 {
-                    for (int i = 0; i < multiplyer; ++i)
-                        _Player.StoreElementInOrb(element_temp.GetElementType());
-                }
+                    if (element_temp != null)
+                    {
+                        for (int i = 0; i < multiplyer; ++i)
+                            _Player.StoreElementInOrb(element_temp.GetElementType());
+                    }
 
-                IDamageable damage_temp = other.gameObject.GetComponent<IDamageable>();
-                if (damage_temp != null)
-                {
-                    damage_temp.TakeDamage(1000);
+                    IDamageable damage_temp = other.gameObject.GetComponent<IDamageable>();
+                    if (damage_temp != null)
+                    {
+                        damage_temp.TakeDamage(1000);
+                    }
                 }
             }
         }
