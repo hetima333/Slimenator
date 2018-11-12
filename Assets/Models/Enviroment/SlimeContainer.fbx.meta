@@ -1,30 +1,11 @@
 fileFormatVersion: 2
-guid: 48fe58d15c8170145904f3595b74c3f5
+guid: ddb451c731f954945bf0a2d104288771
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
     100000: //RootNode
     400000: //RootNode
-    2100000: Material.005
-    2100002: Material.025
-    2100004: Material.024
-    2100006: Material.006
-    2100008: Material.020
-    2100010: Material.021
-    2100012: Material.008
-    2100014: Material.016
-    2100016: Material.017
-    2100018: Material.012
-    2100020: Material.013
-    2100022: Material.015
-    2100024: Material.014
-    2100026: Material.010
-    2100028: Material.011
-    2100030: Material.009
-    2100032: Material.019
-    2100034: Material.018
-    2100036: Material.023
-    2100038: Material.022
+    2100000: No Name
     2300000: //RootNode
     3300000: //RootNode
     4300000: Container
