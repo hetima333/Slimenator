@@ -18,6 +18,11 @@ public class EntityPlayer : MonoBehaviour, IDamageable
         _SuckingRadius;
 
     [SerializeField]
+    private uint
+        _Orb_Slots,
+        _Skill_Slots;
+
+    [SerializeField]
     private GameObject
         _PrefabInstance;
 
@@ -28,7 +33,8 @@ public class EntityPlayer : MonoBehaviour, IDamageable
         _Money;
 
     private bool
-        _RestrictMovement;
+        _RestrictMovement, 
+        _Cast_Trigger;
 
     private Status
         _Status;
@@ -99,6 +105,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable
     {
         _CurrentSkillOutcome = null;
         _CurrentSelection = 0;
+        _Cast_Trigger = false;
 
         _Player_Stats = EnumHolder.Instance.GetStats(gameObject.name);
 
@@ -244,10 +251,13 @@ public class EntityPlayer : MonoBehaviour, IDamageable
                 else
                     _CurrentSelection = 0;
 
-                if (InputManager.UseSkills_Input())
+                if (InputManager.UseSkills_Input() && !_Cast_Trigger)
                 {
                     UseSkill();
+                    _Cast_Trigger = true;
                 }
+                else
+                    _Cast_Trigger = false;
             }
         }
 
@@ -295,7 +305,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable
                     
                     _OrbSlot.Enqueue(type);
 
-                    if (_OrbSlot.Count > 3)
+                    if (_OrbSlot.Count > _Orb_Slots)
                         _OrbSlot.Dequeue();
 
                     bool HasUniqueCombination = true;
@@ -321,9 +331,18 @@ public class EntityPlayer : MonoBehaviour, IDamageable
                     {
                         foreach (Skill s in _combiSkill.GetList())
                         {
-                            if (s.GetCombinationElements()[0] == _OrbSlot.ToArray()[0]
-                                && s.GetCombinationElements()[1] == _OrbSlot.ToArray()[1]
-                                && s.GetCombinationElements()[2] == _OrbSlot.ToArray()[2])
+                            if (s.GetCombinationElements().Length > _OrbSlot.Count)
+                                continue;
+
+                            bool found_skill = true;
+
+                            for(int i = 0; i < _OrbSlot.Count; ++i)
+                            {
+                                if (s.GetCombinationElements()[i] == _OrbSlot.ToArray()[i])
+                                    found_skill = false;
+                            }
+
+                            if (found_skill)
                             {
                                 _CurrentSkillOutcome = ScriptableObject.Instantiate(s);
                                 _CurrentSkillOutcome.name = s.name;
@@ -341,8 +360,11 @@ public class EntityPlayer : MonoBehaviour, IDamageable
                     {
                         foreach (Skill s in _baseSkill.GetList())
                         {
+                            if (_OrbSlot.Count <= 0)
+                                break;
+
                             if (s.GetBaseElement().Equals(_OrbSlot.ToArray()[0]))
-                            {
+                            {                           
                                 int temp_tier = 0;
 
                                 _CurrentSkillOutcome = ScriptableObject.Instantiate(s);
@@ -364,8 +386,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable
                                 List<ElementType> temp = new List<ElementType>();
                                 temp.AddRange(_OrbSlot.ToArray());
 
-                                for(int i = 0; i <= temp_tier; ++i)
-                                    temp.RemoveAt(0);
+                                temp.RemoveRange(0, temp_tier + 1);
 
                                 if (temp.Count > 0)
                                 {
@@ -394,7 +415,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable
         {
             _Skills.Add(_CurrentSkillOutcome);
 
-            if (_Skills.Count > 3)
+            if (_Skills.Count > _Skill_Slots)
                 _Skills.RemoveAt(0);
 
             ResetOrbSlots();

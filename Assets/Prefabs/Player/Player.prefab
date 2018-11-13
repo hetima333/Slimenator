@@ -434,7 +434,7 @@ GameObject:
   - component: {fileID: 114275097617145868}
   - component: {fileID: 114969676855271460}
   - component: {fileID: 114676391800284422}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1864,7 +1864,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1294561646650140}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -2906,6 +2906,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _SuckingParticle: {fileID: 1929610641034208}
   _SuckingRadius: {fileID: 1944767245314202}
+  _Orb_Slots: 3
+  _Skill_Slots: 3
   _PrefabInstance: {fileID: 1294561646650140}
   _skillTier: {fileID: 11400000, guid: dcd849cc3d1479044834399c90986366, type: 2}
   _baseSkill: {fileID: 11400000, guid: 4f203488e8646e248a88079e91126339, type: 2}
