@@ -28,7 +28,7 @@ public class JumpPress : BossSkill {
 	}
 
 	private void Jump () {
-
+		_rid.velocity = Vector3.zero;
 		// 標的の座標
 		Vector3 targetPosition = _target.transform.position;
 		//_marker.SetActive (true);

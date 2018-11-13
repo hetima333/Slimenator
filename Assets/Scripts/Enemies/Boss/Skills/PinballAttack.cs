@@ -35,11 +35,12 @@ public class PinballAttack : BossSkill {
 	public void Attack () {
 		//フィジックスマテリアルの有効
 
-		//お互いを見る。
-		gameObject.transform.LookAt (_avatar.transform);
+		Vector3 lookPos = _avatar.transform.position;
+		lookPos.y = gameObject.transform.position.y;
+		transform.LookAt (lookPos);
 
 		//相手に向かって体当たりを開始。
-		_rid.AddForce (transform.forward * 100);
+		_rid.AddForce (transform.forward * 50000);
 
 		Debug.Log ("体当たり");
 	}
