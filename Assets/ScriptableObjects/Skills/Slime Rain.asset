@@ -16,7 +16,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 36f0bab903e87bc43a975a9ab8b5afd1, type: 2}
   - {fileID: 11400000, guid: 753eac8bb53ca58458e5f20416ea0092, type: 2}
   _Base: {fileID: 0}
-  _Targetable: {fileID: 0}
+  _Targetable: {fileID: 11400000, guid: 04a4afc9e526b5a4c973eea57cfc65bb, type: 2}
   _StatusEffect: []
   _StatusApplyPercentage: 0
   _Damage: 0

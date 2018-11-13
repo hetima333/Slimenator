@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca731fcea334a8446926bd4b3f24015d, type: 3}
   m_Name: Slime Rain Properties
   m_EditorClassIdentifier: 
-  _StartingParticle: {fileID: 1842664229368296, guid: e77da83b1249e6e4fb1132c45464e885,
+  _StartingParticle: {fileID: 1060457761622802, guid: 13437dc8cdd9c8a4a97284a87ae6fa57,
     type: 2}
   _EndingParticle: {fileID: 0}
   _Radius: 20
