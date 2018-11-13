@@ -19,6 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4179700809322036}
+  - component: {fileID: 114110761219416432}
   m_Layer: 0
   m_Name: SlimeRain
   m_TagString: Untagged
@@ -132,6 +133,17 @@ Transform:
   m_Father: {fileID: 4179700809322036}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114110761219416432
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1060457761622802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf4c19401c6b33e40a1ef7cc49d49490, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!198 &198082289376621580
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -192,7 +204,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 0
-  randomSeed: 776741901
+  randomSeed: 1519719006
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -3558,7 +3570,7 @@ ParticleSystem:
       m_RotationOrder: 4
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
-  scalingMode: 1
+  scalingMode: 0
   randomSeed: 775153184
   InitialModule:
     serializedVersion: 3
@@ -6964,7 +6976,7 @@ ParticleSystem:
       m_RotationOrder: 4
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
-  scalingMode: 1
+  scalingMode: 0
   randomSeed: 1836740180
   InitialModule:
     serializedVersion: 3
