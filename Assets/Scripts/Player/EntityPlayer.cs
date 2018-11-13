@@ -251,10 +251,13 @@ public class EntityPlayer : MonoBehaviour, IDamageable
                 else
                     _CurrentSelection = 0;
 
-                if (InputManager.UseSkills_Input() && !_Cast_Trigger)
+                if (InputManager.UseSkills_Input())
                 {
-                    UseSkill();
-                    _Cast_Trigger = true;
+                    if (!_Cast_Trigger)
+                    {
+                        UseSkill();
+                        _Cast_Trigger = true;
+                    }
                 }
                 else
                     _Cast_Trigger = false;
@@ -310,7 +313,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable
 
                     bool HasUniqueCombination = true;
 
-                    if (_OrbSlot.Count == 3)
+                    if (_OrbSlot.Count >= _Orb_Slots)
                     {
                         for (int i = 0; i < _OrbSlot.Count; ++i)
                         {
@@ -338,8 +341,11 @@ public class EntityPlayer : MonoBehaviour, IDamageable
 
                             for(int i = 0; i < _OrbSlot.Count; ++i)
                             {
-                                if (s.GetCombinationElements()[i] == _OrbSlot.ToArray()[i])
+                                if (s.GetCombinationElements()[i] != _OrbSlot.ToArray()[i])
+                                {
                                     found_skill = false;
+                                    break;
+                                }
                             }
 
                             if (found_skill)
