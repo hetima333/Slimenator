@@ -18,6 +18,11 @@ public class EntityPlayer : MonoBehaviour, IDamageable
         _SuckingRadius;
 
     [SerializeField]
+    private uint
+        _Orb_Slots,
+        _Skill_Slots;
+
+    [SerializeField]
     private GameObject
         _PrefabInstance;
 
@@ -28,7 +33,8 @@ public class EntityPlayer : MonoBehaviour, IDamageable
         _Money;
 
     private bool
-        _RestrictMovement;
+        _RestrictMovement, 
+        _Cast_Trigger;
 
     private Status
         _Status;
@@ -99,6 +105,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable
     {
         _CurrentSkillOutcome = null;
         _CurrentSelection = 0;
+        _Cast_Trigger = false;
 
         _Player_Stats = EnumHolder.Instance.GetStats(gameObject.name);
 
@@ -246,8 +253,14 @@ public class EntityPlayer : MonoBehaviour, IDamageable
 
                 if (InputManager.UseSkills_Input())
                 {
-                    UseSkill();
+                    if (!_Cast_Trigger)
+                    {
+                        UseSkill();
+                        _Cast_Trigger = true;
+                    }
                 }
+                else
+                    _Cast_Trigger = false;
             }
         }
 
@@ -280,11 +293,13 @@ public class EntityPlayer : MonoBehaviour, IDamageable
 
             case "Heal":
                 _Player_Stats.HealthProperties += type.GetRandomAmount();
-                _Player_Stats.HealthProperties = Mathf.Clamp(_Player_Stats.HealthProperties, 0, _Player_Stats.MaxHealthProperties * _Player_Stats.HealthMultiplyerProperties);
+                _Player_Stats.HealthProperties = Mathf.Clamp(_Player_Stats.HealthProperties, 0, MaxHitPoint);
                 break;
 
             default:
                 {
+                    string debug = "";
+
                     if (_CurrentSkillOutcome != null)
                     {
                         Destroy(_CurrentSkillOutcome);
@@ -293,12 +308,12 @@ public class EntityPlayer : MonoBehaviour, IDamageable
                     
                     _OrbSlot.Enqueue(type);
 
-                    if (_OrbSlot.Count > 3)
+                    if (_OrbSlot.Count > _Orb_Slots)
                         _OrbSlot.Dequeue();
 
                     bool HasUniqueCombination = true;
 
-                    if (_OrbSlot.Count == 3)
+                    if (_OrbSlot.Count >= _Orb_Slots)
                     {
                         for (int i = 0; i < _OrbSlot.Count; ++i)
                         {
@@ -319,12 +334,28 @@ public class EntityPlayer : MonoBehaviour, IDamageable
                     {
                         foreach (Skill s in _combiSkill.GetList())
                         {
-                            if (s.GetCombinationElements()[0] == _OrbSlot.ToArray()[0]
-                                && s.GetCombinationElements()[1] == _OrbSlot.ToArray()[1]
-                                && s.GetCombinationElements()[2] == _OrbSlot.ToArray()[2])
+                            if (s.GetCombinationElements().Length > _OrbSlot.Count)
+                                continue;
+
+                            bool found_skill = true;
+
+                            for(int i = 0; i < _OrbSlot.Count; ++i)
+                            {
+                                if (s.GetCombinationElements()[i] != _OrbSlot.ToArray()[i])
+                                {
+                                    found_skill = false;
+                                    break;
+                                }
+                            }
+
+                            if (found_skill)
                             {
                                 _CurrentSkillOutcome = ScriptableObject.Instantiate(s);
                                 _CurrentSkillOutcome.name = s.name;
+                                debug += "------------------------------------------------\n";
+                                debug += "[Created Skill] " + _CurrentSkillOutcome.name + "\n";
+                                debug += "------------------------------------------------";
+
                                 break;
                             }
                             else
@@ -335,14 +366,20 @@ public class EntityPlayer : MonoBehaviour, IDamageable
                     {
                         foreach (Skill s in _baseSkill.GetList())
                         {
+                            if (_OrbSlot.Count <= 0)
+                                break;
+
                             if (s.GetBaseElement().Equals(_OrbSlot.ToArray()[0]))
-                            {
+                            {                           
                                 int temp_tier = 0;
 
                                 _CurrentSkillOutcome = ScriptableObject.Instantiate(s);
                                 _CurrentSkillOutcome.name = s.name;
 
-                                for(int i = 1; i < _OrbSlot.Count; ++i)
+                                debug += "------------------------------------------------\n";
+                                debug += "[Created Skill] " + _CurrentSkillOutcome.name + "\n";
+
+                                for (int i = 1; i < _OrbSlot.Count; ++i)
                                 {
                                     if (s.GetBaseElement().Equals(_OrbSlot.ToArray()[i]))
                                         ++temp_tier;
@@ -351,19 +388,28 @@ public class EntityPlayer : MonoBehaviour, IDamageable
                                 }
 
                                 _CurrentSkillOutcome.SetSkillTier((SkillTier)_skillTier.GetList()[temp_tier]);
+                                debug += "[Setting Tier] " + _CurrentSkillOutcome.GetSkillTier() + "\n";
                                 List<ElementType> temp = new List<ElementType>();
                                 temp.AddRange(_OrbSlot.ToArray());
-                                temp.RemoveAt(0);
+
+                                temp.RemoveRange(0, temp_tier + 1);
 
                                 if (temp.Count > 0)
+                                {
                                     _CurrentSkillOutcome.SetElementType(temp);
 
+                                    foreach (StatusEffect et in _CurrentSkillOutcome.GetStatusEffects())
+                                        debug += "[Skill (" + _CurrentSkillOutcome.name + ") Status Added] " + et.name + "\n";
+                                }
+                                debug += "------------------------------------------------";
                                 break;
                             }
                             else
                                 _CurrentSkillOutcome = null;
                         }
                     }
+
+                    Debug.Log(debug);
                 }
                 break;
         }      
@@ -375,7 +421,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable
         {
             _Skills.Add(_CurrentSkillOutcome);
 
-            if (_Skills.Count > 3)
+            if (_Skills.Count > _Skill_Slots)
                 _Skills.RemoveAt(0);
 
             ResetOrbSlots();

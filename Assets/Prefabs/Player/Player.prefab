@@ -2885,8 +2885,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69ca0261d0afe7d4a81392b121fec193, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _Owner: {fileID: 0}
-  _Player: {fileID: 0}
+  _Owner: {fileID: 1442902808025174}
+  _Player: {fileID: 114645841446893710}
 --- !u!114 &114512348383707180
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2997,6 +2997,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _SuckingParticle: {fileID: 1190451602750986}
   _SuckingRadius: {fileID: 1796937364682198}
+  _Orb_Slots: 3
+  _Skill_Slots: 3
   _PrefabInstance: {fileID: 1314456541332650}
   _skillTier: {fileID: 11400000, guid: dcd849cc3d1479044834399c90986366, type: 2}
   _baseSkill: {fileID: 11400000, guid: 4f203488e8646e248a88079e91126339, type: 2}
@@ -3218,7 +3220,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1788100194
+  randomSeed: -42888342
   InitialModule:
     serializedVersion: 3
     enabled: 1

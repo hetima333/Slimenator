@@ -60,7 +60,12 @@ public class HPBarCore : MonoBehaviour {
 			.DistinctUntilChanged()
 			.Subscribe(x => {
 				// HPバーにサイズを適用する
-				_redHPBarTrans.sizeDelta = new Vector2(x * _maxWidth / _slider.maxValue, _redHPBarTrans.sizeDelta.y);
+				var size = new Vector2(x * _maxWidth / _slider.maxValue, _redHPBarTrans.sizeDelta.y);
+				// 最大サイズを越えないようにする
+				if (size.x > _maxWidth) {
+					size.x = _maxWidth;
+				}
+				_redHPBarTrans.sizeDelta = size;
 			});
 
 		// 赤HPがなくなったら非表示にする

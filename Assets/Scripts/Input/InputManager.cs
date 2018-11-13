@@ -104,15 +104,15 @@ public static class InputManager {
 
     public static bool UseSkills_Input()
     {
-        return Input.GetKey(KeyCode.Mouse2) || Right_Trigger();
+        return Input.GetKeyDown(KeyCode.Mouse2) || Right_Trigger();
     }
 
     public static float SkillScroll_Input()
     {
         if (Left_Bumper())
-            return -1;
-        else if (Right_Bumper())
             return 1;
+        else if (Right_Bumper())
+            return -1;
 
         return Input.GetAxis("Mouse ScrollWheel");
     }
