@@ -20,11 +20,19 @@ public class AreaEffect : MonoBehaviour
         _SpawnedEnding = false;
 
         _Properties = Properties;
-        ParticleInterface ParticlePI = _Properties.GetStartingParticle().GetComponent<ParticleInterface>();
-        ParticlePI.Init();
-        _StartingTime = ParticlePI.GetLongestParticleEffect();
-        GameObject temp = Instantiate(_Properties.GetStartingParticle(), gameObject.transform);
-        Destroy(temp, _StartingTime);
+        ParticleInterface ParticlePI = null;
+
+        if (_Properties.GetStartingParticle() != null)
+        {
+            ParticlePI = _Properties.GetStartingParticle().GetComponent<ParticleInterface>();
+            ParticlePI.Init();
+            _StartingTime = ParticlePI.GetLongestParticleEffect();
+
+            GameObject temp = Instantiate(_Properties.GetStartingParticle(), gameObject.transform);
+            Destroy(temp, _StartingTime);
+        }
+        else
+            _StartingTime = 0;
 
         if (_Properties.GetEndingParticle() != null)
         {
@@ -33,6 +41,8 @@ public class AreaEffect : MonoBehaviour
             ParticlePI.Init();
             _EndingTime = ParticlePI.GetLongestParticleEffect();
         }
+        else
+            _EndingTime = 0;
     }
 
     // Update is called once per frame
@@ -175,7 +185,36 @@ public class AreaEffect : MonoBehaviour
                     else
                         _Delay -= Time.deltaTime;
                 }
-        break;
+                break;
+
+            case EnumHolder.AreaEffectType.GROWING:
+                {
+                    if (_Delay <= 0)
+                    {
+                        foreach (GameObject obj in _Properties.GetTargetable().GetList())
+                        {
+                            if (ObjectManager.Instance.GetActiveObjects(obj) != null)
+                            {
+                                foreach (GameObject entity in ObjectManager.Instance.GetActiveObjects(obj))
+                                {
+                                    IGrowable grow = entity.GetComponent<IGrowable>();
+                                    if (grow != null)
+                                    {
+                                        if (Vector3.Distance(gameObject.transform.position, entity.transform.position) < _Properties.GetRadius())
+                                        {
+                                            grow.Grow(_Properties.GetTier());
+                                        }
+                                    }
+                                }   
+                            }
+                        }
+
+                        _Delay = _Properties.GetDelay();
+                    }
+                    else
+                        _Delay -= Time.deltaTime;
+                }
+                break;
 
             default:
                 break;

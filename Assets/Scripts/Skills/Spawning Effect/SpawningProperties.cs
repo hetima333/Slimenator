@@ -33,7 +33,7 @@ public class SpawningProperties : ScriptableObject
     protected GameObjectList
         _Objects;
 
-    [Tooltip("[FOR SPAWNING] Tier determines the size and power of spawned Object")]
+    [Tooltip("[FOR SPAWNING/GROWING] Tier determines the size and power of spawned Object")]
     [SerializeField]
     public SkillTier
      _startingTier;

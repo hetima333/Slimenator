@@ -36,6 +36,7 @@ public class EnumHolder : SingletonMonoBehaviour<EnumHolder>
         SUCKING,
         PUSHING,
         SPAWNING,
+        GROWING,
         DAMAGE,
     }
 
