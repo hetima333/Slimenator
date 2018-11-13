@@ -35,9 +35,4 @@ public class BossBase : MonoBehaviour {
 
 	public List<BossSkill> _canUseSkillList = new List<BossSkill> ();
 
-	void Start () { }
-
-	// Update is called once per frame
-	void Update () { }
-
 }

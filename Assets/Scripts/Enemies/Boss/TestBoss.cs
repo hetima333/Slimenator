@@ -126,18 +126,20 @@ public class TestBoss : BossBase, IDamageable {
 
         Vector3 OffSet = new Vector3 (3, 0, 0);
 
-        GameObject BossA = Instantiate (Boss1);
+        GameObject BossA = ObjectManager.Instance.InstantiateWithObjectPooling (Boss1);
         BossA.transform.position = Pos + OffSet;
 
-        GameObject BossB = Instantiate (Boss2);
+        GameObject BossB = ObjectManager.Instance.InstantiateWithObjectPooling (Boss2);
         BossA.transform.position = Pos - OffSet;
 
         BossA.GetComponent<BossTwins> ()._target = _target;
         BossA.GetComponent<BossTwins> ().SetAvatar (BossB);
+
         BossB.GetComponent<BossTwins> ()._target = _target;
         BossB.GetComponent<BossTwins> ().SetAvatar (BossA);
 
         Destroy (gameObject);
+        //ObjectManager.Instance.ReleaseObject (gameObject);
     }
 
 }

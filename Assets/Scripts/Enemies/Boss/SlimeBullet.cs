@@ -10,6 +10,9 @@ public class SlimeBullet : MonoBehaviour {
 	private Rigidbody rb;
 	private GameObject characterObject;
 
+	[SerializeField]
+	private GameObject _prefab;
+
 	private float _damage = 10;
 
 	void Start () {
@@ -41,7 +44,7 @@ public class SlimeBullet : MonoBehaviour {
 			//TODO take damage   
 			hasIDamageableObject.TakeDamage (_damage);
 		} else {
-			//スライム生成
+
 		}
 
 		//Release bullet

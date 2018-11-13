@@ -9,6 +9,10 @@ public class BossTwins : BossBase, IDamageable {
 	const float MONEY = 2000.0f;
 	private GameObject _avatar;
 
+	public bool _isAlone = false;
+
+	private float graceTime = 5f;
+
 	// Use this for initialization
 	void Start () {
 		SetStatus ();
@@ -24,6 +28,15 @@ public class BossTwins : BossBase, IDamageable {
 			if (_actInterval <= 0) {
 				_actInterval = ACT_INTERVAL;
 				UseSkill ();
+			}
+		}
+
+		//１人になった場合
+		if (_isAlone) {
+			graceTime -= Time.deltaTime;
+			if (graceTime <= 0) {
+				PhaseUp ();
+				_isAlone = false;
 			}
 		}
 
@@ -103,6 +116,11 @@ public class BossTwins : BossBase, IDamageable {
 
 	public void SetAvatar (GameObject avatar) {
 		_avatar = avatar;
+	}
+
+	public void DeadCall () {
+		if (_avatar != null)
+			_avatar.GetComponent<BossTwins> ()._isAlone = true;
 	}
 
 }

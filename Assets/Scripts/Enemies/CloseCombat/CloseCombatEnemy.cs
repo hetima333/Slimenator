@@ -21,9 +21,6 @@ public class CloseCombatEnemy : Enemy {
     EnemyMove _move;
 
     [SerializeField]
-    float _outputDamage = 25;
-
-    [SerializeField]
     private List<GameObject> _weaponList;
 
     // Use this for initialization

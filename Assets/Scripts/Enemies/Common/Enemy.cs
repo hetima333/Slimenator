@@ -126,9 +126,6 @@ public abstract class Enemy : MonoBehaviour, IDamageable, ISuckable {
             if (_anim.GetState (_animName).speed != _properties.SpeedMultiplyerProperties) {
                 _anim.GetState (_animName).speed = _properties.SpeedMultiplyerProperties;
             }
-
-        //_anim.animator.speed = _properties.SpeedMultiplyerProperties;
-
     }
 
     //死亡コルーチン
