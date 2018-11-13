@@ -51,6 +51,7 @@ public class LongRangeEnemy : Enemy {
 
             case State.IDLE:
                 //待機
+                IsAction = false;
                 StartCoroutine (_move.Idle ());
                 _anim.CrossFade ("Idle", 0.5f);
                 _animName = "Idle";
@@ -58,12 +59,14 @@ public class LongRangeEnemy : Enemy {
 
             case State.FREE:
                 //自由移動
+                IsAction = false;
                 _move.FreeMove ();
                 _anim.CrossFade ("Move", 0.5f);
                 _animName = "Move";
                 break;
             case State.DISCOVERY:
                 //プレイヤー追従
+                IsAction = false;
                 _move.Move2Player ();
                 _anim.CrossFade ("Move", 0.5f);
                 _animName = "Move";
@@ -71,6 +74,7 @@ public class LongRangeEnemy : Enemy {
 
             case State.RETURN:
                 //初期位置に帰る
+                IsAction = false;
                 _move.Return2FirstPos ();
                 _anim.CrossFade ("Move", 0.5f);
                 _animName = "Move";
@@ -78,7 +82,7 @@ public class LongRangeEnemy : Enemy {
 
             case State.ATTACK:
                 //攻撃開始
-                StartCoroutine (Attack ());
+                Attack ();
                 break;
             default:
                 break;
@@ -87,9 +91,9 @@ public class LongRangeEnemy : Enemy {
     }
 
     //攻撃コルーチン
-    private IEnumerator Attack () {
+    private void Attack () {
         //行動中はreturn
-        if (IsAction || CurrentState == State.DEAD) yield break;
+        if (IsAction || CurrentState == State.DEAD) return;
         //行動開始
         IsAction = true;
 
@@ -106,10 +110,18 @@ public class LongRangeEnemy : Enemy {
         //遠距離攻撃
         _anim.CrossFade ("Attack", 0.5f);
         _animName = "Attack";
+    }
 
-        //アニメーションとの時間調整
-        yield return new WaitForSeconds (0.2f);
+    public override void Discover (GameObject obj) {
+        if (CurrentState != Enemy.State.DEAD) {
+            //Set Target
+            _target = obj.gameObject;
+            //Change State
+            CurrentState = Enemy.State.DISCOVERY;
+        }
+    }
 
+    void StartHit () {
         if (_bullet) {
             //make bullet 
             GameObject bullet = ObjectManager.Instance.InstantiateWithObjectPooling (_bullet) as GameObject;
@@ -120,25 +132,15 @@ public class LongRangeEnemy : Enemy {
             //set bullet speed(TODO)
             bullet.GetComponent<Rigidbody> ().velocity = gameObject.transform.forward * 10;
         }
+    }
 
-        //TODO行動終了までの時間経過
-        yield return new WaitForSeconds (1);
+    void EndHit () {
 
-        if (CurrentState == State.DEAD) yield break;
+        if (CurrentState == State.DEAD) return;
 
         _anim.CrossFade ("Idle", 0);
         //行動終了
         IsAction = false;
-
-    }
-
-    public override void Discover (GameObject obj) {
-        if (CurrentState != Enemy.State.DEAD) {
-            //Set Target
-            _target = obj.gameObject;
-            //Change State
-            CurrentState = Enemy.State.DISCOVERY;
-        }
     }
 
 }

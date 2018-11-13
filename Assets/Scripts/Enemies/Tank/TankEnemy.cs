@@ -90,7 +90,7 @@ public class TankEnemy : Enemy {
 
                 case State.ATTACK:
                     //攻撃開始
-                    StartCoroutine (Attack ());
+                    Attack ();
                     break;
 
                 default:
@@ -102,14 +102,14 @@ public class TankEnemy : Enemy {
     }
 
     //攻撃コルーチン
-    private IEnumerator Attack () {
+    private void Attack () {
         //行動中はreturn
-        if (IsAction || CurrentState == State.DEAD) yield break;
+        if (IsAction || CurrentState == State.DEAD) return;
         //攻撃範囲から出れば攻撃をやめる
         if ((gameObject.transform.position - _target.transform.position).sqrMagnitude > Mathf.Pow (_attackRange, 2) + ERROR_RANGE) {
             CurrentState = State.DISCOVERY;
             _comboCount = 0;
-            yield break;
+            return;
         }
         //行動開始
         IsAction = true;
@@ -128,19 +128,11 @@ public class TankEnemy : Enemy {
 
         _animName = "Attack" + (_comboCount + 1).ToString ();
 
-        //TODO行動終了までの時間経過
-        yield return new WaitForSeconds (_comboDelay[_comboCount]);
-
-        if (CurrentState == State.DEAD) yield break;
-
         //コンボのカウント増加
         _comboCount++;
         if (_comboCount > 2) {
             _comboCount = 0;
         }
-
-        //行動終了
-        IsAction = false;
     }
 
     private void SetWeapons () {
@@ -203,6 +195,9 @@ public class TankEnemy : Enemy {
     void EndHit () {
         //武器の判定を消す
         _weaponList.ForEach (weapon => weapon.GetComponent<EnemyWeapon> ().ActiveCollision (false));
+
+        //行動終了
+        IsAction = false;
     }
 
 }

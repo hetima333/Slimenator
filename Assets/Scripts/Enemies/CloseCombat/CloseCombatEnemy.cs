@@ -80,7 +80,7 @@ public class CloseCombatEnemy : Enemy {
 
             case State.ATTACK:
                 //攻撃開始
-                StartCoroutine (Attack ());
+                Attack ();
                 break;
 
             default:
@@ -90,9 +90,9 @@ public class CloseCombatEnemy : Enemy {
     }
 
     //攻撃コルーチン
-    private IEnumerator Attack () {
+    private void Attack () {
         //行動中はreturn
-        if (IsAction) yield break;
+        if (IsAction || CurrentState == State.DEAD) return;
         //行動開始
         IsAction = true;
 
@@ -106,19 +106,14 @@ public class CloseCombatEnemy : Enemy {
             gameObject.transform.LookAt (targetPos);
         }
 
+        _anim.CrossFade ("Idle", 0);
+
         int attackNum = Random.Range (1, 3);
 
         _anim.CrossFade ("Attack" + attackNum.ToString (), 0);
 
         _animName = "Attack" + attackNum.ToString ();
 
-        //TODO行動終了までの時間経過
-        yield return new WaitForSeconds (3);
-
-        _anim.CrossFade ("Idle", 0);
-
-        //行動終了
-        IsAction = false;
     }
 
     public override void Discover (GameObject obj) {
@@ -163,5 +158,8 @@ public class CloseCombatEnemy : Enemy {
     void EndHit () {
         //武器の判定を消す
         _weaponList.ForEach (weapon => weapon.GetComponent<EnemyWeapon> ().ActiveCollision (false));
+
+        //行動終了
+        IsAction = false;
     }
 }
