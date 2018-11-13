@@ -392,7 +392,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable
                                 {
                                     _CurrentSkillOutcome.SetElementType(temp);
 
-                                    foreach (ElementType et in temp)
+                                    foreach (StatusEffect et in _CurrentSkillOutcome.GetStatusEffects())
                                         debug += "[Skill (" + _CurrentSkillOutcome.name + ") Status Added] " + et.name + "\n";
                                 }
                                 debug += "------------------------------------------------";

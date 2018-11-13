@@ -17,8 +17,7 @@ MonoBehaviour:
   - {fileID: 0}
   _Base: {fileID: 11400000, guid: 3598f9cad2b4e094e8abf6dc11ad1944, type: 2}
   _Targetable: {fileID: 11400000, guid: 921fd2909285c1b40ac6aee462dd0d4a, type: 2}
-  _StatusEffect:
-  - {fileID: 11400000, guid: a983e4dbbcbe3714fb3bab69798f84e7, type: 2}
+  _StatusEffect: []
   _StatusApplyPercentage: 30
   _Damage: 1
   _RestrictUserMovement: 0
