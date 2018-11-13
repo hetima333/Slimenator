@@ -28,7 +28,7 @@ public class EntityPlayerMovement : MonoBehaviour
     private void Start()
     {
         _MouseRayCastHit = new RaycastHit();
-        _IsUsingMouse true;
+        _IsUsingMouse = true;
     }
 
     // Update is called once per frame
