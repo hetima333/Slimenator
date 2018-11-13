@@ -8,8 +8,8 @@ using UnityEngine;
 
 public class LongRangeEnemy : Enemy {
     //TODO Enemy Performance
-    const float MAX_HP = 100.0f;
-    const float MOVE_SPEED = 2.5f;
+    //const float MAX_HP = 100.0f;
+    //const float MOVE_SPEED = 2.5f;
     const float SEARCH_RANGE = 14.0f;
     const float ATTACK_RANGE = 10.0f;
     const float MOVE_RANGE = 10.0f;
@@ -23,24 +23,30 @@ public class LongRangeEnemy : Enemy {
     private GameObject _bullet;
 
     // Use this for initialization
-    void Start () {
+    public override void Init(Stats _stat)
+    {
+        _properties = _stat;
+
         //ステータスのセット
-        SetStatus (Enemy.Type.RANGE, MAX_HP, MOVE_SPEED, SEARCH_RANGE, ATTACK_RANGE, MOVE_RANGE, MONEY);
+        SetStatus(Enemy.Type.RANGE, MaxHitPoint, Speed, SEARCH_RANGE, ATTACK_RANGE, MOVE_RANGE, MONEY);
         //移動コンポーネントの取得
-        _move = GetComponent<EnemyMove> ();
+        _move = GetComponent<EnemyMove>();
         //リジットボディの取得
-        RigidbodyProperties = GetComponent<Rigidbody> ();
-        _searchObj = transform.Find ("SearchRange").gameObject;
-        _searchObj.GetComponent<SearchPlayer> ().Initialize ();
+        RigidbodyProperties = GetComponent<Rigidbody>();
+        _searchObj = transform.Find("SearchRange").gameObject;
+        _searchObj.GetComponent<SearchPlayer>().Initialize();
         //自由移動ポジション設定
-        _freeMovePosition = _move.SetMovePos ();
+        _freeMovePosition = _move.SetMovePos();
         //弾オブジェクトのロード
-        _bullet = Resources.Load ("EnemyItem/EnemyBullet", typeof (GameObject)) as GameObject;
+        _bullet = Resources.Load("EnemyItem/EnemyBullet", typeof(GameObject)) as GameObject;
 
     }
 
     // Update is called once per frame
     void Update () {
+
+        _status.UpdateStatMultiplyer(ref _properties);
+        TakeDamage(_status.GetValue(EnumHolder.EffectType.TAKEDAMAGE));
 
         switch (CurrentState) {
 

@@ -22,9 +22,15 @@ public class ProjectileProperties : ScriptableObject
     private SpawningProperties
         _AreaEffectProperties;
 
+    [Tooltip("Object to be spawned on Impact")]
     [SerializeField]
     private GameObjectList
         _SpawningObjects;
+
+    [Tooltip("Tier determines the size and power of spawned Object")]
+    [SerializeField]
+    public SkillTier
+     _startingTier;
 
     public GameObject GetMovingParticle()
     {
@@ -49,6 +55,11 @@ public class ProjectileProperties : ScriptableObject
     public SpawningProperties GetProperties()
     {
         return _AreaEffectProperties;
+    }
+
+    public SkillTier GetTier()
+    {
+        return _startingTier;
     }
 
     public GameObjectList GetObjectsToSpawn()

@@ -21,6 +21,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a983e4dbbcbe3714fb3bab69798f84e7, type: 2}
   _StatusApplyPercentage: 30
   _Damage: 1
+  _RestrictUserMovement: 0
   _Description: Breathes out a cone of frost
   _ChannelingParticle: {fileID: 0}
   _CastingParticle: {fileID: 1842664229368296, guid: e77da83b1249e6e4fb1132c45464e885,

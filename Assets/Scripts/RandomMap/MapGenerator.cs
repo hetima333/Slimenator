@@ -12,6 +12,8 @@ public class MapGenerator
         PLAYER,  //プレイヤー
         SLIME,   //スライム
         ENEMY,   //敵
+        BOSS,    //ボス
+        BOOS_ROOM_PASSAGE, //ボス部屋への通路
         KIND_NUM //種類の数
     };
 
@@ -32,6 +34,8 @@ public class MapGenerator
     private List<Range> _passage = new List<Range>();
     //部屋から繋がっている通路
     private List<Range> _roomPassage = new List<Range>();
+    //ボス部屋への通路
+    //private List<Range> _bossRoomPassage = new List<Range>();
 
     /// <summary>
     /// マップを生成する
@@ -96,7 +100,7 @@ public class MapGenerator
         TrimPassage(ref map);
 
         //ボス部屋の確立
-        EstablishBossRoom(ref map);
+        map = EstablishBossRoom(ref map);
 
         return map;
     }
@@ -509,10 +513,15 @@ public class MapGenerator
     }
 
     /// <summary>
-    /// ボス部屋の確立
+    /// ボス部屋の確立(ボス部屋に繋がる通路を塞ぐ)
     /// </summary>
-    private void EstablishBossRoom(ref int[,] map)
+    /// <param name="int[">マップ全体</param>
+    /// <param name="map">ボス部屋への通路を塞いだマップ</param>
+    /// <returns></returns>
+    private int[,] EstablishBossRoom(ref int[,] map)
     {
+        int[,] allMap = map;
+
         //最初に作られた部屋
         var maxRoom = _room.Count;
         var lastRoom = _room[maxRoom - 1];
@@ -528,13 +537,17 @@ public class MapGenerator
             //下幅
             if (map[i, startZ - 1] == (int)MAP_STATUS.FLOOR)
             {
-                Debug.Log("down width Passage!!");
+                //Debug.Log("down width Passage!!");
+                allMap[i, startZ - 1] = (int)MAP_STATUS.BOOS_ROOM_PASSAGE;
+                //_bossRoomPassage.Add(new Range(i, startZ - 1, i, startZ - 1));
             }
 
             //上幅
             if (map[i, endZ + 1] == (int)MAP_STATUS.FLOOR)
             {
-                Debug.Log("up width Passage!!");
+                //Debug.Log("up width Passage!!");
+                allMap[i, endZ + 1] = (int)MAP_STATUS.BOOS_ROOM_PASSAGE;
+                //_bossRoomPassage.Add(new Range(i, endZ + 1, i, endZ + 1));
             }
 
         }
@@ -543,16 +556,21 @@ public class MapGenerator
             //左奥行き
             if (map[startX - 1, i] == (int)MAP_STATUS.FLOOR)
             {
-                Debug.Log("left depth Passage!!");
+                //Debug.Log("left depth Passage!!");
+                allMap[startX - 1, i] = (int)MAP_STATUS.BOOS_ROOM_PASSAGE;
+                //_bossRoomPassage.Add(new Range(startX - 1, i, startX - 1, i));
             }
 
             //右奥行き
             if (map[endX + 1, i] == (int)MAP_STATUS.FLOOR)
             {
-                Debug.Log("right depth Passage!!");
+                //Debug.Log("right depth Passage!!");
+                allMap[endX + 1, i] = (int)MAP_STATUS.BOOS_ROOM_PASSAGE;
+                //_bossRoomPassage.Add(new Range(endX + 1, i, endX + 1, i));
             }
         }
 
+        return allMap;
     }
 
 }

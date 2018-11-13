@@ -1299,7 +1299,7 @@ GameObject:
   - component: {fileID: 114988621395578590}
   m_Layer: 0
   m_Name: Radius
-  m_TagString: Untagged
+  m_TagString: Helper
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2811,6 +2811,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 42c35453a99cb7d4f9acab8caf6d8c56, type: 2}
   - {fileID: 11400000, guid: 6cb34600d6a8aee4d9e1895cee46c513, type: 2}
   - {fileID: 11400000, guid: 2aae09e9ce58187459bc99c4cfa5e148, type: 2}
+  - {fileID: 11400000, guid: 60dc596bfa8b9c148ac8e4fefca76e66, type: 2}
+  - {fileID: 11400000, guid: ea58226aaaa222c4a861cb739a38f0dd, type: 2}
   Response:
   - m_PersistentCalls:
       m_Calls:
@@ -2853,6 +2855,37 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 11400000, guid: cb25ffbe128a58e4ea499cf97c1a51f3,
             type: 2}
           m_ObjectArgumentAssemblyTypeName: StatusEffect, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 10000
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 114969676855271460}
+        m_MethodName: AddStatus
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: f6cf67d2d13771843840682f485417f2,
+            type: 2}
+          m_ObjectArgumentAssemblyTypeName: StatusEffect, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 10000
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 114429317269427306}
+        m_MethodName: StartSuck
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 10000
           m_StringArgument: 
@@ -3032,7 +3065,7 @@ ParticleSystem:
   simulationSpeed: 70
   stopAction: 0
   looping: 1
-  prewarm: 0
+  prewarm: 1
   playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1

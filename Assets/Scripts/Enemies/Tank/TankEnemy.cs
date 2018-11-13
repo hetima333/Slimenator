@@ -9,8 +9,8 @@ using UnityEngine;
 
 public class TankEnemy : Enemy {
     //TODO Enemy Performance
-    const float MAX_HP = 250.0f;
-    const float MOVE_SPEED = 2.0f;
+    //const float MAX_HP = 250.0f;
+    //const float MOVE_SPEED = 2.0f;
     const float SEARCH_RANGE = 11.0f;
     const float ATTACK_RANGE = 4.0f;
     const float MOVE_RANGE = 4.0f;
@@ -34,27 +34,29 @@ public class TankEnemy : Enemy {
 
     private float[] _comboDelay = { 1.5f, 0.8f, 1.7f };
 
-    // Use this for initialization
-    void Start () {
+    public override void Init(Stats _stat)
+    {
+        _properties = _stat;
+
         //ステータスのセット
-        SetStatus (Enemy.Type.TANK, MAX_HP, MOVE_SPEED, SEARCH_RANGE, ATTACK_RANGE, MOVE_RANGE, MONEY);
+        SetStatus(Enemy.Type.TANK, MaxHitPoint, Speed, SEARCH_RANGE, ATTACK_RANGE, MOVE_RANGE, MONEY);
         //移動コンポーネントの取得
-        _move = GetComponent<EnemyMove> ();
+        _move = GetComponent<EnemyMove>();
         //リジットボディの取得
-        RigidbodyProperties = GetComponent<Rigidbody> ();
-        //索敵用オブジェクトの設定
-        _searchObj = transform.Find ("SearchRange").gameObject;
-        _searchObj.GetComponent<SearchPlayer> ().Initialize ();
+        RigidbodyProperties = GetComponent<Rigidbody>();
+        _searchObj = transform.Find("SearchRange").gameObject;
+        _searchObj.GetComponent<SearchPlayer>().Initialize();
         //自由移動ポジション設定
-        _freeMovePosition = _move.SetMovePos ();
-
+        _freeMovePosition = _move.SetMovePos();
         //武器プレハブの取得
-        SetWeapons ();
-
+        SetWeapons();
     }
 
     // Update is called once per frame
     void Update () {
+
+        _status.UpdateStatMultiplyer(ref _properties);
+        TakeDamage(_status.GetValue(EnumHolder.EffectType.TAKEDAMAGE));
 
         if (!_isSleeping) {
             switch (CurrentState) {
