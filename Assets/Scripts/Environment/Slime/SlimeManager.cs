@@ -34,17 +34,17 @@ public class SlimeManager : SingletonMonoBehaviour<SlimeManager> {
     public GameObject GetSlimeFromPool(int type, Vector3 position = new Vector3())
     {
         GameObject slime_obj = ObjectManager.Instance.InstantiateWithObjectPooling(_prefab, position);
-        Stats temp = EnumHolder.Instance.GetStats(_prefab.name);
-        SlimeBase temp_component = slime_obj.GetComponent<SlimeBase>();
+        //Stats temp = EnumHolder.Instance.GetStats(_prefab.name);
+        //SlimeBase temp_component = slime_obj.GetComponent<SlimeBase>();
 
-        if (temp_component != null)
-            DestroyImmediate(temp_component);
+        //if (temp_component != null)
+        //    DestroyImmediate(temp_component);
 
-        System.Type _MyScriptType = System.Type.GetType(((ElementType)_elements.GetList()[type]).GetSlimeScriptName());
-        slime_obj.AddComponent(_MyScriptType);
+        //System.Type _MyScriptType = System.Type.GetType(((ElementType)_elements.GetList()[type]).GetSlimeScriptName());
+        //slime_obj.AddComponent(_MyScriptType);
 
-        slime_obj.GetComponent<SlimeBase>().Init(temp, ((((ElementType)_elements.GetList()[type]).name.Equals("Lightning")) ? 2 : 1), ((ElementType)_elements.GetList()[type]), _startingTier);
-        slime_obj.SetActive(true);
+        //slime_obj.GetComponent<SlimeBase>().Init(temp, ((((ElementType)_elements.GetList()[type]).name.Equals("Lightning")) ? 2 : 1), ((ElementType)_elements.GetList()[type]), _startingTier);
+        //slime_obj.SetActive(true);
 
         return slime_obj;
     }
