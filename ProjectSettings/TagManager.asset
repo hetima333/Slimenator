@@ -3,7 +3,11 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Suckable
+  - Hittable
+  - Slime
+  - Projectile
   layers:
   - Default
   - TransparentFX
@@ -13,13 +17,13 @@ TagManager:
   - UI
   - 
   - 
+  - Ground
+  - Player
   - 
+  - Enemy
+  - EnemyAttack
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Wall
   - 
   - 
   - 

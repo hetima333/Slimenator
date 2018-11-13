@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32e8d1fb205a4324f99c4d9085aaae87, type: 3}
+  m_Name: Fire
+  m_EditorClassIdentifier: 
+  _minAmount: 0
+  _maxAmount: 0
+  _color: {r: 1, g: 0, b: 0, a: 0}
+  _ClassName: FireSlime
+  _ParticleEffect: {fileID: 1825173637339698, guid: d7bcc9d120ef295439d39fefa26c144c,
+    type: 2}
+  _StatusEffect: {fileID: 11400000, guid: 82823a8632fe1e846b6ac8ebf4100ca7, type: 2}
