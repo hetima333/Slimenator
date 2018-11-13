@@ -10,6 +10,7 @@ TagManager:
   - Helper
   - Projectile
   - Slime
+  - Enemy
   layers:
   - Default
   - TransparentFX

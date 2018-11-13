@@ -36,7 +36,7 @@ public class BossSkill : MonoBehaviour {
 
 	public virtual void Action () { }
 
-	void ActEnd () {
+	public void ActEnd () {
 		_isActive = false;
 		_boss.GetComponent<BossBase> ()._isAction = false;
 

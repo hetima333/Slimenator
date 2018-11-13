@@ -210,17 +210,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36526dda63121de4bbafaa3c6459bafb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentState: 0
+  _maxHp: 0
   _hp: 0
-  _moveSpeed: 0
-  _searchRange: 0
-  _attackRange: 0
-  _freeMoveRange: 0
-  _money: 0
-  _freeMovePosition: {x: 0, y: 0, z: 0}
-  _staetPosition: {x: 0, y: 0, z: 0}
-  _isAction: 0
   _target: {fileID: 0}
+  _isAction: 0
+  _anim: {fileID: 0}
+  _slimeBullet: {fileID: 0}
+  _previousSkill: {fileID: 0}
+  _skillList: []
+  _canUseSkillList: []
+  Boss1: {fileID: 0}
+  Boss2: {fileID: 0}
 --- !u!114 &114992988909079086
 MonoBehaviour:
   m_ObjectHideFlags: 1

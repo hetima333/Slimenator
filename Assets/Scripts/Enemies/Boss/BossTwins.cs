@@ -7,7 +7,7 @@ public class BossTwins : BossBase, IDamageable {
 	//TODO Boss Performance
 	const float MAX_HP = 1000.0f;
 	const float MONEY = 2000.0f;
-	private GameObject _avatar;
+	public GameObject _avatar;
 
 	public bool _isAlone = false;
 
@@ -98,10 +98,11 @@ public class BossTwins : BossBase, IDamageable {
 		switch (_phase) {
 			case 1:
 				//新しいコンポーネントの追加
-				_skillList.Add (gameObject.AddComponent<JumpPress> ());
-				_skillList.Add (gameObject.AddComponent<FrontSlimeShot> ());
-				_skillList.Add (gameObject.AddComponent<AroundSlimeShot> ());
-				_skillList.Add (gameObject.AddComponent<Tackle> ());
+				//_skillList.Add (gameObject.AddComponent<JumpPress> ());
+				//_skillList.Add (gameObject.AddComponent<FrontSlimeShot> ());
+				//_skillList.Add (gameObject.AddComponent<AroundSlimeShot> ());
+				//_skillList.Add (gameObject.AddComponent<Tackle> ());
+				_skillList.Add (gameObject.AddComponent<PinballAttack> ());
 				break;
 
 			case 2:
