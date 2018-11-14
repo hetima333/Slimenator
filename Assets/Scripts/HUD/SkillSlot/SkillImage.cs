@@ -43,7 +43,8 @@ public class SkillImage : MonoBehaviour {
 			_baseTierText.text = tier.ToString();
 
 			// MARK : 現在ユニークスキル以外はエンチャント1つなのでこの書き方にしている
-			var enchantmentOrb = skill.GetStatusEffects() [0].ToOrb();
+			var effects = skill.GetStatusEffects();
+			var enchantmentOrb = effects.Count > 0 ? effects[0].ToOrb() : Orb.NONE;
 			_enchantmentImage.sprite = OrbToSprite(enchantmentOrb);
 			_enchantmentTierText.text = enchantmentOrb == Orb.NONE ? "" : skill.GetEnchantmentTier().ToString();
 		}
