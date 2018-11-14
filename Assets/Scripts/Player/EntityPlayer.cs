@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class EntityPlayer : MonoBehaviour, IDamageable
 {
@@ -365,14 +366,15 @@ public class EntityPlayer : MonoBehaviour, IDamageable
                     {
                         foreach (Skill s in _combiSkill.GetList())
                         {
-                            if (s.GetCombinationElements().Length > _OrbSlot.Count)
+							var conbinationElements = s.GetCombinationElements();
+							if (conbinationElements.Length > _OrbSlot.Count)
                                 continue;
 
                             bool found_skill = true;
 
                             for(int i = 0; i < _OrbSlot.Count; ++i)
                             {
-                                if (s.GetCombinationElements()[i] != _OrbSlot[i])
+                                if (conbinationElements[i] != _OrbSlot[i])
                                 {
                                     found_skill = false;
                                     break;
@@ -400,9 +402,10 @@ public class EntityPlayer : MonoBehaviour, IDamageable
                             if (_OrbSlot.Count <= 0)
                                 break;
 
-                            if (s.GetBaseElement().Equals(_OrbSlot[0]))
+							var baseElement = s.GetBaseElement();
+							if (baseElement.Equals(_OrbSlot[0]))
                             {                           
-                                int temp_tier = 0;
+                                int temp_tier = _OrbSlot.Skip(1).Where(x => x.Equals(baseElement)).Count();
 
                                 _CurrentSkillOutcome = ScriptableObject.Instantiate(s);
                                 _CurrentSkillOutcome.name = s.name;
@@ -410,26 +413,28 @@ public class EntityPlayer : MonoBehaviour, IDamageable
                                 debug += "------------------------------------------------\n";
                                 debug += "[Created Skill] " + _CurrentSkillOutcome.name + "\n";
 
-                                for (int i = 1; i < _OrbSlot.Count; ++i)
-                                {
-                                    if (s.GetBaseElement().Equals(_OrbSlot[i]))
-                                        ++temp_tier;
-                                    else
-                                        break;
-                                }
+                                // for (int i = 1; i < _OrbSlot.Count; ++i)
+                                // {
+                                //     if (baseElement.Equals(_OrbSlot[i]))
+                                //         ++temp_tier;
+                                //     else
+                                //         break;
+                                // }
 
-                                _CurrentSkillOutcome.SetSkillTier((SkillTier)_skillTier.GetList()[temp_tier]);
+								_CurrentSkillOutcome.SetSkillTier((SkillTier)_skillTier.GetList()[temp_tier]);
                                 debug += "[Setting Tier] " + _CurrentSkillOutcome.GetSkillTier() + "\n";
-                                List<ElementType> temp = new List<ElementType>();
-                                temp.AddRange(_OrbSlot);
+                                // List<ElementType> temp = new List<ElementType>();
+                                // temp.AddRange(_OrbSlot);
 
-                                temp.RemoveRange(0, temp_tier + 1);
+                                // temp.RemoveRange(0, temp_tier + 1);
+								List<ElementType> temp = _OrbSlot.Skip(temp_tier + 1).ToList();
 
-                                if (temp.Count > 0)
+								if (temp.Count > 0)
                                 {
                                     _CurrentSkillOutcome.SetElementType(temp);
 
-                                    foreach (StatusEffect et in _CurrentSkillOutcome.GetStatusEffects())
+									var statusEffects = _CurrentSkillOutcome.GetStatusEffects();
+									foreach (StatusEffect et in statusEffects)
                                         debug += "[Skill (" + _CurrentSkillOutcome.name + ") Status Added] " + et.name + "\n";
                                 }
                                 debug += "------------------------------------------------";
