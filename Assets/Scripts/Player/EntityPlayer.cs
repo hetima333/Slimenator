@@ -13,6 +13,10 @@ public class EntityPlayer : MonoBehaviour, IDamageable
     }
 
     [SerializeField]
+    private SOList
+        _ElementType;
+
+    [SerializeField]
     private GameObject
         _SuckingParticle,
         _SuckingRadius;
@@ -45,8 +49,8 @@ public class EntityPlayer : MonoBehaviour, IDamageable
         _baseSkill,
         _combiSkill;
 
-    private Queue<ElementType>
-        _OrbSlot = new Queue<ElementType>();
+    private List<ElementType>
+        _OrbSlot = new List<ElementType>();
 
     private List<Skill>
         _Skills = new List<Skill>();
@@ -281,6 +285,32 @@ public class EntityPlayer : MonoBehaviour, IDamageable
     {
         if (_Animator.speed != _Player_Stats.SpeedMultiplyerProperties)
             _Animator.speed = _Player_Stats.SpeedMultiplyerProperties;
+
+        if(Input.anyKeyDown)
+        {
+            int temp = 0;
+            bool is_pressed = false; ;
+            foreach (KeyCode vKey in System.Enum.GetValues(typeof(KeyCode)))
+            {
+                if (Input.GetKey(vKey))
+                {
+                    if((int)vKey >= (int)KeyCode.Alpha1 && (int)vKey <= (int)KeyCode.Alpha9)
+                    {
+                        temp = (int)vKey - (int)KeyCode.Alpha1;
+                        is_pressed = true;
+                        break;
+                    }
+                }
+            }
+
+            if(is_pressed)
+            {
+                if(_ElementType.GetList().Count > temp)
+                {
+                    StoreElementInOrb((ElementType)(_ElementType.GetList()[temp]));
+                }
+            }
+        }
     }
 
     public void StoreElementInOrb(ElementType type)
@@ -306,10 +336,10 @@ public class EntityPlayer : MonoBehaviour, IDamageable
                         _CurrentSkillOutcome = null;
                     }
                     
-                    _OrbSlot.Enqueue(type);
+                    _OrbSlot.Add(type);
 
                     if (_OrbSlot.Count > _Orb_Slots)
-                        _OrbSlot.Dequeue();
+                        _OrbSlot.RemoveAt(0);
 
                     bool HasUniqueCombination = true;
 
@@ -319,7 +349,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable
                         {
                             for (int j = i + 1; j < _OrbSlot.Count; ++j)
                             {
-                                if (_OrbSlot.ToArray()[i].Equals(_OrbSlot.ToArray()[j]))
+                                if (_OrbSlot[i].Equals(_OrbSlot[j]))
                                 {
                                     HasUniqueCombination = false;
                                     break;
@@ -341,7 +371,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable
 
                             for(int i = 0; i < _OrbSlot.Count; ++i)
                             {
-                                if (s.GetCombinationElements()[i] != _OrbSlot.ToArray()[i])
+                                if (s.GetCombinationElements()[i] != _OrbSlot[i])
                                 {
                                     found_skill = false;
                                     break;
@@ -369,7 +399,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable
                             if (_OrbSlot.Count <= 0)
                                 break;
 
-                            if (s.GetBaseElement().Equals(_OrbSlot.ToArray()[0]))
+                            if (s.GetBaseElement().Equals(_OrbSlot[0]))
                             {                           
                                 int temp_tier = 0;
 
@@ -381,7 +411,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable
 
                                 for (int i = 1; i < _OrbSlot.Count; ++i)
                                 {
-                                    if (s.GetBaseElement().Equals(_OrbSlot.ToArray()[i]))
+                                    if (s.GetBaseElement().Equals(_OrbSlot[i]))
                                         ++temp_tier;
                                     else
                                         break;
@@ -390,7 +420,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable
                                 _CurrentSkillOutcome.SetSkillTier((SkillTier)_skillTier.GetList()[temp_tier]);
                                 debug += "[Setting Tier] " + _CurrentSkillOutcome.GetSkillTier() + "\n";
                                 List<ElementType> temp = new List<ElementType>();
-                                temp.AddRange(_OrbSlot.ToArray());
+                                temp.AddRange(_OrbSlot);
 
                                 temp.RemoveRange(0, temp_tier + 1);
 
@@ -474,7 +504,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable
 
         for (int i = 0; i < _OrbSlot.Count; ++i)
         {
-            GUI.Box(new Rect(10, 50 * (i + 1), 100, 50), _OrbSlot.ToArray()[i].name);
+            GUI.Box(new Rect(10, 50 * (i + 1), 100, 50), _OrbSlot[i].name);
         }
 
         GUI.Box(new Rect(10, 50 * 5, 500, 50), "Output: " + ((_CurrentSkillOutcome != null) ? ((_CurrentSkillOutcome.GetSkillTier() != null) ? _CurrentSkillOutcome.GetSkillTier().name + " " : "") + _CurrentSkillOutcome.name : "None"));
@@ -482,7 +512,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable
         GUI.Box(new Rect(1500, 10, 100, 50), "Skill Slots");
         for (int i = 0; i < _Skills.Count; ++i)
         {
-            GUI.Box(new Rect(1500, 50 * (i + 1), 500, 50), ((_Skills.ToArray()[i].GetSkillTier() != null) ? _Skills.ToArray()[i].GetSkillTier().name + " " : "") + _Skills.ToArray()[i].name);
+            GUI.Box(new Rect(1500, 50 * (i + 1), 500, 50), ((_Skills[i].GetSkillTier() != null) ? _Skills[i].GetSkillTier().name + " " : "") + _Skills[i].name);
         }
 
         if (_Skills.Count > 0)
@@ -514,7 +544,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable
         _SuckingParticle.transform.Rotate(Vector3.up, 15);
     }
 
-    public Queue<ElementType> GetOrbsInSlot()
+    public List<ElementType> GetOrbsInSlot()
     {
         return _OrbSlot;
     }

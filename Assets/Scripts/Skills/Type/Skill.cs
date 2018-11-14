@@ -41,6 +41,22 @@ public abstract class Skill : ScriptableObject
     private bool
         _RestrictUserMovement;
 
+    [Tooltip("Does Channeling/Casting Shake the screen")]
+    [SerializeField]
+    private bool
+        _ChannelingShakeScreen, 
+        _CastingShakeScreen;
+
+    [Tooltip("How often the Shake will occur")]
+    [SerializeField]
+    private float
+        _ShakeScreenDelay;
+
+    [Tooltip("Only needed when Skill does Shake screen")]
+    [SerializeField]
+    private GameEvent
+        _ShakeScreenEvent;
+
     [SerializeField]
     [TextArea(15, 20)]
     private string
@@ -61,7 +77,8 @@ public abstract class Skill : ScriptableObject
     protected float
         _ChannelingTimer,
         _CastingTimer, 
-        _Multiplyer;
+        _Multiplyer, 
+        _ScreenShakeTimer;
 
     public virtual void Init()
     {
@@ -86,15 +103,16 @@ public abstract class Skill : ScriptableObject
             _CastingTimer = 0;
 
         _Multiplyer = ((_SkillTier != null) ? _SkillTier.GetMultiplyer() : 1);
+        _ScreenShakeTimer = 0;
     }
 
     public virtual void Engage(GameObject caster, Vector3 spawn_position = new Vector3(), Vector3 dir = new Vector3())
     {
-        _ChannelingTimer -= Time.deltaTime;
+        _ScreenShakeTimer -= Time.deltaTime;
 
         if (_ChannelingTimer <= 0)
         {
-            if(_CastingTimer > 0)
+            if (_CastingTimer > 0)
                 _CastingTimer -= Time.deltaTime;
         }
         else
@@ -108,19 +126,7 @@ public abstract class Skill : ScriptableObject
                 _ChannelingParticleCopy = null;
                 Debug.Log("---CHANNELING SKILL---");
             }
-        }
-        else
-        {
-            if (_ChannelingParticle != null && _ChannelingParticleCopy == null)
-            {
-                Debug.Log("+++CHANNELING SKILL+++");
-                _ChannelingParticleCopy = Instantiate(_ChannelingParticle, spawn_position, caster.transform.rotation, caster.transform);
-                _ChannelingParticleCopy.transform.localScale = new Vector3(_Multiplyer, _Multiplyer, _Multiplyer);
-            }
-        }
 
-        if (IsTimeOver())
-        {
             if (IsSkillOver())
             {
                 if (_CastingParticleCopy != null)
@@ -132,12 +138,35 @@ public abstract class Skill : ScriptableObject
             }
             else
             {
+                if (_ScreenShakeTimer <= 0 && _CastingShakeScreen)
+                {
+                    for (int i = 0; i < _Multiplyer; ++i)
+                        _ShakeScreenEvent.InvokeAllListeners();
+                    _ScreenShakeTimer = _ShakeScreenDelay;
+                }
+
                 if (_CastingParticle != null && _CastingParticleCopy == null)
                 {
                     _CastingParticleCopy = Instantiate(_CastingParticle, spawn_position, caster.transform.rotation, caster.transform);
                     _CastingParticleCopy.transform.localScale = new Vector3(_Multiplyer, _Multiplyer, _Multiplyer);
                     Debug.Log("+++CASTING SKILL+++");
                 }
+            }
+        }
+        else
+        {
+            if (_ScreenShakeTimer <= 0 && _ChannelingShakeScreen)
+            {
+                for (int i = 0; i < _Multiplyer; ++i)
+                    _ShakeScreenEvent.InvokeAllListeners();
+                _ScreenShakeTimer = _ShakeScreenDelay;
+            }
+
+            if (_ChannelingParticle != null && _ChannelingParticleCopy == null)
+            {
+                Debug.Log("+++CHANNELING SKILL+++");
+                _ChannelingParticleCopy = Instantiate(_ChannelingParticle, spawn_position, caster.transform.rotation, caster.transform);
+                _ChannelingParticleCopy.transform.localScale = new Vector3(_Multiplyer, _Multiplyer, _Multiplyer);
             }
         }
     }

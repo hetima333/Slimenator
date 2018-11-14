@@ -2995,6 +2995,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 968fc3b8d36da6946ab9eb23fcb50102, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _ElementType: {fileID: 11400000, guid: dafcf0a15e8eadb4fa33c1a792f407fa, type: 2}
   _SuckingParticle: {fileID: 1190451602750986}
   _SuckingRadius: {fileID: 1796937364682198}
   _Orb_Slots: 3
