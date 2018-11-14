@@ -9,13 +9,13 @@ public class Tackle : BossSkill {
 	private Rigidbody _rid;
 	void Start () {
 		_rid = gameObject.GetComponent<Rigidbody> ();
-		_maxCoolTime = Random.Range (3, 6);
+		_maxCoolTime = 7;
 		_coolTime = _maxCoolTime;
 		_target = GameObject.Find ("Player");
 	}
 
 	override public void Action () {
-
+		_actTime = 2.0f;
 		Vector3 lookPos = _target.transform.position;
 		lookPos.y = gameObject.transform.position.y;
 		transform.LookAt (lookPos);

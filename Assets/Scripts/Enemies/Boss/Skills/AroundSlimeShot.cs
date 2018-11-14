@@ -14,8 +14,8 @@ public class AroundSlimeShot : BossSkill {
 	override public void Action () {
 		for (int i = 0; i < 12; i++) {
 			CreateShotObject (i * 30.0f);
-
 		}
+		_actTime = 1.0f;
 		_canActive = false;
 		_boss.GetComponent<BossBase> ()._isAction = true;
 

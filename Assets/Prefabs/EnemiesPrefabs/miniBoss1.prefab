@@ -20,11 +20,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4767504507126088}
   - component: {fileID: 33602447127595536}
-  - component: {fileID: 65638214155447014}
   - component: {fileID: 23179483030620244}
   - component: {fileID: 54242222833351096}
   - component: {fileID: 114094637349096802}
-  m_Layer: 0
+  - component: {fileID: 135077661098812132}
+  m_Layer: 13
   m_Name: miniBoss1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -124,7 +124,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: ca7cf2e6fb90a5c459ece95a7b1e965a, type: 2}
+  - {fileID: 2100000, guid: 2d90c223ad3536d4c8480f2649bfab2b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -185,18 +185,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!65 &65638214155447014
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1140803224203266}
-  m_Material: {fileID: 13400000, guid: 01055e577a665c94ab6f5144851eecb1, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &114094637349096802
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -219,3 +207,16 @@ MonoBehaviour:
   _canUseSkillList: []
   _avatar: {fileID: 0}
   _isAlone: 0
+  _isGround: 0
+--- !u!135 &135077661098812132
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1140803224203266}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.6
+  m_Center: {x: 0, y: 0, z: 0}

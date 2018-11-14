@@ -124,7 +124,7 @@ public class TestBoss : BossBase, IDamageable {
         yield return new WaitForSeconds (3);
         Vector3 Pos = gameObject.transform.position;
 
-        Vector3 OffSet = new Vector3 (3, 0, 0);
+        Vector3 OffSet = new Vector3 (10, 0, 0);
 
         GameObject BossA = ObjectManager.Instance.InstantiateWithObjectPooling (Boss1);
         BossA.transform.position = Pos + OffSet;

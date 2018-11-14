@@ -12,6 +12,8 @@ public class FrontSlimeShot : BossSkill {
 	}
 
 	override public void Action () {
+		Debug.Log ("射撃");
+		_actTime = 1.0f;
 		CreateShotObject (0);
 		CreateShotObject (30f);
 		CreateShotObject (-30f);

@@ -25,7 +25,7 @@ TagManager:
   - 
   - Enemy
   - EnemyAttack
-  - 
+  - Boss
   - Wall
   - BossRoomPassage
   - Slime

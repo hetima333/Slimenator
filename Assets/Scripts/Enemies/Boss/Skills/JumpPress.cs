@@ -7,20 +7,19 @@ public class JumpPress : BossSkill {
 	[SerializeField]
 	private GameObject _marker;
 
-	private Rigidbody _rid;
-
 	private void Start () {
-		_rid = gameObject.GetComponent<Rigidbody> ();
 		//_marker = Resources.Load ("EnemyItem/Marker", typeof (GameObject)) as GameObject;
 		_target = GameObject.Find ("Player");
-
-		_maxCoolTime = Random.Range (3, 6);
+		_maxCoolTime = 5;
+		_actTime = Random.Range (3, 5);
 		_coolTime = _maxCoolTime;
 	}
 
 	override public void Action () {
-		_maxCoolTime = Random.Range (3, 6);
+		_maxCoolTime = 5;
 		_coolTime = _maxCoolTime;
+		_actTime = Random.Range (3, 5);
+		_rid.velocity = Vector3.zero;
 		Jump ();
 		_canActive = false;
 		_boss.GetComponent<BossBase> ()._isAction = true;
@@ -28,12 +27,11 @@ public class JumpPress : BossSkill {
 	}
 
 	private void Jump () {
-		_rid.velocity = Vector3.zero;
 		// 標的の座標
 		Vector3 targetPosition = _target.transform.position;
 		//_marker.SetActive (true);
 		//_marker.transform.position = new Vector3 (targetPosition.x, 0.1f, targetPosition.z)
-		JumpFixedTime (targetPosition, _coolTime);
+		JumpFixedTime (targetPosition, _actTime);
 
 	}
 

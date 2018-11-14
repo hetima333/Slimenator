@@ -4,44 +4,53 @@ using UnityEngine;
 
 public class PinballAttack : BossSkill {
 
-	[SerializeField]
-	private GameObject _marker;
-
-	private Rigidbody _rid;
-
 	private GameObject _avatar;
+
+	private PhysicMaterial _physicMat;
+
+	private float _AttackDistance = 5;
 
 	private void Start () {
 		_rid = gameObject.GetComponent<Rigidbody> ();
+		_col = gameObject.GetComponent<Collider> ();
+		_physicMat = (PhysicMaterial) Resources.Load ("Physics/EnemyBouns");
 		_target = GameObject.Find ("Player");
-		_maxCoolTime = Random.Range (3, 6);
+		_maxCoolTime = 5.0f;
 		_coolTime = _maxCoolTime;
 		_avatar = gameObject.GetComponent<BossTwins> ()._avatar;
 	}
 
 	override public void Action () {
 		if (!_avatar) return;
-		_maxCoolTime = Random.Range (3, 6);
-		_coolTime = _maxCoolTime;
+		//二体の距離を取得
+		var _distance = (gameObject.transform.position - _avatar.transform.position).sqrMagnitude;
+		//二体の距離が近すぎる場合はcancel
+		if (_distance < Mathf.Pow (_AttackDistance, 2)) {
+			Debug.Log ("ちけぇ");
+			_coolTime = _maxCoolTime;
+			_canActive = false;;
+			return;
+		}
 
+		_coolTime = _maxCoolTime;
+		_actTime = 4.0f;
 		_canActive = false;
 		_boss.GetComponent<BossBase> ()._isAction = true;
 
 		Attack ();
-		_avatar.GetComponent<PinballAttack> ().Attack ();
-
 	}
 
 	public void Attack () {
 		//フィジックスマテリアルの有効
+		_col.material = _physicMat;
 
 		Vector3 lookPos = _avatar.transform.position;
 		lookPos.y = gameObject.transform.position.y;
 		transform.LookAt (lookPos);
 
 		//相手に向かって体当たりを開始。
-		_rid.AddForce (transform.forward * 50000);
+		_rid.AddForce (transform.forward * 100000);
 
-		Debug.Log ("体当たり");
+		Debug.Log ("Pinball");
 	}
 }

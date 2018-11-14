@@ -13,6 +13,11 @@ public class BossTwins : BossBase, IDamageable {
 
 	private float graceTime = 5f;
 
+	[SerializeField]
+	private bool _isGround;
+
+	public bool IsGround { get { return _isGround; } }
+
 	// Use this for initialization
 	void Start () {
 		SetStatus ();
@@ -23,6 +28,12 @@ public class BossTwins : BossBase, IDamageable {
 
 	// Update is called once per frame
 	void Update () {
+
+		if (gameObject.transform.position.y > gameObject.transform.localScale.y + 1.5f) {
+			_isGround = false;
+		} else {
+			_isGround = true;
+		}
 
 		_actInterval -= Time.deltaTime; {
 			if (_actInterval <= 0) {
@@ -60,6 +71,8 @@ public class BossTwins : BossBase, IDamageable {
 
 		if (_isAction) { Debug.Log ("今忙しい"); return; }
 
+		_canUseSkillList.Clear ();
+
 		foreach (var skill in _skillList) {
 			if (skill._canActive == true) {
 				_canUseSkillList.Add (skill);
@@ -67,6 +80,19 @@ public class BossTwins : BossBase, IDamageable {
 		}
 
 		if (_canUseSkillList.Count == 0) { Debug.Log ("今使えるの無い"); return; }
+
+		var pinBallComponent = GetComponent<PinballAttack> ();
+
+		//ピンボール攻撃が出来るかつ相手が設置状態
+		if (pinBallComponent._canActive == true && _avatar.GetComponent<BossTwins> ().IsGround == true) {
+			if (_isGround && _previousSkill != pinBallComponent) {
+				pinBallComponent.Action ();
+				_avatar.GetComponent<PinballAttack> ().Action ();
+				_previousSkill = pinBallComponent;
+				_avatar.GetComponent<BossTwins> ()._previousSkill = _avatar.GetComponent<PinballAttack> ();
+				return;
+			}
+		}
 
 		Vector3 lookPos = _target.transform.position;
 
@@ -88,7 +114,6 @@ public class BossTwins : BossBase, IDamageable {
 			}
 		}
 
-		_canUseSkillList.Clear ();
 	}
 
 	private void PhaseUp () {
@@ -99,8 +124,8 @@ public class BossTwins : BossBase, IDamageable {
 			case 1:
 				//新しいコンポーネントの追加
 				//_skillList.Add (gameObject.AddComponent<JumpPress> ());
-				//_skillList.Add (gameObject.AddComponent<FrontSlimeShot> ());
-				//_skillList.Add (gameObject.AddComponent<AroundSlimeShot> ());
+				_skillList.Add (gameObject.AddComponent<FrontSlimeShot> ());
+				_skillList.Add (gameObject.AddComponent<AroundSlimeShot> ());
 				//_skillList.Add (gameObject.AddComponent<Tackle> ());
 				_skillList.Add (gameObject.AddComponent<PinballAttack> ());
 				break;
