@@ -115,6 +115,14 @@ public class HPBarCore : MonoBehaviour {
 
 		// 一度だけの初期化	
 		InitAtOnce();
+
+		// HPバーにサイズを適用する
+		var size = new Vector2(_maxWidth * (_redHP.Value / _slider.maxValue), _redHPBarTrans.sizeDelta.y);
+		// 最大サイズを越えないようにする
+		if (size.x > _maxWidth) {
+			size.x = _maxWidth;
+		}
+		_redHPBarTrans.sizeDelta = size;
 	}
 
 	/// <summary>
