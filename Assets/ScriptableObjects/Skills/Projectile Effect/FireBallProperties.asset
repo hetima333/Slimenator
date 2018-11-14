@@ -11,8 +11,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c65c188f4e6a30419aa87e60efe5c63, type: 3}
   m_Name: FireBallProperties
   m_EditorClassIdentifier: 
-  _MovingParticle: {fileID: 1108898740286488, guid: 1509776f93e0e094db084530fba55db3,
+  _MovingParticle: {fileID: 1477359227648552, guid: b58f6e98a07b3c84c8fb5286ca3da9ea,
     type: 2}
   _ImpactParticle: {fileID: 1609091412045728, guid: 256489c086de3354c8463714da03a14c,
     type: 2}
   _ImpactRadius: 5
+  _SpawningIteration: 0
+  _AreaEffectProperties: {fileID: 0}
+  _SpawningObjects: {fileID: 0}
+  _startingTier: {fileID: 0}
