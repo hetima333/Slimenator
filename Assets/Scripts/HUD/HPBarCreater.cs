@@ -84,5 +84,9 @@ public class HPBarCreater : MonoBehaviour {
 
 		// 各パラメータの初期化
 		_canvas.GetComponentInChildren<HPBarCore>().Init(_target);
+
+		if(transform.name == "Player"){
+			Debug.Log("init player");
+		}
 	}
 }
