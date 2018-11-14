@@ -27,7 +27,8 @@ public abstract class Projectile : MonoBehaviour
 
     protected float
         _impact_particle_timer, 
-        _multiplyer;
+        _multiplyer, 
+        _shaketimer = 0;
 
     public abstract void Init(Vector3 dir, float speed, ProjectileProperties projectile_properties, List<StatusEffect> Status, GameObjectList Targetable, float timer = 5, float damage = 1, float multiplyer = 1, float percentage = 0);
 
@@ -36,9 +37,28 @@ public abstract class Projectile : MonoBehaviour
         _StatusEffects.AddRange(statusEffects);
     }
 
+    protected virtual void Update()
+    {
+        if(_ProjectileProperties.ShakeOnTraveling())
+        {
+            if(_shaketimer <= 0)
+            {
+                for (int i = 0; i < _multiplyer; ++i)
+                    _ProjectileProperties.GetEvent().InvokeAllListeners();
+                _shaketimer = _ProjectileProperties.GetShakeDelay();
+            }
+        }
+    }
+
     protected virtual void Dead()
     {
         gameObject.SetActive(false);
+
+        if (_ProjectileProperties.ShakeOnImpact())
+        {
+            for (int i = 0; i < _multiplyer; ++i)
+                _ProjectileProperties.GetEvent().InvokeAllListeners();
+        }
 
         if (_MovingParticleCopy != null)
         {
