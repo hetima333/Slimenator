@@ -23,9 +23,10 @@ MonoBehaviour:
   _RestrictUserMovement: 0
   _Description: Enlarge nearby entities
   _ChannelingParticle: {fileID: 0}
-  _CastingParticle: {fileID: 0}
+  _CastingParticle: {fileID: 1136072557517078, guid: f1ad456d11c2d69448f72c726f1338ad,
+    type: 2}
   _CastingType: {fileID: 11400000, guid: 9c57f7cfbf3bc204b908973b51b79a3b, type: 2}
-  _SpawningDelay: 0
+  _SpawningDelay: 100
   _Iteration: 1
   _AreaEffectProperties: {fileID: 11400000, guid: 40f7676573959384ba50fb1cf00e0649,
     type: 2}
