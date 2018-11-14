@@ -43,6 +43,8 @@ public class AreaEffect : MonoBehaviour
         }
         else
             _EndingTime = 0;
+
+        _Delay = 0;
     }
 
     // Update is called once per frame

@@ -21,10 +21,14 @@ MonoBehaviour:
   _StatusApplyPercentage: 0
   _Damage: 0
   _RestrictUserMovement: 0
+  _ChannelingShakeScreen: 0
+  _CastingShakeScreen: 0
+  _ShakeScreenDelay: 0
+  _ShakeScreenEvent: {fileID: 0}
   _Description: Explode nearby slimes
   _ChannelingParticle: {fileID: 0}
   _CastingParticle: {fileID: 0}
-  _CastingType: {fileID: 11400000, guid: 2e7805e5357b0af4699fb6b8109c705f, type: 2}
+  _CastingType: {fileID: 11400000, guid: 4b6a1e949f36a0842b7e2e89caa3128e, type: 2}
   _SpawningDelay: 0
   _Iteration: 1
   _AreaEffectProperties: {fileID: 11400000, guid: 461ea68aaf099204e827c36b77c15d58,
