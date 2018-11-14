@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 08e8bb61443a4ef4bb3c821c248dfb82, type: 3}
-  m_Name: GigaVacuum
+  m_Name: Giga Vacuum
   m_EditorClassIdentifier: 
   _Combination:
   - {fileID: 11400000, guid: 36f0bab903e87bc43a975a9ab8b5afd1, type: 2}

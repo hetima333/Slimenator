@@ -114,7 +114,7 @@ public abstract class Projectile : MonoBehaviour
         {
             foreach (GameObject obj in _ProjectileProperties.GetObjectsToSpawn().GetList())
             {
-                for(int i = 0; i < _ProjectileProperties.GetIteration(); ++i)
+                for (int i = 0; i < _ProjectileProperties.GetIteration(); ++i)
                 {
                     GameObject temp_obj = ObjectManager.Instance.InstantiateWithObjectPooling(obj, gameObject.transform.position);
 
@@ -128,16 +128,26 @@ public abstract class Projectile : MonoBehaviour
                         SlimeBase temp_component = temp_obj.GetComponent<SlimeBase>();
 
                         if (temp_component != null)
-                            DestroyImmediate(temp_component);
+                            Destroy(temp_component);
 
-                        int type = Random.Range(0, _ProjectileProperties.GetProperties().GetElement().GetList().Count);
+                        int type = Random.Range(0, _ProjectileProperties.GetProperties().GetElement().GetList().Count - 1);
 
                         System.Type _MyScriptType = System.Type.GetType(((ElementType)_ProjectileProperties.GetProperties().GetElement().GetList()[type]).GetSlimeScriptName());
-                        temp_obj.AddComponent(_MyScriptType);
+                        SlimeBase temp_script = temp_obj.AddComponent(_MyScriptType) as SlimeBase;
 
-                        temp_obj.GetComponent<SlimeBase>().Init(temp, ((((ElementType)_ProjectileProperties.GetProperties().GetElement().GetList()[type]).name.Equals("Lightning")) ? 2 : 1), ((ElementType)_ProjectileProperties.GetProperties().GetElement().GetList()[type]), _ProjectileProperties.GetTier());
+                        temp_script.Init(temp, ((((ElementType)_ProjectileProperties.GetProperties().GetElement().GetList()[type]).name.Equals("Lightning")) ? 2 : 1), ((ElementType)_ProjectileProperties.GetProperties().GetElement().GetList()[type]), _ProjectileProperties.GetTier());
                     }
 
+                    if (_ProjectileProperties._HasRandomMotion)
+                    {
+                        Rigidbody temp_rb = temp_obj.GetComponent<Rigidbody>();
+
+                        if (temp_rb != null)
+                        {
+                            float force = 3500;
+                            temp_rb.AddForce(new Vector3(Random.Range(-force, force), 0, Random.Range(-force, force)), ForceMode.Acceleration);
+                        }
+                    }
                 }
             }
         }

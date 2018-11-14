@@ -33,7 +33,7 @@ public class ProjectileProperties : ScriptableObject
         _ImpactRadius, 
         _SpawningIteration;
 
-    [Tooltip("Only if the object you are spawning is an [Area Effect]")]
+    [Tooltip("Only if the object you are spawning is an [Area Effect] or an oject that needs Element Type Info")]
     [SerializeField]
     private SpawningProperties
         _AreaEffectProperties;
@@ -47,6 +47,11 @@ public class ProjectileProperties : ScriptableObject
     [SerializeField]
     public SkillTier
      _startingTier;
+
+    [Tooltip("Does spawned Object have random motion")]
+    [SerializeField]
+    public bool
+     _HasRandomMotion;
 
     public GameObject GetMovingParticle()
     {
@@ -101,5 +106,10 @@ public class ProjectileProperties : ScriptableObject
     public GameEvent GetEvent()
     {
         return _ShakeScreenEvent;
+    }
+
+    public bool HasRandomPosition()
+    {
+        return _HasRandomMotion;
     }
 }

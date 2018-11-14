@@ -87,14 +87,14 @@ public class AreaEffect : MonoBehaviour
                             SlimeBase temp_component = temp_obj.GetComponent<SlimeBase>();
 
                             if (temp_component != null)
-                                DestroyImmediate(temp_component);
+                                Destroy(temp_component);
 
                             int type = Random.Range(0, _Properties.GetElement().GetList().Count);
 
                             System.Type _MyScriptType = System.Type.GetType(((ElementType)_Properties.GetElement().GetList()[type]).GetSlimeScriptName());
-                            temp_obj.AddComponent(_MyScriptType);
+                            SlimeBase temp_script = temp_obj.AddComponent(_MyScriptType) as SlimeBase;
 
-                            temp_obj.GetComponent<SlimeBase>().Init(temp, ((((ElementType)_Properties.GetElement().GetList()[type]).name.Equals("Lightning")) ? 2 : 1), ((ElementType)_Properties.GetElement().GetList()[type]), _Properties.GetTier());
+                            temp_script.Init(temp, ((((ElementType)_Properties.GetElement().GetList()[type]).name.Equals("Lightning")) ? 2 : 1), ((ElementType)_Properties.GetElement().GetList()[type]), _Properties.GetTier());
                         }
 
                         _Delay = _Properties.GetDelay();
