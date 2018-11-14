@@ -50,7 +50,7 @@ public class SlimeSpawner : MonoBehaviour {
 
     private void Start()
     {
-        _maxSpawnCount = 8;
+        _maxSpawnCount = 4;
     }
 
     private void Update()
