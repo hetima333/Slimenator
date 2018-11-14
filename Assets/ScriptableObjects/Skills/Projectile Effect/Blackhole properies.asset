@@ -15,6 +15,10 @@ MonoBehaviour:
     type: 2}
   _ImpactParticle: {fileID: 1783820332162922, guid: 7c460cf7fffd6ce4d8c3b6f625ed6680,
     type: 2}
+  _ShakeOnTraveling: 0
+  _ShakeOnImpact: 1
+  _ShakeScreenDelay: 0
+  _ShakeScreenEvent: {fileID: 11400000, guid: 394f8c5eb16cafe4ea6e1d5f750f7259, type: 2}
   _ImpactRadius: 0
   _SpawningIteration: 1
   _AreaEffectProperties: {fileID: 11400000, guid: 4cbc1577dc7a8bc4fa1564bc7e945761,
