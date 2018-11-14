@@ -19,7 +19,8 @@ public class EntityPlayer : MonoBehaviour, IDamageable
     [SerializeField]
     private GameObject
         _SuckingParticle,
-        _SuckingRadius;
+        _SuckingRadius, 
+        _WalkParticle;
 
     [SerializeField]
     private uint
@@ -568,6 +569,12 @@ public class EntityPlayer : MonoBehaviour, IDamageable
     public Status GetStatus()
     {
         return _Status;
+    }
+
+    public void CallWalkParticle()
+    {
+        GameObject temp = Instantiate(_WalkParticle, transform);
+        Destroy(temp, 0.5f);
     }
 
     delegate void CheckFunctions();

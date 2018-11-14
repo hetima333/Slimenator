@@ -323,7 +323,23 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.2940105
+        functionName: CallWalkParticle
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 968fc3b8d36da6946ab9eb23fcb50102,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.7613725
+        functionName: CallWalkParticle
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 968fc3b8d36da6946ab9eb23fcb50102,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
@@ -379,7 +395,23 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.28637198
+        functionName: CallWalkParticle
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 968fc3b8d36da6946ab9eb23fcb50102,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.7515636
+        functionName: CallWalkParticle
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 968fc3b8d36da6946ab9eb23fcb50102,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
@@ -407,7 +439,23 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.2717014
+        functionName: CallWalkParticle
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 968fc3b8d36da6946ab9eb23fcb50102,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.69548774
+        functionName: CallWalkParticle
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 968fc3b8d36da6946ab9eb23fcb50102,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
