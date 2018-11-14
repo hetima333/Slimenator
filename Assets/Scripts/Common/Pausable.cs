@@ -83,7 +83,7 @@ public class Pausable : SingletonMonoBehaviour<Pausable> {
 		// 子以外を停止する
 		else {
 			// 子と無視リストの重複なし配列の作成
-			GameObject[] monos = transform.GetComponentsInChildren<MonoBehaviour>().Select(x => x.gameObject).ToArray().Union(_ignoreGameObjects).ToArray();
+			GameObject[] monos = transform.GetComponentsInChildren<MonoBehaviour>().Select(x => x.gameObject).Union(_ignoreGameObjects).ToArray();
 			// 子要素から、有効かつこのインスタンスでないもの、IgnoreGameObjectsに含まれていないMonoBehaviourを抽出
 			monoBehaviourPredicate = obj => obj.enabled &&
 				obj != this &&
