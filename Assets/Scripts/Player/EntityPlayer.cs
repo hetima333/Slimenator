@@ -93,8 +93,9 @@ public class EntityPlayer : MonoBehaviour, IDamageable
 
         _Player_Stats = EnumHolder.Instance.GetStats(gameObject.name);
 
-        _Player_Stats.HealthProperties = _Player_Stats.MaxHealthProperties;
         _Player_Stats.DamageMultiplyerProperties = _Player_Stats.HealthMultiplyerProperties = _Player_Stats.SpeedMultiplyerProperties = _Player_Stats.SuckingPowerMultiplyerProperties = 1;
+        _Player_Stats.HealthProperties = _Player_Stats.MaxHealthProperties;
+
         _Money = 0;
 
         _Player_State = EnumHolder.States.IDLE;
