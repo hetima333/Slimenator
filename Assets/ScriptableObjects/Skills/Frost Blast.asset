@@ -29,5 +29,8 @@ MonoBehaviour:
   _ChannelingParticle: {fileID: 0}
   _CastingParticle: {fileID: 1390921644045378, guid: 38467e27ce18b0f4380211cb200cd975,
     type: 2}
+  _ChannelingTime: 0
+  _CastingTime: 0
+  _AnimationID: 1
   _CastingType: {fileID: 11400000, guid: 7777f7888ac2cc243ad6e788a1715d00, type: 2}
   _AttackDelay: 0.5

@@ -35,7 +35,7 @@ public class EntityPlayerMovement : MonoBehaviour
     private void Update()
     {
         if (_EntityPlayer.GetPlayerState() != EnumHolder.States.DIE &&
-            !(_EntityPlayer.GetPlayerState() == EnumHolder.States.CASTING && _EntityPlayer.RestrictMovement))
+            !(_EntityPlayer.IsCasting() && _EntityPlayer.RestrictMovement))
             Move();
     }
 

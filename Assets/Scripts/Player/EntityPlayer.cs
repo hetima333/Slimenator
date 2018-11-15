@@ -38,9 +38,13 @@ public class EntityPlayer : MonoBehaviour, IDamageable
     private float
         _Money;
 
+    private uint
+        _Casting_Animation_ID;
+
     private bool
         _RestrictMovement, 
-        _Cast_Trigger;
+        _Cast_Trigger, 
+        _Is_Casting;
 
     private Status
         _Status;
@@ -112,6 +116,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable
         _CurrentSkillOutcome = null;
         _CurrentSelection = 0;
         _Cast_Trigger = false;
+        _Is_Casting = false;
 
         _Player_Stats = EnumHolder.Instance.GetStats(gameObject.name);
 
@@ -130,7 +135,6 @@ public class EntityPlayer : MonoBehaviour, IDamageable
         _CheckFuntions.Add(EnumHolder.States.IDLE, IdleCheckFunction);
         _CheckFuntions.Add(EnumHolder.States.MOVING, MovingCheckFunction);
         _CheckFuntions.Add(EnumHolder.States.KICKING, KickingCheckFunction);
-        _CheckFuntions.Add(EnumHolder.States.CASTING, CastingCheckFunction);
         _CheckFuntions.Add(EnumHolder.States.DIE, DieCheckFunction);
     }
 
@@ -181,7 +185,27 @@ public class EntityPlayer : MonoBehaviour, IDamageable
 
     private void CastingCheckFunction()
     {
+        if (_Player_State == EnumHolder.States.IDLE)
+        {
+            _Animator.SetLayerWeight(3, 1f);
+            _Animator.SetLayerWeight(1, 0.5f);
+        }
+        else
+        {
+            _Animator.SetLayerWeight(3, 0.5f);
+            _Animator.SetLayerWeight(1, 1f);
+        }
+
+        if (!_Animator.GetBool("IsCasting"))
+            _Animator.SetBool("IsCasting", true);
+
         _CurrentUseSkill.Engage(gameObject, _CastingPoint.transform.position, gameObject.transform.forward.normalized);
+
+        if (_Casting_Animation_ID != _CurrentUseSkill.GetAnimationID())
+        {
+            _Casting_Animation_ID = _CurrentUseSkill.GetAnimationID();
+            _Animator.SetInteger("CastingID", (int)_Casting_Animation_ID);
+        }
 
         if (RestrictMovement != _CurrentUseSkill.IsMoveOnCast())
             RestrictMovement = _CurrentUseSkill.IsMoveOnCast();
@@ -189,7 +213,12 @@ public class EntityPlayer : MonoBehaviour, IDamageable
         if (_CurrentUseSkill.IsSkillOver() && _CurrentUseSkill.IsTimeOver() || Input.GetKey(KeyCode.Mouse1))
         {
             ResetCurrentUsedSkill();
-            _Player_State = EnumHolder.States.IDLE;
+            if (_Animator.GetBool("IsCasting"))
+            {
+                _Animator.SetBool("IsCasting", false);
+                _Animator.SetLayerWeight(3, 1f);
+                _Animator.SetLayerWeight(1, 1f);
+            }
         }
     }
 
@@ -218,7 +247,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable
         _Animator.SetInteger("State", (int)_Player_State);
         _Animator.SetInteger("Direction", (int)_Player_Dir);
 
-        if (_Player_State != EnumHolder.States.CASTING && 
+        if (!_Is_Casting &&
             _Player_State != EnumHolder.States.KICKING && 
             _Player_State != EnumHolder.States.DIE &&
             Speed > 0)
@@ -271,9 +300,14 @@ public class EntityPlayer : MonoBehaviour, IDamageable
             }
         }
 
+        if(_Is_Casting)
+        {
+            CastingCheckFunction();
+        }
+
         if (IsDead() && _Player_State != EnumHolder.States.DIE)
         {
-            if(_Player_State == EnumHolder.States.CASTING)
+            if(_Is_Casting)
                 ResetCurrentUsedSkill();
             _Player_State = EnumHolder.States.DIE;           
         }
@@ -474,7 +508,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable
             _CurrentUseSkill = _Skills[_CurrentSelection];
             _CurrentUseSkill.Init();
             _Skills.RemoveAt(_CurrentSelection);
-            _Player_State = EnumHolder.States.CASTING;
+            _Is_Casting = true;
         }
     }
 
@@ -482,6 +516,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable
     {
         _CurrentUseSkill.Reset();
         Destroy(_CurrentUseSkill);
+        _Is_Casting = false;
     }
 
     public void ResetOrbSlots()
@@ -503,6 +538,11 @@ public class EntityPlayer : MonoBehaviour, IDamageable
     public bool IsDead()
     {
         return _Player_Stats.HealthProperties <= 0;
+    }
+
+    public bool IsCasting()
+    {
+        return _Is_Casting;
     }
 
     void OnGUI()

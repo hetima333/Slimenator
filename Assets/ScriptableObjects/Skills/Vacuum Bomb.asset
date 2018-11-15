@@ -28,6 +28,9 @@ MonoBehaviour:
   _Description: Shoots out a projectile that upon impact, spawns a blackhole
   _ChannelingParticle: {fileID: 0}
   _CastingParticle: {fileID: 0}
+  _ChannelingTime: 0
+  _CastingTime: 0
+  _AnimationID: 2
   _Projectile: {fileID: 1762178163839322, guid: ac48cf082fcd82843a04c8748fdaa940,
     type: 2}
   _properties: {fileID: 11400000, guid: 6e2b50610000ed64d8e631247c7f9a56, type: 2}
