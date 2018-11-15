@@ -209,48 +209,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bca5c50cf3c1a224ba08ef669605bd05, type: 2}
   m_IsPrefabParent: 0
---- !u!1001 &487052662
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4352706867111714, guid: f1ad456d11c2d69448f72c726f1338ad, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4352706867111714, guid: f1ad456d11c2d69448f72c726f1338ad, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4352706867111714, guid: f1ad456d11c2d69448f72c726f1338ad, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4352706867111714, guid: f1ad456d11c2d69448f72c726f1338ad, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4352706867111714, guid: f1ad456d11c2d69448f72c726f1338ad, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4352706867111714, guid: f1ad456d11c2d69448f72c726f1338ad, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4352706867111714, guid: f1ad456d11c2d69448f72c726f1338ad, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4352706867111714, guid: f1ad456d11c2d69448f72c726f1338ad, type: 2}
-      propertyPath: m_RootOrder
-      value: 13
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: f1ad456d11c2d69448f72c726f1338ad, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1001 &657226311
 Prefab:
   m_ObjectHideFlags: 0
@@ -516,6 +474,12 @@ Prefab:
       propertyPath: _Camera
       value: 
       objectReference: {fileID: 786092756}
+    - target: {fileID: 114645841446893710, guid: d8cee6a6bac30c9458bb392d98cdb343,
+        type: 2}
+      propertyPath: _WalkParticle
+      value: 
+      objectReference: {fileID: 1622399075499832, guid: 80c1aa50f73860846bc12268d9575200,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d8cee6a6bac30c9458bb392d98cdb343, type: 2}
   m_IsPrefabParent: 0

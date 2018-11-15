@@ -578,7 +578,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable
 
     public void CallWalkParticle()
     {
-        GameObject temp = Instantiate(_WalkParticle, transform);
+        GameObject temp = Instantiate(_WalkParticle, transform.position, transform.rotation);
         Destroy(temp, 0.5f);
     }
 
