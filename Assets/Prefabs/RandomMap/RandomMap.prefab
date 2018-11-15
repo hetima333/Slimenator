@@ -1,0 +1,80 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1718353255957232}
+  m_IsPrefabParent: 1
+--- !u!1 &1718353255957232
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4252345003832030}
+  - component: {fileID: 114594352708414850}
+  m_Layer: 0
+  m_Name: RandomMap
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4252345003832030
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1718353255957232}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114594352708414850
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1718353255957232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92889e66660ae994587ded60d92f113f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rooms:
+  - obj: {fileID: 100000, guid: 5efc8232326954747befaa569036b789, type: 3}
+    isBackPassage: 0
+    isRightPassage: 0
+    isFrontPassage: 0
+    isLeftPassage: 1
+    passagePos: 0
+  - obj: {fileID: 100000, guid: e17ad15e88bd27b41a47c788e318bb42, type: 3}
+    isBackPassage: 0
+    isRightPassage: 0
+    isFrontPassage: 1
+    isLeftPassage: 1
+    passagePos: 0
+  - obj: {fileID: 100000, guid: c27ce161b44ae7c438c7654421c5a5e0, type: 3}
+    isBackPassage: 1
+    isRightPassage: 0
+    isFrontPassage: 1
+    isLeftPassage: 1
+    passagePos: 0
+  - obj: {fileID: 100000, guid: e9fe049afccbd2f46b4e603cb3fc0edd, type: 3}
+    isBackPassage: 1
+    isRightPassage: 1
+    isFrontPassage: 1
+    isLeftPassage: 1
+    passagePos: 0
+  _width: 5
+  _depth: 4

@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// ランダムユーティリティ
 /// </summary>
-public class RandomUtils
+public class RogueUtils
 {
 
     /// <summary>
