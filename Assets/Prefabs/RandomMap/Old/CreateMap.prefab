@@ -87,4 +87,3 @@ MonoBehaviour:
   _bossRoomPassagePrefab: {fileID: 1417232500447472, guid: 33471a5fb44842e4fb9d488e9c82db6d,
     type: 2}
   _mapSize: 6
-  _player: {fileID: 0}
