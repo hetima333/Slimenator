@@ -30,6 +30,9 @@ MonoBehaviour:
     type: 2}
   _CastingParticle: {fileID: 1716658819991312, guid: 66b9643a89d531f4eb7af376ad47f697,
     type: 2}
+  _ChannelingTime: 0
+  _CastingTime: 0
+  _AnimationID: 1
   _CastingType: {fileID: 11400000, guid: 9c57f7cfbf3bc204b908973b51b79a3b, type: 2}
   _SingleCallEvents: []
   _MultipleCallEvents:

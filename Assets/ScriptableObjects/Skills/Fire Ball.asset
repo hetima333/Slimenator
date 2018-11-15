@@ -21,9 +21,16 @@ MonoBehaviour:
   _StatusApplyPercentage: 30
   _Damage: 10
   _RestrictUserMovement: 0
+  _ChannelingShakeScreen: 0
+  _CastingShakeScreen: 0
+  _ShakeScreenDelay: 0
+  _ShakeScreenEvent: {fileID: 0}
   _Description: Shoots a fire ball
   _ChannelingParticle: {fileID: 0}
   _CastingParticle: {fileID: 0}
+  _ChannelingTime: 0.4
+  _CastingTime: 0
+  _AnimationID: 2
   _Projectile: {fileID: 1762178163839322, guid: ac48cf082fcd82843a04c8748fdaa940,
     type: 2}
   _properties: {fileID: 11400000, guid: d874422f599e62c4f84d2336096b5be4, type: 2}

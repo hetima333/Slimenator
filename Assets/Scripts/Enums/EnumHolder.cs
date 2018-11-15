@@ -16,7 +16,6 @@ public class EnumHolder : SingletonMonoBehaviour<EnumHolder>
         DIE,
         IDLE,
         MOVING,
-        CASTING,
         KICKING
     }
 

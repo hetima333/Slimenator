@@ -67,6 +67,12 @@ public abstract class Skill : ScriptableObject
       _ChannelingParticle,
       _CastingParticle;
 
+    [Tooltip("If Skill does not have particles")]
+    [SerializeField]
+    private float
+        _ChannelingTime,
+        _CastingTime;
+
     private GameObject
         _ChannelingParticleCopy,
         _CastingParticleCopy;
@@ -80,6 +86,10 @@ public abstract class Skill : ScriptableObject
         _Multiplyer, 
         _ScreenShakeTimer;
 
+    [SerializeField]
+    private uint
+        _AnimationID;
+
     public virtual void Init()
     {
         if (_ChannelingParticle != null)
@@ -90,7 +100,7 @@ public abstract class Skill : ScriptableObject
             //Debug.Log("Channeling Particle: " + _ChannelingTimer);
         }
         else
-            _ChannelingTimer = 0;
+            _ChannelingTimer = _ChannelingTime;
 
         if (_CastingParticle != null)
         {
@@ -100,7 +110,7 @@ public abstract class Skill : ScriptableObject
             //Debug.Log("Casting Particle: " + _CastingTimer);
         }
         else
-            _CastingTimer = 0;
+            _CastingTimer = _CastingTime;
 
         _Multiplyer = ((_SkillTier != null) ? _SkillTier.GetMultiplyer() : 1);
         _ScreenShakeTimer = 0;
@@ -238,5 +248,10 @@ public abstract class Skill : ScriptableObject
             Destroy(_CastingParticleCopy);
             _CastingParticleCopy = null;
         }
+    }
+
+    public uint GetAnimationID()
+    {
+        return _AnimationID;
     }
 }

@@ -21,9 +21,16 @@ MonoBehaviour:
   _StatusApplyPercentage: 30
   _Damage: 1
   _RestrictUserMovement: 0
+  _ChannelingShakeScreen: 0
+  _CastingShakeScreen: 0
+  _ShakeScreenDelay: 0
+  _ShakeScreenEvent: {fileID: 0}
   _Description: Breathes out a cone of frost
   _ChannelingParticle: {fileID: 0}
   _CastingParticle: {fileID: 1842664229368296, guid: e77da83b1249e6e4fb1132c45464e885,
     type: 2}
+  _ChannelingTime: 0
+  _CastingTime: 0
+  _AnimationID: 1
   _CastingType: {fileID: 11400000, guid: 7777f7888ac2cc243ad6e788a1715d00, type: 2}
   _AttackDelay: 0.5
