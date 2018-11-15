@@ -29,7 +29,7 @@ public class BossTwins : BossBase, IDamageable {
 	// Update is called once per frame
 	void Update () {
 
-		if (gameObject.transform.position.y > gameObject.transform.localScale.y + 1.5f) {
+		if (gameObject.transform.position.y > 3.2f) {
 			_isGround = false;
 		} else {
 			_isGround = true;
@@ -123,15 +123,18 @@ public class BossTwins : BossBase, IDamageable {
 		switch (_phase) {
 			case 1:
 				//新しいコンポーネントの追加
-				//_skillList.Add (gameObject.AddComponent<JumpPress> ());
+				_skillList.Add (gameObject.AddComponent<JumpPress> ());
 				_skillList.Add (gameObject.AddComponent<FrontSlimeShot> ());
 				_skillList.Add (gameObject.AddComponent<AroundSlimeShot> ());
-				//_skillList.Add (gameObject.AddComponent<Tackle> ());
+				_skillList.Add (gameObject.AddComponent<Tackle> ());
 				_skillList.Add (gameObject.AddComponent<PinballAttack> ());
 				break;
 
 			case 2:
+				//ピンボール封印
+				_skillList.Remove (gameObject.GetComponent<PinballAttack> ());
 				//メテオの追加
+				_skillList.Add (gameObject.AddComponent<SlimeMeteorRain> ());
 				break;
 			default:
 

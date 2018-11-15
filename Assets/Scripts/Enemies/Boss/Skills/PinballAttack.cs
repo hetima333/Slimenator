@@ -15,7 +15,7 @@ public class PinballAttack : BossSkill {
 		_col = gameObject.GetComponent<Collider> ();
 		_physicMat = (PhysicMaterial) Resources.Load ("Physics/EnemyBouns");
 		_target = GameObject.Find ("Player");
-		_maxCoolTime = 5.0f;
+		_maxCoolTime = 8.0f;
 		_coolTime = _maxCoolTime;
 		_avatar = gameObject.GetComponent<BossTwins> ()._avatar;
 	}
@@ -48,9 +48,12 @@ public class PinballAttack : BossSkill {
 		lookPos.y = gameObject.transform.position.y;
 		transform.LookAt (lookPos);
 
+		transform.Rotate (new Vector3 (0, 3, 0));
+
 		//相手に向かって体当たりを開始。
 		_rid.AddForce (transform.forward * 100000);
 
 		Debug.Log ("Pinball");
 	}
+
 }
