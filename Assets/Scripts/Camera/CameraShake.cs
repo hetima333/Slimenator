@@ -6,7 +6,8 @@ public class CameraShake : MonoBehaviour
 {
     [SerializeField]
     private float
-        _Intensity;
+        _Intensity, 
+        _MaxTremble;
 
     [SerializeField]
     [Range(0, 1)]
@@ -49,6 +50,7 @@ public class CameraShake : MonoBehaviour
 
     public void ShakeCamera()
     {
-        _Tremble += _Intensity;
+        if (_Tremble < _MaxTremble)
+            _Tremble += _Intensity;
     }
 }

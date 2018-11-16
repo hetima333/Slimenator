@@ -114,6 +114,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &20698170 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1314456541332650, guid: d8cee6a6bac30c9458bb392d98cdb343,
+    type: 2}
+  m_PrefabInternal: {fileID: 1383239344}
 --- !u!1 &202249091
 GameObject:
   m_ObjectHideFlags: 0
@@ -303,7 +308,7 @@ Prefab:
         type: 2}
       propertyPath: _player
       value: 
-      objectReference: {fileID: 1880440908}
+      objectReference: {fileID: 20698170}
     - target: {fileID: 114129762375989926, guid: 05418d951fdb48e498028fd64f0b8898,
         type: 2}
       propertyPath: _mapSize
@@ -559,7 +564,7 @@ Prefab:
         type: 2}
       propertyPath: _go_target
       value: 
-      objectReference: {fileID: 1880440908}
+      objectReference: {fileID: 20698170}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2a3da13cad5184b4ba794751bf2d292a, type: 2}
   m_IsPrefabParent: 0
@@ -573,7 +578,7 @@ Camera:
   m_PrefabParentObject: {fileID: 20100311265079470, guid: 2a3da13cad5184b4ba794751bf2d292a,
     type: 2}
   m_PrefabInternal: {fileID: 1128240751}
---- !u!1001 &1880440907
+--- !u!1001 &1383239344
 Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -617,17 +622,6 @@ Prefab:
       propertyPath: _Camera
       value: 
       objectReference: {fileID: 1353723394}
-    - target: {fileID: 114645841446893710, guid: d8cee6a6bac30c9458bb392d98cdb343,
-        type: 2}
-      propertyPath: _WalkParticle
-      value: 
-      objectReference: {fileID: 1609091412045728, guid: 256489c086de3354c8463714da03a14c,
-        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d8cee6a6bac30c9458bb392d98cdb343, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &1880440908 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1314456541332650, guid: d8cee6a6bac30c9458bb392d98cdb343,
-    type: 2}
-  m_PrefabInternal: {fileID: 1880440907}
