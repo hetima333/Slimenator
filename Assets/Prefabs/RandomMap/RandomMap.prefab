@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4252345003832030}
   - component: {fileID: 114594352708414850}
+  - component: {fileID: 114026431175342182}
   m_Layer: 0
   m_Name: RandomMap
   m_TagString: Untagged
@@ -40,6 +41,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114026431175342182
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1718353255957232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 157fd168abf118e47ab598c08a4ffdcd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _mapGen: {fileID: 114594352708414850}
 --- !u!114 &114594352708414850
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -57,24 +70,24 @@ MonoBehaviour:
     isRightPassage: 0
     isFrontPassage: 0
     isLeftPassage: 1
-    passagePos: 0
+    passagePos: 8
   - obj: {fileID: 100000, guid: e17ad15e88bd27b41a47c788e318bb42, type: 3}
     isBackPassage: 0
     isRightPassage: 0
     isFrontPassage: 1
     isLeftPassage: 1
-    passagePos: 0
+    passagePos: 12
   - obj: {fileID: 100000, guid: c27ce161b44ae7c438c7654421c5a5e0, type: 3}
     isBackPassage: 1
     isRightPassage: 0
     isFrontPassage: 1
     isLeftPassage: 1
-    passagePos: 0
+    passagePos: 13
   - obj: {fileID: 100000, guid: e9fe049afccbd2f46b4e603cb3fc0edd, type: 3}
     isBackPassage: 1
     isRightPassage: 1
     isFrontPassage: 1
     isLeftPassage: 1
-    passagePos: 0
+    passagePos: 15
   _width: 5
   _depth: 4
