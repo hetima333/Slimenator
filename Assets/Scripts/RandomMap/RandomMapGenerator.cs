@@ -21,6 +21,13 @@ public class RandomMapGenerator : MonoBehaviour
     static int modelSizeX = 80;
     static int modelSizeZ = 80;
 
+    void Awake()
+    {
+        //マップ全体の大きさ
+        _maps = new OneRoomInfo[_width, _depth];
+
+    }
+
 
     // Use this for initialization
     void Start()
@@ -35,11 +42,6 @@ public class RandomMapGenerator : MonoBehaviour
         //     }
         // }
 
-        //マップ全体の大きさ
-        _maps = new OneRoomInfo[_width, _depth];
-
-        //最初の部屋を生成する
-        ChoiceFirstRoom();
 
     }
 
@@ -52,7 +54,7 @@ public class RandomMapGenerator : MonoBehaviour
     /// <summary>
     /// 最初の部屋を生成する
     /// </summary>
-    private void ChoiceFirstRoom()
+    public void ChoiceFirstRoom()
     {
         //登録された部屋の種類を取得
         int count = _rooms.Length;
@@ -82,6 +84,8 @@ public class RandomMapGenerator : MonoBehaviour
 
                     //部屋を生成する
                     GameObject room = Instantiate(_rooms[firstRoom].obj, new Vector3(x * modelSizeX, 0, z * modelSizeZ), new Quaternion());
+                    _rooms[firstRoom].JudgmentPassage();
+                    Debug.Log("最初の部屋のpassagePos = " + System.Convert.ToString(_rooms[firstRoom].passagePos, 2));
                     room.transform.SetParent(transform);
                     //地形がデータをマップに知らせる
                     _maps[x, z] = _rooms[firstRoom];
@@ -101,6 +105,19 @@ public class RandomMapGenerator : MonoBehaviour
 
     }
 
+    public OneRoomInfo[] GetRoomInfos()
+    {
+        return _rooms;
+    }
+
+
+    /// <summary>
+    /// 部屋のサイズ
+    /// </summary>
+    public Vector2Int GetSize()
+    {
+        return new Vector2Int(_width, _depth);
+    }
 
 
 
