@@ -360,6 +360,8 @@ public class EntityPlayer : MonoBehaviour, IDamageable
 
     public void StoreElementInOrb(ElementType type)
     {
+        AudioManager.Instance.PlaySE(_SuckSFX.name);
+
         switch (type.name)
         {
             case "Gold":
@@ -627,6 +629,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable
 
     public void CallWalkParticle()
     {
+        AudioManager.Instance.PlaySE(_WalkingSFX.name);
         GameObject temp = Instantiate(_WalkParticle, transform.position, transform.rotation);
         Destroy(temp, 0.5f);
     }

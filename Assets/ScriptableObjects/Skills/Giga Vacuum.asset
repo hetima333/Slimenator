@@ -11,6 +11,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08e8bb61443a4ef4bb3c821c248dfb82, type: 3}
   m_Name: Giga Vacuum
   m_EditorClassIdentifier: 
+  _CastingAudio: {fileID: 8300000, guid: 40750b088d2e7d5409704f0490f81b2b, type: 3}
+  _ChannelingAudio: {fileID: 8300000, guid: 6daefe2d96ce9e24688a7693f93edd2b, type: 3}
+  _IsCastingAudioLoop: 1
+  _IsChannelingAudioLoop: 1
   _Combination:
   - {fileID: 11400000, guid: 36f0bab903e87bc43a975a9ab8b5afd1, type: 2}
   - {fileID: 11400000, guid: 753eac8bb53ca58458e5f20416ea0092, type: 2}

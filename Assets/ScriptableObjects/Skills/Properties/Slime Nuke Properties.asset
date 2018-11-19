@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca731fcea334a8446926bd4b3f24015d, type: 3}
   m_Name: Slime Nuke Properties
   m_EditorClassIdentifier: 
-  _CastingAudio: {fileID: 0}
+  _CastingAudio: {fileID: 8300000, guid: 2b0ae6cafa0beb84daa659b3e9b75b2d, type: 3}
   _EndingAudio: {fileID: 0}
   _IsCastingAudioLoop: 0
   _IsEndingAudioLoop: 0

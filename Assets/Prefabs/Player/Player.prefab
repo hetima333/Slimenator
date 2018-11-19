@@ -3010,8 +3010,8 @@ MonoBehaviour:
   _SkillStoreSFX: {fileID: 8300000, guid: 63719820795e7eb428e743dc729db86f, type: 3}
   _SkillCombinationSFX: {fileID: 0}
   _VacuumSFX: {fileID: 0}
-  _SuckSFX: {fileID: 0}
-  _WalkingSFX: {fileID: 0}
+  _SuckSFX: {fileID: 8300000, guid: 1cdbcfdf787b8f64f955040f3ee73b74, type: 3}
+  _WalkingSFX: {fileID: 8300000, guid: 5e4a2f60ab1e21e43befeb5a1030fd4d, type: 3}
 --- !u!114 &114676757198629502
 MonoBehaviour:
   m_ObjectHideFlags: 1
