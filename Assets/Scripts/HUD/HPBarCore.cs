@@ -44,7 +44,7 @@ public class HPBarCore : MonoBehaviour {
 				var dmg = _slider.value - x;
 				// ダメージが1以上なら表示する
 				if (dmg > 0) {
-					DamagePoper.Instance.PopDamage(transform.parent, (int) dmg);
+					DamagePoper.Instance.PopDamage(transform.parent, (int)dmg);
 				}
 
 				_slider.value = x;
@@ -60,7 +60,7 @@ public class HPBarCore : MonoBehaviour {
 			.DistinctUntilChanged()
 			.Subscribe(x => {
 				// HPバーにサイズを適用する
-				var size = new Vector2(x * _maxWidth / _slider.maxValue, _redHPBarTrans.sizeDelta.y);
+				var size = new Vector2(_maxWidth * (x / _slider.maxValue), _redHPBarTrans.sizeDelta.y);
 				// 最大サイズを越えないようにする
 				if (size.x > _maxWidth) {
 					size.x = _maxWidth;
@@ -115,6 +115,14 @@ public class HPBarCore : MonoBehaviour {
 
 		// 一度だけの初期化	
 		InitAtOnce();
+
+		// HPバーにサイズを適用する
+		var size = new Vector2(_maxWidth * (_redHP.Value / _slider.maxValue), _redHPBarTrans.sizeDelta.y);
+		// 最大サイズを越えないようにする
+		if (size.x > _maxWidth) {
+			size.x = _maxWidth;
+		}
+		_redHPBarTrans.sizeDelta = size;
 	}
 
 	/// <summary>

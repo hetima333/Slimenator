@@ -857,11 +857,6 @@ Prefab:
     m_Modifications:
     - target: {fileID: 224422612800325430, guid: ab4d347eb710e444f843c2db83fb2ee1,
         type: 2}
-      propertyPath: m_RootOrder
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 224422612800325430, guid: ab4d347eb710e444f843c2db83fb2ee1,
-        type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -955,6 +950,11 @@ Prefab:
       propertyPath: _ignoreGameObjects.Array.data[0]
       value: 
       objectReference: {fileID: 161992075}
+    - target: {fileID: 225712038271796860, guid: ab4d347eb710e444f843c2db83fb2ee1,
+        type: 2}
+      propertyPath: m_Alpha
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ab4d347eb710e444f843c2db83fb2ee1, type: 2}
   m_IsPrefabParent: 0
