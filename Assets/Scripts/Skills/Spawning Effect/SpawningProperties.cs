@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Skills/Properties/Area Effect")]
 public class SpawningProperties : BaseProperties
 {
-    [BackgroundColor(0.5f, 0.5f, 0f, 0.5f)]
+    [BackgroundColor(0.8f, 0.3f, 0.5f, 0.5f)]
     [Header("Area Effect Properties")]
     [SerializeField]
     private GameObject

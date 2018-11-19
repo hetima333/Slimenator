@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class BaseProperties : ScriptableObject 
 {
-    [BackgroundColor(0.7f, 0.0f, 0.5f, 0.3f)]
+    [BackgroundColor(0.8f, 0.4f, 0.5f, 0.3f)]
     [Header("Audio")]
     [Tooltip("Audio clips, leave empty if no audio should be played")]
     [SerializeField]
