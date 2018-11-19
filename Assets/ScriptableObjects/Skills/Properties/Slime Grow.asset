@@ -11,6 +11,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca731fcea334a8446926bd4b3f24015d, type: 3}
   m_Name: Slime Grow
   m_EditorClassIdentifier: 
+  _CastingAudio: {fileID: 0}
+  _EndingAudio: {fileID: 0}
+  _IsCastingAudioLoop: 0
+  _IsEndingAudioLoop: 0
   _StartingParticle: {fileID: 0}
   _EndingParticle: {fileID: 0}
   _Radius: 30

@@ -474,11 +474,6 @@ Prefab:
       propertyPath: _Camera
       value: 
       objectReference: {fileID: 786092756}
-    - target: {fileID: 114645841446893710, guid: d8cee6a6bac30c9458bb392d98cdb343,
-        type: 2}
-      propertyPath: _SkillStoreSFX
-      value: 
-      objectReference: {fileID: 8300000, guid: 63719820795e7eb428e743dc729db86f, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d8cee6a6bac30c9458bb392d98cdb343, type: 2}
   m_IsPrefabParent: 0

@@ -11,8 +11,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c65c188f4e6a30419aa87e60efe5c63, type: 3}
   m_Name: SlimeBazookaProperties
   m_EditorClassIdentifier: 
-  _MovingParticle: {fileID: 0}
-  _ImpactParticle: {fileID: 1609091412045728, guid: 256489c086de3354c8463714da03a14c,
+  _CastingAudio: {fileID: 0}
+  _EndingAudio: {fileID: 0}
+  _IsCastingAudioLoop: 0
+  _IsEndingAudioLoop: 0
+  _MovingParticle: {fileID: 1199832738952986, guid: 65e25b1015ee3804e90095fd2df1588a,
+    type: 2}
+  _ImpactParticle: {fileID: 1683314513829474, guid: be2d49ec8fbdee240aded2530507aa52,
     type: 2}
   _ShakeOnTraveling: 0
   _ShakeOnImpact: 1

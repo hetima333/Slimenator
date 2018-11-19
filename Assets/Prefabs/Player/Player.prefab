@@ -3007,6 +3007,11 @@ MonoBehaviour:
   _baseSkill: {fileID: 11400000, guid: 4f203488e8646e248a88079e91126339, type: 2}
   _combiSkill: {fileID: 11400000, guid: f99c96af4be7dbb41aadfb0eae2d5767, type: 2}
   _CastingPoint: {fileID: 1442902808025174}
+  _SkillStoreSFX: {fileID: 8300000, guid: 63719820795e7eb428e743dc729db86f, type: 3}
+  _SkillCombinationSFX: {fileID: 0}
+  _VacuumSFX: {fileID: 0}
+  _SuckSFX: {fileID: 0}
+  _WalkingSFX: {fileID: 0}
 --- !u!114 &114676757198629502
 MonoBehaviour:
   m_ObjectHideFlags: 1
