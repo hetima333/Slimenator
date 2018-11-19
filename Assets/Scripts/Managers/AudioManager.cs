@@ -97,7 +97,7 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager> {
 	/// </summary>
 	/// <param name="name">ファイル名</param>
 	public void StopSE(string name) {
-		var source = _seSourceList.FirstOrDefault(x => name == x.clip.name);
+		var source = _seSourceList.Where(x => x.clip != null).FirstOrDefault(x => name == x.clip.name);
 		if (source == null) {
 			return;
 		}
@@ -111,7 +111,7 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager> {
 	/// </summary>
 	/// <param name="name">ファイル名</param>
 	public void StopSELoop(string name) {
-		var source = _seSourceList.FirstOrDefault(x => name == x.clip.name);
+		var source = _seSourceList.Where(x => x.clip != null).FirstOrDefault(x => name == x.clip.name);
 		if (source == null) {
 			return;
 		}
