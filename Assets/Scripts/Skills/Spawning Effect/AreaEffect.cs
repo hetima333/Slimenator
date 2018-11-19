@@ -13,11 +13,15 @@ public class AreaEffect : MonoBehaviour
         _Delay;
 
     private bool
-        _SpawnedEnding;
+        _SpawnedEnding,
+        _PlayedCastingAudio,
+        _PlayedEndingAudio;
 
     public void Init(SpawningProperties Properties)
     {
         _SpawnedEnding = false;
+        _PlayedCastingAudio = _PlayedEndingAudio = false;
+
 
         _Properties = Properties;
         ParticleInterface ParticlePI = null;
@@ -30,6 +34,15 @@ public class AreaEffect : MonoBehaviour
 
             GameObject temp = Instantiate(_Properties.GetStartingParticle(), gameObject.transform);
             Destroy(temp, _StartingTime);
+
+            if(!_PlayedCastingAudio)
+            {
+                if(_Properties.GetCastingAudio() != null)
+                {
+                    _PlayedCastingAudio = true;
+                    AudioManager.Instance.PlaySE(_Properties.GetCastingAudio().name, _Properties.IsCastingLoop());
+                }
+            }
         }
         else
             _StartingTime = 0;
@@ -59,8 +72,37 @@ public class AreaEffect : MonoBehaviour
                 _SpawnedEnding = true;
             }
 
+            if(_PlayedCastingAudio)
+            {
+                if (_Properties.IsCastingLoop())
+                {
+                    AudioManager.Instance.StopSELoop(_Properties.GetCastingAudio().name);
+                    _PlayedCastingAudio = false;
+                }
+            }
+
+            if (!_PlayedEndingAudio)
+            {
+                if (_Properties.GetEndingAudio() != null)
+                {
+                    _PlayedEndingAudio = true;
+                    AudioManager.Instance.PlaySE(_Properties.GetEndingAudio().name, _Properties.IsEndingLoop());
+                }
+            }
+
             if (_EndingTime <= 0)
+            {
                 gameObject.SetActive(false);
+
+                if (_PlayedEndingAudio)
+                {
+                    if (_Properties.IsEndingLoop())
+                    {
+                        AudioManager.Instance.StopSELoop(_Properties.GetEndingAudio().name);
+                        _PlayedEndingAudio = false;
+                    }
+                }
+            }
             else
                 _EndingTime -= Time.deltaTime;
         }

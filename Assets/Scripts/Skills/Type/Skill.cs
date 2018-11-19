@@ -4,6 +4,20 @@ using UnityEngine;
 
 public abstract class Skill : ScriptableObject
 {
+    [BackgroundColor(0.7f, 0.0f, 0.5f, 0.3f)]
+    [Header("Audio")]
+    [Tooltip("Audio clips, leave empty if no audio should be played")]
+    [SerializeField]
+    private AudioClip
+        _CastingAudio,
+        _ChannelingAudio;
+
+    [Tooltip("Tick if audio should loop")]
+    [SerializeField]
+    private bool
+        _IsCastingAudioLoop,
+        _IsChannelingAudioLoop;
+
     [BackgroundColor(0f, 1f, 0f, 0.5f)]
     [Header("Skills Properties")]
     [Tooltip("Skill is created via Combinations")]
@@ -86,12 +100,18 @@ public abstract class Skill : ScriptableObject
         _Multiplyer, 
         _ScreenShakeTimer;
 
+    private bool
+        _PlayedChannelingAudio,
+        _PlayedCastingAudio;
+
     [SerializeField]
     private uint
         _AnimationID;
 
     public virtual void Init()
     {
+        _PlayedCastingAudio = _PlayedChannelingAudio = false;
+
         if (_ChannelingParticle != null)
         {
             ParticleInterface ChannelingParticlePI = _ChannelingParticle.GetComponent<ParticleInterface>();
@@ -137,6 +157,15 @@ public abstract class Skill : ScriptableObject
                 Debug.Log("---CHANNELING SKILL---");
             }
 
+            if (_PlayedChannelingAudio)
+            {
+                if (_IsChannelingAudioLoop)
+                {
+                    AudioManager.Instance.StopSELoop(_ChannelingAudio.name);
+                    _PlayedChannelingAudio = false;
+                }
+            }
+
             if (IsSkillOver())
             {
                 if (_CastingParticleCopy != null)
@@ -145,9 +174,27 @@ public abstract class Skill : ScriptableObject
                     _CastingParticleCopy = null;
                     Debug.Log("---CASTING SKILL---");
                 }
+
+                if (_PlayedCastingAudio)
+                {
+                    if (_IsCastingAudioLoop)
+                    {
+                        AudioManager.Instance.StopSELoop(_CastingAudio.name);
+                        _PlayedCastingAudio = false;
+                    }
+                }
             }
             else
             {
+                if (!_PlayedCastingAudio)
+                {
+                    if (_CastingAudio != null)
+                    {
+                        _PlayedCastingAudio = true;
+                        AudioManager.Instance.PlaySE(_CastingAudio.name, _IsCastingAudioLoop);
+                    }
+                }
+
                 if (_ScreenShakeTimer <= 0 && _CastingShakeScreen)
                 {
                     for (int i = 0; i < _Multiplyer; ++i)
@@ -170,6 +217,15 @@ public abstract class Skill : ScriptableObject
                 for (int i = 0; i < _Multiplyer; ++i)
                     _ShakeScreenEvent.InvokeAllListeners();
                 _ScreenShakeTimer = _ShakeScreenDelay;
+            }
+
+            if (!_PlayedChannelingAudio)
+            {
+                if (_ChannelingAudio != null)
+                {
+                    _PlayedChannelingAudio = true;
+                    AudioManager.Instance.PlaySE(_ChannelingAudio.name, _IsChannelingAudioLoop);
+                }
             }
 
             if (_ChannelingParticle != null && _ChannelingParticleCopy == null)
@@ -247,6 +303,24 @@ public abstract class Skill : ScriptableObject
         {
             Destroy(_CastingParticleCopy);
             _CastingParticleCopy = null;
+        }
+
+        if (_PlayedCastingAudio)
+        {
+            if (_IsCastingAudioLoop)
+            {
+                AudioManager.Instance.StopSELoop(_CastingAudio.name);
+                _PlayedCastingAudio = false;
+            }
+        }
+
+        if (_PlayedChannelingAudio)
+        {
+            if (_IsChannelingAudioLoop)
+            {
+                AudioManager.Instance.StopSELoop(_ChannelingAudio.name);
+                _PlayedChannelingAudio = false;
+            }
         }
     }
 

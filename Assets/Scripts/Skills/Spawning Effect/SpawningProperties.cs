@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Skills/Properties/Area Effect")]
-public class SpawningProperties : ScriptableObject
+public class SpawningProperties : BaseProperties
 {
     [BackgroundColor(0.5f, 0.5f, 0f, 0.5f)]
     [Header("Area Effect Properties")]

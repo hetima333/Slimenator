@@ -30,6 +30,10 @@ public abstract class Projectile : MonoBehaviour
         _multiplyer, 
         _shaketimer = 0;
 
+    protected bool
+      _PlayedCastingAudio,
+      _PlayedEndingAudio;
+
     public abstract void Init(Vector3 dir, float speed, ProjectileProperties projectile_properties, List<StatusEffect> Status, GameObjectList Targetable, float timer = 5, float damage = 1, float multiplyer = 1, float percentage = 0);
 
     public void SetStatusEffect(List<StatusEffect> statusEffects)
@@ -48,11 +52,38 @@ public abstract class Projectile : MonoBehaviour
                 _shaketimer = _ProjectileProperties.GetShakeDelay();
             }
         }
+
+        if (!_PlayedCastingAudio)
+        {
+            if (_ProjectileProperties.GetCastingAudio() != null)
+            {
+                _PlayedCastingAudio = true;
+                AudioManager.Instance.PlaySE(_ProjectileProperties.GetCastingAudio().name, _ProjectileProperties.IsCastingLoop());
+            }
+        }
     }
 
     protected virtual void Dead()
     {
         gameObject.SetActive(false);
+
+        if(_PlayedCastingAudio)
+        {
+            if(_ProjectileProperties.IsCastingLoop())
+            {
+                AudioManager.Instance.StopSELoop(_ProjectileProperties.GetCastingAudio().name);
+                _PlayedCastingAudio = false;
+            }
+        }
+
+        if (!_PlayedEndingAudio)
+        {
+            if (_ProjectileProperties.GetEndingAudio() != null)
+            {
+                _PlayedEndingAudio = true;
+                AudioManager.Instance.PlaySE(_ProjectileProperties.GetEndingAudio().name, _ProjectileProperties.IsEndingLoop());
+            }
+        }
 
         if (_ProjectileProperties.ShakeOnImpact())
         {

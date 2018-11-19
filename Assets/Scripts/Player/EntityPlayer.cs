@@ -326,7 +326,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable
         if(Input.anyKeyDown)
         {
             int temp = 0;
-            bool is_pressed = false; ;
+            bool is_pressed = false;
             foreach (KeyCode vKey in System.Enum.GetValues(typeof(KeyCode)))
             {
                 if (Input.GetKey(vKey))

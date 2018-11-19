@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Skills/Properties/Projectile")]
-public class ProjectileProperties : ScriptableObject
+public class ProjectileProperties : BaseProperties
 {
     [BackgroundColor(0.5f, 0.5f, 0f, 0.5f)]
     [Header("Projectile Properties")]
