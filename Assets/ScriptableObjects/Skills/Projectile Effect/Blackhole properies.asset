@@ -11,6 +11,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c65c188f4e6a30419aa87e60efe5c63, type: 3}
   m_Name: Blackhole properies
   m_EditorClassIdentifier: 
+  _CastingAudio: {fileID: 0}
+  _EndingAudio: {fileID: 8300000, guid: 5886022a0ba488148808723bb4b6aa87, type: 3}
+  _IsCastingAudioLoop: 0
+  _IsEndingAudioLoop: 0
   _MovingParticle: {fileID: 1783820332162922, guid: 7c460cf7fffd6ce4d8c3b6f625ed6680,
     type: 2}
   _ImpactParticle: {fileID: 1783820332162922, guid: 7c460cf7fffd6ce4d8c3b6f625ed6680,
@@ -25,3 +29,4 @@ MonoBehaviour:
     type: 2}
   _SpawningObjects: {fileID: 11400000, guid: 04a4afc9e526b5a4c973eea57cfc65bb, type: 2}
   _startingTier: {fileID: 0}
+  _HasRandomMotion: 0
