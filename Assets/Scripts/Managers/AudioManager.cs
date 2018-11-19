@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -93,6 +93,32 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager> {
 	}
 
 	/// <summary>
+	/// SEの停止
+	/// </summary>
+	/// <param name="name">ファイル名</param>
+	public void StopSE(string name) {
+		var source = _seSourceList.FirstOrDefault(x => name == x.clip.name);
+		if (source == null) {
+			return;
+		}
+		// 念のためループ解除
+		source.loop = false;
+		source.Stop();
+	}
+
+	/// <summary>
+	/// SEのループ停止
+	/// </summary>
+	/// <param name="name">ファイル名</param>
+	public void StopSELoop(string name) {
+		var source = _seSourceList.FirstOrDefault(x => name == x.clip.name);
+		if (source == null) {
+			return;
+		}
+		source.loop = false;
+	}
+
+	/// <summary>
 	/// BGMの再生
 	/// </summary>
 	/// <param name="name">ファイル名</param>
@@ -114,17 +140,5 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager> {
 	/// </summary>
 	public void StopBGM() {
 		_bgmSource.Stop();
-	}
-
-	/// <summary>
-	/// SEのループ停止
-	/// </summary>
-	/// <param name="name">ファイル名</param>
-	public void StopSELoop(string name) {
-		var source = _seSourceList.FirstOrDefault(x => name == x.clip.name);
-		if (source == null) {
-			return;
-		}
-		source.loop = false;
 	}
 }
