@@ -1746,6 +1746,15 @@ MonoBehaviour:
   - clip: {fileID: 7400004, guid: ed8a9c994fae58946be072e80328d405, type: 3}
     name: Attack2
     defaultState: 0
+  - clip: {fileID: 7400008, guid: ed8a9c994fae58946be072e80328d405, type: 3}
+    name: Damage
+    defaultState: 0
+  - clip: {fileID: 7400018, guid: ed8a9c994fae58946be072e80328d405, type: 3}
+    name: Open
+    defaultState: 0
+  - clip: {fileID: 7400006, guid: ed8a9c994fae58946be072e80328d405, type: 3}
+    name: Close
+    defaultState: 0
 --- !u!114 &114708319668736618
 MonoBehaviour:
   m_ObjectHideFlags: 1

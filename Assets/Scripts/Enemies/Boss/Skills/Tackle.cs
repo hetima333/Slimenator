@@ -5,8 +5,6 @@ using UnityEngine;
 public class Tackle : BossSkill {
 
 	// Use this for initialization
-
-	private Rigidbody _rid;
 	void Start () {
 		_rid = gameObject.GetComponent<Rigidbody> ();
 		_maxCoolTime = 7;

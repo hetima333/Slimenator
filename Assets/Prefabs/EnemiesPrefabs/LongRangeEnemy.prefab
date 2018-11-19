@@ -1781,6 +1781,9 @@ MonoBehaviour:
   - clip: {fileID: 7400004, guid: 043335303ea42c44380b3ac5241db83d, type: 3}
     name: Dead
     defaultState: 0
+  - clip: {fileID: 7400018, guid: 043335303ea42c44380b3ac5241db83d, type: 3}
+    name: Damage
+    defaultState: 0
 --- !u!114 &114300097105584400
 MonoBehaviour:
   m_ObjectHideFlags: 1

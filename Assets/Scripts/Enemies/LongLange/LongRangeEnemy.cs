@@ -1,7 +1,7 @@
 ﻿/// 遠距離攻撃タイプの敵
 /// Enemy of Long Range Type
 /// Athor：Yuhei Mastumura
-/// Last edit date：2018/10/25
+/// Last edit date：2018/11/15
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,6 +14,7 @@ public class LongRangeEnemy : Enemy {
     const float ATTACK_RANGE = 10.0f;
     const float MOVE_RANGE = 10.0f;
     const float MONEY = 50.0f;
+    const float PATIENCE_VALUE = 15.0f;
 
     //移動スクリプト
     EnemyMove _move;
@@ -28,6 +29,8 @@ public class LongRangeEnemy : Enemy {
 
         //ステータスのセット
         SetStatus (Enemy.Type.RANGE, MaxHitPoint, Speed, SEARCH_RANGE, ATTACK_RANGE, MOVE_RANGE, MONEY);
+        //忍耐値のセット
+        _patienceValue = PATIENCE_VALUE;
         //移動コンポーネントの取得
         _move = GetComponent<EnemyMove> ();
         //リジットボディの取得
@@ -46,6 +49,9 @@ public class LongRangeEnemy : Enemy {
 
         _status.UpdateStatMultiplyer (ref _properties);
         TakeDamage (_status.GetValue (EnumHolder.EffectType.TAKEDAMAGE));
+
+        //被ダメアニメーション中は行動できない
+        if (IsDamaged == true) return;
 
         switch (CurrentState) {
 
@@ -112,6 +118,7 @@ public class LongRangeEnemy : Enemy {
         _animName = "Attack";
     }
 
+    //発見時
     public override void Discover (GameObject obj) {
         if (CurrentState != Enemy.State.DEAD) {
             //Set Target
@@ -121,6 +128,7 @@ public class LongRangeEnemy : Enemy {
         }
     }
 
+    //攻撃判定開始（AnimationEvent用）
     void StartHit () {
         if (_bullet) {
             //make bullet 
@@ -134,10 +142,11 @@ public class LongRangeEnemy : Enemy {
         }
     }
 
+    //攻撃判定終了（AnimationEvent用）
     void EndHit () {
 
         if (CurrentState == State.DEAD) return;
-
+        //待機アニメーション
         _anim.CrossFade ("Idle", 0);
         //行動終了
         IsAction = false;
