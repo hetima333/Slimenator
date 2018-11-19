@@ -111,6 +111,14 @@ public class EntityPlayer : MonoBehaviour, IDamageable
     private GameObject
         _CastingPoint;
 
+    [SerializeField]
+    private AudioClip
+        _SkillStoreSFX,
+        _SkillCombinationSFX,
+        _VacuumSFX,
+        _SuckSFX,
+        _WalkingSFX;
+
     private void Awake()
     {
         _CurrentSkillOutcome = null;
@@ -496,6 +504,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable
                 _Skills.RemoveAt(0);
 
             ResetOrbSlots();
+            AudioManager.Instance.PlaySE(_SkillStoreSFX.name);
 
             _CurrentSkillOutcome = null;
         }

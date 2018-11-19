@@ -161,7 +161,7 @@ public abstract class Skill : ScriptableObject
             {
                 if (_IsChannelingAudioLoop)
                 {
-                    AudioManager.Instance.StopSELoop(_ChannelingAudio.name);
+                    AudioManager.Instance.StopSE(_ChannelingAudio.name);
                     _PlayedChannelingAudio = false;
                 }
             }
@@ -179,7 +179,7 @@ public abstract class Skill : ScriptableObject
                 {
                     if (_IsCastingAudioLoop)
                     {
-                        AudioManager.Instance.StopSELoop(_CastingAudio.name);
+                        AudioManager.Instance.StopSE(_CastingAudio.name);
                         _PlayedCastingAudio = false;
                     }
                 }
@@ -309,7 +309,7 @@ public abstract class Skill : ScriptableObject
         {
             if (_IsCastingAudioLoop)
             {
-                AudioManager.Instance.StopSELoop(_CastingAudio.name);
+                AudioManager.Instance.StopSE(_CastingAudio.name);
                 _PlayedCastingAudio = false;
             }
         }
@@ -318,7 +318,7 @@ public abstract class Skill : ScriptableObject
         {
             if (_IsChannelingAudioLoop)
             {
-                AudioManager.Instance.StopSELoop(_ChannelingAudio.name);
+                AudioManager.Instance.StopSE(_ChannelingAudio.name);
                 _PlayedChannelingAudio = false;
             }
         }

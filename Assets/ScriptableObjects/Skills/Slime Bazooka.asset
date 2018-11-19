@@ -11,6 +11,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4f745ea35a19d14c94dfa52e1e271e7, type: 3}
   m_Name: Slime Bazooka
   m_EditorClassIdentifier: 
+  _CastingAudio: {fileID: 8300000, guid: e3d4121176e556742b5a1ca0f8cbc9f5, type: 3}
+  _ChannelingAudio: {fileID: 0}
+  _IsCastingAudioLoop: 0
+  _IsChannelingAudioLoop: 0
   _Combination:
   - {fileID: 11400000, guid: 753eac8bb53ca58458e5f20416ea0092, type: 2}
   - {fileID: 11400000, guid: 3598f9cad2b4e094e8abf6dc11ad1944, type: 2}
@@ -28,8 +32,8 @@ MonoBehaviour:
   _Description: 'Shoots a bazooka '
   _ChannelingParticle: {fileID: 0}
   _CastingParticle: {fileID: 0}
-  _ChannelingTime: 0
-  _CastingTime: 0
+  _ChannelingTime: 0.4
+  _CastingTime: 0.01
   _AnimationID: 2
   _Projectile: {fileID: 1762178163839322, guid: ac48cf082fcd82843a04c8748fdaa940,
     type: 2}

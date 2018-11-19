@@ -11,6 +11,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7680328c40acfd74aa9871324511c607, type: 3}
   m_Name: Frost Blast
   m_EditorClassIdentifier: 
+  _CastingAudio: {fileID: 8300000, guid: cac6551d210ecdc4893d5ccc84aeb73f, type: 3}
+  _ChannelingAudio: {fileID: 0}
+  _IsCastingAudioLoop: 1
+  _IsChannelingAudioLoop: 0
   _Combination:
   - {fileID: 0}
   - {fileID: 0}

@@ -76,7 +76,7 @@ public class AreaEffect : MonoBehaviour
             {
                 if (_Properties.IsCastingLoop())
                 {
-                    AudioManager.Instance.StopSELoop(_Properties.GetCastingAudio().name);
+                    AudioManager.Instance.StopSE(_Properties.GetCastingAudio().name);
                     _PlayedCastingAudio = false;
                 }
             }
@@ -98,7 +98,7 @@ public class AreaEffect : MonoBehaviour
                 {
                     if (_Properties.IsEndingLoop())
                     {
-                        AudioManager.Instance.StopSELoop(_Properties.GetEndingAudio().name);
+                        AudioManager.Instance.StopSE(_Properties.GetEndingAudio().name);
                         _PlayedEndingAudio = false;
                     }
                 }

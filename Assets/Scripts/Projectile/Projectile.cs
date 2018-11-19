@@ -71,7 +71,7 @@ public abstract class Projectile : MonoBehaviour
         {
             if(_ProjectileProperties.IsCastingLoop())
             {
-                AudioManager.Instance.StopSELoop(_ProjectileProperties.GetCastingAudio().name);
+                AudioManager.Instance.StopSE(_ProjectileProperties.GetCastingAudio().name);
                 _PlayedCastingAudio = false;
             }
         }
