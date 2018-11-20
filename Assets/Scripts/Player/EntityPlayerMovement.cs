@@ -35,11 +35,6 @@ public class EntityPlayerMovement : MonoBehaviour
         _IsUsingMouse = true;
     }
 
-    // Update is called once per frame
-    private void Update()
-    {
-    }
-
     private void FixedUpdate()
     {
         if (_EntityPlayer.GetPlayerState() != EnumHolder.States.DIE &&
