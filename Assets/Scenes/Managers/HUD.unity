@@ -576,36 +576,6 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114482000690584196, guid: 7474dd014c97246e6ac9e73543778c45,
-        type: 2}
-      propertyPath: m_RaycastTarget
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114326125817826024, guid: 7474dd014c97246e6ac9e73543778c45,
-        type: 2}
-      propertyPath: m_FontData.m_RichText
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114314679382847756, guid: 7474dd014c97246e6ac9e73543778c45,
-        type: 2}
-      propertyPath: m_RaycastTarget
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114099552305619836, guid: 7474dd014c97246e6ac9e73543778c45,
-        type: 2}
-      propertyPath: m_RaycastTarget
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114979406720038326, guid: 7474dd014c97246e6ac9e73543778c45,
-        type: 2}
-      propertyPath: m_FontData.m_RichText
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114326125817826024, guid: 7474dd014c97246e6ac9e73543778c45,
-        type: 2}
-      propertyPath: m_RaycastTarget
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7474dd014c97246e6ac9e73543778c45, type: 2}
   m_IsPrefabParent: 0
@@ -1404,6 +1374,16 @@ Prefab:
     - target: {fileID: 225712038271796860, guid: ab4d347eb710e444f843c2db83fb2ee1,
         type: 2}
       propertyPath: m_Alpha
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114933752197990344, guid: ab4d347eb710e444f843c2db83fb2ee1,
+        type: 2}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114718596726324414, guid: ab4d347eb710e444f843c2db83fb2ee1,
+        type: 2}
+      propertyPath: m_RaycastTarget
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
