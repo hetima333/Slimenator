@@ -13,12 +13,10 @@ public class EnumHolder : SingletonMonoBehaviour<EnumHolder>
 
     public enum States
     {
+        DIE,
         IDLE,
         MOVING,
-        ATTACKING,
-        CASTING,
-        KICKING,
-        DIE
+        KICKING
     }
 
     public enum EffectType
@@ -36,6 +34,7 @@ public class EnumHolder : SingletonMonoBehaviour<EnumHolder>
         SUCKING,
         PUSHING,
         SPAWNING,
+        GROWING,
         DAMAGE,
     }
 

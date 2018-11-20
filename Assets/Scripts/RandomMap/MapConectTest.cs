@@ -6,9 +6,7 @@ public class MapConectTest : MonoBehaviour
 {
     [SerializeField]
     private RandomMapGenerator _mapGen;
-
     private const int BLOCK_SIZE = 80;
-
     private int _baseBlockInfo;  // 繋がれる側のブロックの情報
     private OneRoomInfo _nextBlock;	// つなぐ側のブロックの情報
 
@@ -48,11 +46,6 @@ public class MapConectTest : MonoBehaviour
         int nextCorridor = (bitData << 1) % (15);
 
         // TODO：修正 1111はまわしたら0になります　
-        if (nextCorridor == 15)
-        {
-            print("何かがおかしい");
-        }
-
         if (nextCorridor == 0)
         {
             nextCorridor = 15;
@@ -66,11 +59,6 @@ public class MapConectTest : MonoBehaviour
         int nextCorridor = (bitData << 1) % (15);
         nextCorridor = (nextCorridor << 1) % (15);
         // TODO：修正 1111はまわしたら0になります　
-        if (nextCorridor == 15)
-        {
-            print("何かがおかしい");
-        }
-
         if (nextCorridor == 0)
         {
             nextCorridor = 15;

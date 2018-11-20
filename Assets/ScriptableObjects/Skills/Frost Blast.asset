@@ -11,6 +11,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7680328c40acfd74aa9871324511c607, type: 3}
   m_Name: Frost Blast
   m_EditorClassIdentifier: 
+  _CastingAudio: {fileID: 8300000, guid: cac6551d210ecdc4893d5ccc84aeb73f, type: 3}
+  _ChannelingAudio: {fileID: 0}
+  _IsCastingAudioLoop: 1
+  _IsChannelingAudioLoop: 0
   _Combination:
   - {fileID: 0}
   - {fileID: 0}
@@ -19,12 +23,19 @@ MonoBehaviour:
   _Targetable: {fileID: 11400000, guid: 921fd2909285c1b40ac6aee462dd0d4a, type: 2}
   _StatusEffect:
   - {fileID: 11400000, guid: a983e4dbbcbe3714fb3bab69798f84e7, type: 2}
-  _StatusApplyPercentage: 30
+  _StatusApplyPercentage: 15
   _Damage: 1
   _RestrictUserMovement: 0
+  _ChannelingShakeScreen: 0
+  _CastingShakeScreen: 0
+  _ShakeScreenDelay: 0
+  _ShakeScreenEvent: {fileID: 0}
   _Description: Breathes out a cone of frost
   _ChannelingParticle: {fileID: 0}
-  _CastingParticle: {fileID: 1842664229368296, guid: e77da83b1249e6e4fb1132c45464e885,
+  _CastingParticle: {fileID: 1390921644045378, guid: 38467e27ce18b0f4380211cb200cd975,
     type: 2}
+  _ChannelingTime: 0
+  _CastingTime: 0
+  _AnimationID: 1
   _CastingType: {fileID: 11400000, guid: 7777f7888ac2cc243ad6e788a1715d00, type: 2}
   _AttackDelay: 0.5

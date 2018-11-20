@@ -8,7 +8,6 @@ public class EventInvokeButton : Editor
 {
     GameEvent GameEvent;
     Object source;
-    ScriptableObject so;
 
     public override void OnInspectorGUI()
     {

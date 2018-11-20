@@ -18,8 +18,7 @@ public class CameraFollowTarget : MonoBehaviour
     private void Start()
     {
         _v3_target_position = _go_target.transform.position;  //Setting the target position to a Vector3 variable
-
-        transform.position = new Vector3(
+        transform.position = new Vector3(   
               _v3_target_position.x - (((_go_target.transform.forward).normalized).x * _offSet),
               _v3_target_position.y + _offSet,
               _v3_target_position.z - (((_go_target.transform.forward).normalized).z * _offSet));

@@ -34,29 +34,28 @@ public class TankEnemy : Enemy {
 
     private float[] _comboDelay = { 1.5f, 0.8f, 1.7f };
 
-    public override void Init(Stats _stat)
-    {
+    public override void Init (Stats _stat) {
         _properties = _stat;
 
         //ステータスのセット
-        SetStatus(Enemy.Type.TANK, MaxHitPoint, Speed, SEARCH_RANGE, ATTACK_RANGE, MOVE_RANGE, MONEY);
+        SetStatus (Enemy.Type.TANK, MaxHitPoint, Speed, SEARCH_RANGE, ATTACK_RANGE, MOVE_RANGE, MONEY);
         //移動コンポーネントの取得
-        _move = GetComponent<EnemyMove>();
+        _move = GetComponent<EnemyMove> ();
         //リジットボディの取得
-        RigidbodyProperties = GetComponent<Rigidbody>();
-        _searchObj = transform.Find("SearchRange").gameObject;
-        _searchObj.GetComponent<SearchPlayer>().Initialize();
+        RigidbodyProperties = GetComponent<Rigidbody> ();
+        _searchObj = transform.Find ("SearchRange").gameObject;
+        _searchObj.GetComponent<SearchPlayer> ().Initialize ();
         //自由移動ポジション設定
-        _freeMovePosition = _move.SetMovePos();
+        _freeMovePosition = _move.SetMovePos ();
         //武器プレハブの取得
-        SetWeapons();
+        SetWeapons ();
     }
 
     // Update is called once per frame
     void Update () {
 
-        _status.UpdateStatMultiplyer(ref _properties);
-        TakeDamage(_status.GetValue(EnumHolder.EffectType.TAKEDAMAGE));
+        _status.UpdateStatMultiplyer (ref _properties);
+        TakeDamage (_status.GetValue (EnumHolder.EffectType.TAKEDAMAGE));
 
         if (!_isSleeping) {
             switch (CurrentState) {
@@ -65,29 +64,33 @@ public class TankEnemy : Enemy {
                     //待機
                     StartCoroutine (_move.Idle ());
                     _anim.CrossFade ("Idle", 0);
+                    _animName = "Idle";
                     break;
 
                 case State.FREE:
                     //自由移動
                     _move.FreeMove ();
                     _anim.CrossFade ("Move", 0.5f);
+                    _animName = "Move";
                     break;
 
                 case State.DISCOVERY:
                     //プレイヤー追従
                     _move.Move2Player ();
                     _anim.CrossFade ("Move", 0.5f);
+                    _animName = "Move";
                     break;
 
                 case State.RETURN:
                     //初期位置に帰る
                     _move.Return2FirstPos ();
                     _anim.CrossFade ("Move", 0.5f);
+                    _animName = "Move";
                     break;
 
                 case State.ATTACK:
                     //攻撃開始
-                    StartCoroutine (Attack ());
+                    Attack ();
                     break;
 
                 default:
@@ -99,14 +102,14 @@ public class TankEnemy : Enemy {
     }
 
     //攻撃コルーチン
-    private IEnumerator Attack () {
+    private void Attack () {
         //行動中はreturn
-        if (IsAction || CurrentState == State.DEAD) yield break;
+        if (IsAction || CurrentState == State.DEAD) return;
         //攻撃範囲から出れば攻撃をやめる
         if ((gameObject.transform.position - _target.transform.position).sqrMagnitude > Mathf.Pow (_attackRange, 2) + ERROR_RANGE) {
             CurrentState = State.DISCOVERY;
             _comboCount = 0;
-            yield break;
+            return;
         }
         //行動開始
         IsAction = true;
@@ -123,19 +126,13 @@ public class TankEnemy : Enemy {
 
         _anim.CrossFade ("Attack" + (_comboCount + 1).ToString (), 0);
 
-        //TODO行動終了までの時間経過
-        yield return new WaitForSeconds (_comboDelay[_comboCount]);
-
-        if (CurrentState == State.DEAD) yield break;
+        _animName = "Attack" + (_comboCount + 1).ToString ();
 
         //コンボのカウント増加
         _comboCount++;
         if (_comboCount > 2) {
             _comboCount = 0;
         }
-
-        //行動終了
-        IsAction = false;
     }
 
     private void SetWeapons () {
@@ -198,6 +195,9 @@ public class TankEnemy : Enemy {
     void EndHit () {
         //武器の判定を消す
         _weaponList.ForEach (weapon => weapon.GetComponent<EnemyWeapon> ().ActiveCollision (false));
+
+        //行動終了
+        IsAction = false;
     }
 
 }

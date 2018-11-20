@@ -10,6 +10,7 @@ TagManager:
   - Helper
   - Projectile
   - Slime
+  - PassageCollidor
   layers:
   - Default
   - TransparentFX
@@ -28,7 +29,7 @@ TagManager:
   - Wall
   - BossRoomPassage
   - Slime
-  - 
+  - Shuter
   - 
   - 
   - 

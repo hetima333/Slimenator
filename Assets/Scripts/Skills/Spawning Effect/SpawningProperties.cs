@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Skills/Properties/Area Effect")]
-public class SpawningProperties : ScriptableObject
+public class SpawningProperties : BaseProperties
 {
-    [BackgroundColor(0.5f, 0.5f, 0f, 0.5f)]
+    [BackgroundColor(0.8f, 0.3f, 0.5f, 0.5f)]
     [Header("Area Effect Properties")]
     [SerializeField]
     private GameObject
@@ -33,7 +33,7 @@ public class SpawningProperties : ScriptableObject
     protected GameObjectList
         _Objects;
 
-    [Tooltip("[FOR SPAWNING] Tier determines the size and power of spawned Object")]
+    [Tooltip("[FOR SPAWNING/GROWING] Tier determines the size and power of spawned Object")]
     [SerializeField]
     public SkillTier
      _startingTier;
