@@ -42,9 +42,10 @@ public class EntityPlayer : MonoBehaviour, IDamageable
         _Casting_Animation_ID;
 
     private bool
-        _RestrictMovement, 
-        _Cast_Trigger, 
-        _Is_Casting;
+        _RestrictMovement,
+        _Cast_Trigger,
+        _Is_Casting,
+        _Is_VacuumSFXPlayed;
 
     private Status
         _Status;
@@ -83,7 +84,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable
     private Animator
         _Animator;
 
-	public float MaxHitPoint {get { return _Player_Stats.MaxHealthProperties * _Player_Stats.HealthMultiplyerProperties; } }
+    public float MaxHitPoint {get { return _Player_Stats.MaxHealthProperties * _Player_Stats.HealthMultiplyerProperties; } }
 	public float HitPoint {get { return _Player_Stats.HealthProperties; } }
     public float MoneyAmount { get { return _Money; } }
     public float Speed
@@ -114,7 +115,6 @@ public class EntityPlayer : MonoBehaviour, IDamageable
     [SerializeField]
     private AudioClip
         _SkillStoreSFX,
-        _SkillCombinationSFX,
         _VacuumSFX,
         _SuckSFX,
         _WalkingSFX;
@@ -125,6 +125,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable
         _CurrentSelection = 0;
         _Cast_Trigger = false;
         _Is_Casting = false;
+        _Is_VacuumSFXPlayed = false;
 
         _Player_Stats = EnumHolder.Instance.GetStats(gameObject.name);
 
@@ -144,6 +145,10 @@ public class EntityPlayer : MonoBehaviour, IDamageable
         _CheckFuntions.Add(EnumHolder.States.MOVING, MovingCheckFunction);
         _CheckFuntions.Add(EnumHolder.States.KICKING, KickingCheckFunction);
         _CheckFuntions.Add(EnumHolder.States.DIE, DieCheckFunction);
+
+        _SuckingParticle.SetActive(false);
+        _SuckingRadius.SetActive(false);
+        _Animator.SetBool("IsSucking", false);
     }
 
     private void IdleCheckFunction()
@@ -239,15 +244,6 @@ public class EntityPlayer : MonoBehaviour, IDamageable
     // Update is called once per frame
     private void Update()
     {
-        if (_SuckingParticle.activeSelf)
-            _SuckingParticle.SetActive(false);
-
-        if (_SuckingRadius.activeSelf)
-            _SuckingRadius.SetActive(false);
-
-        if(_Animator.GetBool("IsSucking"))
-            _Animator.SetBool("IsSucking", false);
-
         _Status.UpdateStatMultiplyer(ref _Player_Stats);
         TakeDamage(_Status.GetValue(EnumHolder.EffectType.TAKEDAMAGE));
 
@@ -264,7 +260,29 @@ public class EntityPlayer : MonoBehaviour, IDamageable
             {
                 StartSuck();
                 _Animator.SetBool("IsSucking", true);
+
+                if (!_Is_VacuumSFXPlayed)
+                {
+                    _Is_VacuumSFXPlayed = true;
+                    AudioManager.Instance.PlaySE(_VacuumSFX.name, true);
+                }
+
             }
+            else if (_Is_VacuumSFXPlayed)
+            {
+                _Is_VacuumSFXPlayed = false;
+                AudioManager.Instance.StopSE(_VacuumSFX.name);
+
+                if (_SuckingParticle.activeSelf)
+                    _SuckingParticle.SetActive(false);
+
+                if (_SuckingRadius.activeSelf)
+                    _SuckingRadius.SetActive(false);
+
+                if (_Animator.GetBool("IsSucking"))
+                    _Animator.SetBool("IsSucking", false);
+            }
+
 
             //Reset
             if (Input.GetKeyDown(KeyCode.LeftControl))
