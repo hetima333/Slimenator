@@ -52,6 +52,22 @@ public class MapConectTest : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            for (int i = 0; i < _mapSize.y; i++)
+            {
+                for (int j = 0; j < _mapSize.x; j++)
+                {
+                    var passagePos = 0;
+                    if (_mapGen._maps[j, i] != null)
+                    {
+                        passagePos = _mapGen._maps[j, i].passagePos;
+                    }
+                    print("[" + j + "," + i + "] = " + System.Convert.ToString(passagePos, 2));
+                }
+            }
+        }
     }
 
     // ブロックオブジェクトのbitデータを時計回りに1回だけ90°回転させる
@@ -86,21 +102,15 @@ public class MapConectTest : MonoBehaviour
             {
 
                 // 最奥行でなければ奥のマスを確認してつなぐ
-                if (i != 0)
+                if (i != 0 && infoList[j, i - 1] != null)
                 {
-                    if (infoList[j, i - 1] != null)
-                    {
-                        ConectBlock(infoList[j, i - 1].passagePos, BitDirection.FRONT, new Vector2(j, i));
-                        continue;
-                    }
+                    ConectBlock(infoList[j, i - 1].passagePos, BitDirection.FRONT, new Vector2(j, i));
+                    continue;
                 }
 
                 // 最左列でなければ右のマスを確認してつなぐ
-                if (j != 0)
-                {
-                    if (infoList[j - 1, i] != null)
-                        ConectBlock(infoList[j - 1, i].passagePos, BitDirection.RIGHT, new Vector2(j, i));
-                }
+                if (j != 0 && infoList[j - 1, i] != null)
+                    ConectBlock(infoList[j - 1, i].passagePos, BitDirection.RIGHT, new Vector2(j, i));
             }
         }
     }
@@ -180,5 +190,5 @@ public class MapConectTest : MonoBehaviour
 
         _mapGen._maps[(int)position.x, (int)position.y] = block;
     }
-    
+
 }
