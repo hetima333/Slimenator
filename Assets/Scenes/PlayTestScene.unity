@@ -317,7 +317,7 @@ Prefab:
         type: 2}
       propertyPath: _enemys.Array.data[1]._object
       value: 
-      objectReference: {fileID: 1772466507498902, guid: 36548978b6c2a0e4d9ce1c93145a8506,
+      objectReference: {fileID: 1106937644777684, guid: 36548978b6c2a0e4d9ce1c93145a8506,
         type: 2}
     - target: {fileID: 114016712845709412, guid: 05418d951fdb48e498028fd64f0b8898,
         type: 2}

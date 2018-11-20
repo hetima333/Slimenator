@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class BossSkill : MonoBehaviour {
 
+	public enum AttackType {
+
+		PHYSICAL,
+		SHOT
+	}
+
+	public AttackType _Type;
+
 	public float _maxCoolTime = 5.0f;
 	public float _coolTime;
 

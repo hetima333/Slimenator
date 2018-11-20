@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class TestBoss : BossBase, IDamageable {
+public class TestBoss : BossBase {
 
     //TODO Boss Performance
     const float MAX_HP = 3000.0f;
@@ -20,14 +20,22 @@ public class TestBoss : BossBase, IDamageable {
     [SerializeField]
     private GameObject Boss2;
 
+    private Material _matA;
+    private Material _matB;
+
+    private GameObject _body;
+
     // Use this for initialization
     void Start () {
         SetStatus ();
         PhaseUp ();
         _target = GameObject.Find ("Player");
+        _body = transform.Find ("Body").gameObject;
         _anim = GetComponent<SimpleAnimation> ();
         _anim.CrossFade ("Idle", 0);
-
+        //マテリアルの取得
+        _matA = (Material) Resources.Load ("Material/BossA");
+        _matB = (Material) Resources.Load ("Material/BossB");
     }
 
     // Update is called once per frame
@@ -53,7 +61,7 @@ public class TestBoss : BossBase, IDamageable {
     }
 
     //ダメージを受ける
-    public void TakeDamage (float damage) {
+    public new void TakeDamage (float damage) {
         _hp -= damage;
 
         if (_hp <= 0) {
@@ -73,17 +81,21 @@ public class TestBoss : BossBase, IDamageable {
 
         if (_canUseSkillList.Count == 0) { Debug.Log ("今使えるの無い"); return; }
 
-        Vector3 lookPos = _target.transform.position;
-
-        lookPos.y = gameObject.transform.position.y;
-
-        transform.LookAt (lookPos);
-
         //ランダムなスキルを呼び出す。
         if (_canUseSkillList.Count != 0) {
             var skill = _canUseSkillList[Random.Range (0, _canUseSkillList.Count)];
             //一回前に使ったスキルではない。かつ発動できる場合実行
             if (skill != _previousSkill) {
+
+                Vector3 lookPos = _target.transform.position;
+                lookPos.y = gameObject.transform.position.y;
+                transform.LookAt (lookPos);
+
+                if (skill._Type == BossSkill.AttackType.PHYSICAL) {
+                    _body.GetComponent<Renderer> ().material = _matA;
+                } else {
+                    _body.GetComponent<Renderer> ().material = _matB;
+                }
                 skill.Action ();
                 _previousSkill = skill;
                 _canUseSkillList.Remove (skill);

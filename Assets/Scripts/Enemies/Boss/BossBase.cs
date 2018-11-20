@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 [RequireComponent (typeof (Rigidbody))]
 [RequireComponent (typeof (SimpleAnimation))]
-public class BossBase : MonoBehaviour {
+public class BossBase : MonoBehaviour, IDamageable {
 
 	public enum State {
 		ALIVE,
@@ -48,5 +48,9 @@ public class BossBase : MonoBehaviour {
 
 	[SerializeField]
 	public bool _canAnimation = true;
+
+	public void TakeDamage (float damage) {
+		_hp -= damage;
+	}
 
 }

@@ -9,9 +9,11 @@ public class FrontSlimeShot : BossSkill {
 	// Use this for initialization
 	void Start () {
 		_slimeBullet = Resources.Load ("EnemyItem/SlimeBullet", typeof (GameObject)) as GameObject;
+		_Type = AttackType.SHOT;
 	}
 
 	override public void Action () {
+		_rid.velocity = Vector3.zero;
 		if (_boss._canAnimation) {
 			_boss._anim.CrossFade ("Shot", 0);
 		} else {

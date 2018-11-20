@@ -10,6 +10,7 @@ public class Tackle : BossSkill {
 		_maxCoolTime = 7;
 		_coolTime = _maxCoolTime;
 		_target = GameObject.Find ("Player");
+		_Type = AttackType.PHYSICAL;
 	}
 
 	override public void Action () {

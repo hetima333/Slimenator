@@ -9,15 +9,23 @@ public class AroundSlimeShot : BossSkill {
 	// Use this for initialization
 	void Start () {
 		_slimeBullet = Resources.Load ("EnemyItem/SlimeBullet", typeof (GameObject)) as GameObject;
+		_Type = AttackType.SHOT;
 	}
 
 	override public void Action () {
-		for (int i = 0; i < 12; i++) {
-			CreateShotObject (i * 30.0f);
+		_rid.velocity = Vector3.zero;
+		if (_boss._canAnimation) {
+			_boss._anim.CrossFade ("Shot2", 0);
+		} else {
+			for (int i = 0; i < 12; i++) {
+
+				_canActive = false;
+				CreateShotObject (i * 30.0f);
+
+			}
+			_actTime = 1.0f;
+			_boss.GetComponent<BossBase> ()._isAction = true;
 		}
-		_actTime = 1.0f;
-		_canActive = false;
-		_boss.GetComponent<BossBase> ()._isAction = true;
 
 	}
 
@@ -26,5 +34,14 @@ public class AroundSlimeShot : BossSkill {
 		var shotObject = shot.GetComponent<SlimeBullet> ();
 		shotObject.SetCharacterObject (gameObject);
 		shotObject.SetForwordAxis (Quaternion.AngleAxis (axis, Vector3.up));
+	}
+
+	void ShotStart () {
+		for (int i = 0; i < 12; i++) {
+			_canActive = false;
+			CreateShotObject (i * 30.0f);
+		}
+		_actTime = 1.0f;
+		_boss.GetComponent<BossBase> ()._isAction = true;
 	}
 }
