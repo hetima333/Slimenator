@@ -30,7 +30,7 @@ MonoBehaviour:
   _ShakeScreenDelay: 0.3
   _ShakeScreenEvent: {fileID: 11400000, guid: 394f8c5eb16cafe4ea6e1d5f750f7259, type: 2}
   _Description: Grants you the ability to suck monsters.
-  _ChannelingParticle: {fileID: 1783820332162922, guid: 7c460cf7fffd6ce4d8c3b6f625ed6680,
+  _ChannelingParticle: {fileID: 1408977243535944, guid: 073e147167e75d8439668ad333e172cd,
     type: 2}
   _CastingParticle: {fileID: 1716658819991312, guid: 66b9643a89d531f4eb7af376ad47f697,
     type: 2}
