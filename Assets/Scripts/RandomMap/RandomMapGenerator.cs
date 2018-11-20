@@ -31,15 +31,6 @@ public class RandomMapGenerator : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        //マップ全体の配列初期化
-        // _map = new int[_width, _depth];
-        // for (int z = 0; z < _depth; z++)
-        // {
-        //     for (int x = 0; x < _width; x++)
-        //     {
-        //         _map[x, z] = 0;
-        //     }
-        // }
 
     }
 
@@ -61,19 +52,15 @@ public class RandomMapGenerator : MonoBehaviour
         {
             for (int x = 0; x < _width; x++)
             {
-                System.Threading.Thread.Sleep(1);
+                //System.Threading.Thread.Sleep(1);
                 //60%の確率で生成する
-                if (RogueUtils.RandomJadge(0.6f))
-                {
+                //if (RandomUtils.RandomJadge(0.6f))
+                //{
                     int firstRoom;
                     do
                     {
                         //最初に生成する部屋をランダムに決定する
-                        firstRoom = RogueUtils.GetRandomInt(0, count - 1);
-                        //部屋の通路の情報を取得
-                        //_rooms[firstRoom].JudgmentPassage();
-                        Debug.Log("passage:" + System.Convert.ToString(_rooms[firstRoom].passagePos, 2));
-                        Debug.Log("configurat passage:" + firstRoom);
+                        firstRoom = RandomUtils.GetRandomInt(0, count - 1);
                         //通路が1つのみの部屋は除外
                     } while ((_rooms[firstRoom].passagePos == (int)OneRoomInfo.PASSAGE.BACK) ||
                     (_rooms[firstRoom].passagePos == (int)OneRoomInfo.PASSAGE.RIGHT) ||
@@ -82,17 +69,14 @@ public class RandomMapGenerator : MonoBehaviour
 
                     //部屋を生成する
                     GameObject room = Instantiate(_rooms[firstRoom].gameObject, new Vector3(x * modelSizeX, 0, z * modelSizeZ), new Quaternion());
-                    //_rooms[firstRoom].JudgmentPassage();
-                    Debug.Log("最初の部屋のpassagePos = " + System.Convert.ToString(_rooms[firstRoom].passagePos, 2));
                     room.transform.SetParent(transform);
                     //地形がデータをマップに知らせる
                     _maps[x, z] = _rooms[firstRoom];
-                    Debug.Log("room object:" + _maps[x, z].gameObject);
 
                     //部屋の通路の情報を取得
-                    Debug.Log("map pos:" + new Vector2(x, z));
+                    //Debug.Log("map pos:" + new Vector2(x, z));
                     return;
-                }
+                //}
 
             }
         }

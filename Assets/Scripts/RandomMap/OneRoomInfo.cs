@@ -33,6 +33,8 @@ public class OneRoomInfo : MonoBehaviour
 
     void Start()
     {
+        passagePos = 0;
+
         //通路の位置の判別
         if (_isBackPassage)
             passagePos |= (int)PASSAGE.BACK;
