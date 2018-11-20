@@ -87,8 +87,8 @@ public class HPBarCreater : MonoBehaviour {
 		_target = GetComponent<IDamageable>();
 
 		// 各パラメータの初期化
-		hpbar.Init(_target);
 		var hpbar = _canvas.GetComponentInChildren<HPBarCore>();
+		hpbar.Init(_target);
 		hpbar.UseDamagePop = _useDamagePop;
 	}
 }
