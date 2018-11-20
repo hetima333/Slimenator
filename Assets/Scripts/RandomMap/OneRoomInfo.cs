@@ -6,22 +6,22 @@ using UnityEngine;
 /// 1つの部屋の情報
 /// </summary>
 /// 
-[System.Serializable]
-public class OneRoomInfo
+//[System.Serializable]
+public class OneRoomInfo : MonoBehaviour
 {
     //1部屋の地形オブジェクト
-    public GameObject obj;
+    //public GameObject obj;
     //奥に通路があるか
-    public bool isBackPassage;
+    public bool _isBackPassage;
     //右に通路があるか
-    public bool isRightPassage;
+    public bool _isRightPassage;
     //手前に通路があるか
-    public bool isFrontPassage;
+    public bool _isFrontPassage;
     //左に通路があるか
-    public bool isLeftPassage;
+    public bool _isLeftPassage;
 
     //通路の位置
-    public int passagePos = 0;
+    public int passagePos;
 
     public enum PASSAGE
     {
@@ -31,19 +31,18 @@ public class OneRoomInfo
         LEFT = 8
     };
 
-    /// <summary>
-    /// 通路の位置の判別
-    /// </summary>
-    public void JudgmentPassage()
+    void Start()
     {
-        if (isBackPassage)
+        //通路の位置の判別
+        if (_isBackPassage)
             passagePos |= (int)PASSAGE.BACK;
-        if (isRightPassage)
+        if (_isRightPassage)
             passagePos |= (int)PASSAGE.RIGHT;
-        if (isFrontPassage)
+        if (_isFrontPassage)
             passagePos |= (int)PASSAGE.FRONT;
-        if (isLeftPassage)
+        if (_isLeftPassage)
             passagePos |= (int)PASSAGE.LEFT;
+    
     }
 
 }

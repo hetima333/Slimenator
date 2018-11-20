@@ -88,7 +88,7 @@ public class CreateRandomMap : MonoBehaviour
         transform.localScale = new Vector3(_mapSize, _mapSize, _mapSize);
 
         //敵が全滅していたら
-        var distribute = GetComponent<Distribute>();
+        //var distribute = GetComponent<Distribute>();
         if (Input.GetKey(KeyCode.Space))// || distribute.IsEnemyAnnihilated())
         {
             Debug.Log("Open boss room passage!");

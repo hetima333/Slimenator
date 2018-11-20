@@ -11,7 +11,7 @@ public class MapConectTest : MonoBehaviour
     private const int BLOCK_SIZE = 80;
 
     private int _baseBlockInfo;  // 繋がれる側のブロックの情報
-    private GameObject _nextBlock;	// つなぐ側のブロックの情報
+    private OneRoomInfo _nextBlock;	// つなぐ側のブロックの情報
 
     public enum BitDirection
     {
@@ -46,7 +46,6 @@ public class MapConectTest : MonoBehaviour
         // Debug.Log("a=" + System.Convert.ToString(a, 2));
         // a = RotateBitClockwise(a);
         // Debug.Log("a=" + System.Convert.ToString(a, 2));
-
 
     }
 
@@ -138,7 +137,7 @@ public class MapConectTest : MonoBehaviour
 
         OneRoomInfo nextInfo = _mapGen.GetRoomInfos()[Random.Range(1, length)]; // プレハブリストからランダムに取得
 
-        _nextBlock = nextInfo.obj;
+        _nextBlock = nextInfo;
         int nextCorridor = nextInfo.passagePos;//通路データを取得
 
         print("nextCorridor:" + nextCorridor);
@@ -170,15 +169,16 @@ public class MapConectTest : MonoBehaviour
         rot = Quaternion.Euler(0.0f, 90.0f * i, 0.0f);
 
         // オブジェクトの生成
-        Instantiate(_nextBlock, pos, rot, gameObject.transform);
+        var block = Instantiate(_nextBlock, pos, rot, gameObject.transform);
 
         // つくったオブジェクトを配列に格納
-        OneRoomInfo roomInfo = new OneRoomInfo();
+        //OneRoomInfo roomInfo = new OneRoomInfo();
         // roomInfo.obj = _nextBlock;
 
-        roomInfo.passagePos = nextCorridor;
+        block.passagePos = nextCorridor;
 
 
-        _mapGen._maps[(int)position.x, (int)position.y] = roomInfo;
+        _mapGen._maps[(int)position.x, (int)position.y] = block;
     }
+    
 }

@@ -4,18 +4,17 @@ using UnityEngine;
 
 public class RandomMapGenerator : MonoBehaviour
 {
-    //部屋の登録
-    [SerializeField] private OneRoomInfo[] _rooms;
-
     //横幅
     [SerializeField] private int _width = 5;
     //奥行き
     [SerializeField] private int _depth = 4;
 
+    //部屋の登録
+    public OneRoomInfo[] _rooms;
+
     //マップ全体
     //private int[,] _map;
     public OneRoomInfo[,] _maps;
-
 
     //モデルサイズ
     static int modelSizeX = 80;
@@ -41,7 +40,6 @@ public class RandomMapGenerator : MonoBehaviour
         //         _map[x, z] = 0;
         //     }
         // }
-
 
     }
 
@@ -73,7 +71,7 @@ public class RandomMapGenerator : MonoBehaviour
                         //最初に生成する部屋をランダムに決定する
                         firstRoom = RogueUtils.GetRandomInt(0, count - 1);
                         //部屋の通路の情報を取得
-                        _rooms[firstRoom].JudgmentPassage();
+                        //_rooms[firstRoom].JudgmentPassage();
                         Debug.Log("passage:" + System.Convert.ToString(_rooms[firstRoom].passagePos, 2));
                         Debug.Log("configurat passage:" + firstRoom);
                         //通路が1つのみの部屋は除外
@@ -83,19 +81,15 @@ public class RandomMapGenerator : MonoBehaviour
                     (_rooms[firstRoom].passagePos == (int)OneRoomInfo.PASSAGE.LEFT));
 
                     //部屋を生成する
-                    GameObject room = Instantiate(_rooms[firstRoom].obj, new Vector3(x * modelSizeX, 0, z * modelSizeZ), new Quaternion());
-                    _rooms[firstRoom].JudgmentPassage();
+                    GameObject room = Instantiate(_rooms[firstRoom].gameObject, new Vector3(x * modelSizeX, 0, z * modelSizeZ), new Quaternion());
+                    //_rooms[firstRoom].JudgmentPassage();
                     Debug.Log("最初の部屋のpassagePos = " + System.Convert.ToString(_rooms[firstRoom].passagePos, 2));
                     room.transform.SetParent(transform);
                     //地形がデータをマップに知らせる
                     _maps[x, z] = _rooms[firstRoom];
-                    Debug.Log("room object:" + _maps[x, z].obj);
+                    Debug.Log("room object:" + _maps[x, z].gameObject);
 
                     //部屋の通路の情報を取得
-                    //_rooms[firstRoom].JudgmentPassage();
-                    //Debug.Log("passage:" + _rooms[firstRoom].passagePos);
-                    //Debug.Log("passage:" + System.Convert.ToString(_rooms[firstRoom].passagePos, 2));
-                    //_map[x, z] = 1;
                     Debug.Log("map pos:" + new Vector2(x, z));
                     return;
                 }
