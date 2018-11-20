@@ -158,6 +158,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 328622efd06378b46847fa2ccae7a025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _createPoint:
+  - {fileID: 0}
+  - {fileID: 0}
+  _slimeSpooner:
+    _object: {fileID: 1711871630936228, guid: 933bbbd2ea7c9a64c8322cbcf7350da7, type: 2}
+  _enemys:
+  - _object: {fileID: 1368410216600654, guid: 065392f26bf24bb4883cc37b354c59b5, type: 2}
+  - _object: {fileID: 1772466507498902, guid: 36548978b6c2a0e4d9ce1c93145a8506, type: 2}
+  - _object: {fileID: 1080958911619074, guid: 34e919bf364425d43a17b3544e78a98a, type: 2}
 --- !u!114 &114874106773353214
 MonoBehaviour:
   m_ObjectHideFlags: 1
