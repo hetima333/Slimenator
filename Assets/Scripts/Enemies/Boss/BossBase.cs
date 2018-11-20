@@ -1,19 +1,30 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+[RequireComponent (typeof (Rigidbody))]
+[RequireComponent (typeof (SimpleAnimation))]
 public class BossBase : MonoBehaviour {
 
+	public enum State {
+		ALIVE,
+		DEAD
+	}
+
+	public State _state = State.ALIVE;
+
 	protected const float ACT_INTERVAL = 1.0f;
-
 	protected float _actInterval = ACT_INTERVAL;
-
 	public float _maxHp;
 	public float _hp;
 	//インタフェース用最大Hp取得
 	public float MaxHitPoint { get { return _maxHp; } }
 	//インタフェース用現在Hp取得
 	public float HitPoint { get { return _hp; } }
+
+	[SerializeField]
+	public bool _isGround = true;
+
+	public bool IsGround { get { return _isGround; } }
 
 	public GameObject _target;
 
@@ -34,5 +45,8 @@ public class BossBase : MonoBehaviour {
 	public List<BossSkill> _skillList = new List<BossSkill> ();
 
 	public List<BossSkill> _canUseSkillList = new List<BossSkill> ();
+
+	[SerializeField]
+	public bool _canAnimation = true;
 
 }

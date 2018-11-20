@@ -25,11 +25,15 @@ public class TestBoss : BossBase, IDamageable {
         SetStatus ();
         PhaseUp ();
         _target = GameObject.Find ("Player");
+        _anim = GetComponent<SimpleAnimation> ();
+        _anim.CrossFade ("Idle", 0);
 
     }
 
     // Update is called once per frame
     void Update () {
+
+        if (_state == State.DEAD) return;
 
         _actInterval -= Time.deltaTime; {
             if (_actInterval <= 0) {
@@ -108,7 +112,8 @@ public class TestBoss : BossBase, IDamageable {
                 break;
             case 3:
                 //分裂
-                StartCoroutine (Split ());
+                _state = State.DEAD;
+                Split ();
                 break;
             default:
 
@@ -117,12 +122,17 @@ public class TestBoss : BossBase, IDamageable {
 
     }
 
-    private IEnumerator Split () {
+    private void Split () {
+        //分裂アニメーション開始
+        _anim.CrossFade ("Split", 0);
+        _isAction = true;
 
-        Debug.Log ("分裂");
+    }
 
-        yield return new WaitForSeconds (3);
+    void SplitEnd () {
+        Debug.Log ("分裂完了");
         Vector3 Pos = gameObject.transform.position;
+        Pos.y = 2;
 
         Vector3 OffSet = new Vector3 (10, 0, 0);
 
@@ -140,6 +150,7 @@ public class TestBoss : BossBase, IDamageable {
 
         Destroy (gameObject);
         //ObjectManager.Instance.ReleaseObject (gameObject);
+
     }
 
 }

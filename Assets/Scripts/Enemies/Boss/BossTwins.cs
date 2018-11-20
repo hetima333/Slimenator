@@ -13,11 +13,6 @@ public class BossTwins : BossBase, IDamageable {
 
 	private float graceTime = 5f;
 
-	[SerializeField]
-	private bool _isGround;
-
-	public bool IsGround { get { return _isGround; } }
-
 	// Use this for initialization
 	void Start () {
 		SetStatus ();
@@ -28,12 +23,6 @@ public class BossTwins : BossBase, IDamageable {
 
 	// Update is called once per frame
 	void Update () {
-
-		if (gameObject.transform.position.y > 3.2f) {
-			_isGround = false;
-		} else {
-			_isGround = true;
-		}
 
 		_actInterval -= Time.deltaTime; {
 			if (_actInterval <= 0) {

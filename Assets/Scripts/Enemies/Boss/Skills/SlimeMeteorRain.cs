@@ -17,7 +17,8 @@ public class SlimeMeteorRain : BossSkill {
 
 		MeteorFall (20);
 		_canActive = false;
-		_boss.GetComponent<BossBase> ()._isAction = true;
+
+		_boss._isAction = true;
 
 	}
 

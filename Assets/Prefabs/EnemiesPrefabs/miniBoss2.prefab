@@ -24,6 +24,8 @@ GameObject:
   - component: {fileID: 54288581376842030}
   - component: {fileID: 114218945424782938}
   - component: {fileID: 135703289947674888}
+  - component: {fileID: 95785223160522086}
+  - component: {fileID: 114496054205416112}
   m_Layer: 13
   m_Name: miniBoss2
   m_TagString: Untagged
@@ -185,6 +187,23 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!95 &95785223160522086
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1495927005282174}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 1
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114218945424782938
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -198,6 +217,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHp: 0
   _hp: 0
+  _isGround: 0
   _target: {fileID: 0}
   _isAction: 0
   _anim: {fileID: 0}
@@ -205,9 +225,56 @@ MonoBehaviour:
   _previousSkill: {fileID: 0}
   _skillList: []
   _canUseSkillList: []
+  _canAnimation: 0
   _avatar: {fileID: 0}
   _isAlone: 0
-  _isGround: 0
+--- !u!114 &114496054205416112
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1495927005282174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3759e2aae0f7b9a47bb98fc64bf3c543, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingMode: 1
+  m_WrapMode: 0
+  m_Clip: {fileID: 7400002, guid: 2ff7f16170809b04e888c3ae62e6c2cf, type: 3}
+  m_States:
+  - clip: {fileID: 7400002, guid: 2ff7f16170809b04e888c3ae62e6c2cf, type: 3}
+    name: Default
+    defaultState: 1
+  - clip: {fileID: 7400002, guid: 2ff7f16170809b04e888c3ae62e6c2cf, type: 3}
+    name: Idle
+    defaultState: 0
+  - clip: {fileID: 7400016, guid: 2ff7f16170809b04e888c3ae62e6c2cf, type: 3}
+    name: Shot
+    defaultState: 0
+  - clip: {fileID: 7400020, guid: 2ff7f16170809b04e888c3ae62e6c2cf, type: 3}
+    name: Damage
+    defaultState: 0
+  - clip: {fileID: 7400006, guid: 2ff7f16170809b04e888c3ae62e6c2cf, type: 3}
+    name: Jump
+    defaultState: 0
+  - clip: {fileID: 7400000, guid: 2ff7f16170809b04e888c3ae62e6c2cf, type: 3}
+    name: Tackle
+    defaultState: 0
+  - clip: {fileID: 7400018, guid: 2ff7f16170809b04e888c3ae62e6c2cf, type: 3}
+    name: Split
+    defaultState: 0
+  - clip: {fileID: 7400006, guid: 2ff7f16170809b04e888c3ae62e6c2cf, type: 3}
+    name: Fall
+    defaultState: 0
+  - clip: {fileID: 7400018, guid: 2ff7f16170809b04e888c3ae62e6c2cf, type: 3}
+    name: Split (2)
+    defaultState: 0
+  - clip: {fileID: 7400018, guid: 2ff7f16170809b04e888c3ae62e6c2cf, type: 3}
+    name: Split (3)
+    defaultState: 0
 --- !u!135 &135703289947674888
 SphereCollider:
   m_ObjectHideFlags: 1

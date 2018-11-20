@@ -13,14 +13,14 @@ public class BossSkill : MonoBehaviour {
 
 	public GameObject _target;
 
-	public GameObject _boss;
+	public BossBase _boss;
 
 	public Collider _col;
 
 	public Rigidbody _rid;
 
 	private void Awake () {
-		_boss = this.gameObject;
+		_boss = this.gameObject.GetComponent<BossBase> ();
 
 		_coolTime = _maxCoolTime;
 
@@ -33,13 +33,15 @@ public class BossSkill : MonoBehaviour {
 	}
 
 	void Update () {
+
+		if (_boss._state == BossBase.State.DEAD) return;
+
 		if (!_isActive && !_canActive) {
 
 			_coolTime -= Time.deltaTime;
 			if (_coolTime <= 0) {
 				_coolTime = _maxCoolTime;
 				_canActive = true;
-
 			}
 
 			if (_actTime > 0) {
@@ -64,6 +66,9 @@ public class BossSkill : MonoBehaviour {
 		_col.material = null;
 		_isActive = false;
 		_boss.GetComponent<BossBase> ()._isAction = false;
+		if (_boss._canAnimation) {
+			_boss._anim.CrossFade ("Idle", 0);
+		}
 
 	}
 }

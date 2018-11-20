@@ -14,6 +14,10 @@ public class Tackle : BossSkill {
 
 	override public void Action () {
 		_actTime = 2.0f;
+		if (_boss._canAnimation) {
+			_boss._anim.CrossFade ("Tackle", 0);
+		}
+
 		Vector3 lookPos = _target.transform.position;
 		lookPos.y = gameObject.transform.position.y;
 		transform.LookAt (lookPos);
