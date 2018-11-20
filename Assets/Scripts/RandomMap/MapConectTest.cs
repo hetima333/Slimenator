@@ -7,7 +7,6 @@ public class MapConectTest : MonoBehaviour
     [SerializeField]
     private RandomMapGenerator _mapGen;
 
-
     private const int BLOCK_SIZE = 80;
 
     private int _baseBlockInfo;  // 繋がれる側のブロックの情報
@@ -35,39 +34,12 @@ public class MapConectTest : MonoBehaviour
 
         // マップの生成を実行
         GenerateMap(_mapGen._maps, _mapSize.y, _mapSize.x);
-
-        // int a = (int)(BitDirection.BACK | BitDirection.LEFT);
-        // Debug.Log("a=" + System.Convert.ToString(a, 2));
-        // a = RotateBitClockwise(a);
-        // Debug.Log("a=" + System.Convert.ToString(a, 2));
-        // a = RotateBitClockwise(a);
-        // Debug.Log("a=" + System.Convert.ToString(a, 2));
-        // a = RotateBitClockwise(a);
-        // Debug.Log("a=" + System.Convert.ToString(a, 2));
-        // a = RotateBitClockwise(a);
-        // Debug.Log("a=" + System.Convert.ToString(a, 2));
-
     }
 
     // Update is called once per frame
     void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            for (int i = 0; i < _mapSize.y; i++)
-            {
-                for (int j = 0; j < _mapSize.x; j++)
-                {
-                    var passagePos = 0;
-                    if (_mapGen._maps[j, i] != null)
-                    {
-                        passagePos = _mapGen._maps[j, i].passagePos;
-                    }
-                    print("[" + j + "," + i + "] = " + System.Convert.ToString(passagePos, 2));
-                }
-            }
-        }
     }
 
     // ブロックオブジェクトのbitデータを時計回りに1回だけ90°回転させる
@@ -76,8 +48,15 @@ public class MapConectTest : MonoBehaviour
         int nextCorridor = (bitData << 1) % (15);
 
         // TODO：修正 1111はまわしたら0になります　
+        if (nextCorridor == 15)
+        {
+            print("何かがおかしい");
+        }
+
         if (nextCorridor == 0)
+        {
             nextCorridor = 15;
+        }
         return nextCorridor;
     }
 
@@ -87,8 +66,15 @@ public class MapConectTest : MonoBehaviour
         int nextCorridor = (bitData << 1) % (15);
         nextCorridor = (nextCorridor << 1) % (15);
         // TODO：修正 1111はまわしたら0になります　
+        if (nextCorridor == 15)
+        {
+            print("何かがおかしい");
+        }
+
         if (nextCorridor == 0)
+        {
             nextCorridor = 15;
+        }
         return nextCorridor;
     }
 
@@ -126,13 +112,6 @@ public class MapConectTest : MonoBehaviour
     // ブロックの通路を調べ、つなげるかどうかを判定
     private bool CheckConect(BitDirection dir, int info)
     {
-        // そもそもこのますにオブジェクトがない
-        // if (info == 0)
-        // {
-        //     Debug.Log("通ってるよ");
-        //     return false;
-        // }
-
         // 判定方向に道がない
         if ((info & (int)dir) == 0)
             return false;
@@ -147,13 +126,13 @@ public class MapConectTest : MonoBehaviour
 
         OneRoomInfo nextInfo = _mapGen.GetRoomInfos()[Random.Range(1, length)]; // プレハブリストからランダムに取得
 
+        //通路データを取得
         _nextBlock = nextInfo;
-        int nextCorridor = nextInfo.passagePos;//通路データを取得
-
-        print("nextCorridor:" + nextCorridor);
+        int nextCorridor = nextInfo.passagePos;
 
         // 3回転以内でつながる
         int i = 0;
+        // TDOO: このループ気持ち悪いので今度直す
         while (i < 3)
         {
             // つながってなかったら
@@ -182,12 +161,7 @@ public class MapConectTest : MonoBehaviour
         var block = Instantiate(_nextBlock, pos, rot, gameObject.transform);
 
         // つくったオブジェクトを配列に格納
-        //OneRoomInfo roomInfo = new OneRoomInfo();
-        // roomInfo.obj = _nextBlock;
-
         block.passagePos = nextCorridor;
-
-
         _mapGen._maps[(int)position.x, (int)position.y] = block;
     }
 
