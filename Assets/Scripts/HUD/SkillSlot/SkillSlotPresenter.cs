@@ -12,13 +12,12 @@ using UnityEngine.UI;
 public class SkillSlotPresenter : MonoBehaviour {
 
 	// スロットの数はコアの静的メンバから取得
+	// MARK : 中央、右、左の順
 	[SerializeField]
 	private SkillImage[] _slots = new SkillImage[SkillSlotCore.SLOT_SIZE];
 
 	void Start() {
 		var core = GetComponent<SkillSlotCore>();
-
-		_slots = GetComponentsInChildren<SkillImage>();
 
 		// スロットの初期化
 		foreach (var slot in _slots) {
@@ -27,27 +26,29 @@ public class SkillSlotPresenter : MonoBehaviour {
 
 		// 選択中スキルが変更されたら
 		core.SelectedSkillNumber
-			// .DistinctUntilChanged()
+			.DistinctUntilChanged()
 			.Subscribe(selectedNumber => {
-				// 該当スキルの拡大率を変更する
-				var slotsTrans = _slots
-					.Select(slot => slot.GetComponent<RectTransform>())
-					.Select((Value, Index) => new { Value, Index });
-
-				// 拡大率の変更
-				foreach (var slot in slotsTrans) {
-					if (slot.Index == selectedNumber) {
-						slot.Value.localScale = Vector3.one * 1.2f;
-					} else {
-						slot.Value.localScale = Vector3.one;
+				for (int i = 0; i < SkillSlotCore.SLOT_SIZE; i++) {
+					int index = selectedNumber + i;
+					if (index >= SkillSlotCore.SLOT_SIZE) {
+						index -= SkillSlotCore.SLOT_SIZE;
 					}
+
+					if (index >= core.Slot.Count) {
+						return;
+					}
+					_slots[i].ChangeSkillImage(core.Slot[index]);
 				}
 			});
 
 		core.Slot.ObserveReplace()
 			.Where(x => x.NewValue != x.OldValue)
 			.Subscribe(x => {
-				_slots[x.Index].ChangeSkillImage(x.NewValue);
+				int index = core.SelectedSkillNumber.Value + x.Index;
+				if (index >= SkillSlotCore.SLOT_SIZE) {
+					index -= SkillSlotCore.SLOT_SIZE;
+				}
+				_slots[index].ChangeSkillImage(x.NewValue);
 			});
 	}
 }

@@ -19,10 +19,16 @@ public class SkillImage : MonoBehaviour {
 	private OrbSprites _sprites;
 
 	public void ChangeSkillImage(Skill skill) {
+		// スキルがあれば不透明にする
+		if (skill != null) {
+			_baseElementImage.color = new Color(1, 1, 1, 1);
+		}
+
 		// スキルがなければSpriteを空にする
 		if (skill == null) {
 			_baseElementImage.sprite = null;
 			_baseTierText.text = "";
+			_baseElementImage.color = new Color(1, 1, 1, 0);
 			_enchantmentImage.sprite = null;
 			_enchantmentTierText.text = "";
 		}

@@ -28,6 +28,17 @@ public class HPBarCore : MonoBehaviour {
 
 	private bool _initFlg = false;
 
+	// ダメージポップアップをするか？
+	private bool _useDamagePop = true;
+	public bool UseDamagePop {
+		get {
+			return _useDamagePop;
+		}
+		set {
+			_useDamagePop = value;
+		}
+	}
+
 	void InitAtOnce() {
 		// 初期化は一度だけ行なう
 		if (_initFlg) {
@@ -43,8 +54,8 @@ public class HPBarCore : MonoBehaviour {
 				// ダメージのポップ
 				var dmg = _slider.value - x;
 				// ダメージが1以上なら表示する
-				if (dmg > 0) {
-					DamagePoper.Instance.PopDamage(transform.parent, (int)dmg);
+				if (dmg > 0 && _useDamagePop) {
+					DamagePoper.Instance.PopDamage(transform.parent, (int) dmg);
 				}
 
 				_slider.value = x;
