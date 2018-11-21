@@ -215,6 +215,16 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager> {
 	}
 
 	/// <summary>
+	/// SEの停止とフェードアウト
+	/// </summary>
+	/// <param name="name">se name</param>
+	/// <param name="fadeTime">fade time</param>
+	public void StopSEWithFadeOut(string name, float fadeTime, float endVolume = 0.0f) {
+		var source = _seSourceList.Where(x => x.clip != null).FirstOrDefault(x => name == x.clip.name);
+		StartCoroutine(source.FadeOut(fadeTime, endVolume, true));
+	}
+
+	/// <summary>
 	/// BGMの再生
 	/// </summary>
 	/// <param name="name">ファイル名</param>
@@ -264,5 +274,14 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager> {
 	/// <param name="fadeTime">fade time</param>
 	public void FadeOutBGM(float fadeTime, float endVolume = 0.0f) {
 		StartCoroutine(_bgmSource.FadeOut(fadeTime, endVolume));
+	}
+
+	/// <summary>
+	/// BGMの停止とフェードアウト
+	/// </summary>
+	/// <param name="fadeTime"></param>
+	/// <param name="endVolume"></param>
+	public void StopBGMWithFadeOut(float fadeTime, float endVolume = 0.0f) {
+		StartCoroutine(_bgmSource.FadeOut(fadeTime, endVolume, true));
 	}
 }
