@@ -8,10 +8,13 @@ using UnityEngine;
 public class InsertObject : MonoBehaviour {
 
     //生成ボックス
-    [SerializeField] private GameObject[] _createPoint;
+    //[SerializeField] private GameObject[] _createPoint;
 
-	//プレイヤー
-	private GameObject _player;
+    //生成するスポナー
+    private GameObject[] _spawnerPoint;
+
+    //プレイヤー
+    private GameObject _player;
 
     //スライムスポナー
     [SerializeField] private SetObject _slimeSpooner;
@@ -97,14 +100,14 @@ public class InsertObject : MonoBehaviour {
     /// </summary>
     public void CreateObject()
     {
-        foreach (var createPoint in _createPoint)
+        //生成するオブジェクトの取得
+        _spawnerPoint = GameObject.FindGameObjectsWithTag("Spawner");
+
+        foreach (var spawn in _spawnerPoint)
         {
             //60%の確率で
             if (RandomUtils.RandomJadge(0.6f))
             {
-                //生成する位置ボックスをランダムに決定
-                var point = RandomUtils.GetRandomInt(0, _createPoint.Length - 1);
-
                 //生成する物をランダムに決定する
                 var type = RandomUtils.GetRandomInt((int)Type.SLIME, (int)Type.NUM - 1);
 
@@ -115,7 +118,7 @@ public class InsertObject : MonoBehaviour {
                         //敵のタイプをランダムに決定する
                         var enemyType = RandomUtils.GetRandomInt(0, _enemys.Length - 1);
                         //敵オブジェクトを生成する
-                        GameObject enemyObj = ObjectManager.Instance.InstantiateWithObjectPooling(_enemys[enemyType]._object, _createPoint[point].transform.position, new Quaternion());
+                        GameObject enemyObj = ObjectManager.Instance.InstantiateWithObjectPooling(_enemys[enemyType]._object, spawn.transform.position, new Quaternion());
                         Enemy temp_enemy = enemyObj.GetComponent<Enemy>();
                         if (temp_enemy != null)
                         {
@@ -126,7 +129,7 @@ public class InsertObject : MonoBehaviour {
                     //スライム
                     case (int)Type.SLIME:
                         //スライムスポナーを生成する
-                        GameObject slimeObj = ObjectManager.Instance.InstantiateWithObjectPooling(_slimeSpooner._object, _createPoint[point].transform.position, new Quaternion());
+                        GameObject slimeObj = ObjectManager.Instance.InstantiateWithObjectPooling(_slimeSpooner._object, spawn.transform.position, new Quaternion());
                         Debug.Log("create slime");
                         break;
                     //その他
