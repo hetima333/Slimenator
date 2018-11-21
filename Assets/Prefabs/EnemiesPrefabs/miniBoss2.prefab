@@ -20,11 +20,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4830603063190580}
   - component: {fileID: 33846100387953896}
-  - component: {fileID: 65990387666853758}
   - component: {fileID: 23294828624722454}
   - component: {fileID: 54288581376842030}
   - component: {fileID: 114218945424782938}
-  m_Layer: 11
+  - component: {fileID: 135703289947674888}
+  m_Layer: 13
   m_Name: miniBoss2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 33931430523534996}
   - component: {fileID: 65924116777385804}
   - component: {fileID: 23949600736927242}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: FrontMark
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -90,7 +90,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 039d60c518b6bc04ab08ef161e61214f, type: 2}
+  - {fileID: 2100000, guid: 357a40d77a539b14ab8d359616ddbd6f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -165,7 +165,7 @@ Rigidbody:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1495927005282174}
   serializedVersion: 2
-  m_Mass: 100
+  m_Mass: 20
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -182,18 +182,6 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!65 &65990387666853758
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1495927005282174}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -217,3 +205,18 @@ MonoBehaviour:
   _previousSkill: {fileID: 0}
   _skillList: []
   _canUseSkillList: []
+  _avatar: {fileID: 0}
+  _isAlone: 0
+  _isGround: 0
+--- !u!135 &135703289947674888
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1495927005282174}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.6
+  m_Center: {x: 0, y: 0, z: 0}

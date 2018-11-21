@@ -12,6 +12,7 @@ TagManager:
   - Slime
   - PassageCollidor
   - Spawner
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -26,7 +27,7 @@ TagManager:
   - 
   - Enemy
   - EnemyAttack
-  - 
+  - Boss
   - Wall
   - BossRoomPassage
   - Slime

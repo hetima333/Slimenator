@@ -1,7 +1,8 @@
 ﻿/// 敵の基本クラス
 /// Base class of enemies
 /// Athor： Yuhei Mastumura
-/// Last edit date：2018/10/25
+/// Last edit date：2018/11/15
+/// ★印は留学生に改変された部分
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -25,10 +26,6 @@ public abstract class Enemy : MonoBehaviour, IDamageable, ISuckable {
     [SerializeField]
     private State _currentState;
     public State CurrentState { get { return _currentState; } set { _currentState = value; } }
-    //状態異常
-    public enum BadState { NONE, FIRE, FREEZ, PARALYSIS }
-    private BadState _badState;
-    public BadState CurrentBadState { get { return _badState; } set { _badState = value; } }
 
     //移動速度
     public float Speed {
@@ -50,6 +47,11 @@ public abstract class Enemy : MonoBehaviour, IDamageable, ISuckable {
     public Vector3 _freeMovePosition;
     //初期座標
     public Vector3 _startPosition;
+    //ダメージを受けているか？（ダメージモーション中か）
+    private bool _isDamaged = false;
+    public bool IsDamaged { get { return _isDamaged; } set { _isDamaged = value; } }
+    //忍耐値（OVERでのけぞる）
+    public float _patienceValue = 10;
 
     //行動中か？
     [SerializeField]
@@ -64,14 +66,11 @@ public abstract class Enemy : MonoBehaviour, IDamageable, ISuckable {
     public GameObject _target;
     //シンプルアニメーション
     public SimpleAnimation _anim;
-
+    //現在再生中のアニメの名前
     public string _animName;
 
     protected Status _status;
     protected Stats _properties;
-
-    //[SerializeField]
-    //protected Animator _animator;
 
     //最大値
     public float MaxHitPoint { get { return _properties.MaxHealthProperties * _properties.HealthMultiplyerProperties; } }
@@ -86,8 +85,6 @@ public abstract class Enemy : MonoBehaviour, IDamageable, ISuckable {
         _enemyType = type;
         //初期はアイドル
         _currentState = State.IDLE;
-        //状態異常はなし
-        _badState = BadState.NONE;
         //体力
         _properties.HealthProperties = MaxHitPoint;
         //索敵範囲
@@ -112,35 +109,57 @@ public abstract class Enemy : MonoBehaviour, IDamageable, ISuckable {
         if (_currentState == State.DEAD) return;
 
         if (damage > 0) {
+            //ダメージ受ける
             _properties.HealthProperties -= damage;
-
+            //TODO被ダメが許容値を超えた場合
+            if (damage > _patienceValue) {
+                //被ダメアニメーション
+                _anim.CrossFade ("Damage", 0);
+                _animName = "Damage";
+                //ダメージ判定中
+                IsDamaged = true;
+            }
+            //HPが0になる=死んだとき
             if (_properties.HealthProperties <= 0) {
                 _currentState = State.DEAD;
-                StartCoroutine (Dying ());
+                //死んだときの処理
+                Dying ();
             }
         }
     }
 
+    //★アニメーションを状態異常に適応させるためのLateUpdate
     protected virtual void LateUpdate () {
+        //現在再生中のアニメがある
         if (_anim.GetState (_animName) != null)
+            //再生中のアニメのスピードが想定される再生速度と異なる場合
             if (_anim.GetState (_animName).speed != _properties.SpeedMultiplyerProperties) {
+                //再生速度の変更を行う
                 _anim.GetState (_animName).speed = _properties.SpeedMultiplyerProperties;
             }
     }
 
-    //死亡コルーチン
-    private IEnumerator Dying () {
+    //死亡アクション
+    private void Dying () {
         //Dead Animation
         _anim.CrossFade ("Dead", 0);
-        //Wait Animation End 
-        yield return new WaitForSeconds (2);
-        //Object Release
+
+    }
+
+    //死亡したときに呼ばれる関数（AnimationEvent）
+    public void Dead () {
         ObjectManager.Instance.ReleaseObject (gameObject);
     }
 
+    //発見時に呼ばれる関数
     public virtual void Discover (GameObject obj) { }
 
+    //★吸い込まれた時呼ばれる関数
     public void Sacking () {
         return;
+    }
+    //ダメージ判定終了（AnimationEvent用）
+    void EndDamage () {
+        IsDamaged = false;
     }
 }

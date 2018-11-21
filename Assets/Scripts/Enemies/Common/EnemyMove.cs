@@ -63,11 +63,7 @@ public class EnemyMove : MonoBehaviour {
             //向かう場所の方向を見る
             gameObject.transform.LookAt (_enemy._freeMovePosition);
             //移動
-            if (_enemy.CurrentBadState == Enemy.BadState.FREEZ) {
-                _enemy.RigidbodyProperties.velocity = transform.forward * _enemy.Speed / 2;
-            } else {
-                _enemy.RigidbodyProperties.velocity = transform.forward * _enemy.Speed;
-            }
+            _enemy.RigidbodyProperties.velocity = transform.forward * _enemy.Speed;
 
             if (_distance >= Mathf.Pow (_enemy._freeMoveRange, 2)) {
                 //戻り状態になる

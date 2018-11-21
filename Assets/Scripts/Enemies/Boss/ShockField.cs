@@ -49,7 +49,6 @@ public class ShockField : MonoBehaviour {
     }
 
     void OnTriggerEnter (Collider col) {
-        Debug.Log (col.gameObject.name);
         //Make sure the target has components
         var hasIDamageableObject = col.gameObject.GetComponent<IDamageable> ();
         //If have a IDamageable component

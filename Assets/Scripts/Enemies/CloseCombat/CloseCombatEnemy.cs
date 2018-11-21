@@ -1,7 +1,8 @@
 ﻿/// 近距離攻撃タイプの敵
 /// Enemy of Close Combat Type
 /// Athor： Yuhei Mastumura
-/// Last edit date：2018/10/17
+/// Last edit date：2018/11/19
+/// ★印は留学生に改変された部分
 
 using System.Collections;
 using System.Collections.Generic;
@@ -13,15 +14,20 @@ public class CloseCombatEnemy : Enemy {
     //const float MAX_HP = 40.0f;
     //const float MOVE_SPEED = 3.0f;
     const float SEARCH_RANGE = 6.0f;
-    const float ATTACK_RANGE = 4f;
+    const float ATTACK_RANGE = 4.0f;
     const float MOVE_RANGE = 3.0f;
     const float MONEY = 10.0f;
+    const float PATIENCE_VALUE = 15.0f;
 
     //移動スクリプト
     EnemyMove _move;
 
+    private bool _inMotion = false;
+
     [SerializeField]
     private List<GameObject> _weaponList;
+
+    private Enemy.State _tmpState = Enemy.State.IDLE;
 
     // Use this for initialization
     public override void Init (Stats _stat) {
@@ -29,10 +35,13 @@ public class CloseCombatEnemy : Enemy {
 
         //ステータスのセット
         SetStatus (Enemy.Type.MEEL, MaxHitPoint, Speed, SEARCH_RANGE, ATTACK_RANGE, MOVE_RANGE, MONEY);
+        //忍耐値のセット
+        _patienceValue = PATIENCE_VALUE;
         //移動コンポーネントの取得
         _move = GetComponent<EnemyMove> ();
         //リジットボディの取得
         RigidbodyProperties = GetComponent<Rigidbody> ();
+        //索敵用オブジェクトの取得
         _searchObj = transform.Find ("SearchRange").gameObject;
         _searchObj.GetComponent<SearchPlayer> ().Initialize ();
         //自由移動ポジション設定
@@ -45,8 +54,15 @@ public class CloseCombatEnemy : Enemy {
     // Update is called once per frame
     void Update () {
 
+        //★ステータスの更新
         _status.UpdateStatMultiplyer (ref _properties);
+        //★状態ダメージを受ける
         TakeDamage (_status.GetValue (EnumHolder.EffectType.TAKEDAMAGE));
+        //開閉アニメーションの為の状態チェック
+        StateCheck ();
+
+        //被ダメアニメーション中は行動できない
+        if (IsDamaged == true || _inMotion == true) return;
 
         switch (CurrentState) {
 
@@ -89,7 +105,7 @@ public class CloseCombatEnemy : Enemy {
         }
     }
 
-    //攻撃コルーチン
+    //攻撃
     private void Attack () {
         //行動中はreturn
         if (IsAction || CurrentState == State.DEAD) return;
@@ -116,6 +132,7 @@ public class CloseCombatEnemy : Enemy {
 
     }
 
+    //発見時
     public override void Discover (GameObject obj) {
         if (CurrentState != Enemy.State.DEAD) {
             //Set Target
@@ -162,4 +179,59 @@ public class CloseCombatEnemy : Enemy {
         //行動終了
         IsAction = false;
     }
+
+    void EndMotion () {
+        _inMotion = false;
+    }
+
+    //状態変化（移動等）の確認（開閉アニメーションの為の措置）
+    void StateCheck () {
+        //一個前の状態と現在の状態が異なる場合
+        if (_tmpState != CurrentState) {
+
+            switch (_tmpState) {
+                //待機状態からの変更の場合
+                case Enemy.State.IDLE:
+                    if (CurrentState == Enemy.State.DISCOVERY) {
+                        _anim.CrossFade ("Close", 0.5f);
+                        _inMotion = true;
+                    }
+                    break;
+
+                case Enemy.State.FREE:
+                    if (CurrentState == Enemy.State.DISCOVERY) {
+                        _anim.CrossFade ("Close", 0.5f);
+                        _inMotion = true;
+                    }
+                    break;
+
+                case Enemy.State.ATTACK:
+                    if (CurrentState == Enemy.State.DISCOVERY) {
+                        _anim.CrossFade ("Close", 0.5f);
+                        _inMotion = true;
+                    }
+                    break;
+
+                case Enemy.State.DISCOVERY:
+                    if (CurrentState == Enemy.State.ATTACK) {
+                        _anim.CrossFade ("Open", 0.5f);
+                        _inMotion = true;
+                    }
+
+                    if (CurrentState == Enemy.State.FREE) {
+                        _anim.CrossFade ("Open", 0.5f);
+                        _inMotion = true;
+                    }
+                    break;
+
+                default:
+                    break;
+
+            }
+
+            _tmpState = CurrentState;
+        }
+
+    }
+
 }

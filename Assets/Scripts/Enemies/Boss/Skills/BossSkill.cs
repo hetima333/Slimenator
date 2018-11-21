@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class BossSkill : MonoBehaviour {
 
-	public float _maxCoolTime = 3.0f;
+	public float _maxCoolTime = 5.0f;
 	public float _coolTime;
+
+	public float _actTime = 3.0f;
 	public bool _canActive = true;
 	public bool _isActive = false;
 
@@ -13,12 +15,20 @@ public class BossSkill : MonoBehaviour {
 
 	public GameObject _boss;
 
+	public Collider _col;
+
+	public Rigidbody _rid;
+
 	private void Awake () {
 		_boss = this.gameObject;
 
 		_coolTime = _maxCoolTime;
 
 		_target = _boss.GetComponent<BossBase> ()._target;
+
+		_col = gameObject.GetComponent<Collider> ();
+
+		_rid = gameObject.GetComponent<Rigidbody> ();
 
 	}
 
@@ -29,14 +39,29 @@ public class BossSkill : MonoBehaviour {
 			if (_coolTime <= 0) {
 				_coolTime = _maxCoolTime;
 				_canActive = true;
-				ActEnd ();
+
 			}
+
+			if (_actTime > 0) {
+				_actTime -= Time.deltaTime;
+				if (_actTime <= 0) {
+					ActEnd ();
+				}
+			}
+
+		}
+		if (_col.material != null) {
+			var pos = gameObject.transform.position;
+			pos.y = 5;
 		}
 	}
 
 	public virtual void Action () { }
 
-	void ActEnd () {
+	public void ActEnd () {
+		_actTime = 0;
+		_rid.velocity = Vector3.zero;
+		_col.material = null;
 		_isActive = false;
 		_boss.GetComponent<BossBase> ()._isAction = false;
 

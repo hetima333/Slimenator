@@ -11,14 +11,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dc3c36a00271444f93f234ac0edf53e, type: 3}
   m_Name: LongRangeEnemy
   m_EditorClassIdentifier: 
-  _Prefab: {fileID: 1772466507498902, guid: 36548978b6c2a0e4d9ce1c93145a8506, type: 2}
+  _Prefab: {fileID: 1106937644777684, guid: 36548978b6c2a0e4d9ce1c93145a8506, type: 2}
   _MaxHealth: 100
+  _MaxHealthMultiplyer: 1
   _Health: 0
   _MaxDamage: 0
+  _MaxDamageMultiplyer: 1
   _MaxSpeed: 2.5
   _MaxSpeedMultiplyer: 1
-  _MaxDamageMultiplyer: 1
-  _MaxHealthMultiplyer: 1
   _SuckingPower: 0
   _SuckingPowerMultiplyer: 1
   _UsedByMultipleEntities: 1
