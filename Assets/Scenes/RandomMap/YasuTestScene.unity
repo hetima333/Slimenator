@@ -449,6 +449,12 @@ Prefab:
       value: 
       objectReference: {fileID: 1511007971229264, guid: a9e3da10e657e224bb215c43399fd14d,
         type: 2}
+    - target: {fileID: 114570986863478406, guid: e072421b92d90e64c8ea3e5b37d6e3e6,
+        type: 2}
+      propertyPath: _enemys.Array.data[1]._object
+      value: 
+      objectReference: {fileID: 1106937644777684, guid: 36548978b6c2a0e4d9ce1c93145a8506,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e072421b92d90e64c8ea3e5b37d6e3e6, type: 2}
   m_IsPrefabParent: 0
