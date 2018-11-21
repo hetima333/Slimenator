@@ -57,6 +57,11 @@ public abstract class Enemy : MonoBehaviour, IDamageable, ISuckable {
     [SerializeField]
     private bool _isAction;
     public bool IsAction { get { return _isAction; } set { _isAction = value; } }
+
+    [SerializeField]
+    private bool _isGround;
+    public bool IsGround { get { return _isGround; } set { _isGround = value; } }
+
     //移動用リジットボディ
     private Rigidbody _rigidbody;
     public Rigidbody RigidbodyProperties { get { return _rigidbody; } set { _rigidbody = value; } }
@@ -161,5 +166,19 @@ public abstract class Enemy : MonoBehaviour, IDamageable, ISuckable {
     //ダメージ判定終了（AnimationEvent用）
     void EndDamage () {
         IsDamaged = false;
+    }
+
+    private void OnCollisionEnter (Collision col) {
+        if (col.gameObject.layer == LayerMask.NameToLayer ("Ground") && CurrentState != State.DEAD) {
+            if (_isGround == false) {
+                _isGround = true;
+            }
+        }
+    }
+
+    private void OnCollisionExit (Collision col) {
+        if (col.gameObject.layer == LayerMask.NameToLayer ("Ground") && CurrentState != State.DEAD) {
+            _isGround = false;
+        }
     }
 }
