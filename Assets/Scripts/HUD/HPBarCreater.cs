@@ -28,6 +28,10 @@ public class HPBarCreater : MonoBehaviour {
 	// 追従するターゲット
 	private IDamageable _target;
 
+	// ダメージポップアップを利用するか？
+	[SerializeField]
+	private bool _useDamagePop = true;
+
 	// Use this for initialization
 	void Start() {
 		// 親オブジェクトが既に存在するか探索する
@@ -53,7 +57,7 @@ public class HPBarCreater : MonoBehaviour {
 	// Update is called once per frame
 	void Update() {
 		// ターゲットが生存していら追従する
-		if(_target.HitPoint > 0){
+		if (_target.HitPoint > 0) {
 			// 追従する
 			_canvas.transform.position = this.transform.position + _offset;
 			_canvas.transform.rotation = Quaternion.Euler(0, 0, 0);
@@ -83,10 +87,8 @@ public class HPBarCreater : MonoBehaviour {
 		_target = GetComponent<IDamageable>();
 
 		// 各パラメータの初期化
-		_canvas.GetComponentInChildren<HPBarCore>().Init(_target);
-
-		if(transform.name == "Player"){
-			Debug.Log("init player");
-		}
+		var hpbar = _canvas.GetComponentInChildren<HPBarCore>();
+		hpbar.Init(_target);
+		hpbar.UseDamagePop = _useDamagePop;
 	}
 }
