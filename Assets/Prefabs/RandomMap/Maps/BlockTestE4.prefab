@@ -200,7 +200,6 @@ GameObject:
   - component: {fileID: 65559693009400900}
   - component: {fileID: 65825007986614336}
   - component: {fileID: 65259302732568686}
-  - component: {fileID: 114670741048061252}
   m_Layer: 0
   m_Name: BlockTestE4
   m_TagString: Untagged
@@ -890,17 +889,6 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1077311033399758}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3a307e27ee89844cb0d336dc41c0820, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &114670741048061252
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1696980831624496}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c3a307e27ee89844cb0d336dc41c0820, type: 3}
