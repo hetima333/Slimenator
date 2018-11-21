@@ -9,11 +9,7 @@ public class SkillImage : MonoBehaviour {
 	[SerializeField]
 	private Image _baseElementImage;
 	[SerializeField]
-	private Text _baseTierText;
-	[SerializeField]
 	private Image _enchantmentImage;
-	[SerializeField]
-	private Text _enchantmentTierText;
 
 	[SerializeField]
 	private OrbSprites _sprites;
@@ -27,17 +23,13 @@ public class SkillImage : MonoBehaviour {
 		// スキルがなければSpriteを空にする
 		if (skill == null) {
 			_baseElementImage.sprite = null;
-			_baseTierText.text = "";
 			_baseElementImage.color = new Color(1, 1, 1, 0);
 			_enchantmentImage.sprite = null;
-			_enchantmentTierText.text = "";
 		}
 		// ユニークスキル
 		else if (skill.IsUnique()) {
 			// スキル画像が来たら変更する
 			_enchantmentImage.sprite = null;
-			_enchantmentTierText.text = "";
-
 			_baseElementImage.sprite = TextureLoader.Load("HUD/SkillUI/" + skill.name);
 		}
 		// ユニークでないスキル
@@ -51,7 +43,7 @@ public class SkillImage : MonoBehaviour {
 			var effects = skill.GetStatusEffects();
 			var enchantmentOrb = effects.Count > 0 ? effects[0].ToOrb() : Orb.NONE;
 			_enchantmentImage.sprite = OrbToSprite(enchantmentOrb);
-			_enchantmentTierText.text = enchantmentOrb == Orb.NONE ? "" : skill.GetEnchantmentTier().ToString();
+			// _enchantmentTierText.text = enchantmentOrb == Orb.NONE ? "" : skill.GetEnchantmentTier().ToString();
 		}
 	}
 
