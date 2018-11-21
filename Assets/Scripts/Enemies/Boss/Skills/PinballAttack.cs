@@ -41,6 +41,7 @@ public class PinballAttack : BossSkill {
 	}
 
 	public void Attack () {
+		_rid.velocity = Vector3.zero;
 		//フィジックスマテリアルの有効
 		_col.material = _physicMat;
 

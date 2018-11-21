@@ -38,7 +38,6 @@ public class JumpPress : BossSkill {
 		//_marker.SetActive (true);
 		//_marker.transform.position = new Vector3 (targetPosition.x, 0.1f, targetPosition.z)
 		JumpFixedTime (targetPosition, _actTime - LANDING_TIME);
-		_boss._isGround = false;
 
 	}
 
@@ -128,15 +127,4 @@ public class JumpPress : BossSkill {
 		return new Vector2 (v_x, v_y);
 	}
 
-	private void OnCollisionEnter (Collision col) {
-		if (col.gameObject.layer == LayerMask.NameToLayer ("Ground") && _boss._state == BossBase.State.ALIVE) {
-			if (_boss._isGround == false) {
-				Debug.Log ("着地");
-				if (_boss._canAnimation) {
-					_boss._anim.CrossFade ("Fall", 0);
-				}
-				_boss._isGround = true;
-			}
-		}
-	}
 }

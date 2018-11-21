@@ -215,6 +215,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6073a623bc82644f9c5640013d18ecd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _state: 0
   _maxHp: 0
   _hp: 0
   _isGround: 0
@@ -226,8 +227,9 @@ MonoBehaviour:
   _skillList: []
   _canUseSkillList: []
   _canAnimation: 0
+  _type: 0
   _avatar: {fileID: 0}
-  _isAlone: 1
+  _isAlone: 0
 --- !u!114 &114274726944270056
 MonoBehaviour:
   m_ObjectHideFlags: 1

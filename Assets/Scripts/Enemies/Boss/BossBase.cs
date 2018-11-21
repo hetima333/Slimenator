@@ -53,4 +53,22 @@ public class BossBase : MonoBehaviour, IDamageable {
 		_hp -= damage;
 	}
 
+	private void OnCollisionEnter (Collision col) {
+		if (col.gameObject.layer == LayerMask.NameToLayer ("Ground") && _state == BossBase.State.ALIVE) {
+			if (_isGround == false) {
+				Debug.Log ("着地");
+				if (_canAnimation) {
+					_anim.CrossFade ("Fall", 0);
+				}
+				_isGround = true;
+			}
+		}
+	}
+
+	private void OnCollisionExit (Collision col) {
+		if (col.gameObject.layer == LayerMask.NameToLayer ("Ground") && _state == BossBase.State.ALIVE) {
+			_isGround = false;
+		}
+	}
+
 }

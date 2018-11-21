@@ -2,7 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BossTwins : BossBase, IDamageable {
+public class BossTwins : BossBase {
+
+	public enum Type {
+
+		PHYSICAL,
+		SHOT
+	}
+
+	[SerializeField]
+	private Type _type;
 
 	//TODO Boss Performance
 	const float MAX_HP = 1000.0f;
@@ -26,6 +35,19 @@ public class BossTwins : BossBase, IDamageable {
 
 		_actInterval -= Time.deltaTime; {
 			if (_actInterval <= 0) {
+				switch (_phase) {
+					case 1:
+						_actInterval = ACT_INTERVAL;
+						break;
+
+					case 2:
+						_actInterval = ACT_INTERVAL / 2.0f;
+						break;
+					default:
+
+						break;
+				}
+
 				_actInterval = ACT_INTERVAL;
 				UseSkill ();
 			}
@@ -48,7 +70,7 @@ public class BossTwins : BossBase, IDamageable {
 	}
 
 	//ダメージを受ける
-	public void TakeDamage (float damage) {
+	public new void TakeDamage (float damage) {
 		_hp -= damage;
 
 		if (_hp <= 0) {
@@ -111,18 +133,36 @@ public class BossTwins : BossBase, IDamageable {
 
 		switch (_phase) {
 			case 1:
-				//新しいコンポーネントの追加
-				_skillList.Add (gameObject.AddComponent<JumpPress> ());
-				_skillList.Add (gameObject.AddComponent<FrontSlimeShot> ());
-				_skillList.Add (gameObject.AddComponent<AroundSlimeShot> ());
-				_skillList.Add (gameObject.AddComponent<Tackle> ());
+				//タイプ別にスキルの追加
+				switch (_type) {
+					case Type.PHYSICAL:
+						_skillList.Add (gameObject.AddComponent<JumpPress> ());
+						_skillList.Add (gameObject.AddComponent<Tackle> ());
+						break;
+					case Type.SHOT:
+						_skillList.Add (gameObject.AddComponent<FrontSlimeShot> ());
+						_skillList.Add (gameObject.AddComponent<AroundSlimeShot> ());
+						break;
+				}
 				_skillList.Add (gameObject.AddComponent<PinballAttack> ());
 				break;
 
 			case 2:
 				//ピンボール封印
 				_skillList.Remove (gameObject.GetComponent<PinballAttack> ());
-				//メテオの追加
+
+				//タイプ別に(相方の)スキルの追加
+				switch (_type) {
+					case Type.PHYSICAL:
+						_skillList.Add (gameObject.AddComponent<FrontSlimeShot> ());
+						_skillList.Add (gameObject.AddComponent<AroundSlimeShot> ());
+						break;
+					case Type.SHOT:
+						_skillList.Add (gameObject.AddComponent<JumpPress> ());
+						_skillList.Add (gameObject.AddComponent<Tackle> ());
+						break;
+				}
+				//特殊技メテオの追加
 				_skillList.Add (gameObject.AddComponent<SlimeMeteorRain> ());
 				break;
 			default:
@@ -137,8 +177,11 @@ public class BossTwins : BossBase, IDamageable {
 	}
 
 	public void DeadCall () {
-		if (_avatar != null)
+		if (_avatar != null) {
 			_avatar.GetComponent<BossTwins> ()._isAlone = true;
+		}
+		Destroy (gameObject);
+		//ObjectManager.Instance.ReleaseObject (gameObject);
 	}
 
 }
