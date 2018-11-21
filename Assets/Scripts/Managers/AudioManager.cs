@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class AudioManager : SingletonMonoBehaviour<AudioManager> {
 
@@ -20,6 +21,60 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager> {
 	// SEの最大数
 	private const int SE_MAX_NUM = 10;
 
+	/// <summary>
+	/// マスター音量
+	/// </summary>
+	/// <value>0.0~1.2</value>
+	public float MasterVolume {
+		get {
+			float vol;
+			if (_mixer.GetFloat("MasterVolume", out vol)) {
+				return (vol / 80.0f) + 1.0f;
+			}
+			return 0.0f;
+		}
+		set {
+			_mixer.SetFloat("MasterVolume", -80.0f + Mathf.Clamp(value, 0.0f, 1.2f) * 80.0f);
+		}
+	}
+
+	/// <summary>
+	/// SE音量
+	/// </summary>
+	/// <value>0.0~1.2</value>
+	public float SEVolume {
+		get {
+			float vol;
+			if (_mixer.GetFloat("SEVolume", out vol)) {
+				return (vol / 80.0f) + 1.0f;
+			}
+			return 0.0f;
+		}
+		set {
+			_mixer.SetFloat("SEVolume", -80.0f + Mathf.Clamp(value, 0.0f, 1.2f) * 80.0f);
+		}
+	}
+
+	/// <summary>
+	/// BGM音量
+	/// </summary>
+	/// <value>0.0~1.2</value>
+	public float BGMVolume {
+		get {
+			float vol;
+			if (_mixer.GetFloat("BGMVolume", out vol)) {
+				return (vol / 80.0f) + 1.0f;
+			}
+			return 0.0f;
+		}
+		set {
+			_mixer.SetFloat("BGMVolume", -80.0f + Mathf.Clamp(value, 0.0f, 1.2f) * 80.0f);
+		}
+	}
+
+	// オーディオミキサー
+	private AudioMixer _mixer;
+
 	// シーン読み込み前にインスタンスを生成
 	[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
 	private static void InitializeBeforeSceneLoad() {
@@ -33,33 +88,42 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager> {
 		// オーディオリスナーをアタッチ
 		gameObject.AddComponent<AudioListener>();
 
+		// オーディオミキサーの取得
+		_mixer = Resources.Load("Audio/Mixer", typeof(AudioMixer)) as AudioMixer;
+
+		#region BGM settings
+
 		// BGM用のオーディオソースを付与
 		_bgmSource = gameObject.AddComponent<AudioSource>();
 
-		// TODO : BGM用設定
+		// ループを有効にする
 		_bgmSource.loop = true;
+		// 2Dサウンドにする
+		_bgmSource.spatialBlend = 0.0f;
+		// ミキサーグループの設定
+		_bgmSource.outputAudioMixerGroup = _mixer.FindMatchingGroups("BGM") [0];
 
-		// SEの数だけオーディオソースを付与
-		for (int i = 0; i < SE_MAX_NUM; i++) {
-			var source = gameObject.AddComponent<AudioSource>();
-			_seSourceList.Add(source);
+		#endregion
 
-			// TODO : SE用設定
-		}
+		#region  SE settings
+
+		var seGroup = _mixer.FindMatchingGroups("SE") [0];
+
+		_seSourceList = Enumerable.Range(0, SE_MAX_NUM)
+			.Select(x => {
+				var source = gameObject.AddComponent<AudioSource>();
+				// ミキサーグループの設定
+				source.outputAudioMixerGroup = seGroup;
+
+				return source;
+			})
+			.ToList();
+
+		#endregion
 
 		// リソースフォルダから全SE&BGMのファイルを読み込みセット
-		_bgmDic = new Dictionary<string, AudioClip>();
-		_seDic = new Dictionary<string, AudioClip>();
-
-		object[] bgmList = Resources.LoadAll(BGM_PATH, typeof(AudioClip));
-		object[] seList = Resources.LoadAll(SE_PATH, typeof(AudioClip));
-
-		foreach (AudioClip bgm in bgmList) {
-			_bgmDic[bgm.name] = bgm;
-		}
-		foreach (AudioClip se in seList) {
-			_seDic[se.name] = se;
-		}
+		_bgmDic = Resources.LoadAll(BGM_PATH, typeof(AudioClip)).Select(x => x as AudioClip).ToDictionary(x => x.name);
+		_seDic = Resources.LoadAll(SE_PATH, typeof(AudioClip)).Select(x => x as AudioClip).ToDictionary(x => x.name);
 	}
 
 	/// <summary>
