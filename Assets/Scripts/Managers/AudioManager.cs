@@ -124,8 +124,6 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager> {
 		// リソースフォルダから全SE&BGMのファイルを読み込みセット
 		_bgmDic = Resources.LoadAll(BGM_PATH, typeof(AudioClip)).Select(x => x as AudioClip).ToDictionary(x => x.name);
 		_seDic = Resources.LoadAll(SE_PATH, typeof(AudioClip)).Select(x => x as AudioClip).ToDictionary(x => x.name);
-
-		PlayBGMWithFadeIn("02", 5.0f);
 	}
 
 	/// <summary>
