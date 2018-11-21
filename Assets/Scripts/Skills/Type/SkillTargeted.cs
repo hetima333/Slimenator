@@ -29,7 +29,7 @@ public class SkillTargeted : Skill
             {
                 if (_Timer <= 0)
                 {
-                    foreach (GameObject obj in _CastingType.GetTargets(ref spawn_position, ref _SkillTier, _Targetable.GetList(), ref caster))
+                    foreach (GameObject obj in _CastingType.GetTargets(ref spawn_position, ref _SkillTier, ref _Targetable, ref caster))
                     {
                         IDamageable dmg = obj.GetComponent<IDamageable>();
 

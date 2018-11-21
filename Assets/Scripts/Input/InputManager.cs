@@ -104,7 +104,7 @@ public static class InputManager {
 
     public static bool UseSkills_Input()
     {
-        return Input.GetKey(KeyCode.Mouse2) || Right_Trigger();
+        return Input.GetKeyDown(KeyCode.Mouse2) || Right_Trigger();
     }
 
     public static float SkillScroll_Input()

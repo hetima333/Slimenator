@@ -27,6 +27,9 @@ public class EntityPlayer : MonoBehaviour, IDamageable
     private float
         _Money;
 
+    private bool
+        _RestrictMovement;
+
     private Status
         _Status;
 
@@ -64,24 +67,30 @@ public class EntityPlayer : MonoBehaviour, IDamageable
     private Animator
         _Animator;
 
-	public float MaxHitPoint {get { return _Player_Stats.MaxHealthProperties; } }
+	public float MaxHitPoint {get { return _Player_Stats.MaxHealthProperties * _Player_Stats.HealthMultiplyerProperties; } }
 	public float HitPoint {get { return _Player_Stats.HealthProperties; } }
     public float MoneyAmount { get { return _Money; } }
     public float Speed
     {
         get
         {
-            if (_Status != null)
-            {
-                return _Player_Stats.SpeedProperties *
-                    ((100.0f - ((_Status.GetValue(EnumHolder.EffectType.SPEED) > 100) ? 100 :
-                    ((_Status.GetValue(EnumHolder.EffectType.SPEED) < 0) ? 0 :
-                    _Status.GetValue(EnumHolder.EffectType.SPEED)))) / 100.0f);
-            }
-            else
-                return _Player_Stats.SpeedProperties;
+            return _Player_Stats.SpeedProperties * _Player_Stats.SpeedMultiplyerProperties;
         }
     }
+
+    public bool RestrictMovement
+    {
+        get
+        {
+            return _RestrictMovement;
+        }
+
+        set
+        {
+            _RestrictMovement = value;
+        }
+    }
+
     [SerializeField]
     private GameObject
         _CastingPoint;
@@ -93,9 +102,8 @@ public class EntityPlayer : MonoBehaviour, IDamageable
 
         _Player_Stats = EnumHolder.Instance.GetStats(gameObject.name);
 
+        _Player_Stats.HealthProperties = MaxHitPoint;
         _Player_Stats.DamageMultiplyerProperties = _Player_Stats.HealthMultiplyerProperties = _Player_Stats.SpeedMultiplyerProperties = _Player_Stats.SuckingPowerMultiplyerProperties = 1;
-        _Player_Stats.HealthProperties = _Player_Stats.MaxHealthProperties;
-
         _Money = 0;
 
         _Player_State = EnumHolder.States.IDLE;
@@ -161,11 +169,13 @@ public class EntityPlayer : MonoBehaviour, IDamageable
     {
         _CurrentUseSkill.Engage(gameObject, _CastingPoint.transform.position, gameObject.transform.forward.normalized);
 
-        if(_CurrentUseSkill.IsSkillOver() && _CurrentUseSkill.IsTimeOver() || Input.GetKey(KeyCode.Mouse1))
+        if (RestrictMovement != _CurrentUseSkill.IsMoveOnCast())
+            RestrictMovement = _CurrentUseSkill.IsMoveOnCast();
+
+        if (_CurrentUseSkill.IsSkillOver() && _CurrentUseSkill.IsTimeOver() || Input.GetKey(KeyCode.Mouse1))
         {
-            _CurrentUseSkill.Reset();
+            ResetCurrentUsedSkill();
             _Player_State = EnumHolder.States.IDLE;
-            Destroy(_CurrentUseSkill);
         }
     }
 
@@ -178,9 +188,19 @@ public class EntityPlayer : MonoBehaviour, IDamageable
     // Update is called once per frame
     private void Update()
     {
-        TakeDamage(_Status.GetValue(EnumHolder.EffectType.HEALTH));
+        if (_SuckingParticle.activeSelf)
+            _SuckingParticle.SetActive(false);
 
-        _CheckFuntions[_Player_State]();
+        if (_SuckingRadius.activeSelf)
+            _SuckingRadius.SetActive(false);
+
+        if(_Animator.GetBool("IsSucking"))
+            _Animator.SetBool("IsSucking", false);
+
+        _Status.UpdateStatMultiplyer(ref _Player_Stats);
+        TakeDamage(_Status.GetValue(EnumHolder.EffectType.TAKEDAMAGE));
+
+        _CheckFuntions[_Player_State].Invoke();
         _Animator.SetInteger("State", (int)_Player_State);
         _Animator.SetInteger("Direction", (int)_Player_Dir);
 
@@ -191,26 +211,8 @@ public class EntityPlayer : MonoBehaviour, IDamageable
         {
             if (InputManager.Suck_Input())
             {
-                if (!_SuckingParticle.activeSelf)
-                    _SuckingParticle.SetActive(true);
-
-
-                if (!_SuckingRadius.activeSelf)
-                    _SuckingRadius.SetActive(true);
-
-                _SuckingParticle.transform.Rotate(Vector3.up, 15);
-
+                StartSuck();
                 _Animator.SetBool("IsSucking", true);
-            }
-            else
-            {
-                if (_SuckingParticle.activeSelf)
-                    _SuckingParticle.SetActive(false);
-
-                if (_SuckingRadius.activeSelf)
-                    _SuckingRadius.SetActive(false);
-
-                _Animator.SetBool("IsSucking", false);
             }
 
             //Reset
@@ -248,18 +250,12 @@ public class EntityPlayer : MonoBehaviour, IDamageable
                 }
             }
         }
-        else
-        {
-            if (_SuckingParticle.activeSelf)
-                _SuckingParticle.SetActive(false);
-
-            if (_SuckingRadius.activeSelf)
-                _SuckingRadius.SetActive(false);
-        }
 
         if (IsDead() && _Player_State != EnumHolder.States.DIE)
         {
-            _Player_State = EnumHolder.States.DIE;
+            if(_Player_State == EnumHolder.States.CASTING)
+                ResetCurrentUsedSkill();
+            _Player_State = EnumHolder.States.DIE;           
         }
 
         if (_CurrentSelection < 0)
@@ -270,8 +266,8 @@ public class EntityPlayer : MonoBehaviour, IDamageable
 
     protected virtual void LateUpdate()
     {
-        if (_Animator.speed != (Speed / _Player_Stats.SpeedProperties) * _Player_Stats.SpeedMultiplyerProperties)
-            _Animator.speed = (Speed / _Player_Stats.SpeedProperties) * _Player_Stats.SpeedMultiplyerProperties;
+        if (_Animator.speed != _Player_Stats.SpeedMultiplyerProperties)
+            _Animator.speed = _Player_Stats.SpeedMultiplyerProperties;
     }
 
     public void StoreElementInOrb(ElementType type)
@@ -284,11 +280,13 @@ public class EntityPlayer : MonoBehaviour, IDamageable
 
             case "Heal":
                 _Player_Stats.HealthProperties += type.GetRandomAmount();
-                _Player_Stats.HealthProperties = Mathf.Clamp(_Player_Stats.HealthProperties, 0, _Player_Stats.MaxHealthProperties);
+                _Player_Stats.HealthProperties = Mathf.Clamp(_Player_Stats.HealthProperties, 0, MaxHitPoint);
                 break;
 
             default:
                 {
+                    string debug = "";
+
                     if (_CurrentSkillOutcome != null)
                     {
                         Destroy(_CurrentSkillOutcome);
@@ -329,6 +327,10 @@ public class EntityPlayer : MonoBehaviour, IDamageable
                             {
                                 _CurrentSkillOutcome = ScriptableObject.Instantiate(s);
                                 _CurrentSkillOutcome.name = s.name;
+                                debug += "------------------------------------------------\n";
+                                debug += "[Created Skill] " + _CurrentSkillOutcome.name + "\n";
+                                debug += "------------------------------------------------";
+
                                 break;
                             }
                             else
@@ -346,7 +348,10 @@ public class EntityPlayer : MonoBehaviour, IDamageable
                                 _CurrentSkillOutcome = ScriptableObject.Instantiate(s);
                                 _CurrentSkillOutcome.name = s.name;
 
-                                for(int i = 1; i < _OrbSlot.Count; ++i)
+                                debug += "------------------------------------------------\n";
+                                debug += "[Created Skill] " + _CurrentSkillOutcome.name + "\n";
+
+                                for (int i = 1; i < _OrbSlot.Count; ++i)
                                 {
                                     if (s.GetBaseElement().Equals(_OrbSlot.ToArray()[i]))
                                         ++temp_tier;
@@ -355,25 +360,35 @@ public class EntityPlayer : MonoBehaviour, IDamageable
                                 }
 
                                 _CurrentSkillOutcome.SetSkillTier((SkillTier)_skillTier.GetList()[temp_tier]);
+                                debug += "[Setting Tier] " + _CurrentSkillOutcome.GetSkillTier() + "\n";
                                 List<ElementType> temp = new List<ElementType>();
                                 temp.AddRange(_OrbSlot.ToArray());
-                                temp.RemoveAt(0);
+
+                                for(int i = 0; i <= temp_tier; ++i)
+                                    temp.RemoveAt(0);
 
                                 if (temp.Count > 0)
+                                {
                                     _CurrentSkillOutcome.SetElementType(temp);
 
+                                    foreach (ElementType et in temp)
+                                        debug += "[Skill (" + _CurrentSkillOutcome.name + ") Status Added] " + et.name + "\n";
+                                }
+                                debug += "------------------------------------------------";
                                 break;
                             }
                             else
                                 _CurrentSkillOutcome = null;
                         }
                     }
+
+                    Debug.Log(debug);
                 }
                 break;
         }      
     }
 
-    public void StoreSkills()
+    protected void StoreSkills()
     {
         if (_CurrentSkillOutcome != null)
         {
@@ -388,7 +403,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable
         }
     }
 
-    public void UseSkill()
+    protected void UseSkill()
     {
        if(_Skills.Count > 0)
         {
@@ -397,6 +412,12 @@ public class EntityPlayer : MonoBehaviour, IDamageable
             _Skills.RemoveAt(_CurrentSelection);
             _Player_State = EnumHolder.States.CASTING;
         }
+    }
+
+    private void ResetCurrentUsedSkill()
+    {
+        _CurrentUseSkill.Reset();
+        Destroy(_CurrentUseSkill);
     }
 
     public void ResetOrbSlots()
@@ -453,6 +474,17 @@ public class EntityPlayer : MonoBehaviour, IDamageable
             _Animator.SetTrigger("IsDamage");
             _Player_Stats.HealthProperties -= Damage;
         }
+    }
+
+    public void StartSuck()
+    {
+        if (!_SuckingParticle.activeSelf)
+            _SuckingParticle.SetActive(true);
+
+        if (!_SuckingRadius.activeSelf)
+            _SuckingRadius.SetActive(true);
+
+        _SuckingParticle.transform.Rotate(Vector3.up, 15);
     }
 
     public Queue<ElementType> GetOrbsInSlot()

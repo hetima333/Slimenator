@@ -2,6 +2,7 @@
 /// Enemy of Tank Type
 /// Athor：Yuhei Mastumura
 /// Last edit date：2018/10/31
+/// ★印は留学生に改変された部分
 
 using System.Collections;
 using System.Collections.Generic;
@@ -9,13 +10,14 @@ using UnityEngine;
 
 public class TankEnemy : Enemy {
     //TODO Enemy Performance
-    const float MAX_HP = 250.0f;
-    const float MOVE_SPEED = 2.0f;
+    //const float MAX_HP = 250.0f;
+    //const float MOVE_SPEED = 2.0f;
     const float SEARCH_RANGE = 11.0f;
     const float ATTACK_RANGE = 4.0f;
     const float MOVE_RANGE = 4.0f;
     const float MONEY = 150.0f;
     const float ERROR_RANGE = 10.0f;
+    const float PATIENCE_VALUE = 15.0f;
 
     //移動スクリプト
     EnemyMove _move;
@@ -34,27 +36,35 @@ public class TankEnemy : Enemy {
 
     private float[] _comboDelay = { 1.5f, 0.8f, 1.7f };
 
-    // Use this for initialization
-    void Start () {
+    public override void Init (Stats _stat) {
+        _properties = _stat;
         //ステータスのセット
-        SetStatus (Enemy.Type.TANK, MAX_HP, MOVE_SPEED, SEARCH_RANGE, ATTACK_RANGE, MOVE_RANGE, MONEY);
+        SetStatus (Enemy.Type.TANK, MaxHitPoint, Speed, SEARCH_RANGE, ATTACK_RANGE, MOVE_RANGE, MONEY);
+        //忍耐値のセット
+        _patienceValue = PATIENCE_VALUE;
         //移動コンポーネントの取得
         _move = GetComponent<EnemyMove> ();
         //リジットボディの取得
         RigidbodyProperties = GetComponent<Rigidbody> ();
-        //索敵用オブジェクトの設定
+        //索敵用オブジェクトの取得
         _searchObj = transform.Find ("SearchRange").gameObject;
         _searchObj.GetComponent<SearchPlayer> ().Initialize ();
         //自由移動ポジション設定
         _freeMovePosition = _move.SetMovePos ();
-
         //武器プレハブの取得
         SetWeapons ();
-
     }
 
     // Update is called once per frame
     void Update () {
+
+        //★ステータスの更新
+        _status.UpdateStatMultiplyer (ref _properties);
+        //★状態ダメージを受ける
+        TakeDamage (_status.GetValue (EnumHolder.EffectType.TAKEDAMAGE));
+
+        //被ダメアニメーション中は行動できない
+        if (IsDamaged == true) return;
 
         if (!_isSleeping) {
             switch (CurrentState) {
@@ -63,29 +73,33 @@ public class TankEnemy : Enemy {
                     //待機
                     StartCoroutine (_move.Idle ());
                     _anim.CrossFade ("Idle", 0);
+                    _animName = "Idle";
                     break;
 
                 case State.FREE:
                     //自由移動
                     _move.FreeMove ();
                     _anim.CrossFade ("Move", 0.5f);
+                    _animName = "Move";
                     break;
 
                 case State.DISCOVERY:
                     //プレイヤー追従
                     _move.Move2Player ();
                     _anim.CrossFade ("Move", 0.5f);
+                    _animName = "Move";
                     break;
 
                 case State.RETURN:
                     //初期位置に帰る
                     _move.Return2FirstPos ();
                     _anim.CrossFade ("Move", 0.5f);
+                    _animName = "Move";
                     break;
 
                 case State.ATTACK:
                     //攻撃開始
-                    StartCoroutine (Attack ());
+                    Attack ();
                     break;
 
                 default:
@@ -97,14 +111,14 @@ public class TankEnemy : Enemy {
     }
 
     //攻撃コルーチン
-    private IEnumerator Attack () {
+    private void Attack () {
         //行動中はreturn
-        if (IsAction || CurrentState == State.DEAD) yield break;
+        if (IsAction || CurrentState == State.DEAD) return;
         //攻撃範囲から出れば攻撃をやめる
         if ((gameObject.transform.position - _target.transform.position).sqrMagnitude > Mathf.Pow (_attackRange, 2) + ERROR_RANGE) {
             CurrentState = State.DISCOVERY;
             _comboCount = 0;
-            yield break;
+            return;
         }
         //行動開始
         IsAction = true;
@@ -118,51 +132,52 @@ public class TankEnemy : Enemy {
             //相手の方向を見る。
             gameObject.transform.LookAt (targetPos);
         }
-
+        //攻撃アニメーションの再生
         _anim.CrossFade ("Attack" + (_comboCount + 1).ToString (), 0);
-
-        //TODO行動終了までの時間経過
-        yield return new WaitForSeconds (_comboDelay[_comboCount]);
-
-        if (CurrentState == State.DEAD) yield break;
+        _animName = "Attack" + (_comboCount + 1).ToString ();
 
         //コンボのカウント増加
         _comboCount++;
         if (_comboCount > 2) {
             _comboCount = 0;
         }
-
-        //行動終了
-        IsAction = false;
     }
 
+    //所持している武器の取得
     private void SetWeapons () {
+        //武器リスト作成
         _weaponList = new List<GameObject> ();
-
+        //子オブジェクトのリスト作成
         List<GameObject> childList = GetAllChildren.GetAll (gameObject);
 
         foreach (GameObject obj in childList) {
-            //child is your child transform
 
+            //EnemyWeaponのコンポーネントを持っているか
             //Make sure the target has components
             var hasEnemyWeapon = obj.GetComponent<EnemyWeapon> ();
 
+            //コンポーネントを持っている場合
             //If have a component
             if (hasEnemyWeapon != null) {
+                //武器リストにオブジェクトを登録する
                 _weaponList.Add (obj);
             }
 
         }
-
+        //子オブジェクトのリストをクリア
         childList.Clear ();
     }
 
+    //発見時
     public override void Discover (GameObject obj) {
         //Set Target
         _target = obj;
+        //寝ている場合
         if (_isSleeping) {
+            //起き上がるコルーチン
             StartCoroutine (WakeUp ());
         } else if (CurrentState != State.DEAD && !IsAction) {
+            //発見状態にする
             CurrentState = State.DISCOVERY;
             _comboCount = 0;
         }
@@ -176,13 +191,15 @@ public class TankEnemy : Enemy {
         //起き上がるまで待つ
         //wait for end wakeup
         yield return new WaitForSeconds (6);
-
+        //眠り判定を解除
         _isSleeping = false;
         //Change State
         CurrentState = State.DISCOVERY;
     }
 
+    //攻撃判定開始（AnimationEvent用）
     void StartHit () {
+        //所持している武器に対しての更新
         _weaponList.ForEach (weapon => {
             //武器のダメージセット
             weapon.GetComponent<EnemyWeapon> ().SetDamage (_comboDamage[_comboCount]);
@@ -193,9 +210,13 @@ public class TankEnemy : Enemy {
         });
     }
 
+    //攻撃判定終了（AnimationEvent用）
     void EndHit () {
         //武器の判定を消す
         _weaponList.ForEach (weapon => weapon.GetComponent<EnemyWeapon> ().ActiveCollision (false));
+
+        //行動終了
+        IsAction = false;
     }
 
 }

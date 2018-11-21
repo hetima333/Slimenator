@@ -9,11 +9,11 @@ public class SkillTargetAOEPosition : SkillCastingType
     private float
         _Range;
 
-    public override List<GameObject> GetTargets(ref Vector3 casting_position, ref SkillTier tier, List<GameObject> targets, ref GameObject caster)
+    public override List<GameObject> GetTargets(ref Vector3 casting_position, ref SkillTier tier, ref GameObjectList targets, ref GameObject caster)
     {
         List<GameObject> list = new List<GameObject>();
 
-        foreach (GameObject obj in targets)
+        foreach (GameObject obj in targets.GetList())
         {
             if (ObjectManager.Instance.GetActiveObjects(obj) != null)
             {

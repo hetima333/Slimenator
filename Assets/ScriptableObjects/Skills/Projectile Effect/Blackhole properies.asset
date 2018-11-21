@@ -13,9 +13,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _MovingParticle: {fileID: 1783820332162922, guid: 7c460cf7fffd6ce4d8c3b6f625ed6680,
     type: 2}
-  _ImpactParticle: {fileID: 0}
+  _ImpactParticle: {fileID: 1783820332162922, guid: 7c460cf7fffd6ce4d8c3b6f625ed6680,
+    type: 2}
   _ImpactRadius: 0
   _SpawningIteration: 1
   _AreaEffectProperties: {fileID: 11400000, guid: 4cbc1577dc7a8bc4fa1564bc7e945761,
     type: 2}
   _SpawningObjects: {fileID: 11400000, guid: 04a4afc9e526b5a4c973eea57cfc65bb, type: 2}
+  _startingTier: {fileID: 0}

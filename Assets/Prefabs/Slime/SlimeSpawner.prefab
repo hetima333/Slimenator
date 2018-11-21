@@ -57,3 +57,4 @@ MonoBehaviour:
   _spawnRate: 3
   _maxSpawnCount: 0
   _elements: {fileID: 11400000, guid: dafcf0a15e8eadb4fa33c1a792f407fa, type: 2}
+  _startingTier: {fileID: 11400000, guid: 246bfa278bfe9c9448873a22d6fa2e30, type: 2}

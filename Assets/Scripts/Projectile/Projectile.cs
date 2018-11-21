@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class Projectile : MonoBehaviour
 {
     protected Vector3
-     _Dir;
+        _Dir;
 
     protected float
         _speed,
@@ -115,7 +115,7 @@ public abstract class Projectile : MonoBehaviour
                         System.Type _MyScriptType = System.Type.GetType(((ElementType)_ProjectileProperties.GetProperties().GetElement().GetList()[type]).GetSlimeScriptName());
                         temp_obj.AddComponent(_MyScriptType);
 
-                        temp_obj.GetComponent<SlimeBase>().Init(temp, ((((ElementType)_ProjectileProperties.GetProperties().GetElement().GetList()[type]).name.Equals("Lightning")) ? 2 : 1), ((ElementType)_ProjectileProperties.GetProperties().GetElement().GetList()[type]));
+                        temp_obj.GetComponent<SlimeBase>().Init(temp, ((((ElementType)_ProjectileProperties.GetProperties().GetElement().GetList()[type]).name.Equals("Lightning")) ? 2 : 1), ((ElementType)_ProjectileProperties.GetProperties().GetElement().GetList()[type]), _ProjectileProperties.GetTier());
                     }
 
                 }

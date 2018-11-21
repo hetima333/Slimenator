@@ -5,9 +5,12 @@ TagManager:
   serializedVersion: 2
   tags:
   - Suckable
-  - Hittable
-  - Slime
+  - Wall
+  - BossRoomPassage
+  - Helper
   - Projectile
+  - Slime
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -22,10 +25,10 @@ TagManager:
   - 
   - Enemy
   - EnemyAttack
-  - 
+  - Boss
   - Wall
-  - 
-  - 
+  - BossRoomPassage
+  - Slime
   - 
   - 
   - 
