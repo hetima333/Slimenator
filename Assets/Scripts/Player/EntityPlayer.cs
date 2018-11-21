@@ -268,10 +268,13 @@ public class EntityPlayer : MonoBehaviour, IDamageable
                 }
 
             }
-            else if (_Is_VacuumSFXPlayed)
+            else
             {
-                _Is_VacuumSFXPlayed = false;
-                AudioManager.Instance.StopSE(_VacuumSFX.name);
+                if (_Is_VacuumSFXPlayed)
+                {
+                    _Is_VacuumSFXPlayed = false;
+                    AudioManager.Instance.StopSE(_VacuumSFX.name);
+                }
 
                 if (_SuckingParticle.activeSelf)
                     _SuckingParticle.SetActive(false);

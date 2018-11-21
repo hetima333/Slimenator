@@ -19,6 +19,9 @@ public class EntityPlayerMovement : MonoBehaviour
     private RaycastHit
         _MouseRayCastHit;
 
+    private Rigidbody
+        _Rigibody;
+
     private bool
         _IsUsingMouse;
 
@@ -28,11 +31,11 @@ public class EntityPlayerMovement : MonoBehaviour
     private void Start()
     {
         _MouseRayCastHit = new RaycastHit();
+        _Rigibody = gameObject.GetComponent<Rigidbody>();
         _IsUsingMouse = true;
     }
 
-    // Update is called once per frame
-    private void Update()
+    private void FixedUpdate()
     {
         if (_EntityPlayer.GetPlayerState() != EnumHolder.States.DIE &&
             !(_EntityPlayer.IsCasting() && _EntityPlayer.RestrictMovement))
@@ -55,27 +58,7 @@ public class EntityPlayerMovement : MonoBehaviour
             movement += Vector3.Scale(_Camera.gameObject.transform.right.normalized, InputManager.LS_Joystick()) * _EntityPlayer.Speed * Time.deltaTime;
         }
 
-        //if (InputManager.RS_Horizontal() > 0)
-        //{
-        //    movement += _Camera.gameObject.transform.forward.normalized * _EntityPlayer.GetPlayerStats().SpeedProperties * Time.deltaTime;
-        //}
-        //else if (InputManager.RS_Horizontal() < 0)
-        //{
-        //    movement -= _Camera.gameObject.transform.forward.normalized * _EntityPlayer.GetPlayerStats().SpeedProperties * Time.deltaTime;
-        //}
-
-        //if (InputManager.RS_Vertical() > 0)
-        //{
-        //    movement -= _Camera.gameObject.transform.right.normalized * _EntityPlayer.GetPlayerStats().SpeedProperties * Time.deltaTime;
-        //}
-        //else if (InputManager.RS_Vertical() < 0)
-        //{
-        //    movement += _Camera.gameObject.transform.right.normalized * _EntityPlayer.GetPlayerStats().SpeedProperties * Time.deltaTime;
-        //}
-
-        //movement.y = 0;
-
-        gameObject.transform.position += movement;
+        _Rigibody.MovePosition(_Rigibody.transform.position + movement);
     }
 
     void Rotate()
