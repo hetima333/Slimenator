@@ -11,8 +11,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c65c188f4e6a30419aa87e60efe5c63, type: 3}
   m_Name: FireBallProperties
   m_EditorClassIdentifier: 
-  _MovingParticle: {fileID: 1108898740286488, guid: 1509776f93e0e094db084530fba55db3,
+  _CastingAudio: {fileID: 0}
+  _EndingAudio: {fileID: 8300000, guid: 14cef0f27906dc1439f406bbbfed2458, type: 3}
+  _IsCastingAudioLoop: 0
+  _IsEndingAudioLoop: 0
+  _MovingParticle: {fileID: 1477359227648552, guid: b58f6e98a07b3c84c8fb5286ca3da9ea,
     type: 2}
   _ImpactParticle: {fileID: 1609091412045728, guid: 256489c086de3354c8463714da03a14c,
     type: 2}
+  _ShakeOnTraveling: 0
+  _ShakeOnImpact: 1
+  _ShakeScreenDelay: 0
+  _ShakeScreenEvent: {fileID: 11400000, guid: 394f8c5eb16cafe4ea6e1d5f750f7259, type: 2}
   _ImpactRadius: 5
+  _SpawningIteration: 0
+  _AreaEffectProperties: {fileID: 0}
+  _SpawningObjects: {fileID: 0}
+  _startingTier: {fileID: 0}
+  _HasRandomMotion: 0

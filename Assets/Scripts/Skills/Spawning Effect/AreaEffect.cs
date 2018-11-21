@@ -13,18 +13,39 @@ public class AreaEffect : MonoBehaviour
         _Delay;
 
     private bool
-        _SpawnedEnding;
+        _SpawnedEnding,
+        _PlayedCastingAudio,
+        _PlayedEndingAudio;
 
     public void Init(SpawningProperties Properties)
     {
         _SpawnedEnding = false;
+        _PlayedCastingAudio = _PlayedEndingAudio = false;
+
 
         _Properties = Properties;
-        ParticleInterface ParticlePI = _Properties.GetStartingParticle().GetComponent<ParticleInterface>();
-        ParticlePI.Init();
-        _StartingTime = ParticlePI.GetLongestParticleEffect();
-        GameObject temp = Instantiate(_Properties.GetStartingParticle(), gameObject.transform);
-        Destroy(temp, _StartingTime);
+        ParticleInterface ParticlePI = null;
+
+        if (_Properties.GetStartingParticle() != null)
+        {
+            ParticlePI = _Properties.GetStartingParticle().GetComponent<ParticleInterface>();
+            ParticlePI.Init();
+            _StartingTime = ParticlePI.GetLongestParticleEffect();
+
+            GameObject temp = Instantiate(_Properties.GetStartingParticle(), gameObject.transform);
+            Destroy(temp, _StartingTime);
+
+            if(!_PlayedCastingAudio)
+            {
+                if(_Properties.GetCastingAudio() != null)
+                {
+                    _PlayedCastingAudio = true;
+                    AudioManager.Instance.PlaySE(_Properties.GetCastingAudio().name, _Properties.IsCastingLoop());
+                }
+            }
+        }
+        else
+            _StartingTime = 0;
 
         if (_Properties.GetEndingParticle() != null)
         {
@@ -33,6 +54,10 @@ public class AreaEffect : MonoBehaviour
             ParticlePI.Init();
             _EndingTime = ParticlePI.GetLongestParticleEffect();
         }
+        else
+            _EndingTime = 0;
+
+        _Delay = 0;
     }
 
     // Update is called once per frame
@@ -47,8 +72,37 @@ public class AreaEffect : MonoBehaviour
                 _SpawnedEnding = true;
             }
 
+            if(_PlayedCastingAudio)
+            {
+                if (_Properties.IsCastingLoop())
+                {
+                    AudioManager.Instance.StopSE(_Properties.GetCastingAudio().name);
+                    _PlayedCastingAudio = false;
+                }
+            }
+
+            if (!_PlayedEndingAudio)
+            {
+                if (_Properties.GetEndingAudio() != null)
+                {
+                    _PlayedEndingAudio = true;
+                    AudioManager.Instance.PlaySE(_Properties.GetEndingAudio().name, _Properties.IsEndingLoop());
+                }
+            }
+
             if (_EndingTime <= 0)
+            {
                 gameObject.SetActive(false);
+
+                if (_PlayedEndingAudio)
+                {
+                    if (_Properties.IsEndingLoop())
+                    {
+                        AudioManager.Instance.StopSE(_Properties.GetEndingAudio().name);
+                        _PlayedEndingAudio = false;
+                    }
+                }
+            }
             else
                 _EndingTime -= Time.deltaTime;
         }
@@ -77,14 +131,14 @@ public class AreaEffect : MonoBehaviour
                             SlimeBase temp_component = temp_obj.GetComponent<SlimeBase>();
 
                             if (temp_component != null)
-                                DestroyImmediate(temp_component);
+                                Destroy(temp_component);
 
                             int type = Random.Range(0, _Properties.GetElement().GetList().Count);
 
                             System.Type _MyScriptType = System.Type.GetType(((ElementType)_Properties.GetElement().GetList()[type]).GetSlimeScriptName());
-                            temp_obj.AddComponent(_MyScriptType);
+                            SlimeBase temp_script = temp_obj.AddComponent(_MyScriptType) as SlimeBase;
 
-                            temp_obj.GetComponent<SlimeBase>().Init(temp, ((((ElementType)_Properties.GetElement().GetList()[type]).name.Equals("Lightning")) ? 2 : 1), ((ElementType)_Properties.GetElement().GetList()[type]), _Properties.GetTier());
+                            temp_script.Init(temp, ((((ElementType)_Properties.GetElement().GetList()[type]).name.Equals("Lightning")) ? 2 : 1), ((ElementType)_Properties.GetElement().GetList()[type]), _Properties.GetTier());
                         }
 
                         _Delay = _Properties.GetDelay();
@@ -175,7 +229,36 @@ public class AreaEffect : MonoBehaviour
                     else
                         _Delay -= Time.deltaTime;
                 }
-        break;
+                break;
+
+            case EnumHolder.AreaEffectType.GROWING:
+                {
+                    if (_Delay <= 0)
+                    {
+                        foreach (GameObject obj in _Properties.GetTargetable().GetList())
+                        {
+                            if (ObjectManager.Instance.GetActiveObjects(obj) != null)
+                            {
+                                foreach (GameObject entity in ObjectManager.Instance.GetActiveObjects(obj))
+                                {
+                                    IGrowable grow = entity.GetComponent<IGrowable>();
+                                    if (grow != null)
+                                    {
+                                        if (Vector3.Distance(gameObject.transform.position, entity.transform.position) < _Properties.GetRadius())
+                                        {
+                                            grow.Grow(_Properties.GetTier());
+                                        }
+                                    }
+                                }   
+                            }
+                        }
+
+                        _Delay = _Properties.GetDelay();
+                    }
+                    else
+                        _Delay -= Time.deltaTime;
+                }
+                break;
 
             default:
                 break;

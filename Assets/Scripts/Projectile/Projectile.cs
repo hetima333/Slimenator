@@ -27,7 +27,12 @@ public abstract class Projectile : MonoBehaviour
 
     protected float
         _impact_particle_timer, 
-        _multiplyer;
+        _multiplyer, 
+        _shaketimer = 0;
+
+    protected bool
+      _PlayedCastingAudio,
+      _PlayedEndingAudio;
 
     public abstract void Init(Vector3 dir, float speed, ProjectileProperties projectile_properties, List<StatusEffect> Status, GameObjectList Targetable, float timer = 5, float damage = 1, float multiplyer = 1, float percentage = 0);
 
@@ -36,9 +41,55 @@ public abstract class Projectile : MonoBehaviour
         _StatusEffects.AddRange(statusEffects);
     }
 
+    protected virtual void Update()
+    {
+        if(_ProjectileProperties.ShakeOnTraveling())
+        {
+            if(_shaketimer <= 0)
+            {
+                for (int i = 0; i < _multiplyer; ++i)
+                    _ProjectileProperties.GetEvent().InvokeAllListeners();
+                _shaketimer = _ProjectileProperties.GetShakeDelay();
+            }
+        }
+
+        if (!_PlayedCastingAudio)
+        {
+            if (_ProjectileProperties.GetCastingAudio() != null)
+            {
+                _PlayedCastingAudio = true;
+                AudioManager.Instance.PlaySE(_ProjectileProperties.GetCastingAudio().name, _ProjectileProperties.IsCastingLoop());
+            }
+        }
+    }
+
     protected virtual void Dead()
     {
         gameObject.SetActive(false);
+
+        if(_PlayedCastingAudio)
+        {
+            if(_ProjectileProperties.IsCastingLoop())
+            {
+                AudioManager.Instance.StopSE(_ProjectileProperties.GetCastingAudio().name);
+                _PlayedCastingAudio = false;
+            }
+        }
+
+        if (!_PlayedEndingAudio)
+        {
+            if (_ProjectileProperties.GetEndingAudio() != null)
+            {
+                _PlayedEndingAudio = true;
+                AudioManager.Instance.PlaySE(_ProjectileProperties.GetEndingAudio().name, _ProjectileProperties.IsEndingLoop());
+            }
+        }
+
+        if (_ProjectileProperties.ShakeOnImpact())
+        {
+            for (int i = 0; i < _multiplyer; ++i)
+                _ProjectileProperties.GetEvent().InvokeAllListeners();
+        }
 
         if (_MovingParticleCopy != null)
         {
@@ -94,7 +145,7 @@ public abstract class Projectile : MonoBehaviour
         {
             foreach (GameObject obj in _ProjectileProperties.GetObjectsToSpawn().GetList())
             {
-                for(int i = 0; i < _ProjectileProperties.GetIteration(); ++i)
+                for (int i = 0; i < _ProjectileProperties.GetIteration(); ++i)
                 {
                     GameObject temp_obj = ObjectManager.Instance.InstantiateWithObjectPooling(obj, gameObject.transform.position);
 
@@ -108,16 +159,26 @@ public abstract class Projectile : MonoBehaviour
                         SlimeBase temp_component = temp_obj.GetComponent<SlimeBase>();
 
                         if (temp_component != null)
-                            DestroyImmediate(temp_component);
+                            Destroy(temp_component);
 
-                        int type = Random.Range(0, _ProjectileProperties.GetProperties().GetElement().GetList().Count);
+                        int type = Random.Range(0, _ProjectileProperties.GetProperties().GetElement().GetList().Count - 1);
 
                         System.Type _MyScriptType = System.Type.GetType(((ElementType)_ProjectileProperties.GetProperties().GetElement().GetList()[type]).GetSlimeScriptName());
-                        temp_obj.AddComponent(_MyScriptType);
+                        SlimeBase temp_script = temp_obj.AddComponent(_MyScriptType) as SlimeBase;
 
-                        temp_obj.GetComponent<SlimeBase>().Init(temp, ((((ElementType)_ProjectileProperties.GetProperties().GetElement().GetList()[type]).name.Equals("Lightning")) ? 2 : 1), ((ElementType)_ProjectileProperties.GetProperties().GetElement().GetList()[type]), _ProjectileProperties.GetTier());
+                        temp_script.Init(temp, ((((ElementType)_ProjectileProperties.GetProperties().GetElement().GetList()[type]).name.Equals("Lightning")) ? 2 : 1), ((ElementType)_ProjectileProperties.GetProperties().GetElement().GetList()[type]), _ProjectileProperties.GetTier());
                     }
 
+                    if (_ProjectileProperties._HasRandomMotion)
+                    {
+                        Rigidbody temp_rb = temp_obj.GetComponent<Rigidbody>();
+
+                        if (temp_rb != null)
+                        {
+                            float force = 3500;
+                            temp_rb.AddForce(new Vector3(Random.Range(-force, force), 0, Random.Range(-force, force)), ForceMode.Acceleration);
+                        }
+                    }
                 }
             }
         }

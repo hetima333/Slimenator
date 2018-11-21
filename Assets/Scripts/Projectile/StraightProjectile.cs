@@ -17,6 +17,8 @@ public class StraightProjectile : Projectile
         _multiplyer = multiplyer;
         _percentage = percentage;
         _ProjectileProperties = projectile_properties;
+        _PlayedCastingAudio = _PlayedEndingAudio = false;
+
 
         if (projectile_properties.GetMovingParticle() != null)
         {
@@ -44,8 +46,10 @@ public class StraightProjectile : Projectile
     }
 
     // Update is called once per frame
-    void Update ()
+    protected override void Update ()
     {
+        base.Update();
+
         if (_timer > 0)
             _timer -= Time.deltaTime;
 

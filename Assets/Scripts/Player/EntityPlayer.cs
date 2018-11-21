@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class EntityPlayer : MonoBehaviour, IDamageable
 {
@@ -13,9 +14,19 @@ public class EntityPlayer : MonoBehaviour, IDamageable
     }
 
     [SerializeField]
+    private SOList
+        _ElementType;
+
+    [SerializeField]
     private GameObject
         _SuckingParticle,
-        _SuckingRadius;
+        _SuckingRadius, 
+        _WalkParticle;
+
+    [SerializeField]
+    private uint
+        _Orb_Slots,
+        _Skill_Slots;
 
     [SerializeField]
     private GameObject
@@ -27,8 +38,14 @@ public class EntityPlayer : MonoBehaviour, IDamageable
     private float
         _Money;
 
+    private uint
+        _Casting_Animation_ID;
+
     private bool
-        _RestrictMovement;
+        _RestrictMovement,
+        _Cast_Trigger,
+        _Is_Casting,
+        _Is_VacuumSFXPlayed;
 
     private Status
         _Status;
@@ -39,8 +56,8 @@ public class EntityPlayer : MonoBehaviour, IDamageable
         _baseSkill,
         _combiSkill;
 
-    private Queue<ElementType>
-        _OrbSlot = new Queue<ElementType>();
+    private List<ElementType>
+        _OrbSlot = new List<ElementType>();
 
     private List<Skill>
         _Skills = new List<Skill>();
@@ -67,7 +84,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable
     private Animator
         _Animator;
 
-	public float MaxHitPoint {get { return _Player_Stats.MaxHealthProperties * _Player_Stats.HealthMultiplyerProperties; } }
+    public float MaxHitPoint {get { return _Player_Stats.MaxHealthProperties * _Player_Stats.HealthMultiplyerProperties; } }
 	public float HitPoint {get { return _Player_Stats.HealthProperties; } }
     public float MoneyAmount { get { return _Money; } }
     public float Speed
@@ -95,15 +112,26 @@ public class EntityPlayer : MonoBehaviour, IDamageable
     private GameObject
         _CastingPoint;
 
+    [SerializeField]
+    private AudioClip
+        _SkillStoreSFX,
+        _VacuumSFX,
+        _SuckSFX,
+        _WalkingSFX;
+
     private void Awake()
     {
         _CurrentSkillOutcome = null;
         _CurrentSelection = 0;
+        _Cast_Trigger = false;
+        _Is_Casting = false;
+        _Is_VacuumSFXPlayed = false;
 
         _Player_Stats = EnumHolder.Instance.GetStats(gameObject.name);
 
-        _Player_Stats.HealthProperties = MaxHitPoint;
         _Player_Stats.DamageMultiplyerProperties = _Player_Stats.HealthMultiplyerProperties = _Player_Stats.SpeedMultiplyerProperties = _Player_Stats.SuckingPowerMultiplyerProperties = 1;
+        _Player_Stats.HealthProperties = MaxHitPoint;
+
         _Money = 0;
 
         _Player_State = EnumHolder.States.IDLE;
@@ -116,8 +144,11 @@ public class EntityPlayer : MonoBehaviour, IDamageable
         _CheckFuntions.Add(EnumHolder.States.IDLE, IdleCheckFunction);
         _CheckFuntions.Add(EnumHolder.States.MOVING, MovingCheckFunction);
         _CheckFuntions.Add(EnumHolder.States.KICKING, KickingCheckFunction);
-        _CheckFuntions.Add(EnumHolder.States.CASTING, CastingCheckFunction);
         _CheckFuntions.Add(EnumHolder.States.DIE, DieCheckFunction);
+
+        _SuckingParticle.SetActive(false);
+        _SuckingRadius.SetActive(false);
+        _Animator.SetBool("IsSucking", false);
     }
 
     private void IdleCheckFunction()
@@ -167,7 +198,27 @@ public class EntityPlayer : MonoBehaviour, IDamageable
 
     private void CastingCheckFunction()
     {
+        if (_Player_State == EnumHolder.States.IDLE)
+        {
+            _Animator.SetLayerWeight(3, 1f);
+            _Animator.SetLayerWeight(1, 0.5f);
+        }
+        else
+        {
+            _Animator.SetLayerWeight(3, 0.5f);
+            _Animator.SetLayerWeight(1, 1f);
+        }
+
+        if (!_Animator.GetBool("IsCasting"))
+            _Animator.SetBool("IsCasting", true);
+
         _CurrentUseSkill.Engage(gameObject, _CastingPoint.transform.position, gameObject.transform.forward.normalized);
+
+        if (_Casting_Animation_ID != _CurrentUseSkill.GetAnimationID())
+        {
+            _Casting_Animation_ID = _CurrentUseSkill.GetAnimationID();
+            _Animator.SetInteger("CastingID", (int)_Casting_Animation_ID);
+        }
 
         if (RestrictMovement != _CurrentUseSkill.IsMoveOnCast())
             RestrictMovement = _CurrentUseSkill.IsMoveOnCast();
@@ -175,7 +226,12 @@ public class EntityPlayer : MonoBehaviour, IDamageable
         if (_CurrentUseSkill.IsSkillOver() && _CurrentUseSkill.IsTimeOver() || Input.GetKey(KeyCode.Mouse1))
         {
             ResetCurrentUsedSkill();
-            _Player_State = EnumHolder.States.IDLE;
+            if (_Animator.GetBool("IsCasting"))
+            {
+                _Animator.SetBool("IsCasting", false);
+                _Animator.SetLayerWeight(3, 1f);
+                _Animator.SetLayerWeight(1, 1f);
+            }
         }
     }
 
@@ -188,15 +244,6 @@ public class EntityPlayer : MonoBehaviour, IDamageable
     // Update is called once per frame
     private void Update()
     {
-        if (_SuckingParticle.activeSelf)
-            _SuckingParticle.SetActive(false);
-
-        if (_SuckingRadius.activeSelf)
-            _SuckingRadius.SetActive(false);
-
-        if(_Animator.GetBool("IsSucking"))
-            _Animator.SetBool("IsSucking", false);
-
         _Status.UpdateStatMultiplyer(ref _Player_Stats);
         TakeDamage(_Status.GetValue(EnumHolder.EffectType.TAKEDAMAGE));
 
@@ -204,7 +251,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable
         _Animator.SetInteger("State", (int)_Player_State);
         _Animator.SetInteger("Direction", (int)_Player_Dir);
 
-        if (_Player_State != EnumHolder.States.CASTING && 
+        if (!_Is_Casting &&
             _Player_State != EnumHolder.States.KICKING && 
             _Player_State != EnumHolder.States.DIE &&
             Speed > 0)
@@ -213,7 +260,32 @@ public class EntityPlayer : MonoBehaviour, IDamageable
             {
                 StartSuck();
                 _Animator.SetBool("IsSucking", true);
+
+                if (!_Is_VacuumSFXPlayed)
+                {
+                    _Is_VacuumSFXPlayed = true;
+                    AudioManager.Instance.PlaySE(_VacuumSFX.name, true);
+                }
+
             }
+            else
+            {
+                if (_Is_VacuumSFXPlayed)
+                {
+                    _Is_VacuumSFXPlayed = false;
+                    AudioManager.Instance.StopSE(_VacuumSFX.name);
+                }
+
+                if (_SuckingParticle.activeSelf)
+                    _SuckingParticle.SetActive(false);
+
+                if (_SuckingRadius.activeSelf)
+                    _SuckingRadius.SetActive(false);
+
+                if (_Animator.GetBool("IsSucking"))
+                    _Animator.SetBool("IsSucking", false);
+            }
+
 
             //Reset
             if (Input.GetKeyDown(KeyCode.LeftControl))
@@ -246,14 +318,25 @@ public class EntityPlayer : MonoBehaviour, IDamageable
 
                 if (InputManager.UseSkills_Input())
                 {
-                    UseSkill();
+                    if (!_Cast_Trigger)
+                    {
+                        UseSkill();
+                        _Cast_Trigger = true;
+                    }
                 }
+                else
+                    _Cast_Trigger = false;
             }
+        }
+
+        if(_Is_Casting)
+        {
+            CastingCheckFunction();
         }
 
         if (IsDead() && _Player_State != EnumHolder.States.DIE)
         {
-            if(_Player_State == EnumHolder.States.CASTING)
+            if(_Is_Casting)
                 ResetCurrentUsedSkill();
             _Player_State = EnumHolder.States.DIE;           
         }
@@ -268,10 +351,38 @@ public class EntityPlayer : MonoBehaviour, IDamageable
     {
         if (_Animator.speed != _Player_Stats.SpeedMultiplyerProperties)
             _Animator.speed = _Player_Stats.SpeedMultiplyerProperties;
+
+        if(Input.anyKeyDown)
+        {
+            int temp = 0;
+            bool is_pressed = false;
+            foreach (KeyCode vKey in System.Enum.GetValues(typeof(KeyCode)))
+            {
+                if (Input.GetKey(vKey))
+                {
+                    if((int)vKey >= (int)KeyCode.Alpha1 && (int)vKey <= (int)KeyCode.Alpha9)
+                    {
+                        temp = (int)vKey - (int)KeyCode.Alpha1;
+                        is_pressed = true;
+                        break;
+                    }
+                }
+            }
+
+            if(is_pressed)
+            {
+                if(_ElementType.GetList().Count > temp)
+                {
+                    StoreElementInOrb((ElementType)(_ElementType.GetList()[temp]));
+                }
+            }
+        }
     }
 
     public void StoreElementInOrb(ElementType type)
     {
+        AudioManager.Instance.PlaySE(_SuckSFX.name);
+
         switch (type.name)
         {
             case "Gold":
@@ -293,20 +404,20 @@ public class EntityPlayer : MonoBehaviour, IDamageable
                         _CurrentSkillOutcome = null;
                     }
                     
-                    _OrbSlot.Enqueue(type);
+                    _OrbSlot.Add(type);
 
-                    if (_OrbSlot.Count > 3)
-                        _OrbSlot.Dequeue();
+                    if (_OrbSlot.Count > _Orb_Slots)
+                        _OrbSlot.RemoveAt(0);
 
                     bool HasUniqueCombination = true;
 
-                    if (_OrbSlot.Count == 3)
+                    if (_OrbSlot.Count >= _Orb_Slots)
                     {
                         for (int i = 0; i < _OrbSlot.Count; ++i)
                         {
                             for (int j = i + 1; j < _OrbSlot.Count; ++j)
                             {
-                                if (_OrbSlot.ToArray()[i].Equals(_OrbSlot.ToArray()[j]))
+                                if (_OrbSlot[i].Equals(_OrbSlot[j]))
                                 {
                                     HasUniqueCombination = false;
                                     break;
@@ -321,9 +432,22 @@ public class EntityPlayer : MonoBehaviour, IDamageable
                     {
                         foreach (Skill s in _combiSkill.GetList())
                         {
-                            if (s.GetCombinationElements()[0] == _OrbSlot.ToArray()[0]
-                                && s.GetCombinationElements()[1] == _OrbSlot.ToArray()[1]
-                                && s.GetCombinationElements()[2] == _OrbSlot.ToArray()[2])
+							var conbinationElements = s.GetCombinationElements();
+							if (conbinationElements.Length > _OrbSlot.Count)
+                                continue;
+
+                            bool found_skill = true;
+
+                            for(int i = 0; i < _OrbSlot.Count; ++i)
+                            {
+                                if (conbinationElements[i] != _OrbSlot[i])
+                                {
+                                    found_skill = false;
+                                    break;
+                                }
+                            }
+
+                            if (found_skill)
                             {
                                 _CurrentSkillOutcome = ScriptableObject.Instantiate(s);
                                 _CurrentSkillOutcome.name = s.name;
@@ -341,9 +465,13 @@ public class EntityPlayer : MonoBehaviour, IDamageable
                     {
                         foreach (Skill s in _baseSkill.GetList())
                         {
-                            if (s.GetBaseElement().Equals(_OrbSlot.ToArray()[0]))
-                            {
-                                int temp_tier = 0;
+                            if (_OrbSlot.Count <= 0)
+                                break;
+
+							var baseElement = s.GetBaseElement();
+							if (baseElement.Equals(_OrbSlot[0]))
+                            {                           
+                                int temp_tier = _OrbSlot.Skip(1).Where(x => x.Equals(baseElement)).Count();
 
                                 _CurrentSkillOutcome = ScriptableObject.Instantiate(s);
                                 _CurrentSkillOutcome.name = s.name;
@@ -351,27 +479,28 @@ public class EntityPlayer : MonoBehaviour, IDamageable
                                 debug += "------------------------------------------------\n";
                                 debug += "[Created Skill] " + _CurrentSkillOutcome.name + "\n";
 
-                                for (int i = 1; i < _OrbSlot.Count; ++i)
-                                {
-                                    if (s.GetBaseElement().Equals(_OrbSlot.ToArray()[i]))
-                                        ++temp_tier;
-                                    else
-                                        break;
-                                }
+                                // for (int i = 1; i < _OrbSlot.Count; ++i)
+                                // {
+                                //     if (baseElement.Equals(_OrbSlot[i]))
+                                //         ++temp_tier;
+                                //     else
+                                //         break;
+                                // }
 
-                                _CurrentSkillOutcome.SetSkillTier((SkillTier)_skillTier.GetList()[temp_tier]);
+								_CurrentSkillOutcome.SetSkillTier((SkillTier)_skillTier.GetList()[temp_tier]);
                                 debug += "[Setting Tier] " + _CurrentSkillOutcome.GetSkillTier() + "\n";
-                                List<ElementType> temp = new List<ElementType>();
-                                temp.AddRange(_OrbSlot.ToArray());
+                                // List<ElementType> temp = new List<ElementType>();
+                                // temp.AddRange(_OrbSlot);
 
-                                for(int i = 0; i <= temp_tier; ++i)
-                                    temp.RemoveAt(0);
+                                // temp.RemoveRange(0, temp_tier + 1);
+								List<ElementType> temp = _OrbSlot.Skip(temp_tier + 1).ToList();
 
-                                if (temp.Count > 0)
+								if (temp.Count > 0)
                                 {
                                     _CurrentSkillOutcome.SetElementType(temp);
 
-                                    foreach (ElementType et in temp)
+									var statusEffects = _CurrentSkillOutcome.GetStatusEffects();
+									foreach (StatusEffect et in statusEffects)
                                         debug += "[Skill (" + _CurrentSkillOutcome.name + ") Status Added] " + et.name + "\n";
                                 }
                                 debug += "------------------------------------------------";
@@ -394,10 +523,11 @@ public class EntityPlayer : MonoBehaviour, IDamageable
         {
             _Skills.Add(_CurrentSkillOutcome);
 
-            if (_Skills.Count > 3)
+            if (_Skills.Count > _Skill_Slots)
                 _Skills.RemoveAt(0);
 
             ResetOrbSlots();
+            AudioManager.Instance.PlaySE(_SkillStoreSFX.name);
 
             _CurrentSkillOutcome = null;
         }
@@ -410,7 +540,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable
             _CurrentUseSkill = _Skills[_CurrentSelection];
             _CurrentUseSkill.Init();
             _Skills.RemoveAt(_CurrentSelection);
-            _Player_State = EnumHolder.States.CASTING;
+            _Is_Casting = true;
         }
     }
 
@@ -418,6 +548,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable
     {
         _CurrentUseSkill.Reset();
         Destroy(_CurrentUseSkill);
+        _Is_Casting = false;
     }
 
     public void ResetOrbSlots()
@@ -441,13 +572,18 @@ public class EntityPlayer : MonoBehaviour, IDamageable
         return _Player_Stats.HealthProperties <= 0;
     }
 
+    public bool IsCasting()
+    {
+        return _Is_Casting;
+    }
+
     void OnGUI()
     {
         GUI.Box(new Rect(10, 10, 100, 50), "Orb Slots");
 
         for (int i = 0; i < _OrbSlot.Count; ++i)
         {
-            GUI.Box(new Rect(10, 50 * (i + 1), 100, 50), _OrbSlot.ToArray()[i].name);
+            GUI.Box(new Rect(10, 50 * (i + 1), 100, 50), _OrbSlot[i].name);
         }
 
         GUI.Box(new Rect(10, 50 * 5, 500, 50), "Output: " + ((_CurrentSkillOutcome != null) ? ((_CurrentSkillOutcome.GetSkillTier() != null) ? _CurrentSkillOutcome.GetSkillTier().name + " " : "") + _CurrentSkillOutcome.name : "None"));
@@ -455,7 +591,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable
         GUI.Box(new Rect(1500, 10, 100, 50), "Skill Slots");
         for (int i = 0; i < _Skills.Count; ++i)
         {
-            GUI.Box(new Rect(1500, 50 * (i + 1), 500, 50), ((_Skills.ToArray()[i].GetSkillTier() != null) ? _Skills.ToArray()[i].GetSkillTier().name + " " : "") + _Skills.ToArray()[i].name);
+            GUI.Box(new Rect(1500, 50 * (i + 1), 500, 50), ((_Skills[i].GetSkillTier() != null) ? _Skills[i].GetSkillTier().name + " " : "") + _Skills[i].name);
         }
 
         if (_Skills.Count > 0)
@@ -487,7 +623,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable
         _SuckingParticle.transform.Rotate(Vector3.up, 15);
     }
 
-    public Queue<ElementType> GetOrbsInSlot()
+    public List<ElementType> GetOrbsInSlot()
     {
         return _OrbSlot;
     }
@@ -510,6 +646,13 @@ public class EntityPlayer : MonoBehaviour, IDamageable
     public Status GetStatus()
     {
         return _Status;
+    }
+
+    public void CallWalkParticle()
+    {
+        AudioManager.Instance.PlaySE(_WalkingSFX.name);
+        GameObject temp = Instantiate(_WalkParticle, transform.position, transform.rotation);
+        Destroy(temp, 0.5f);
     }
 
     delegate void CheckFunctions();

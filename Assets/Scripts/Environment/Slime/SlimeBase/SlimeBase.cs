@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class SlimeBase : MonoBehaviour, ISuckable, IDamageable, IElement, IExplodable
+public abstract class SlimeBase : MonoBehaviour, ISuckable, IDamageable, IElement, IExplodable, IGrowable
 {
     SlimeStats _stats;
     SlimeBaseState _state;
@@ -230,5 +230,10 @@ public abstract class SlimeBase : MonoBehaviour, ISuckable, IDamageable, IElemen
     public void OnExplode()
     {
         //Instantiate(_ChannelingParticle, spawn_position, caster.transform.rotation, caster.transform);
+    }
+
+    public void Grow(SkillTier tier)
+    {
+        _tier = tier;
     }
 }

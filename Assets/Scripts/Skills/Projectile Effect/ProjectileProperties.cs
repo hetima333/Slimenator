@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Skills/Properties/Projectile")]
-public class ProjectileProperties : ScriptableObject
+public class ProjectileProperties : BaseProperties
 {
     [BackgroundColor(0.5f, 0.5f, 0f, 0.5f)]
     [Header("Projectile Properties")]
@@ -12,12 +12,28 @@ public class ProjectileProperties : ScriptableObject
      _MovingParticle,
      _ImpactParticle;
 
+    [Tooltip("Does it Shake the screen on Impact/Traveling")]
+    [SerializeField]
+    private bool
+       _ShakeOnTraveling,
+       _ShakeOnImpact;
+
+    [Tooltip("How often the Shake will occur")]
+    [SerializeField]
+    private float
+        _ShakeScreenDelay;
+
+    [Tooltip("Only needed when Skill does Shake screen")]
+    [SerializeField]
+    private GameEvent
+        _ShakeScreenEvent;
+
     [SerializeField]
     private float
         _ImpactRadius, 
         _SpawningIteration;
 
-    [Tooltip("Only if the object you are spawning is an [Area Effect]")]
+    [Tooltip("Only if the object you are spawning is an [Area Effect] or an oject that needs Element Type Info")]
     [SerializeField]
     private SpawningProperties
         _AreaEffectProperties;
@@ -31,6 +47,11 @@ public class ProjectileProperties : ScriptableObject
     [SerializeField]
     public SkillTier
      _startingTier;
+
+    [Tooltip("Does spawned Object have random motion")]
+    [SerializeField]
+    public bool
+     _HasRandomMotion;
 
     public GameObject GetMovingParticle()
     {
@@ -65,5 +86,30 @@ public class ProjectileProperties : ScriptableObject
     public GameObjectList GetObjectsToSpawn()
     {
         return _SpawningObjects;
+    }
+
+    public bool ShakeOnTraveling()
+    {
+        return _ShakeOnTraveling;
+    }
+
+    public bool ShakeOnImpact()
+    {
+        return _ShakeOnImpact;
+    }
+
+    public float GetShakeDelay()
+    {
+        return _ShakeScreenDelay;
+    }
+
+    public GameEvent GetEvent()
+    {
+        return _ShakeScreenEvent;
+    }
+
+    public bool HasRandomPosition()
+    {
+        return _HasRandomMotion;
     }
 }

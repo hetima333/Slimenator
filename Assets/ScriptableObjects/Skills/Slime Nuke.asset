@@ -11,6 +11,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a62d70063ef38b49aaad8107fc11876, type: 3}
   m_Name: Slime Nuke
   m_EditorClassIdentifier: 
+  _CastingAudio: {fileID: 0}
+  _ChannelingAudio: {fileID: 0}
+  _IsCastingAudioLoop: 0
+  _IsChannelingAudioLoop: 0
   _Combination:
   - {fileID: 11400000, guid: 753eac8bb53ca58458e5f20416ea0092, type: 2}
   - {fileID: 11400000, guid: 36f0bab903e87bc43a975a9ab8b5afd1, type: 2}
@@ -21,10 +25,18 @@ MonoBehaviour:
   _StatusApplyPercentage: 0
   _Damage: 0
   _RestrictUserMovement: 0
+  _ChannelingShakeScreen: 0
+  _CastingShakeScreen: 0
+  _ShakeScreenDelay: 0
+  _ShakeScreenEvent: {fileID: 0}
   _Description: Explode nearby slimes
   _ChannelingParticle: {fileID: 0}
-  _CastingParticle: {fileID: 0}
-  _CastingType: {fileID: 11400000, guid: 2e7805e5357b0af4699fb6b8109c705f, type: 2}
+  _CastingParticle: {fileID: 1136072557517078, guid: f1ad456d11c2d69448f72c726f1338ad,
+    type: 2}
+  _ChannelingTime: 0
+  _CastingTime: 0
+  _AnimationID: 0
+  _CastingType: {fileID: 11400000, guid: 4b6a1e949f36a0842b7e2e89caa3128e, type: 2}
   _SpawningDelay: 0
   _Iteration: 1
   _AreaEffectProperties: {fileID: 11400000, guid: 461ea68aaf099204e827c36b77c15d58,

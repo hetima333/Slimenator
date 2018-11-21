@@ -11,6 +11,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4f745ea35a19d14c94dfa52e1e271e7, type: 3}
   m_Name: Fire Ball
   m_EditorClassIdentifier: 
+  _CastingAudio: {fileID: 8300000, guid: 0aad9e37ea56f4d4d9da0e0636d575f4, type: 3}
+  _ChannelingAudio: {fileID: 0}
+  _IsCastingAudioLoop: 0
+  _IsChannelingAudioLoop: 0
   _Combination:
   - {fileID: 0}
   - {fileID: 0}
@@ -19,11 +23,19 @@ MonoBehaviour:
   _Targetable: {fileID: 11400000, guid: 921fd2909285c1b40ac6aee462dd0d4a, type: 2}
   _StatusEffect:
   - {fileID: 11400000, guid: 82823a8632fe1e846b6ac8ebf4100ca7, type: 2}
-  _StatusApplyPercentage: 30
+  _StatusApplyPercentage: 15
   _Damage: 10
+  _RestrictUserMovement: 0
+  _ChannelingShakeScreen: 0
+  _CastingShakeScreen: 0
+  _ShakeScreenDelay: 0
+  _ShakeScreenEvent: {fileID: 0}
   _Description: Shoots a fire ball
   _ChannelingParticle: {fileID: 0}
   _CastingParticle: {fileID: 0}
+  _ChannelingTime: 0.4
+  _CastingTime: 0.01
+  _AnimationID: 2
   _Projectile: {fileID: 1762178163839322, guid: ac48cf082fcd82843a04c8748fdaa940,
     type: 2}
   _properties: {fileID: 11400000, guid: d874422f599e62c4f84d2336096b5be4, type: 2}
