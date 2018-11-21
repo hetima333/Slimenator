@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7680328c40acfd74aa9871324511c607, type: 3}
   m_Name: Lightning Strike
   m_EditorClassIdentifier: 
-  _CastingAudio: {fileID: 0}
+  _CastingAudio: {fileID: 8300000, guid: 11a43956dcceeda4d89a295131b6722e, type: 3}
   _ChannelingAudio: {fileID: 0}
   _IsCastingAudioLoop: 0
   _IsChannelingAudioLoop: 0
@@ -24,12 +24,12 @@ MonoBehaviour:
   _StatusEffect:
   - {fileID: 11400000, guid: cb25ffbe128a58e4ea499cf97c1a51f3, type: 2}
   _StatusApplyPercentage: 15
-  _Damage: 5
+  _Damage: 30
   _RestrictUserMovement: 0
   _ChannelingShakeScreen: 0
-  _CastingShakeScreen: 0
-  _ShakeScreenDelay: 0
-  _ShakeScreenEvent: {fileID: 0}
+  _CastingShakeScreen: 1
+  _ShakeScreenDelay: 1
+  _ShakeScreenEvent: {fileID: 11400000, guid: 394f8c5eb16cafe4ea6e1d5f750f7259, type: 2}
   _Description: Strikes lightning down on your position
   _ChannelingParticle: {fileID: 0}
   _CastingParticle: {fileID: 1665728080246610, guid: b7a12ca9fd71311429f0651a8e72a573,
@@ -38,4 +38,4 @@ MonoBehaviour:
   _CastingTime: 0
   _AnimationID: 0
   _CastingType: {fileID: 11400000, guid: 2e7805e5357b0af4699fb6b8109c705f, type: 2}
-  _AttackDelay: 0.5
+  _AttackDelay: 1
