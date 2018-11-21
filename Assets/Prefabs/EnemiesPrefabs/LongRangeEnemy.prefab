@@ -1802,7 +1802,7 @@ MonoBehaviour:
   Response:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 114642706824805764}
         m_MethodName: AddStatus
         m_Mode: 2
         m_Arguments:
@@ -1818,7 +1818,7 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 114642706824805764}
         m_MethodName: AddStatus
         m_Mode: 2
         m_Arguments:
@@ -1834,7 +1834,7 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 114642706824805764}
         m_MethodName: AddStatus
         m_Mode: 2
         m_Arguments:
@@ -1921,6 +1921,7 @@ MonoBehaviour:
   _hpbarCanvas: {fileID: 1883121316519442, guid: 07f82906bffcd4ba9831779e5e2ddb31,
     type: 2}
   _offset: {x: 0, y: 3.4, z: 1.71}
+  _useDamagePop: 1
 --- !u!135 &135359599673845736
 SphereCollider:
   m_ObjectHideFlags: 1

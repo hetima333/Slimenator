@@ -2807,8 +2807,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 2.05, y: 4.3, z: 2.05}
+  m_Center: {x: 0, y: 2.2, z: 0.4}
 --- !u!65 &65716262077275632
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -3025,6 +3025,7 @@ MonoBehaviour:
   _hpbarCanvas: {fileID: 1883121316519442, guid: 07f82906bffcd4ba9831779e5e2ddb31,
     type: 2}
   _offset: {x: 0, y: 5, z: 0}
+  _useDamagePop: 1
 --- !u!114 &114677114656700916
 MonoBehaviour:
   m_ObjectHideFlags: 1
