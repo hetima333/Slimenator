@@ -11,6 +11,7 @@ TagManager:
   - Projectile
   - Slime
   - PassageCollidor
+  - Spawner
   layers:
   - Default
   - TransparentFX
