@@ -59,7 +59,7 @@ public abstract class Enemy : MonoBehaviour, IDamageable, ISuckable {
     public bool IsAction { get { return _isAction; } set { _isAction = value; } }
 
     [SerializeField]
-    private bool _isGround;
+    private bool _isGround = false;
     public bool IsGround { get { return _isGround; } set { _isGround = value; } }
 
     //移動用リジットボディ
