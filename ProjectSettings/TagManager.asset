@@ -10,6 +10,8 @@ TagManager:
   - Helper
   - Projectile
   - Slime
+  - PassageCollidor
+  - Spawner
   - Enemy
   layers:
   - Default
@@ -29,7 +31,7 @@ TagManager:
   - Wall
   - BossRoomPassage
   - Slime
-  - 
+  - Shuter
   - 
   - 
   - 

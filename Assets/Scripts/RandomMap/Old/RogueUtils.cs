@@ -5,7 +5,8 @@ using UnityEngine;
 /// <summary>
 /// ランダムユーティリティ
 /// </summary>
-public class RogueUtils {
+public class RandomUtils
+{
 
     /// <summary>
     /// 最小値から最大値までの間にある値を無作為に抽出する
@@ -13,7 +14,7 @@ public class RogueUtils {
     /// <param name="min">最小値</param>
     /// <param name="max">最大値</param>
     /// <returns></returns>
-    public static int GetRandomInt(int min,int max)
+    public static int GetRandomInt(int min, int max)
     {
         return min + Mathf.FloorToInt(Random.value * (max - min + 1));
     }
