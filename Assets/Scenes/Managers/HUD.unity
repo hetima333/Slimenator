@@ -404,7 +404,8 @@ Prefab:
       propertyPath: m_RaycastTarget
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114470092624267816, guid: 7474dd014c97246e6ac9e73543778c45, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 7474dd014c97246e6ac9e73543778c45, type: 2}
   m_IsPrefabParent: 0
 --- !u!114 &250160749 stripped
@@ -1382,6 +1383,7 @@ GameObject:
   - component: {fileID: 1663156110}
   - component: {fileID: 1663156109}
   - component: {fileID: 1663156107}
+  - component: {fileID: 1663156111}
   m_Layer: 5
   m_Name: OrbSlot
   m_TagString: Untagged
@@ -1472,6 +1474,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _manager: {fileID: 1520271099}
+--- !u!95 &1663156111
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1663156105}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 3dde7e9a42d9d4fe7807fdafaf13db08, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &1677685759
 GameObject:
   m_ObjectHideFlags: 0
@@ -1482,6 +1501,7 @@ GameObject:
   - component: {fileID: 1677685760}
   - component: {fileID: 1677685762}
   - component: {fileID: 1677685761}
+  - component: {fileID: 1677685763}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -1519,7 +1539,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1546,6 +1566,20 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1677685759}
+--- !u!114 &1677685763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1677685759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -900027084, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1001 &1848542204
 Prefab:
   m_ObjectHideFlags: 0
@@ -1682,7 +1716,8 @@ Prefab:
       propertyPath: m_RaycastTarget
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114470092624267816, guid: 7474dd014c97246e6ac9e73543778c45, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 7474dd014c97246e6ac9e73543778c45, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &1867993068
@@ -1963,6 +1998,12 @@ Prefab:
       propertyPath: m_RaycastTarget
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 114470092624267816, guid: 7474dd014c97246e6ac9e73543778c45,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 114470092624267816, guid: 7474dd014c97246e6ac9e73543778c45, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 7474dd014c97246e6ac9e73543778c45, type: 2}
   m_IsPrefabParent: 0

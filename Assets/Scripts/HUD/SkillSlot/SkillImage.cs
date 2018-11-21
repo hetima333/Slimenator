@@ -34,19 +34,18 @@ public class SkillImage : MonoBehaviour {
 		}
 		// ユニークスキル
 		else if (skill.IsUnique()) {
-			// TODO : スキル画像が来たら変更する
-			_baseElementImage.sprite = null;
-			_baseTierText.text = "unique";
+			// スキル画像が来たら変更する
 			_enchantmentImage.sprite = null;
 			_enchantmentTierText.text = "";
+
+			_baseElementImage.sprite = TextureLoader.Load("HUD/SkillUI/" + skill.name);
 		}
 		// ユニークでないスキル
 		else {
 			var tier = skill.GetSkillTier().GetMultiplyer();
-			var baseOrb = skill.ToOrb().First();
+			var baseOrb = skill.GetBaseElement().name;
 
-			_baseElementImage.sprite = OrbToSprite(baseOrb);
-			_baseTierText.text = tier.ToString();
+			_baseElementImage.sprite = TextureLoader.Load("HUD/SkillsUI/" + baseOrb + tier);
 
 			// MARK : 現在ユニークスキル以外はエンチャント1つなのでこの書き方にしている
 			var effects = skill.GetStatusEffects();
