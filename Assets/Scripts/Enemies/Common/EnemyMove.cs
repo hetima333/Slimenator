@@ -30,14 +30,15 @@ public class EnemyMove : MonoBehaviour {
     //待機コルーチン
     public IEnumerator Idle () {
         //移動速度のリセット
-        if (_enemy.IsGround)
+        if (!_enemy.IsGround) { new Vector3 (0, 1, 0); yield break; } else {
             _enemy.RigidbodyProperties.velocity = Vector3.zero;
+        }
         //思考時間リセット
         _thinkTime = THINK_TIME;
         //TODO 指定時間待機
         yield return new WaitForSeconds (IDLE_TIME);
 
-        if (_enemy.CurrentState != Enemy.State.IDLE) yield break;
+        if (_enemy.CurrentState != Enemy.State.IDLE || !_enemy.IsGround) yield break;
         //目的地の再取得
         _enemy._freeMovePosition = SetMovePos ();
         //自由移動に移行
@@ -48,8 +49,9 @@ public class EnemyMove : MonoBehaviour {
     //自由移動
     public void FreeMove () {
         //移動速度のリセット
-        if (_enemy.IsGround)
+        if (!_enemy.IsGround) { new Vector3 (0, 1, 0); return; } else {
             _enemy.RigidbodyProperties.velocity = Vector3.zero;
+        }
         //現在座標を取得
         Vector3 pos = gameObject.transform.position;
         //距離を算出
@@ -84,8 +86,10 @@ public class EnemyMove : MonoBehaviour {
     //プレイヤーに向かっての移動
     public void Move2Player () {
         //移動速度のリセット
-        if (_enemy.IsGround)
+        if (!_enemy.IsGround) { new Vector3 (0, 1, 0); return; } else {
             _enemy.RigidbodyProperties.velocity = Vector3.zero;
+        }
+
         if (!_enemy._target) {
             _enemy.CurrentState = Enemy.State.FREE;
             return;
@@ -113,8 +117,9 @@ public class EnemyMove : MonoBehaviour {
 
     public void Dash2Player () {
         //移動速度のリセット
-        if (_enemy.IsGround)
+        if (!_enemy.IsGround) { new Vector3 (0, 1, 0); return; } else {
             _enemy.RigidbodyProperties.velocity = Vector3.zero;
+        }
         //対象がいない場合は終了
         if (!_enemy._target) {
             _enemy.CurrentState = Enemy.State.FREE;
@@ -145,8 +150,9 @@ public class EnemyMove : MonoBehaviour {
     public void Return2FirstPos () {
 
         //移動速度のリセット
-        if (_enemy.IsGround)
+        if (!_enemy.IsGround) { new Vector3 (0, 1, 0); return; } else {
             _enemy.RigidbodyProperties.velocity = Vector3.zero;
+        }
         //現在座標を取得
         Vector3 pos = gameObject.transform.position;
         //対象の座標取得
@@ -172,8 +178,9 @@ public class EnemyMove : MonoBehaviour {
     //目的地のセット
     public Vector3 SetMovePos () {
         //移動速度のリセット
-        if (_enemy.IsGround)
+        if (!_enemy.IsGround) { new Vector3 (0, 1, 0); } else {
             _enemy.RigidbodyProperties.velocity = Vector3.zero;
+        }
 
         //移動先の座標を求める（Find the coordinates to move）
         //X軸移動量の設定

@@ -1718,7 +1718,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!65 &65800723420608296
 BoxCollider:
@@ -1868,6 +1868,7 @@ MonoBehaviour:
   _startPosition: {x: 0, y: 0, z: 0}
   _patienceValue: 10
   _isAction: 0
+  _isGround: 0
   _searchObj: {fileID: 0}
   _target: {fileID: 0}
   _anim: {fileID: 0}
