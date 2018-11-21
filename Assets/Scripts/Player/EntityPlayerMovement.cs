@@ -63,7 +63,7 @@ public class EntityPlayerMovement : MonoBehaviour
             movement += Vector3.Scale(_Camera.gameObject.transform.right.normalized, InputManager.LS_Joystick()) * _EntityPlayer.Speed * Time.deltaTime;
         }
 
-        _Rigibody.MovePosition(_Rigibody.transform.position + movement);
+        _Rigibody.velocity = movement * 100;
     }
 
     void Rotate()
