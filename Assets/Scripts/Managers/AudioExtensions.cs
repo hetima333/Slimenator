@@ -33,13 +33,17 @@ public static class AudioExtensions {
 		}
 	}
 
-	public static IEnumerator FadeOut(this AudioSource source, float fadeTime, float endVolume = 0.0f) {
+	public static IEnumerator FadeOut(this AudioSource source, float fadeTime, float endVolume = 0.0f, bool autoStop = false) {
 		while (source.volume > endVolume) {
 			float temp = source.volume - (Time.deltaTime / fadeTime);
 
 			source.volume = temp < endVolume ? endVolume : temp;
 
 			yield return null;
+		}
+
+		if (autoStop) {
+			source.Stop();
 		}
 	}
 }
