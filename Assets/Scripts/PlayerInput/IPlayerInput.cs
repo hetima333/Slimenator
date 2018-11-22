@@ -30,4 +30,9 @@ public interface IPlayerInput {
 	/// 吸い込みボタンを押しているか？
 	/// </summary>
 	IObservable<bool> SuckingButton { get; }
+
+	/// <summary>
+	/// マウスポジション
+	/// </summary>
+	IObservable<Vector3> MousePosition { get; }
 }

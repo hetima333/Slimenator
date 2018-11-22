@@ -34,9 +34,14 @@ public class PlayerInput : MonoBehaviour, IPlayerInput {
 		get { return suckingButtonSubject.AsObservable(); }
 	}
 
+	private Subject<Vector3> mousePositionSubject = new Subject<Vector3>();
+	public IObservable<Vector3> MousePosition {
+		get { return mousePositionSubject.AsObservable(); }
+	}
+
 	void Start() {
 		// 移動入力
-		this.UpdateAsObservable()
+		this.FixedUpdateAsObservable()
 			.Select(_ => (new Vector3(
 				Input.GetAxis("Horizontal"), 0.0f, Input.GetAxis("Vertical")
 			).normalized))
@@ -61,5 +66,12 @@ public class PlayerInput : MonoBehaviour, IPlayerInput {
 		this.UpdateAsObservable()
 			.Select(_ => Input.GetKey(KeyCode.Mouse0))
 			.Subscribe(suckingButtonSubject);
+
+		// マウス座標
+		this.FixedUpdateAsObservable()
+			.Select(_ => Input.mousePosition)
+			// .Buffer(2,1)
+			// .Select(pos => pos[0] - pos[1])
+			.Subscribe(mousePositionSubject);
 	}
 }
