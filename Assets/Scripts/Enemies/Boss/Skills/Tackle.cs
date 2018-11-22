@@ -17,6 +17,7 @@ public class Tackle : BossSkill {
 		_actTime = 2.0f;
 		if (_boss._canAnimation) {
 			_boss._anim.CrossFade ("Tackle", 0);
+			_boss._animName = "Tackle";
 		}
 
 		Vector3 lookPos = _target.transform.position;
@@ -25,6 +26,8 @@ public class Tackle : BossSkill {
 
 		//相手に向かって体当たりを開始。
 		_rid.AddForce (transform.forward * 50000);
+		//速度調整
+		_rid.velocity = _rid.velocity * _boss._properties.SpeedMultiplyerProperties;
 
 		Debug.Log ("ぶちかます");
 

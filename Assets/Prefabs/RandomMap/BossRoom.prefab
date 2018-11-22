@@ -95,6 +95,7 @@ GameObject:
   - component: {fileID: 65084782460599220}
   - component: {fileID: 23272770992872468}
   - component: {fileID: 114149758927960206}
+  - component: {fileID: 114075631489619512}
   m_Layer: 0
   m_Name: ==DebugObject==
   m_TagString: Untagged
@@ -173,7 +174,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1657089757464944}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 9.7, y: 3, z: -5.95}
+  m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 5.1065145, y: 5.1065135, z: 5.1065135}
   m_Children: []
   m_Father: {fileID: 4343344967369122}
@@ -545,7 +546,7 @@ BoxCollider:
   m_GameObject: {fileID: 1657089757464944}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -581,7 +582,7 @@ BoxCollider:
   m_GameObject: {fileID: 1564239865324246}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -621,6 +622,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _transferTarget: {fileID: 0}
+--- !u!114 &114075631489619512
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1657089757464944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e9a13764966c1643be1d4e97bcae2aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _bossPrefab: {fileID: 1354793241189908, guid: a8cd674e1471a434686ffab2a2a47309,
+    type: 2}
 --- !u!114 &114149758927960206
 MonoBehaviour:
   m_ObjectHideFlags: 1

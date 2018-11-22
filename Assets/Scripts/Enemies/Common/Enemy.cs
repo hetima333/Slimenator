@@ -104,6 +104,8 @@ public abstract class Enemy : MonoBehaviour, IDamageable, ISuckable {
         _startPosition = gameObject.transform.position;
         //animationSystem Set
         _anim = GetComponent<SimpleAnimation> ();
+        //Managerに生まれたっていう
+        GameStateManager.Instance.IncreaseEnemy ();
 
         _status = gameObject.GetComponent<Status> ();
         _status.Init ();
@@ -153,6 +155,8 @@ public abstract class Enemy : MonoBehaviour, IDamageable, ISuckable {
 
     //死亡したときに呼ばれる関数（AnimationEvent）
     public void Dead () {
+        //マネージャーに死んだよっていう
+        GameStateManager.Instance.DecreaseEnemy ();
         ObjectManager.Instance.ReleaseObject (gameObject);
     }
 

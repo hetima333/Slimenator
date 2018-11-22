@@ -19,7 +19,7 @@ public class LongRangeEnemy : Enemy {
     //移動スクリプト
     EnemyMove _move;
     [SerializeField]
-    float _outputDamage = 25;
+    float _outputDamage;
 
     private GameObject _bullet;
 

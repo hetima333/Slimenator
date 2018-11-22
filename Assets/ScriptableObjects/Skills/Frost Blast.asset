@@ -24,7 +24,7 @@ MonoBehaviour:
   _StatusEffect:
   - {fileID: 11400000, guid: a983e4dbbcbe3714fb3bab69798f84e7, type: 2}
   _StatusApplyPercentage: 15
-  _Damage: 1
+  _Damage: 3
   _RestrictUserMovement: 0
   _ChannelingShakeScreen: 0
   _CastingShakeScreen: 0

@@ -52,7 +52,7 @@ public class SlimeBullet : MonoBehaviour {
 			//TODO take damage   
 			hasIDamageableObject.TakeDamage (_damage);
 		} else {
-			int random = Random.Range (0, _elements.GetList ().Count);
+			int random = Random.Range (0, _elements.GetList ().Count - 1);
 			GetSlimeFromPool (random, gameObject.transform.position);
 		}
 

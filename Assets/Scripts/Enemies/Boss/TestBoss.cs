@@ -37,6 +37,7 @@ public class TestBoss : BossBase {
         _body = transform.Find ("Body").gameObject;
         _anim = GetComponent<SimpleAnimation> ();
         _anim.CrossFade ("Idle", 0);
+        _animName = "Idle";
         //マテリアルの取得
         _matA = (Material) Resources.Load ("Material/BossA");
         _matB = (Material) Resources.Load ("Material/BossB");
@@ -76,7 +77,7 @@ public class TestBoss : BossBase {
             PhaseUp ();
         }
 
-        if (_properties.HealthProperties <= 200 && _phase == 1) {
+        if (_properties.HealthProperties <= 300 && _phase == 1) {
             PhaseUp ();
         }
     }
@@ -149,13 +150,14 @@ public class TestBoss : BossBase {
     private void Split () {
         //分裂アニメーション開始
         _anim.CrossFade ("Split", 0);
+        _animName = "Split";
         _isAction = true;
 
     }
 
     void SplitEnd () {
         Debug.Log ("分裂完了");
-        Vector3 Pos = gameObject.transform.position;
+        Vector3 Pos = new Vector3 (821, 0, 0);
         Pos.y = 2;
 
         Vector3 OffSet = new Vector3 (10, 0, 0);

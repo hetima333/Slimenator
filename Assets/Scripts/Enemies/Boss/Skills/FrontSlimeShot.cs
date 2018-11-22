@@ -16,6 +16,7 @@ public class FrontSlimeShot : BossSkill {
 		_rid.velocity = Vector3.zero;
 		if (_boss._canAnimation) {
 			_boss._anim.CrossFade ("Shot", 0);
+			_boss._animName = "Shot";
 		} else {
 			Debug.Log ("射撃");
 			_actTime = 1.0f;
@@ -46,6 +47,7 @@ public class FrontSlimeShot : BossSkill {
 	void ShotEnd () {
 		if (_boss._canAnimation) {
 			_boss._anim.CrossFade ("Idle", 0);
+			_boss._animName = "Idle";
 		}
 	}
 }
