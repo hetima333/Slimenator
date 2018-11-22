@@ -11,6 +11,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca731fcea334a8446926bd4b3f24015d, type: 3}
   m_Name: Slime Rain Properties
   m_EditorClassIdentifier: 
+  _CastingAudio: {fileID: 8300000, guid: 656a5a776763dc047b11b46931f38908, type: 3}
+  _EndingAudio: {fileID: 0}
+  _IsCastingAudioLoop: 0
+  _IsEndingAudioLoop: 0
   _StartingParticle: {fileID: 1060457761622802, guid: 13437dc8cdd9c8a4a97284a87ae6fa57,
     type: 2}
   _EndingParticle: {fileID: 0}
