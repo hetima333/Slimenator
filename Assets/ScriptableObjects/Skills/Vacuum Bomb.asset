@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4f745ea35a19d14c94dfa52e1e271e7, type: 3}
   m_Name: Vacuum Bomb
   m_EditorClassIdentifier: 
-  _CastingAudio: {fileID: 0}
+  _CastingAudio: {fileID: 8300000, guid: 46d7e4fb466330944b6f4fcd7a1f6a4d, type: 3}
   _ChannelingAudio: {fileID: 0}
   _IsCastingAudioLoop: 0
   _IsChannelingAudioLoop: 0
