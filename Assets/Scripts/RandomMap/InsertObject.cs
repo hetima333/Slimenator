@@ -7,8 +7,8 @@ using UnityEngine;
 /// </summary>
 public class InsertObject : MonoBehaviour {
 
-    //生成ボックス
-    //[SerializeField] private GameObject[] _createPoint;
+    //生成するスライムスポナー
+    private GameObject[] _createSlimeSpawners;
 
     //生成するスポナー
     private GameObject[] _spawnerPoint;
@@ -22,10 +22,13 @@ public class InsertObject : MonoBehaviour {
     //敵
     [SerializeField] private SetObject[] _enemys;
 
+    //生成された敵
+    public List<GameObject> _createEnemys;
+
     //生成するオブジェクトの種類
     private enum Type
     {
-        SLIME,
+        //SLIME,
         ENEMY,
         NUM
     };
@@ -43,8 +46,9 @@ public class InsertObject : MonoBehaviour {
         //プレイヤーの座標を設定
         SetPlayerPosition();
 
-        //オブジェクトの生成
-        CreateObject();
+        //全てのオブジェクトの生成
+        CreateAllObject();
+
     }
 	
 	// Update is called once per frame
@@ -66,10 +70,7 @@ public class InsertObject : MonoBehaviour {
 
         //プレイヤーの位置を設定
         _player.transform.position = new Vector3(firstRoomPos.x * _mapGen.GetSize().x, 2, firstRoomPos.y * _mapGen.GetSize().y);
-        //Debug.Log(_player.transform.position);
 
-        //オブジェクトの生成
-        CreateObject();
     }
 
     /// <summary>
@@ -84,7 +85,6 @@ public class InsertObject : MonoBehaviour {
             {
                 if (_mapGen._maps[x, z] != null)
                 {
-                    //Debug.Log(new Vector2(x, z) + "!!!!");
                     return new Vector2Int(x, z);
                 }
             }
@@ -98,7 +98,64 @@ public class InsertObject : MonoBehaviour {
     /// <summary>
     /// オブジェクトの生成
     /// </summary>
-    public void CreateObject()
+    //public void CreateObject()
+    //{
+    //    //生成するオブジェクトの取得
+    //    _spawnerPoint = GameObject.FindGameObjectsWithTag("Spawner");
+
+    //    foreach (var spawn in _spawnerPoint)
+    //    {
+    //        //60%の確率で
+    //        if (RandomUtils.RandomJadge(0.6f))
+    //        {
+    //            //生成する物をランダムに決定する
+    //            var type = RandomUtils.GetRandomInt((int)Type.SLIME, (int)Type.NUM - 1);
+
+    //            switch (type)
+    //            {
+    //                //敵
+    //                case (int)Type.ENEMY:
+    //                    //敵のタイプをランダムに決定する
+    //                    var enemyType = RandomUtils.GetRandomInt(0, _enemys.Length - 1);
+    //                    //敵オブジェクトを生成する
+    //                    GameObject enemyObj = ObjectManager.Instance.InstantiateWithObjectPooling(_enemys[enemyType]._object, spawn.transform.position, new Quaternion());
+    //                    Enemy temp_enemy = enemyObj.GetComponent<Enemy>();
+    //                    if (temp_enemy != null)
+    //                    {
+    //                        temp_enemy.Init(EnumHolder.Instance.GetStats(_enemys[enemyType]._object.name));
+    //                    }
+    //                    Debug.Log("create enemy");
+    //                    break;
+    //                //スライム
+    //                case (int)Type.SLIME:
+    //                    //スライムスポナーを生成する
+    //                    GameObject slimeObj = ObjectManager.Instance.InstantiateWithObjectPooling(_slimeSpooner._object, spawn.transform.position, new Quaternion());
+    //                    Debug.Log("create slime");
+    //                    break;
+    //                //その他
+    //                default:
+    //                    Debug.Log("Nothimg create object");
+    //                    break;
+    //            }
+    //        }
+    //    }
+    //}
+
+    /// <summary>
+    /// 全てのオブジェクトを生成する
+    /// </summary>
+    public void CreateAllObject()
+    {
+        //スライムスポナーの生成
+        CreateSlimeSpawner();
+        //敵の生成
+        CreateEnemy();
+    }
+
+    /// <summary>
+    /// 敵の生成
+    /// </summary>
+    public void CreateEnemy()
     {
         //生成するオブジェクトの取得
         _spawnerPoint = GameObject.FindGameObjectsWithTag("Spawner");
@@ -108,36 +165,35 @@ public class InsertObject : MonoBehaviour {
             //60%の確率で
             if (RandomUtils.RandomJadge(0.6f))
             {
-                //生成する物をランダムに決定する
-                var type = RandomUtils.GetRandomInt((int)Type.SLIME, (int)Type.NUM - 1);
+                //敵のタイプをランダムに決定する
+                var enemyType = RandomUtils.GetRandomInt(0, _enemys.Length - 1);
+                //敵オブジェクトを生成する
+                GameObject enemyObj = ObjectManager.Instance.InstantiateWithObjectPooling(_enemys[enemyType]._object, spawn.transform.position, new Quaternion());
+                //敵の数
+                _createEnemys.Add(enemyObj);
 
-                switch (type)
+                Enemy temp_enemy = enemyObj.GetComponent<Enemy>();
+                if (temp_enemy != null)
                 {
-                    //敵
-                    case (int)Type.ENEMY:
-                        //敵のタイプをランダムに決定する
-                        var enemyType = RandomUtils.GetRandomInt(0, _enemys.Length - 1);
-                        //敵オブジェクトを生成する
-                        GameObject enemyObj = ObjectManager.Instance.InstantiateWithObjectPooling(_enemys[enemyType]._object, spawn.transform.position, new Quaternion());
-                        Enemy temp_enemy = enemyObj.GetComponent<Enemy>();
-                        if (temp_enemy != null)
-                        {
-                            temp_enemy.Init(EnumHolder.Instance.GetStats(_enemys[enemyType]._object.name));
-                        }
-                        Debug.Log("create enemy");
-                        break;
-                    //スライム
-                    case (int)Type.SLIME:
-                        //スライムスポナーを生成する
-                        GameObject slimeObj = ObjectManager.Instance.InstantiateWithObjectPooling(_slimeSpooner._object, spawn.transform.position, new Quaternion());
-                        Debug.Log("create slime");
-                        break;
-                    //その他
-                    default:
-                        Debug.Log("Nothimg create object");
-                        break;
+                    temp_enemy.Init(EnumHolder.Instance.GetStats(_enemys[enemyType]._object.name));
                 }
             }
+        }
+    }
+
+    /// <summary>
+    /// スライムスポナーの生成
+    /// </summary>
+    public void CreateSlimeSpawner()
+    {
+        //生成するスライムスポナーオブジェクトの取得
+        _createSlimeSpawners = GameObject.FindGameObjectsWithTag("SlimeSpawner");
+
+        //スライムスポナーは必ず生成する
+        foreach (var spawner in _createSlimeSpawners)
+        {
+            //生成する
+            ObjectManager.Instance.InstantiateWithObjectPooling(_slimeSpooner._object, spawner.transform.position, new Quaternion());
         }
     }
 

@@ -27,7 +27,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 18
   m_IsActive: 1
 --- !u!1 &1718353255957232
 GameObject:
@@ -158,9 +158,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 328622efd06378b46847fa2ccae7a025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _createPoint:
-  - {fileID: 0}
-  - {fileID: 0}
   _slimeSpooner:
     _object: {fileID: 1711871630936228, guid: 933bbbd2ea7c9a64c8322cbcf7350da7, type: 2}
   _enemys:

@@ -13,6 +13,7 @@ TagManager:
   - PassageCollidor
   - Spawner
   - Enemy
+  - SlimeSpawner
   layers:
   - Default
   - TransparentFX
