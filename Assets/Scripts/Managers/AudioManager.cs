@@ -173,13 +173,14 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager> {
 	/// </summary>
 	/// <param name="name">ファイル名</param>
 	public void StopSE(string name) {
-		var source = _seSourceList.Where(x => x.clip != null).FirstOrDefault(x => name == x.clip.name);
+		var source = FindSESource(name);
 		if (source == null) {
 			return;
 		}
 		// 念のためループ解除
 		source.loop = false;
 		source.Stop();
+		source.clip = null;
 	}
 
 	/// <summary>
@@ -187,7 +188,7 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager> {
 	/// </summary>
 	/// <param name="name">ファイル名</param>
 	public void StopSELoop(string name) {
-		var source = _seSourceList.Where(x => x.clip != null).FirstOrDefault(x => name == x.clip.name);
+		var source = FindSESource(name);
 		if (source == null) {
 			return;
 		}
@@ -200,7 +201,10 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager> {
 	/// <param name="name">se name</param>
 	/// <param name="fadeTime">fade time</param>
 	public void FadeInSE(string name, float fadeTime, float endVolume = 1.0f) {
-		var source = _seSourceList.Where(x => x.clip != null).FirstOrDefault(x => name == x.clip.name);
+		var source = FindSESource(name);
+		if (source == null) {
+			return;
+		}
 		StartCoroutine(source.FadeIn(fadeTime, endVolume));
 	}
 
@@ -210,7 +214,10 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager> {
 	/// <param name="name">se name</param>
 	/// <param name="fadeTime">fade time</param>
 	public void FadeOutSE(string name, float fadeTime, float endVolume = 0.0f) {
-		var source = _seSourceList.Where(x => x.clip != null).FirstOrDefault(x => name == x.clip.name);
+		var source = FindSESource(name);
+		if (source == null) {
+			return;
+		}
 		StartCoroutine(source.FadeOut(fadeTime, endVolume));
 	}
 
@@ -220,7 +227,11 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager> {
 	/// <param name="name">se name</param>
 	/// <param name="fadeTime">fade time</param>
 	public void StopSEWithFadeOut(string name, float fadeTime, float endVolume = 0.0f) {
-		var source = _seSourceList.Where(x => x.clip != null).FirstOrDefault(x => name == x.clip.name);
+		var source = FindSESource(name);
+		if (source == null) {
+			return;
+		}
+
 		StartCoroutine(source.FadeOut(fadeTime, endVolume, true));
 	}
 
@@ -283,5 +294,14 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager> {
 	/// <param name="endVolume"></param>
 	public void StopBGMWithFadeOut(float fadeTime, float endVolume = 0.0f) {
 		StartCoroutine(_bgmSource.FadeOut(fadeTime, endVolume, true));
+	}
+
+	/// <summary>
+	/// 名前からSEのオーディオソースを探す
+	/// </summary>
+	/// <param name="name">se name</param>
+	/// <returns></returns>
+	private AudioSource FindSESource(string name) {
+		return _seSourceList.Where(x => x.clip != null).FirstOrDefault(x => name == x.clip.name);
 	}
 }
