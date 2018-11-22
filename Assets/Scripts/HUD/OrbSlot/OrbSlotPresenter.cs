@@ -16,6 +16,9 @@ public class OrbSlotPresenter : MonoBehaviour {
 	private Image[] _slots = new Image[OrbSlotCore.SLOT_SIZE];
 
 	[SerializeField]
+	private Animator[] _slotAnimators = new Animator[OrbSlotCore.SLOT_SIZE];
+
+	[SerializeField]
 	private OrbSprites _sprites;
 
 	private SkillImage _skillImage;
@@ -36,18 +39,8 @@ public class OrbSlotPresenter : MonoBehaviour {
 			core.Slot.ObserveReplace()
 				.Where(x => x.NewValue != x.OldValue)
 				.Subscribe(x => {
-					var slot = _slots[x.Index];
-					// 該当の画像の読み込み
-					slot.sprite = OrbToSprite(x.NewValue);
-
-					// スプライトが設定されなければ透明にする
-					if (slot.sprite == null) {
-						slot.color = slot.color * new Color(1, 1, 1, 0);
-					}
-					// スプライトが設定されていたら不透明にする
-					else {
-						slot.color = Color.white;
-					}
+					var animator = _slotAnimators[x.Index];
+					animator.SetInteger("OrbType", (int)x.NewValue);
 				});
 
 			// 生成されるスキルが更新されたら
