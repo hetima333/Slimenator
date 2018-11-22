@@ -61,9 +61,8 @@ public class TestBoss : BossBase {
             }
         }
 
-        if (Input.GetKeyDown (KeyCode.C)) {
-            PhaseUp ();
-        }
+        //強制phaseアップ（debug用）
+        //if (Input.GetKeyDown (KeyCode.C)) {PhaseUp (); }
 
     }
 
