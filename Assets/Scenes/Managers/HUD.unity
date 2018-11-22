@@ -1132,6 +1132,11 @@ Prefab:
       propertyPath: m_RaycastTarget
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114981698155783622, guid: ab4d347eb710e444f843c2db83fb2ee1,
+        type: 2}
+      propertyPath: m_Text
+      value: Restart
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ab4d347eb710e444f843c2db83fb2ee1, type: 2}
   m_IsPrefabParent: 0
