@@ -91,7 +91,7 @@ public abstract class BossBase : MonoBehaviour, IDamageable {
 					shockWave.GetComponent<ShockWave> ().SetDamage (10);
 					//接触地点を取得
 					Vector3 ShockPos = gameObject.transform.position;
-					ShockPos.y = 0.1f;
+					ShockPos.y = 1f;
 					shockWave.transform.position = ShockPos;
 				}
 				_isGround = true;

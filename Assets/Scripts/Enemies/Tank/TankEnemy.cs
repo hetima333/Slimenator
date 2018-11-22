@@ -219,4 +219,8 @@ public class TankEnemy : Enemy {
         IsAction = false;
     }
 
+    void HitWakeUp () {
+        _isSleeping = false;
+    }
+
 }

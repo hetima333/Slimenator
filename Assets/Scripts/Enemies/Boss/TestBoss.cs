@@ -25,6 +25,8 @@ public class TestBoss : BossBase {
 
     private GameObject _body;
 
+    private bool _isSleep = true;
+
     // Use this for initialization
 
     public override void Init (Stats _stat) {
@@ -44,7 +46,7 @@ public class TestBoss : BossBase {
     // Update is called once per frame
     void Update () {
 
-        if (_state == State.DEAD) return;
+        if (_state == State.DEAD || _isSleep == true) return;
 
         //★ステータスの更新
         _status.UpdateStatMultiplyer (ref _properties);
@@ -175,6 +177,10 @@ public class TestBoss : BossBase {
 
         ObjectManager.Instance.ReleaseObject (gameObject);
 
+    }
+
+    public void WakeUp () {
+        _isSleep = false;
     }
 
 }
