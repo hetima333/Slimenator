@@ -22,6 +22,10 @@ public class SlimeSpawner : MonoBehaviour {
     public SOList
       _elements;
 
+    [SerializeField]
+    public SkillTier
+      _startingTier;
+
     #region Getter/Setter
     public float SpawnTimer
     {
@@ -46,7 +50,7 @@ public class SlimeSpawner : MonoBehaviour {
 
     private void Start()
     {
-        _maxSpawnCount = 8;
+        _maxSpawnCount = 4;
     }
 
     private void Update()
@@ -82,12 +86,12 @@ public class SlimeSpawner : MonoBehaviour {
         SlimeBase temp_component = slime_obj.GetComponent<SlimeBase>();
 
         if (temp_component != null)
-            DestroyImmediate(temp_component);
+            Destroy(temp_component);
 
         System.Type _MyScriptType = System.Type.GetType(((ElementType)_elements.GetList()[type]).GetSlimeScriptName());
-        slime_obj.AddComponent(_MyScriptType);
+        SlimeBase temp_script = slime_obj.AddComponent(_MyScriptType) as SlimeBase;
 
-        slime_obj.GetComponent<SlimeBase>().Init(temp, ((((ElementType)_elements.GetList()[type]).name.Equals("Lightning")) ? 2 : 1), ((ElementType)_elements.GetList()[type]));
+        temp_script.Init(temp, ((((ElementType)_elements.GetList()[type]).name.Equals("Lightning")) ? 2 : 1), ((ElementType)_elements.GetList()[type]), _startingTier);
         slime_obj.SetActive(true);
 
         return slime_obj;

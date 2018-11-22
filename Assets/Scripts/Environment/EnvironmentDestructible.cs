@@ -11,6 +11,9 @@ public class EnvironmentDestructible : EnvironmentBase, IDamageable {
         _health,
         _maxHealth;
 
+    [SerializeField]
+    protected PrefabHolder _drop;
+
     public float MaxHitPoint
     {
         get
@@ -35,9 +38,14 @@ public class EnvironmentDestructible : EnvironmentBase, IDamageable {
 
     // Update is called once per frame
     protected override void Update () {
+        // for testing only
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            Die();
+        }
 	}
 
-    void Die()
+    protected virtual void Die()
     {
         gameObject.SetActive(false);
         EnvironmentBase temp = ObjectManager.Instance.InstantiateWithObjectPooling(_shatterObject, transform.position, transform.rotation).GetComponent<EnvironmentBase>();
@@ -46,7 +54,6 @@ public class EnvironmentDestructible : EnvironmentBase, IDamageable {
 
     public void TakeDamage(float Damage)
     {
-        Debug.Log("OUHCHC");
         _health -= Damage;
 
         if (_health < 0)

@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c65c188f4e6a30419aa87e60efe5c63, type: 3}
+  m_Name: SlimeBazookaProperties
+  m_EditorClassIdentifier: 
+  _CastingAudio: {fileID: 0}
+  _EndingAudio: {fileID: 8300000, guid: 69435e3b15207ac4b8998c014b13af28, type: 3}
+  _IsCastingAudioLoop: 0
+  _IsEndingAudioLoop: 0
+  _MovingParticle: {fileID: 1199832738952986, guid: 65e25b1015ee3804e90095fd2df1588a,
+    type: 2}
+  _ImpactParticle: {fileID: 1683314513829474, guid: be2d49ec8fbdee240aded2530507aa52,
+    type: 2}
+  _ShakeOnTraveling: 0
+  _ShakeOnImpact: 1
+  _ShakeScreenDelay: 0
+  _ShakeScreenEvent: {fileID: 11400000, guid: 394f8c5eb16cafe4ea6e1d5f750f7259, type: 2}
+  _ImpactRadius: 0
+  _SpawningIteration: 5
+  _AreaEffectProperties: {fileID: 11400000, guid: 760d8e0921c026a48b230bb97a555eaf,
+    type: 2}
+  _SpawningObjects: {fileID: 11400000, guid: 0af16483d2acb014fb644cf71b79ce3f, type: 2}
+  _startingTier: {fileID: 11400000, guid: 246bfa278bfe9c9448873a22d6fa2e30, type: 2}
+  _HasRandomMotion: 1

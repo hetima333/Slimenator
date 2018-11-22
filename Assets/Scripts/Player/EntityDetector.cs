@@ -18,26 +18,32 @@ public class EntityDetector : MonoBehaviour
     protected void OnTriggerStay(Collider other)
     {
         ISuckable suckable_temp = other.gameObject.GetComponent<ISuckable>();
+        IElement element_temp = other.gameObject.GetComponent<IElement>();
+
+        float multiplyer = ((element_temp != null) ? element_temp.GetTier().GetMultiplyer() : 1);
+
         if (suckable_temp != null)
         {
             Rigidbody RB = other.GetComponent<Rigidbody>();
             suckable_temp.Sacking();
 
-            if (RB != null && RB.mass < _Player.GetPlayerStats().SuckingPowerProperties)
-                RB.AddForce(-GAcceleration(_Owner.transform.position, RB.mass, RB));
-
-            if (Vector3.Distance(other.gameObject.transform.position, _Owner.gameObject.transform.position) < 3)
+            if (RB != null && RB.mass < _Player.GetPlayerStats().SuckingPowerProperties * _Player.GetPlayerStats().SuckingPowerMultiplyerProperties)               
             {
-                IElement element_temp = other.gameObject.GetComponent<IElement>();
-                if (element_temp != null)
-                {
-                    _Player.StoreElementInOrb(element_temp.GetElementType());            
-                }
+                RB.AddForce(-GAcceleration(_Owner.transform.position, RB.mass * multiplyer, RB));
 
-                IDamageable damage_temp = other.gameObject.GetComponent<IDamageable>();
-                if (damage_temp != null)
+                if (Vector3.Distance(other.gameObject.transform.position, _Owner.gameObject.transform.position) < 3 + multiplyer)
                 {
-                    damage_temp.TakeDamage(1000);
+                    if (element_temp != null)
+                    {
+                        for (int i = 0; i < multiplyer; ++i)
+                            _Player.StoreElementInOrb(element_temp.GetElementType());
+                    }
+
+                    IDamageable damage_temp = other.gameObject.GetComponent<IDamageable>();
+                    if (damage_temp != null)
+                    {
+                        damage_temp.TakeDamage(1000);
+                    }
                 }
             }
         }

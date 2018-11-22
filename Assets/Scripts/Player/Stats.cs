@@ -12,13 +12,14 @@ public class Stats : ScriptableObject
     [SerializeField]
     private float
         _MaxHealth,
-        _Health,
-        _MaxDamage,
-        _MaxSpeed,
-
-        _MaxSpeedMultiplyer,
-        _MaxDamageMultiplyer,
         _MaxHealthMultiplyer,
+        _Health,
+
+        _MaxDamage,
+        _MaxDamageMultiplyer,
+
+        _MaxSpeed,
+        _MaxSpeedMultiplyer,
 
         _SuckingPower,
         _SuckingPowerMultiplyer;

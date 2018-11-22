@@ -1,0 +1,4 @@
+﻿interface IExplodable
+{
+    void OnExplode();
+}
