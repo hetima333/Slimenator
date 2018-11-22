@@ -1658,7 +1658,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damage: 0
-  _groundHit: 0
+  _groundHit: 1
 --- !u!114 &114734001464578518
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1673,6 +1673,7 @@ MonoBehaviour:
   _hpbarCanvas: {fileID: 1883121316519442, guid: 07f82906bffcd4ba9831779e5e2ddb31,
     type: 2}
   _offset: {x: 0, y: 7.53, z: 3.4}
+  _useDamagePop: 1
 --- !u!114 &114764713969013314
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1693,6 +1694,7 @@ MonoBehaviour:
   _startPosition: {x: 0, y: 0, z: 0}
   _patienceValue: 10
   _isAction: 0
+  _isGround: 0
   _searchObj: {fileID: 0}
   _target: {fileID: 0}
   _anim: {fileID: 0}
