@@ -9,14 +9,20 @@ public class FrontSlimeShot : BossSkill {
 	// Use this for initialization
 	void Start () {
 		_slimeBullet = Resources.Load ("EnemyItem/SlimeBullet", typeof (GameObject)) as GameObject;
+		_Type = AttackType.SHOT;
 	}
 
 	override public void Action () {
-		Debug.Log ("射撃");
-		_actTime = 1.0f;
-		CreateShotObject (0);
-		CreateShotObject (30f);
-		CreateShotObject (-30f);
+		_rid.velocity = Vector3.zero;
+		if (_boss._canAnimation) {
+			_boss._anim.CrossFade ("Shot", 0);
+		} else {
+			Debug.Log ("射撃");
+			_actTime = 1.0f;
+			CreateShotObject (0);
+			CreateShotObject (30f);
+			CreateShotObject (-30f);
+		}
 		_canActive = false;
 		_boss.GetComponent<BossBase> ()._isAction = true;
 
@@ -27,5 +33,19 @@ public class FrontSlimeShot : BossSkill {
 		var shotObject = shot.GetComponent<SlimeBullet> ();
 		shotObject.SetCharacterObject (gameObject);
 		shotObject.SetForwordAxis (Quaternion.AngleAxis (axis, Vector3.up));
+	}
+
+	void ShotStart () {
+		Debug.Log ("射撃");
+		_actTime = 1.0f;
+		CreateShotObject (0);
+		CreateShotObject (30f);
+		CreateShotObject (-30f);
+	}
+
+	void ShotEnd () {
+		if (_boss._canAnimation) {
+			_boss._anim.CrossFade ("Idle", 0);
+		}
 	}
 }

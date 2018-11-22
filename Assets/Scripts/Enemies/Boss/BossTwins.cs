@@ -2,7 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BossTwins : BossBase, IDamageable {
+public class BossTwins : BossBase {
+
+	public enum Type {
+
+		PHYSICAL,
+		SHOT
+	}
+
+	[SerializeField]
+	private Type _type;
 
 	//TODO Boss Performance
 	const float MAX_HP = 1000.0f;
@@ -13,15 +22,15 @@ public class BossTwins : BossBase, IDamageable {
 
 	private float graceTime = 5f;
 
-	[SerializeField]
-	private bool _isGround;
-
-	public bool IsGround { get { return _isGround; } }
-
 	// Use this for initialization
 	void Start () {
 		SetStatus ();
-		PhaseUp ();
+		_anim = GetComponent<SimpleAnimation> ();
+		//分裂アニメの再生開始位置を終点に設定
+		_anim.GetState ("WakeUp").normalizedTime = 1;
+		_anim.GetState ("WakeUp").speed = -1f;
+		_anim.CrossFade ("WakeUp", 0);
+
 		_target = GameObject.Find ("Player");
 
 	}
@@ -29,14 +38,21 @@ public class BossTwins : BossBase, IDamageable {
 	// Update is called once per frame
 	void Update () {
 
-		if (gameObject.transform.position.y > 3.2f) {
-			_isGround = false;
-		} else {
-			_isGround = true;
-		}
-
 		_actInterval -= Time.deltaTime; {
 			if (_actInterval <= 0) {
+				switch (_phase) {
+					case 1:
+						_actInterval = ACT_INTERVAL;
+						break;
+
+					case 2:
+						_actInterval = ACT_INTERVAL / 2.0f;
+						break;
+					default:
+
+						break;
+				}
+
 				_actInterval = ACT_INTERVAL;
 				UseSkill ();
 			}
@@ -59,7 +75,7 @@ public class BossTwins : BossBase, IDamageable {
 	}
 
 	//ダメージを受ける
-	public void TakeDamage (float damage) {
+	public new void TakeDamage (float damage) {
 		_hp -= damage;
 
 		if (_hp <= 0) {
@@ -122,18 +138,36 @@ public class BossTwins : BossBase, IDamageable {
 
 		switch (_phase) {
 			case 1:
-				//新しいコンポーネントの追加
-				_skillList.Add (gameObject.AddComponent<JumpPress> ());
-				_skillList.Add (gameObject.AddComponent<FrontSlimeShot> ());
-				_skillList.Add (gameObject.AddComponent<AroundSlimeShot> ());
-				_skillList.Add (gameObject.AddComponent<Tackle> ());
+				//タイプ別にスキルの追加
+				switch (_type) {
+					case Type.PHYSICAL:
+						_skillList.Add (gameObject.AddComponent<JumpPress> ());
+						_skillList.Add (gameObject.AddComponent<Tackle> ());
+						break;
+					case Type.SHOT:
+						_skillList.Add (gameObject.AddComponent<FrontSlimeShot> ());
+						_skillList.Add (gameObject.AddComponent<AroundSlimeShot> ());
+						break;
+				}
 				_skillList.Add (gameObject.AddComponent<PinballAttack> ());
 				break;
 
 			case 2:
 				//ピンボール封印
 				_skillList.Remove (gameObject.GetComponent<PinballAttack> ());
-				//メテオの追加
+
+				//タイプ別に(相方の)スキルの追加
+				switch (_type) {
+					case Type.PHYSICAL:
+						_skillList.Add (gameObject.AddComponent<FrontSlimeShot> ());
+						_skillList.Add (gameObject.AddComponent<AroundSlimeShot> ());
+						break;
+					case Type.SHOT:
+						_skillList.Add (gameObject.AddComponent<JumpPress> ());
+						_skillList.Add (gameObject.AddComponent<Tackle> ());
+						break;
+				}
+				//特殊技メテオの追加
 				_skillList.Add (gameObject.AddComponent<SlimeMeteorRain> ());
 				break;
 			default:
@@ -148,8 +182,15 @@ public class BossTwins : BossBase, IDamageable {
 	}
 
 	public void DeadCall () {
-		if (_avatar != null)
+		if (_avatar != null) {
 			_avatar.GetComponent<BossTwins> ()._isAlone = true;
+		}
+		Destroy (gameObject);
+		//ObjectManager.Instance.ReleaseObject (gameObject);
+	}
+
+	void WakeUp () {
+		PhaseUp ();
 	}
 
 }

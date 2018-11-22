@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class JumpPress : BossSkill {
 
+	private const float LANDING_TIME = 0.5f;
+
 	[SerializeField]
 	private GameObject _marker;
 
@@ -13,6 +15,7 @@ public class JumpPress : BossSkill {
 		_maxCoolTime = 5;
 		_actTime = Random.Range (3, 5);
 		_coolTime = _maxCoolTime;
+		_Type = AttackType.PHYSICAL;
 	}
 
 	override public void Action () {
@@ -20,6 +23,9 @@ public class JumpPress : BossSkill {
 		_coolTime = _maxCoolTime;
 		_actTime = Random.Range (3, 5);
 		_rid.velocity = Vector3.zero;
+		if (_boss._canAnimation) {
+			_boss._anim.CrossFade ("Jump", 0);
+		}
 		Jump ();
 		_canActive = false;
 		_boss.GetComponent<BossBase> ()._isAction = true;
@@ -31,7 +37,7 @@ public class JumpPress : BossSkill {
 		Vector3 targetPosition = _target.transform.position;
 		//_marker.SetActive (true);
 		//_marker.transform.position = new Vector3 (targetPosition.x, 0.1f, targetPosition.z)
-		JumpFixedTime (targetPosition, _actTime);
+		JumpFixedTime (targetPosition, _actTime - LANDING_TIME);
 
 	}
 
