@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: SlimeBazookaProperties
   m_EditorClassIdentifier: 
   _CastingAudio: {fileID: 0}
-  _EndingAudio: {fileID: 0}
+  _EndingAudio: {fileID: 8300000, guid: 69435e3b15207ac4b8998c014b13af28, type: 3}
   _IsCastingAudioLoop: 0
   _IsEndingAudioLoop: 0
   _MovingParticle: {fileID: 1199832738952986, guid: 65e25b1015ee3804e90095fd2df1588a,

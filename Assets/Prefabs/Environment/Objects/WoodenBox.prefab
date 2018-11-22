@@ -58,7 +58,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 72afbad3cc0353c44be6b1fd0bbe0511, type: 3}
+  - {fileID: 2100000, guid: 2db079bb1d1d4cf42ae8a2281bd37647, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -125,3 +125,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _shatterObject: {fileID: 1525994445714538, guid: 430ff85846f2024408863fd0396e832e,
     type: 2}
+  _drop: {fileID: 0}
