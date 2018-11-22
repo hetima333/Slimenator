@@ -10,26 +10,36 @@ public class SkillImage : MonoBehaviour {
 	private Image _baseElementImage;
 	[SerializeField]
 	private Image _enchantmentImage;
+	[SerializeField]
+	private Image _enchantmentBackImage;
 
 	[SerializeField]
 	private OrbSprites _sprites;
+
+	void Start() {
+		// _enchantmentBackImage = _enchantmentImage.transform.parent.GetComponent<Image>();
+
+		Debug.Log("come : " + _enchantmentBackImage.name);
+	}
 
 	public void ChangeSkillImage(Skill skill) {
 		// スキルがあれば不透明にする
 		if (skill != null) {
 			_baseElementImage.color = new Color(1, 1, 1, 1);
+			_enchantmentImage.color = new Color(1, 1, 1, 1);
+			_enchantmentBackImage.color = new Color(1, 1, 1, 1);
 		}
 
 		// スキルがなければSpriteを空にする
 		if (skill == null) {
-			_baseElementImage.sprite = null;
 			_baseElementImage.color = new Color(1, 1, 1, 0);
-			_enchantmentImage.sprite = null;
+			_enchantmentImage.color = new Color(1, 1, 1, 0);
+			_enchantmentBackImage.color = new Color(1, 1, 1, 0);
 		}
 		// ユニークスキル
 		else if (skill.IsUnique()) {
-			// スキル画像が来たら変更する
-			_enchantmentImage.sprite = null;
+			_enchantmentImage.color = new Color(1, 1, 1, 0);
+			_enchantmentBackImage.color = new Color(1, 1, 1, 0);
 			_baseElementImage.sprite = TextureLoader.Load("HUD/SkillUI/" + skill.name);
 		}
 		// ユニークでないスキル

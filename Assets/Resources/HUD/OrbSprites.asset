@@ -11,6 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d3505af4751f4e59903972c35414463, type: 3}
   m_Name: OrbSprites
   m_EditorClassIdentifier: 
-  _fire: {fileID: 21300000, guid: e3f581ceda67943009821aea91e11035, type: 3}
-  _ice: {fileID: 21300000, guid: 164777b10cacf49138de2452b66d085e, type: 3}
-  _lightning: {fileID: 21300000, guid: b9c58d3fdfa2c4eb5a08372b5bb608f1, type: 3}
+  _fire: {fileID: 21300000, guid: 9dc4d86b1a97d4566af3e1bf170a487c, type: 3}
+  _ice: {fileID: 21300000, guid: 0c7d7839438f148cdbf6a38ce501b210, type: 3}
+  _lightning: {fileID: 21300000, guid: 2e511ffee134a48c28309383192eac84, type: 3}
