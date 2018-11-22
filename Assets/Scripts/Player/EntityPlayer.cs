@@ -117,7 +117,8 @@ public class EntityPlayer : MonoBehaviour, IDamageable
         _SkillStoreSFX,
         _VacuumSFX,
         _SuckSFX,
-        _WalkingSFX;
+        _WalkingSFX,
+        _SkillSwapSFX;
 
     private void Awake()
     {
@@ -264,7 +265,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable
                 if (!_Is_VacuumSFXPlayed)
                 {
                     _Is_VacuumSFXPlayed = true;
-                    AudioManager.Instance.PlaySE(_VacuumSFX.name, true);
+                    AudioManager.Instance.PlaySEWithFadeIn(_VacuumSFX.name, 0.5f, true);
                 }
 
             }
@@ -306,10 +307,12 @@ public class EntityPlayer : MonoBehaviour, IDamageable
                     float position = InputManager.SkillScroll_Input();
                     if (position > 0f)
                     {
+                        AudioManager.Instance.PlaySE(_SkillSwapSFX.name);
                         --_CurrentSelection;                     
                     }
                     else if (position < 0f)
                     {
+                        AudioManager.Instance.PlaySE(_SkillSwapSFX.name);
                         ++_CurrentSelection;
                     }
                 }

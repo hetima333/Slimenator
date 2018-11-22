@@ -3011,6 +3011,7 @@ MonoBehaviour:
   _VacuumSFX: {fileID: 8300000, guid: afb455f159970704a91dfb62222052f0, type: 3}
   _SuckSFX: {fileID: 8300000, guid: 1cdbcfdf787b8f64f955040f3ee73b74, type: 3}
   _WalkingSFX: {fileID: 8300000, guid: 5e4a2f60ab1e21e43befeb5a1030fd4d, type: 3}
+  _SkillSwapSFX: {fileID: 8300000, guid: b4aa4d53cac93264781f9026e3fe9d0f, type: 3}
 --- !u!114 &114676757198629502
 MonoBehaviour:
   m_ObjectHideFlags: 1
