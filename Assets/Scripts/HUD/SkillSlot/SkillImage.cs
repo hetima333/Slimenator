@@ -34,7 +34,7 @@ public class SkillImage : MonoBehaviour {
 		else if (skill.IsUnique()) {
 			_enchantmentImage.color = new Color(1, 1, 1, 0);
 			_enchantmentBackImage.color = new Color(1, 1, 1, 0);
-			_baseElementImage.sprite = TextureLoader.Load("HUD/SkillUI/" + skill.name);
+			_baseElementImage.sprite = TextureLoader.Load("HUD/SkillsUI/" + skill.name);
 		}
 		// ユニークでないスキル
 		else {
