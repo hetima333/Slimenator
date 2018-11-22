@@ -7,17 +7,9 @@ using UnityEngine.UI;
 
 public abstract class MenuButtonBase : MonoBehaviour {
 
-	private PauseMenuCore _menuCore;
-	protected PauseMenuCore MenuCore {
-		get { return _menuCore; }
-	}
-
 	private void Start() {
 		// ボタンの参照を取得
 		var button = GetComponent<Button>();
-
-		// メニューコアの参照取得
-		_menuCore = GetComponentInParent<PauseMenuCore>();
 
 		// ポインターが入った時にフォーカスをあわせる
 		button.OnPointerEnterAsObservable()

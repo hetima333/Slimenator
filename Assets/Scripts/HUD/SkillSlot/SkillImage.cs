@@ -16,12 +16,6 @@ public class SkillImage : MonoBehaviour {
 	[SerializeField]
 	private OrbSprites _sprites;
 
-	void Start() {
-		// _enchantmentBackImage = _enchantmentImage.transform.parent.GetComponent<Image>();
-
-		Debug.Log("come : " + _enchantmentBackImage.name);
-	}
-
 	public void ChangeSkillImage(Skill skill) {
 		// スキルがあれば不透明にする
 		if (skill != null) {
@@ -40,7 +34,7 @@ public class SkillImage : MonoBehaviour {
 		else if (skill.IsUnique()) {
 			_enchantmentImage.color = new Color(1, 1, 1, 0);
 			_enchantmentBackImage.color = new Color(1, 1, 1, 0);
-			_baseElementImage.sprite = TextureLoader.Load("HUD/SkillUI/" + skill.name);
+			_baseElementImage.sprite = TextureLoader.Load("HUD/SkillsUI/" + skill.name);
 		}
 		// ユニークでないスキル
 		else {
