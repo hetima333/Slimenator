@@ -25,11 +25,11 @@ public class SlimeMeteorRain : BossSkill {
 	private void MeteorFall (int num) {
 
 		for (int i = 0; i < num; i++) {
-			Vector3 pos;
+			Vector3 pos = gameObject.transform.position;
 
-			pos.x = Random.Range (-50, 50);
+			pos.x += Random.Range (-50, 50);
 			pos.y = 50;
-			pos.z = Random.Range (-50, 50);
+			pos.z += Random.Range (-50, 50);
 			GameObject meteor = Instantiate (_slimeMeteor, pos, Quaternion.identity);
 		}
 

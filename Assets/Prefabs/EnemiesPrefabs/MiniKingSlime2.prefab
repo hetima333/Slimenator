@@ -222,6 +222,7 @@ GameObject:
   - component: {fileID: 114010817410202462}
   - component: {fileID: 114173391258304730}
   - component: {fileID: 114439259044563178}
+  - component: {fileID: 114493458786186030}
   m_Layer: 13
   m_Name: MiniKingSlime2
   m_TagString: Untagged
@@ -555,8 +556,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _state: 0
-  _maxHp: 0
-  _hp: 0
   _isGround: 0
   _target: {fileID: 0}
   _isAction: 0
@@ -599,8 +598,8 @@ MonoBehaviour:
   Response:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1818661371988076}
-        m_MethodName: 
+      - m_Target: {fileID: 114173391258304730}
+        m_MethodName: AddStatus
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: a983e4dbbcbe3714fb3bab69798f84e7,
@@ -615,8 +614,8 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1818661371988076}
-        m_MethodName: 
+      - m_Target: {fileID: 114173391258304730}
+        m_MethodName: AddStatus
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: 82823a8632fe1e846b6ac8ebf4100ca7,
@@ -631,8 +630,8 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1818661371988076}
-        m_MethodName: 
+      - m_Target: {fileID: 114173391258304730}
+        m_MethodName: AddStatus
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: cb25ffbe128a58e4ea499cf97c1a51f3,
@@ -645,6 +644,21 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114493458786186030
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1818661371988076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a9afa2bc112e47d688b392b5032afa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _hpbarCanvas: {fileID: 1883121316519442, guid: 07f82906bffcd4ba9831779e5e2ddb31,
+    type: 2}
+  _offset: {x: 0, y: 3.51, z: 0}
+  _useDamagePop: 1
 --- !u!114 &114628547022102538
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -4,21 +4,22 @@ using UnityEngine;
 
 public class BossSpawn : MonoBehaviour {
 
-public GameObject _bossPrefab;
+	public GameObject _bossPrefab;
 
 	// Use this for initialization
 	void Start () {
-	if(_bossPrefab == null)
-	{
-		print("Bossプレハブがセットされていません");
-		return;
+		if (_bossPrefab == null) {
+			print ("Bossプレハブがセットされていません");
+			return;
+		}
+
+		GameObject obj = ObjectManager.Instance.InstantiateWithObjectPooling (_bossPrefab, gameObject.transform.position, new Quaternion ());
+		BossBase boss = obj.GetComponent<BossBase> ();
+		boss.Init (EnumHolder.Instance.GetStats (_bossPrefab.name));
 	}
 
-		ObjectManager.Instance.InstantiateWithObjectPooling(_bossPrefab, gameObject.transform.position, new Quaternion());
-	}
-	
 	// Update is called once per frame
 	void Update () {
-		
+
 	}
 }

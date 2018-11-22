@@ -14,7 +14,6 @@ public class BossTwins : BossBase {
 	private Type _type;
 
 	//TODO Boss Performance
-	const float MAX_HP = 1000.0f;
 	const float MONEY = 2000.0f;
 	public GameObject _avatar;
 
@@ -22,8 +21,9 @@ public class BossTwins : BossBase {
 
 	private float graceTime = 5f;
 
-	// Use this for initialization
-	void Start () {
+	public override void Init (Stats _stat) {
+		_properties = _stat;
+
 		SetStatus ();
 		_anim = GetComponent<SimpleAnimation> ();
 		//分裂アニメの再生開始位置を終点に設定
@@ -37,6 +37,13 @@ public class BossTwins : BossBase {
 
 	// Update is called once per frame
 	void Update () {
+
+		if (_state == State.DEAD) return;
+
+		//★ステータスの更新
+		_status.UpdateStatMultiplyer (ref _properties);
+		//★状態ダメージを受ける
+		TakeDamage (_status.GetValue (EnumHolder.EffectType.TAKEDAMAGE));
 
 		_actInterval -= Time.deltaTime; {
 			if (_actInterval <= 0) {
@@ -69,18 +76,17 @@ public class BossTwins : BossBase {
 
 	}
 
-	private void SetStatus () {
-		_maxHp = MAX_HP;
-		_hp = _maxHp;
-	}
-
 	//ダメージを受ける
 	public new void TakeDamage (float damage) {
-		_hp -= damage;
 
-		if (_hp <= 0) {
+		if (_state == State.DEAD) return;
 
+		_properties.HealthProperties -= damage;
+		if (_properties.HealthProperties <= 0) {
+			_anim.CrossFade ("Dead", 0);
+			_state = State.DEAD;
 		}
+
 	}
 
 	private void UseSkill () {
@@ -185,8 +191,8 @@ public class BossTwins : BossBase {
 		if (_avatar != null) {
 			_avatar.GetComponent<BossTwins> ()._isAlone = true;
 		}
-		Destroy (gameObject);
-		//ObjectManager.Instance.ReleaseObject (gameObject);
+		//Destroy (gameObject);
+		ObjectManager.Instance.ReleaseObject (gameObject);
 	}
 
 	void WakeUp () {

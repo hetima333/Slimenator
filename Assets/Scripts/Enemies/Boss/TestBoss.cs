@@ -26,7 +26,9 @@ public class TestBoss : BossBase {
     private GameObject _body;
 
     // Use this for initialization
-    void Start () {
+
+    public override void Init (Stats _stat) {
+        _properties = _stat;
         SetStatus ();
         PhaseUp ();
         _target = GameObject.Find ("Player");
@@ -36,12 +38,18 @@ public class TestBoss : BossBase {
         //マテリアルの取得
         _matA = (Material) Resources.Load ("Material/BossA");
         _matB = (Material) Resources.Load ("Material/BossB");
+
     }
 
     // Update is called once per frame
     void Update () {
 
         if (_state == State.DEAD) return;
+
+        //★ステータスの更新
+        _status.UpdateStatMultiplyer (ref _properties);
+        //★状態ダメージを受ける
+        TakeDamage (_status.GetValue (EnumHolder.EffectType.TAKEDAMAGE));
 
         _actInterval -= Time.deltaTime; {
             if (_actInterval <= 0) {
@@ -56,15 +64,17 @@ public class TestBoss : BossBase {
 
     }
 
-    private void SetStatus () {
-        _hp = _maxHp;
-    }
-
     //ダメージを受ける
     public new void TakeDamage (float damage) {
-        _hp -= damage;
 
-        if (_hp <= 0) {
+        if (_state == State.DEAD) return;
+        _properties.HealthProperties -= damage;
+
+        if (_properties.HealthProperties <= 0) {
+            PhaseUp ();
+        }
+
+        if (_properties.HealthProperties <= 200 && _phase == 1) {
             PhaseUp ();
         }
     }
@@ -152,7 +162,10 @@ public class TestBoss : BossBase {
         BossA.transform.position = Pos + OffSet;
 
         GameObject BossB = ObjectManager.Instance.InstantiateWithObjectPooling (Boss2);
-        BossA.transform.position = Pos - OffSet;
+        BossB.transform.position = Pos - OffSet;
+
+        BossA.GetComponent<BossTwins> ().Init (EnumHolder.Instance.GetStats (Boss1.name));
+        BossB.GetComponent<BossTwins> ().Init (EnumHolder.Instance.GetStats (Boss2.name));
 
         BossA.GetComponent<BossTwins> ()._target = _target;
         BossA.GetComponent<BossTwins> ().SetAvatar (BossB);
@@ -160,8 +173,7 @@ public class TestBoss : BossBase {
         BossB.GetComponent<BossTwins> ()._target = _target;
         BossB.GetComponent<BossTwins> ().SetAvatar (BossA);
 
-        Destroy (gameObject);
-        //ObjectManager.Instance.ReleaseObject (gameObject);
+        ObjectManager.Instance.ReleaseObject (gameObject);
 
     }
 

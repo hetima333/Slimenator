@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 [RequireComponent (typeof (Rigidbody))]
 [RequireComponent (typeof (SimpleAnimation))]
-public class BossBase : MonoBehaviour, IDamageable {
+public abstract class BossBase : MonoBehaviour, IDamageable {
 
 	public enum State {
 		ALIVE,
@@ -14,12 +14,6 @@ public class BossBase : MonoBehaviour, IDamageable {
 
 	protected const float ACT_INTERVAL = 1.0f;
 	protected float _actInterval = ACT_INTERVAL;
-	public float _maxHp;
-	public float _hp;
-	//インタフェース用最大Hp取得
-	public float MaxHitPoint { get { return _maxHp; } }
-	//インタフェース用現在Hp取得
-	public float HitPoint { get { return _hp; } }
 
 	[SerializeField]
 	public bool _isGround = true;
@@ -51,12 +45,22 @@ public class BossBase : MonoBehaviour, IDamageable {
 
 	public GameObject _shockWave;
 
+	protected Status _status;
+	protected Stats _properties;
+
+	//最大値
+	public float MaxHitPoint { get { return _properties.MaxHealthProperties * _properties.HealthMultiplyerProperties; } }
+	//体力
+	public float HitPoint { get { return _properties.HealthProperties; } }
+
+	public abstract void Init (Stats stat);
+
 	public void Awake () {
 		_shockWave = Resources.Load ("EnemyItem/ShockWave", typeof (GameObject)) as GameObject;
 	}
 
 	public void TakeDamage (float damage) {
-		_hp -= damage;
+		_properties.HealthProperties -= damage;
 	}
 
 	private void OnCollisionEnter (Collision col) {
@@ -99,6 +103,12 @@ public class BossBase : MonoBehaviour, IDamageable {
 		if (col.gameObject.layer == LayerMask.NameToLayer ("Ground") && _state == BossBase.State.ALIVE) {
 			_isGround = false;
 		}
+	}
+
+	public void SetStatus () {
+		_properties.HealthProperties = MaxHitPoint;
+		_status = gameObject.GetComponent<Status> ();
+		_status.Init ();
 	}
 
 }
