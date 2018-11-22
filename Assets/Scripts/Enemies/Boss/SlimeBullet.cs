@@ -13,6 +13,14 @@ public class SlimeBullet : MonoBehaviour {
 	[SerializeField]
 	private GameObject _prefab;
 
+	[SerializeField]
+	public SOList
+	_elements;
+
+	[SerializeField]
+	public SkillTier
+	_startingTier;
+
 	private float _damage = 10;
 
 	void Start () {
@@ -44,10 +52,28 @@ public class SlimeBullet : MonoBehaviour {
 			//TODO take damage   
 			hasIDamageableObject.TakeDamage (_damage);
 		} else {
-
+			int random = Random.Range (0, _elements.GetList ().Count);
+			GetSlimeFromPool (random, gameObject.transform.position);
 		}
 
 		//Release bullet
 		ObjectManager.Instance.ReleaseObject (gameObject);
+	}
+
+	public GameObject GetSlimeFromPool (int type, Vector3 position = new Vector3 ()) {
+		GameObject slime_obj = ObjectManager.Instance.InstantiateWithObjectPooling (_prefab, position);
+		Stats temp = EnumHolder.Instance.GetStats (_prefab.name);
+		SlimeBase temp_component = slime_obj.GetComponent<SlimeBase> ();
+
+		if (temp_component != null)
+			DestroyImmediate (temp_component);
+
+		System.Type _MyScriptType = System.Type.GetType (((ElementType) _elements.GetList () [type]).GetSlimeScriptName ());
+		slime_obj.AddComponent (_MyScriptType);
+
+		slime_obj.GetComponent<SlimeBase> ().Init (temp, ((((ElementType) _elements.GetList () [type]).name.Equals ("Lightning")) ? 2 : 1), ((ElementType) _elements.GetList () [type]), _startingTier);
+		slime_obj.SetActive (true);
+
+		return slime_obj;
 	}
 }

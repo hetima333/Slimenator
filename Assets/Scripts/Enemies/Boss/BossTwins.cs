@@ -25,7 +25,12 @@ public class BossTwins : BossBase {
 	// Use this for initialization
 	void Start () {
 		SetStatus ();
-		PhaseUp ();
+		_anim = GetComponent<SimpleAnimation> ();
+		//分裂アニメの再生開始位置を終点に設定
+		_anim.GetState ("WakeUp").normalizedTime = 1;
+		_anim.GetState ("WakeUp").speed = -1f;
+		_anim.CrossFade ("WakeUp", 0);
+
 		_target = GameObject.Find ("Player");
 
 	}
@@ -182,6 +187,10 @@ public class BossTwins : BossBase {
 		}
 		Destroy (gameObject);
 		//ObjectManager.Instance.ReleaseObject (gameObject);
+	}
+
+	void WakeUp () {
+		PhaseUp ();
 	}
 
 }

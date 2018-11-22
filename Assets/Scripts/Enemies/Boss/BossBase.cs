@@ -49,16 +49,46 @@ public class BossBase : MonoBehaviour, IDamageable {
 	[SerializeField]
 	public bool _canAnimation = true;
 
+	public GameObject _shockWave;
+
+	public void Awake () {
+		_shockWave = Resources.Load ("EnemyItem/ShockWave", typeof (GameObject)) as GameObject;
+	}
+
 	public void TakeDamage (float damage) {
 		_hp -= damage;
 	}
 
 	private void OnCollisionEnter (Collision col) {
+
+		if (col.gameObject.layer == LayerMask.NameToLayer ("Player") && _state == BossBase.State.ALIVE) {
+			//Make sure the target has components
+			var hasIDamageableObject = col.gameObject.GetComponent<IDamageable> ();
+
+			//If have a component
+			if (hasIDamageableObject != null) {
+				//ダメージ判定
+				//TODO take damage   
+				hasIDamageableObject.TakeDamage (10);
+			}
+		}
+
 		if (col.gameObject.layer == LayerMask.NameToLayer ("Ground") && _state == BossBase.State.ALIVE) {
 			if (_isGround == false) {
 				Debug.Log ("着地");
-				if (_canAnimation) {
-					_anim.CrossFade ("Fall", 0);
+				if (_isAction)
+					if (_canAnimation) {
+						_anim.CrossFade ("Fall", 0);
+					}
+
+				if (_shockWave) {
+					GameObject shockWave = Instantiate (_shockWave);
+					shockWave.GetComponent<ShockWave> ().SetScale (35);
+					shockWave.GetComponent<ShockWave> ().SetDamage (10);
+					//接触地点を取得
+					Vector3 ShockPos = gameObject.transform.position;
+					ShockPos.y = 0.1f;
+					shockWave.transform.position = ShockPos;
 				}
 				_isGround = true;
 			}
