@@ -44,6 +44,7 @@ public static class AudioExtensions {
 
 		if (autoStop) {
 			source.Stop();
+			source.clip = null;
 		}
 	}
 }
