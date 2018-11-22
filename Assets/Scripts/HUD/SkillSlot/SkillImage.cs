@@ -16,12 +16,6 @@ public class SkillImage : MonoBehaviour {
 	[SerializeField]
 	private OrbSprites _sprites;
 
-	void Start() {
-		// _enchantmentBackImage = _enchantmentImage.transform.parent.GetComponent<Image>();
-
-		Debug.Log("come : " + _enchantmentBackImage.name);
-	}
-
 	public void ChangeSkillImage(Skill skill) {
 		// スキルがあれば不透明にする
 		if (skill != null) {
