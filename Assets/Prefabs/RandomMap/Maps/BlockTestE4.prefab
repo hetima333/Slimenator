@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: 4079286524575070}
   m_Layer: 0
   m_Name: Spawner (1)
-  m_TagString: Spawner
+  m_TagString: SlimeSpawner
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 4836245407271236}
   m_Layer: 0
   m_Name: Spawner
-  m_TagString: Spawner
+  m_TagString: SlimeSpawner
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

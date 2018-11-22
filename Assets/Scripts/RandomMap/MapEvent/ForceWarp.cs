@@ -18,7 +18,12 @@ public	GameObject _Player;
 
 		if(Input.GetKeyDown(KeyCode.O))
 		{
-			_Player.transform.position = _target.transform.position;
-		}
+            Warp();
+        }
 	}
+
+    public void Warp()
+    {
+        _Player.transform.position = _target.transform.position;
+    }
 }
