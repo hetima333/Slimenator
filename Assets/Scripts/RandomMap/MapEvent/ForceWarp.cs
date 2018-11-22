@@ -15,6 +15,7 @@ public	GameObject _Player;
 	
 	// Update is called once per frame
 	void Update () {
+
 		if(Input.GetKeyDown(KeyCode.O))
 		{
 			_Player.transform.position = _target.transform.position;
