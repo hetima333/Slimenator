@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 33589766971544410}
   - component: {fileID: 65829467354849356}
   - component: {fileID: 23699007909483930}
-  - component: {fileID: 114340062399109378}
+  - component: {fileID: 114780184204231036}
   m_Layer: 14
   m_Name: Wall
   m_TagString: Wall
@@ -57,7 +57,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: b8f3096978505424584bc087bcdafcec, type: 2}
+  - {fileID: 2100000, guid: c188611bdfd8cb542b9e439f4f7ff9b9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -96,7 +96,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114340062399109378
+--- !u!114 &114780184204231036
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -107,4 +107,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75c13e38c592a0644a03415568775413, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tr_position: {fileID: 0}
