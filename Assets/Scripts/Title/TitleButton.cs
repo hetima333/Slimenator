@@ -7,7 +7,11 @@ public class TitleButton : MenuButtonBase {
 	[SerializeField]
 	private string _sceneName;
 
-	protected override void OnExecute(PointerEventData e) {
-		SceneManager.LoadScene(_sceneName);
+	[SerializeField]
+	private string _HUD;
+
+	protected override void OnExecute (PointerEventData e) {
+		SceneManager.LoadScene (_sceneName);
+		Application.LoadLevelAdditive (_HUD);
 	}
 }
