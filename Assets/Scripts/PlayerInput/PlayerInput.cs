@@ -10,8 +10,8 @@ using UnityEngine;
 public class PlayerInput : MonoBehaviour, IPlayerInput {
 
 	private Subject<Vector3> moveDirectionSubject = new Subject<Vector3>();
-	public ReadOnlyReactiveProperty<Vector3> MoveDirection {
-		get { return moveDirectionSubject.ToReadOnlyReactiveProperty(); }
+	public IObservable<Vector3> MoveDirection {
+		get { return moveDirectionSubject.AsObservable(); }
 	}
 
 	private Subject<float> scrollDirectionSubject = new Subject<float>();
@@ -29,9 +29,9 @@ public class PlayerInput : MonoBehaviour, IPlayerInput {
 		get { return combineOrbButtonSubject.ToReadOnlyReactiveProperty(); }
 	}
 
-	private Subject<bool> suckingButtonSubject = new Subject<bool>();
-	public IObservable<bool> SuckingButton {
-		get { return suckingButtonSubject.AsObservable(); }
+	private Subject<bool> suckButtonSubject = new Subject<bool>();
+	public IObservable<bool> SuckButton {
+		get { return suckButtonSubject.AsObservable(); }
 	}
 
 	private Subject<Vector3> mousePositionSubject = new Subject<Vector3>();
@@ -41,7 +41,7 @@ public class PlayerInput : MonoBehaviour, IPlayerInput {
 
 	void Start() {
 		// 移動入力
-		this.FixedUpdateAsObservable()
+		this.UpdateAsObservable()
 			.Select(_ => (new Vector3(
 				Input.GetAxis("Horizontal"), 0.0f, Input.GetAxis("Vertical")
 			).normalized))
@@ -65,7 +65,7 @@ public class PlayerInput : MonoBehaviour, IPlayerInput {
 		// 吸い込みボタン
 		this.UpdateAsObservable()
 			.Select(_ => Input.GetKey(KeyCode.Mouse0))
-			.Subscribe(suckingButtonSubject);
+			.Subscribe(suckButtonSubject);
 
 		// マウス座標
 		this.FixedUpdateAsObservable()
