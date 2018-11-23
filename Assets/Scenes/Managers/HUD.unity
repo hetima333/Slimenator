@@ -457,22 +457,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 428749983}
---- !u!1 &497183239 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1729716940486448, guid: ab4d347eb710e444f843c2db83fb2ee1,
-    type: 2}
-  m_PrefabInternal: {fileID: 1447646660}
---- !u!114 &497183240
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 497183239}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6924766d9da40486b95bf91335de3ec0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &531284399
 GameObject:
   m_ObjectHideFlags: 0
@@ -1133,28 +1117,7 @@ Prefab:
       propertyPath: _ignoreGameObjects.Array.data[0]
       value: 
       objectReference: {fileID: 161992075}
-    - target: {fileID: 225712038271796860, guid: ab4d347eb710e444f843c2db83fb2ee1,
-        type: 2}
-      propertyPath: m_Alpha
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114933752197990344, guid: ab4d347eb710e444f843c2db83fb2ee1,
-        type: 2}
-      propertyPath: m_RaycastTarget
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114718596726324414, guid: ab4d347eb710e444f843c2db83fb2ee1,
-        type: 2}
-      propertyPath: m_RaycastTarget
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114981698155783622, guid: ab4d347eb710e444f843c2db83fb2ee1,
-        type: 2}
-      propertyPath: m_Text
-      value: Restart
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 114198237553219252, guid: ab4d347eb710e444f843c2db83fb2ee1, type: 2}
+    m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ab4d347eb710e444f843c2db83fb2ee1, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &1520271097
