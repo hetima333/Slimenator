@@ -33,6 +33,8 @@ public class ForceWarp : MonoBehaviour
         _Player.transform.position = _target.transform.position;
         _Boss = GameObject.Find("KingSlime(Clone)");
         _Boss.GetComponent<TestBoss>().WakeUp();
+
+        GameStateManager.Instance.DestroyMap();
     }
 }
 
