@@ -44,4 +44,10 @@ public class GameStateManager : SingletonMonoBehaviour<GameStateManager>
             _warper.Warp();
         }
     }
+
+    public void DestroyMap()
+    {
+        // マップの破棄
+        Destroy(_enemyCreater.gameObject);
+    }
 }
