@@ -30,7 +30,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
     private GameObject
     _PrefabInstance;
 
-    private Stats
+    public Stats
     _Player_Stats;
 
     private float
