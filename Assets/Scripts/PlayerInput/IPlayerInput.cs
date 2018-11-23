@@ -8,7 +8,7 @@ public interface IPlayerInput {
 	/// <summary>
 	/// プレイヤーの移動方向
 	/// </summary>
-	ReadOnlyReactiveProperty<Vector3> MoveDirection { get; }
+	IObservable<Vector3> MoveDirection { get; }
 
 	/// <summary>
 	/// スクロール方向
@@ -29,7 +29,7 @@ public interface IPlayerInput {
 	/// <summary>
 	/// 吸い込みボタンを押しているか？
 	/// </summary>
-	IObservable<bool> SuckingButton { get; }
+	IObservable<bool> SuckButton { get; }
 
 	/// <summary>
 	/// マウスポジション
