@@ -149,6 +149,7 @@ public abstract class Enemy : MonoBehaviour, IDamageable, ISuckable {
     //死亡アクション
     private void Dying () {
         //Dead Animation
+        _currentState = State.DEAD;
         _anim.CrossFade ("Dead", 0);
 
     }

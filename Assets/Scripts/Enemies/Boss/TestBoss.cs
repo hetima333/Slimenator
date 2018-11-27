@@ -47,12 +47,13 @@ public class TestBoss : BossBase {
     // Update is called once per frame
     void Update () {
 
-        if (_state == State.DEAD || _isSleep == true) return;
-
         //★ステータスの更新
         _status.UpdateStatMultiplyer (ref _properties);
         //★状態ダメージを受ける
         TakeDamage (_status.GetValue (EnumHolder.EffectType.TAKEDAMAGE));
+
+        if (_state == State.DEAD || _isSleep == true) return;
+        
 
         _actInterval -= Time.deltaTime; {
             if (_actInterval <= 0) {
@@ -69,10 +70,14 @@ public class TestBoss : BossBase {
     //ダメージを受ける
     public new void TakeDamage (float damage) {
 
+
         if (_state == State.DEAD) return;
+
         _properties.HealthProperties -= damage;
 
         if (_properties.HealthProperties <= 0) {
+            
+            _state = State.DEAD;
             PhaseUp ();
         }
 
@@ -135,8 +140,7 @@ public class TestBoss : BossBase {
                 _skillList.Add (gameObject.AddComponent<Tackle> ());
                 break;
             case 3:
-                //分裂
-                _state = State.DEAD;
+                //分裂             
                 Split ();
                 break;
             default:
@@ -156,15 +160,16 @@ public class TestBoss : BossBase {
 
     void SplitEnd () {
         Debug.Log ("分裂完了");
+        //ミニボス出現位置一時的処理
         Vector3 Pos = new Vector3 (821, 0, 0);
         Pos.y = 2;
 
         Vector3 OffSet = new Vector3 (10, 0, 0);
 
-        GameObject BossA = Instantiate (Boss1);
+        GameObject BossA = ObjectManager.Instance.InstantiateWithObjectPooling (Boss1);
         BossA.transform.position = Pos + OffSet;
 
-        GameObject BossB = Instantiate (Boss2);
+        GameObject BossB = ObjectManager.Instance.InstantiateWithObjectPooling (Boss2);
         BossB.transform.position = Pos - OffSet;
 
         BossA.GetComponent<BossTwins> ().Init (EnumHolder.Instance.GetStats (Boss1.name));
@@ -176,7 +181,7 @@ public class TestBoss : BossBase {
         BossB.GetComponent<BossTwins> ()._target = _target;
         BossB.GetComponent<BossTwins> ().SetAvatar (BossA);
 
-        Destroy(gameObject);
+        ObjectManager.Instance.ReleaseObject(gameObject);
 
     }
 

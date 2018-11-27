@@ -38,12 +38,13 @@ public class BossTwins : BossBase {
 	// Update is called once per frame
 	void Update () {
 
-		if (_state == State.DEAD) return;
-
 		//★ステータスの更新
 		_status.UpdateStatMultiplyer (ref _properties);
+
 		//★状態ダメージを受ける
 		TakeDamage (_status.GetValue (EnumHolder.EffectType.TAKEDAMAGE));
+		
+		if (_state == State.DEAD) return;
 
 		_actInterval -= Time.deltaTime; {
 			if (_actInterval <= 0) {
@@ -191,7 +192,7 @@ public class BossTwins : BossBase {
 		if (_avatar != null) {
 			_avatar.GetComponent<BossTwins> ()._isAlone = true;
 		}
-		Destroy (gameObject);
+		ObjectManager.Instance.ReleaseObject (gameObject);
 	}
 
 	void WakeUp () {
