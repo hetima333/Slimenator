@@ -161,10 +161,10 @@ public class TestBoss : BossBase {
 
         Vector3 OffSet = new Vector3 (10, 0, 0);
 
-        GameObject BossA = ObjectManager.Instance.InstantiateWithObjectPooling (Boss1);
+        GameObject BossA = Instantiate (Boss1);
         BossA.transform.position = Pos + OffSet;
 
-        GameObject BossB = ObjectManager.Instance.InstantiateWithObjectPooling (Boss2);
+        GameObject BossB = Instantiate (Boss2);
         BossB.transform.position = Pos - OffSet;
 
         BossA.GetComponent<BossTwins> ().Init (EnumHolder.Instance.GetStats (Boss1.name));
@@ -176,7 +176,7 @@ public class TestBoss : BossBase {
         BossB.GetComponent<BossTwins> ()._target = _target;
         BossB.GetComponent<BossTwins> ().SetAvatar (BossA);
 
-        ObjectManager.Instance.ReleaseObject (gameObject);
+        Destroy(gameObject);
 
     }
 

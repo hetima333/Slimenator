@@ -13,7 +13,7 @@ public class BossSpawn : MonoBehaviour {
 			return;
 		}
 
-		GameObject obj = ObjectManager.Instance.InstantiateWithObjectPooling (_bossPrefab, gameObject.transform.position, new Quaternion ());
+		GameObject obj = Instantiate(_bossPrefab, gameObject.transform.position, new Quaternion ());
 		BossBase boss = obj.GetComponent<BossBase> ();
 		boss.Init (EnumHolder.Instance.GetStats (_bossPrefab.name));
 	}
