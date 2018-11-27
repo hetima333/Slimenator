@@ -43,7 +43,7 @@ RenderSettings:
 LightmapSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 11
-  m_GIWorkflowMode: 0
+  m_GIWorkflowMode: 1
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -89,7 +89,8 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaIndirect: 2
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ShowResolutionOverlay: 1
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000002, guid: 5f2abfda7f6f9de46ad4c4e0222a2b66,
+    type: 2}
   m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
@@ -133,9 +134,9 @@ MonoBehaviour:
   m_AnimatePhysics: 0
   m_CullingMode: 1
   m_WrapMode: 0
-  m_Clip: {fileID: 7400016, guid: c0f5d8895ccc760478025d55b5f8be3f, type: 3}
+  m_Clip: {fileID: 7400006, guid: cceb1ceb0a989dc42b45987f42a0653c, type: 3}
   m_States:
-  - clip: {fileID: 7400016, guid: c0f5d8895ccc760478025d55b5f8be3f, type: 3}
+  - clip: {fileID: 7400006, guid: cceb1ceb0a989dc42b45987f42a0653c, type: 3}
     name: Default
     defaultState: 1
 --- !u!1 &108282594
