@@ -44,11 +44,17 @@ public class SkillSlotPresenter : MonoBehaviour {
 		core.Slot.ObserveReplace()
 			.Where(x => x.NewValue != x.OldValue)
 			.Subscribe(x => {
-				int index = core.SelectedSkillNumber.Value + x.Index;
-				if (index >= SkillSlotCore.SLOT_SIZE) {
-					index -= SkillSlotCore.SLOT_SIZE;
+				for (int i = 0; i < SkillSlotCore.SLOT_SIZE; i++) {
+					int index = core.SelectedSkillNumber.Value + i;
+					if (index >= SkillSlotCore.SLOT_SIZE) {
+						index -= SkillSlotCore.SLOT_SIZE;
+					}
+
+					if (index >= core.Slot.Count) {
+						return;
+					}
+					_slots[i].ChangeSkillImage(core.Slot[index]);
 				}
-				_slots[index].ChangeSkillImage(x.NewValue);
 			});
 	}
 }
