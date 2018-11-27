@@ -273,7 +273,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22c0e48d142404bfba028e9421d0c311, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hpDecreaseSpeed: 0.5
+  _hpDecreaseSpeed: 5
   _overLifeTime: 0.2
   _redHPBarTrans: {fileID: 224445319973934652}
 --- !u!222 &222365631644071196
