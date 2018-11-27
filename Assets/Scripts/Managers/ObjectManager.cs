@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UniRx;
@@ -26,13 +26,6 @@ public class ObjectManager : SingletonMonoBehaviour<ObjectManager> {
 	/// </summary>
 	/// <returns></returns>
 	private bool CheckPooledObject(GameObject obj) {
-#if UNITY_EDITOR
-		// 引数のオブジェクトがプレハブでなければエラーを返す
-		if (PrefabUtility.GetPrefabParent(obj) == null) {
-			Debug.LogWarning("CheckPooledObject() argment must be prefab / 引数はプレハブである必要があります");
-			return false;
-		}
-#endif
 		// プレハブのキーを取得する
 		int key = obj.GetInstanceID();
 
@@ -47,7 +40,7 @@ public class ObjectManager : SingletonMonoBehaviour<ObjectManager> {
 	public GameObject InstantiateWithObjectPooling(GameObject obj, Vector3 position = new Vector3(), Quaternion rotation = new Quaternion()) {
 #if UNITY_EDITOR
 		// 引数のオブジェクトがプレハブでなければエラーを返す
-		if (PrefabUtility.GetPrefabParent(obj) == null) {
+		if (PrefabUtility.GetPrefabObject(obj) == null) {
 			Debug.LogWarning("InstantiateWithObjectPooling() argment must be prefab / 引数はプレハブである必要があります");
 			return null;
 		}
@@ -98,7 +91,7 @@ public class ObjectManager : SingletonMonoBehaviour<ObjectManager> {
 	public List<GameObject> GetActiveObjects(GameObject obj) {
 #if UNITY_EDITOR
 		// 引数のオブジェクトがプレハブでなければエラーを返す
-		if (PrefabUtility.GetPrefabParent(obj) == null) {
+		if (PrefabUtility.GetPrefabObject(obj) == null) {
 			Debug.LogWarning("GetActiveObjects() argment must be prefab / 引数はプレハブである必要があります");
 			return null;
 		}
@@ -119,7 +112,7 @@ public class ObjectManager : SingletonMonoBehaviour<ObjectManager> {
 
 #if UNTIY_EDITOR
 		// 引数のオブジェクトがプレハブでなければエラーを返す
-		if (PrefabUtility.GetPrefabParent(obj) == null) {
+		if (PrefabUtility.GetPrefabObject(obj) == null) {
 			Debug.LogWarning("GetSleepObjects() argment must be prefab / 引数はプレハブである必要があります");
 			return null;
 		}
