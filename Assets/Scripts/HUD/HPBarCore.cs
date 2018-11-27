@@ -16,8 +16,8 @@ public class HPBarCore : MonoBehaviour {
 	private IDamageable _target;
 
 	// HP減少の速度
-	[SerializeField, Range(0.1f, 2.0f)]
-	private float _hpDecreaseSpeed = 0.5f;
+	[SerializeField, Range(0.0f, 100.0f)]
+	private float _hpDecreaseSpeed = 5.0f;
 
 	[SerializeField, Range(0.0f, 5.0f)]
 	private float _overLifeTime = 0.2f;

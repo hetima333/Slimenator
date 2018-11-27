@@ -19,8 +19,8 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager> {
 	private Dictionary<string, AudioClip> _bgmDic,
 	_seDic;
 
-	// SEの最大数
-	private const int SE_MAX_NUM = 10;
+	// SEの最大数(31 + 1(BGM))
+	private const int SE_MAX_NUM = 31;
 
 	/// <summary>
 	/// マスター音量
