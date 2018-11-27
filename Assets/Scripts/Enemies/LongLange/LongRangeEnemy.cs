@@ -132,7 +132,7 @@ public class LongRangeEnemy : Enemy {
     void StartHit () {
         if (_bullet) {
             //make bullet 
-            GameObject bullet = ObjectManager.Instance.InstantiateWithObjectPooling (_bullet) as GameObject;
+            GameObject bullet = Instantiate (_bullet, Vector3.zero, Quaternion.identity) as GameObject;
             //set bullet damage
             bullet.GetComponent<EnemyBullet> ().SetDamage (_outputDamage);
             //set bullet position

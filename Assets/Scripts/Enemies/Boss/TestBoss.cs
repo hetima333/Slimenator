@@ -122,7 +122,7 @@ public class TestBoss : BossBase {
 
     private void PhaseUp () {
         _phase++;
-        Debug.Log ("Phase" + _phase);
+        // Debug.Log ("Phase" + _phase);
 
         switch (_phase) {
             case 1:
