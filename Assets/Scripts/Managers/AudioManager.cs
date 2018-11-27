@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UniRx;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -124,6 +125,17 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager> {
 		// リソースフォルダから全SE&BGMのファイルを読み込みセット
 		_bgmDic = Resources.LoadAll(BGM_PATH, typeof(AudioClip)).Select(x => x as AudioClip).ToDictionary(x => x.name);
 		_seDic = Resources.LoadAll(SE_PATH, typeof(AudioClip)).Select(x => x as AudioClip).ToDictionary(x => x.name);
+
+		// ゲームが一時停止していたら音声を止める
+		this.ObserveEveryValueChanged(_ => Time.timeScale)
+			.DistinctUntilChanged()
+			.Subscribe(x => {
+				if (x <= 1) {
+					PauseAllAudio();
+				} else {
+					UnPauseAllAudio();
+				}
+			});
 	}
 
 	/// <summary>
@@ -303,5 +315,21 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager> {
 	/// <returns></returns>
 	private AudioSource FindSESource(string name) {
 		return _seSourceList.Where(x => x.clip != null).FirstOrDefault(x => name == x.clip.name);
+	}
+
+	/// <summary>
+	/// 全ての音声を一時停止する
+	/// </summary>
+	private void PauseAllAudio() {
+		_bgmSource.Pause();
+		_seSourceList.Where(x => x.isPlaying).ToList().ForEach(x => x.Pause());
+	}
+
+	/// <summary>
+	/// 全ての音声を再開する
+	/// </summary>
+	private void UnPauseAllAudio() {
+		_bgmSource.UnPause();
+		_seSourceList.Where(x => x.isPlaying != true).ToList().ForEach(x => x.UnPause());
 	}
 }
