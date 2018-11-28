@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class BossSkill : MonoBehaviour {
 
+	//スキルの攻撃タイプ
 	public enum AttackType {
-
+		//物理的な攻撃
 		PHYSICAL,
+		//射撃
 		SHOT
 	}
+
 
 	public AttackType _Type;
 
@@ -45,24 +48,21 @@ public class BossSkill : MonoBehaviour {
 		if (_boss._state == BossBase.State.DEAD) return;
 
 		if (!_isActive && !_canActive) {
-
-			_coolTime -= Time.deltaTime;
+			//クールタイム減算（状態異常による速度低下も考慮）
+			_coolTime -= Time.deltaTime*_boss._properties.SpeedMultiplyerProperties;
 			if (_coolTime <= 0) {
 				_coolTime = _maxCoolTime;
 				_canActive = true;
 			}
 
 			if (_actTime > 0) {
-				_actTime -= Time.deltaTime;
+				//行動時間減算（状態異常による速度低下も考慮）
+				_actTime -= Time.deltaTime*_boss._properties.SpeedMultiplyerProperties;
 				if (_actTime <= 0) {
 					ActEnd ();
 				}
 			}
 
-		}
-		if (_col.material != null) {
-			var pos = gameObject.transform.position;
-			pos.y = 5;
 		}
 	}
 
@@ -77,6 +77,5 @@ public class BossSkill : MonoBehaviour {
 		if (_boss._canAnimation) {
 			_boss._anim.CrossFade ("Idle", 0);
 		}
-
 	}
 }

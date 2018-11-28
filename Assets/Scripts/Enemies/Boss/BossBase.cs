@@ -72,31 +72,29 @@ public abstract class BossBase : MonoBehaviour, IDamageable {
 			var hasIDamageableObject = col.gameObject.GetComponent<IDamageable> ();
 
 			//If have a component
-			if (hasIDamageableObject != null) {
+			if (hasIDamageableObject != null &&_isAction == true) {
 				//ダメージ判定
 				//TODO take damage   
 				hasIDamageableObject.TakeDamage (10);
+				_isAction = false;
 			}
 		}
 
 		if (col.gameObject.layer == LayerMask.NameToLayer ("Ground") && _state == BossBase.State.ALIVE) {
-			if (_isGround == false) {
-				Debug.Log ("着地");
-				if (_isAction == true)
-					if (_canAnimation) {
-						_anim.CrossFade ("Fall", 0);
-						_animName = "Fall";
-						if (_shockWave) {
-							GameObject shockWave = Instantiate (_shockWave);
-							shockWave.GetComponent<ShockWave> ().SetScale (35);
-							shockWave.GetComponent<ShockWave> ().SetDamage (10);
-							//接触地点を取得
-							Vector3 ShockPos = gameObject.transform.position;
-							ShockPos.y = 1f;
-							shockWave.transform.position = ShockPos;
+			if (_isGround == false&&_isAction == true) {
+				if (_canAnimation) {
+					_anim.CrossFade ("Fall", 0);
+					_animName = "Fall";
+					if (_shockWave) {
+						GameObject shockWave = Instantiate (_shockWave);
+						shockWave.GetComponent<ShockWave> ().SetScale (35);
+						shockWave.GetComponent<ShockWave> ().SetDamage (10);
+						//接触地点を取得
+						Vector3 ShockPos = gameObject.transform.position;
+						ShockPos.y = 1f;
+						shockWave.transform.position = ShockPos;
 						}
 					}
-
 				_isGround = true;
 			}
 		}

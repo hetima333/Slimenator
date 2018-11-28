@@ -34,8 +34,6 @@ public class TankEnemy : Enemy {
     [SerializeField]
     private float[] _comboDamage = { 10, 15, 20 };
 
-    private float[] _comboDelay = { 1.5f, 0.8f, 1.7f };
-
     public override void Init (Stats _stat) {
         _properties = _stat;
         //ステータスのセット

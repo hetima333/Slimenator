@@ -160,8 +160,7 @@ public class BossTwins : BossBase {
 				break;
 
 			case 2:
-				//ピンボール封印
-				_skillList.Remove (gameObject.GetComponent<PinballAttack> ());
+				
 
 				//タイプ別に(相方の)スキルの追加
 				switch (_type) {
@@ -190,7 +189,10 @@ public class BossTwins : BossBase {
 
 	public void DeadCall () {
 		if (_avatar != null) {
+			//相方に一人になったと自覚させる
 			_avatar.GetComponent<BossTwins> ()._isAlone = true;
+			//生き残った方のピンボール封印
+			_avatar.GetComponent<BossBase>()._skillList.Remove (gameObject.GetComponent<PinballAttack> ());
 		}
 		ObjectManager.Instance.ReleaseObject (gameObject);
 	}

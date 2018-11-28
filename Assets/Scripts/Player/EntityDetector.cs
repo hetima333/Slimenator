@@ -42,7 +42,12 @@ public class EntityDetector : MonoBehaviour
                     IDamageable damage_temp = other.gameObject.GetComponent<IDamageable>();
                     if (damage_temp != null)
                     {
-                        damage_temp.TakeDamage(1000);
+                        
+                        damage_temp.TakeDamage(9999);
+                        if(other.gameObject.tag== "Enemy")
+                        {
+                            ObjectManager.Instance.ReleaseObject(other.gameObject);
+                        }
                     }
                 }
             }

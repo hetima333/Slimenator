@@ -28,9 +28,10 @@ public class Tackle : BossSkill {
 		_rid.AddForce (transform.forward * 50000);
 		//速度調整
 		_rid.velocity = _rid.velocity * _boss._properties.SpeedMultiplyerProperties;
-
-		Debug.Log ("ぶちかます");
-
+		_canActive = false;
+		//行動中にする
+		_boss.GetComponent<BossBase> ()._isAction = true;
+	
 	}
 
 }

@@ -37,7 +37,6 @@ public class FrontSlimeShot : BossSkill {
 	}
 
 	void ShotStart () {
-		Debug.Log ("射撃");
 		_actTime = 1.0f;
 		CreateShotObject (0);
 		CreateShotObject (30f);
