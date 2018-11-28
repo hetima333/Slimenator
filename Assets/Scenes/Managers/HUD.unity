@@ -424,6 +424,8 @@ GameObject:
   m_Component:
   - component: {fileID: 428749984}
   - component: {fileID: 428749986}
+  - component: {fileID: 428749987}
+  - component: {fileID: 428749985}
   m_Layer: 5
   m_Name: Money
   m_TagString: Untagged
@@ -451,12 +453,38 @@ RectTransform:
   m_AnchoredPosition: {x: -10, y: -10}
   m_SizeDelta: {x: 200, y: 60}
   m_Pivot: {x: 1, y: 1}
+--- !u!114 &428749985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 428749983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3458090cd0dc4b8e88a59369921892e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _duration: 0.75
+  _isShow: 0
+  _moneyText: {fileID: 1677685761}
 --- !u!222 &428749986
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 428749983}
+--- !u!114 &428749987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 428749983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b4de94c758854841bdb75abf5a086eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _manager: {fileID: 1520271099}
 --- !u!1 &531284399
 GameObject:
   m_ObjectHideFlags: 0
@@ -868,7 +896,7 @@ Prefab:
     - target: {fileID: 224069403316190210, guid: 7474dd014c97246e6ac9e73543778c45,
         type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 224069403316190210, guid: 7474dd014c97246e6ac9e73543778c45,
         type: 2}
@@ -934,6 +962,11 @@ Prefab:
         type: 2}
       propertyPath: m_LocalScale.z
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114482000690584196, guid: 7474dd014c97246e6ac9e73543778c45,
+        type: 2}
+      propertyPath: m_Material
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7474dd014c97246e6ac9e73543778c45, type: 2}
@@ -1161,7 +1194,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffe26e4d28ec24272b3f5cd7c62dfbb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moneyText: {fileID: 1677685761}
 --- !u!114 &1520271100
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1351,10 +1383,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56b74f40dff1f48bd93d6dbca1be17d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _slots:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   _slotAnimators:
   - {fileID: 730071147}
   - {fileID: 2035340126}
