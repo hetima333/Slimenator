@@ -174,7 +174,7 @@ MonoBehaviour:
   _offset: {x: 0, y: 80, z: -70}
   _smoothTime: 0.2
   _minZoom: 70
-  _maxZoom: 10
+  _maxZoom: 30
   _zoomLimiter: 50
 --- !u!114 &114925962276477986
 MonoBehaviour:

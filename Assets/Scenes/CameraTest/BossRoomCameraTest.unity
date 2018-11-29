@@ -438,6 +438,12 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bca5c50cf3c1a224ba08ef669605bd05, type: 2}
   m_IsPrefabParent: 0
+--- !u!114 &1140953087 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114395059633007100, guid: 2a3da13cad5184b4ba794751bf2d292a,
+    type: 2}
+  m_PrefabInternal: {fileID: 91885440}
+  m_Script: {fileID: 11500000, guid: 89e73eb5798dd7944bffc0ff5db2e7b4, type: 3}
 --- !u!1001 &1205446976
 Prefab:
   m_ObjectHideFlags: 0
@@ -487,6 +493,11 @@ Prefab:
       propertyPath: _warper
       value: 
       objectReference: {fileID: 1835610507}
+    - target: {fileID: 114577227134291544, guid: 44e6fae741e37e24c81b5d102b048d6a,
+        type: 2}
+      propertyPath: _exchangeCamera
+      value: 
+      objectReference: {fileID: 1140953087}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 44e6fae741e37e24c81b5d102b048d6a, type: 2}
   m_IsPrefabParent: 0

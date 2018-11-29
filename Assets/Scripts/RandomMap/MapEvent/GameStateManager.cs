@@ -10,6 +10,8 @@ public class GameStateManager : SingletonMonoBehaviour<GameStateManager>
 
     [SerializeField]
     private ForceWarp _warper;
+    [SerializeField]
+    private ExchangeCamera _exchangeCamera;
 
     private int _enemyNum;
     private bool _isSearching = false;
@@ -42,6 +44,9 @@ public class GameStateManager : SingletonMonoBehaviour<GameStateManager>
         {
             _isSearching = false;
             _warper.Warp();
+            //撮影方法の切り替え
+            _exchangeCamera.ChangeShootingMethod();
+
         }
     }
 

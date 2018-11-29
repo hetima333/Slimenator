@@ -53,3 +53,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyCreater: {fileID: 0}
   _warper: {fileID: 0}
+  _exchangeCamera: {fileID: 0}
