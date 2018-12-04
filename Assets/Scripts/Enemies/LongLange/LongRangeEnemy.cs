@@ -41,7 +41,7 @@ public class LongRangeEnemy : Enemy {
         _freeMovePosition = _move.SetMovePos ();
         //弾オブジェクトのロード
         _bullet = Resources.Load ("EnemyItem/EnemyBullet", typeof (GameObject)) as GameObject;
-
+        _anim = GetComponent<SimpleAnimation>();
         _anim.CrossFade ("Idle", 0f);
         _animName = "Idle";
 
@@ -64,31 +64,44 @@ public class LongRangeEnemy : Enemy {
                 //待機
                 IsAction = false;
                 StartCoroutine (_move.Idle ());
-                _anim.CrossFade ("Idle", 0.5f);
-                _animName = "Idle";
+                if(_animName != "Idle")
+                {
+                    _anim.CrossFade ("Idle", 0.5f);
+                    _animName = "Idle";
+                }
+                
                 break;
 
             case State.FREE:
                 //自由移動
                 IsAction = false;
                 _move.FreeMove ();
-                _anim.CrossFade ("Move", 0.5f);
-                _animName = "Move";
+                if(_animName != "Move")
+                {
+                    _anim.CrossFade ("Move", 0.5f);
+                    _animName = "Move";
+                }
                 break;
             case State.DISCOVERY:
                 //プレイヤー追従
                 IsAction = false;
                 _move.Move2Player ();
-                _anim.CrossFade ("Move", 0.5f);
-                _animName = "Move";
+                if(_animName != "Move")
+                {
+                    _anim.CrossFade ("Move", 0.5f);
+                    _animName = "Move";
+                }
                 break;
 
             case State.RETURN:
                 //初期位置に帰る
                 IsAction = false;
                 _move.Return2FirstPos ();
-                _anim.CrossFade ("Move", 0.5f);
-                _animName = "Move";
+                if(_animName != "Move")
+                {
+                    _anim.CrossFade ("Move", 0.5f);
+                    _animName = "Move";
+                }
                 break;
 
             case State.ATTACK:
@@ -156,5 +169,8 @@ public class LongRangeEnemy : Enemy {
         //行動終了
         IsAction = false;
     }
+
+
+    
 
 }

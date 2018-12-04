@@ -35,7 +35,7 @@ public class TestBoss : BossBase {
         PhaseUp ();
         _target = GameObject.Find ("Player");
         _body = transform.Find ("Body").gameObject;
-        _anim = GetComponent<SimpleAnimation> ();
+        _anim = this.gameObject.GetComponent<SimpleAnimation> ();
         _anim.CrossFade ("Idle", 0);
         _animName = "Idle";
         //マテリアルの取得
@@ -63,7 +63,7 @@ public class TestBoss : BossBase {
         }
 
         //強制phaseアップ（debug用）
-        //if (Input.GetKeyDown (KeyCode.C)) {PhaseUp (); }
+        if (Input.GetKeyDown (KeyCode.C)) {PhaseUp (); }
 
     }
 
@@ -171,16 +171,16 @@ public class TestBoss : BossBase {
 
         GameObject BossB = ObjectManager.Instance.InstantiateWithObjectPooling (Boss2);
         BossB.transform.position = Pos - OffSet;
-
+        //それぞれのミニボスの初期化
         BossA.GetComponent<BossTwins> ().Init (EnumHolder.Instance.GetStats (Boss1.name));
         BossB.GetComponent<BossTwins> ().Init (EnumHolder.Instance.GetStats (Boss2.name));
-
+        //それぞれのミニボスにTarget（Player）と相方を設定
         BossA.GetComponent<BossTwins> ()._target = _target;
         BossA.GetComponent<BossTwins> ().SetAvatar (BossB);
 
         BossB.GetComponent<BossTwins> ()._target = _target;
         BossB.GetComponent<BossTwins> ().SetAvatar (BossA);
-
+        //オブジェクトの破棄
         ObjectManager.Instance.ReleaseObject(gameObject);
 
     }

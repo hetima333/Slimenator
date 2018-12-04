@@ -51,7 +51,7 @@ public class TankEnemy : Enemy {
         _freeMovePosition = _move.SetMovePos ();
         //武器プレハブの取得
         SetWeapons ();
-
+        _anim = GetComponent<SimpleAnimation>();
         _anim.CrossFade ("Sleep", 0f);
         _animName = "Sleep";
 
@@ -75,29 +75,41 @@ public class TankEnemy : Enemy {
                 case State.IDLE:
                     //待機
                     StartCoroutine (_move.Idle ());
-                    _anim.CrossFade ("Idle", 0);
-                    _animName = "Idle";
+                    if(_animName != "Idle")
+                    {
+                        _anim.CrossFade ("Idle", 0.5f);
+                        _animName = "Idle";
+                    }
                     break;
 
                 case State.FREE:
                     //自由移動
                     _move.FreeMove ();
-                    _anim.CrossFade ("Move", 0.5f);
-                    _animName = "Move";
+                    if(_animName != "Move")
+                    {
+                        _anim.CrossFade ("Move", 0.5f);
+                        _animName = "Move";
+                    }
                     break;
 
                 case State.DISCOVERY:
                     //プレイヤー追従
                     _move.Move2Player ();
-                    _anim.CrossFade ("Move", 0.5f);
-                    _animName = "Move";
+                    if(_animName != "Move")
+                    {
+                        _anim.CrossFade ("Move", 0.5f);
+                        _animName = "Move";
+                    }
                     break;
 
                 case State.RETURN:
                     //初期位置に帰る
                     _move.Return2FirstPos ();
-                    _anim.CrossFade ("Move", 0.5f);
-                    _animName = "Move";
+                    if(_animName != "Move")
+                    {
+                        _anim.CrossFade ("Move", 0.5f);
+                        _animName = "Move";
+                    }
                     break;
 
                 case State.ATTACK:
@@ -177,8 +189,8 @@ public class TankEnemy : Enemy {
         _target = obj;
         //寝ている場合
         if (_isSleeping) {
-            //起き上がるコルーチン
-            StartCoroutine (WakeUp ());
+            //起き上がる
+            WakeUp ();
         } else if (CurrentState != State.DEAD && !IsAction) {
             //発見状態にする
             CurrentState = State.DISCOVERY;
@@ -186,18 +198,11 @@ public class TankEnemy : Enemy {
         }
     }
 
-    private IEnumerator WakeUp () {
+    private void WakeUp () {
         //起き上がりアニメーション
         //WakeUp Animation
-        _anim.CrossFade ("WakeUp", 0.5f);
+        _anim.CrossFade ("WakeUp", 0f);
         _animName = "WakeUp";
-        //起き上がるまで待つ
-        //wait for end wakeup
-        yield return new WaitForSeconds (6);
-        //眠り判定を解除
-        _isSleeping = false;
-        //Change State
-        CurrentState = State.DISCOVERY;
     }
 
     //攻撃判定開始（AnimationEvent用）
@@ -223,7 +228,13 @@ public class TankEnemy : Enemy {
     }
 
     void HitWakeUp () {
+        //眠り判定を解除
         _isSleeping = false;
+        //Change State
+        CurrentState = State.DISCOVERY;
     }
+
+
+    
 
 }

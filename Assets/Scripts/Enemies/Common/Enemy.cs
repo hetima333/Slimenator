@@ -73,7 +73,7 @@ public abstract class Enemy : MonoBehaviour, IDamageable, ISuckable {
     public SimpleAnimation _anim;
     //現在再生中のアニメの名前
     public string _animName;
-
+    //停止時のアニメの再生時間
     public float _animLastTime = 0;
     protected Status _status;
     protected Stats _properties;
@@ -105,19 +105,18 @@ public abstract class Enemy : MonoBehaviour, IDamageable, ISuckable {
         if (_money == 0) { _money = money; }
         //初期位置の記憶
         _startPosition = gameObject.transform.position;
-        //animationSystem Set
-        _anim = GetComponent<SimpleAnimation> ();
         //Managerに生まれたっていう
         GameStateManager.Instance.IncreaseEnemy ();
-
         _status = gameObject.GetComponent<Status> ();
         _status.Init ();
     }
 
 	void OnDisable()
     {
+        Debug.Log(_animName);
 		//再生中のアニメーションの再生位置を記憶
-		_animLastTime = _anim.GetState(_animName).time;
+		_animLastTime = _anim.GetState(_animName).time - (int)_anim.GetState(_animName).time;
+        Debug.Log(_animLastTime);
     }
 
     void OnEnable()

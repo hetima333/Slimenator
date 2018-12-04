@@ -698,6 +698,7 @@ MonoBehaviour:
   _isAction: 0
   _anim: {fileID: 0}
   _animName: 
+  _animLastTime: 0
   _slimeBullet: {fileID: 0}
   _previousSkill: {fileID: 0}
   _skillList: []
@@ -705,6 +706,7 @@ MonoBehaviour:
   _canAnimation: 1
   _shockWave: {fileID: 0}
   _properties: {fileID: 0}
+  _isLady: 0
   _type: 0
   _avatar: {fileID: 0}
   _isAlone: 0

@@ -48,7 +48,7 @@ public class CloseCombatEnemy : Enemy {
         _freeMovePosition = _move.SetMovePos ();
         //武器プレハブの取得
         SetWeapons ();
-
+        _anim = GetComponent<SimpleAnimation>();
         _anim.CrossFade ("Idle", 0f);
         _animName = "Idle";
 
@@ -243,5 +243,8 @@ public class CloseCombatEnemy : Enemy {
         }
 
     }
+
+
+    
 
 }

@@ -25,11 +25,14 @@ public class BossTwins : BossBase {
 		_properties = _stat;
 
 		SetStatus ();
-		_anim = GetComponent<SimpleAnimation> ();
+		_anim = this.gameObject.GetComponent<SimpleAnimation> ();
+		_anim.CrossFade ("Idle", 0);
 		//分裂アニメの再生開始位置を終点に設定
 		_anim.GetState ("WakeUp").normalizedTime = 1;
+		//再生速度を逆に
 		_anim.GetState ("WakeUp").speed = -1f;
 		_anim.CrossFade ("WakeUp", 0);
+		_animName = "WakeUp";
 		_target = GameObject.Find ("Player");
 		_isLady = true;
 
@@ -85,6 +88,7 @@ public class BossTwins : BossBase {
 		_properties.HealthProperties -= damage;
 		if (_properties.HealthProperties <= 0) {
 			_anim.CrossFade ("Dead", 0);
+			_animName = "Dead";
 			_state = State.DEAD;
 		}
 
