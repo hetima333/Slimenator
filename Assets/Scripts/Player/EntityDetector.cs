@@ -46,6 +46,7 @@ public class EntityDetector : MonoBehaviour
                         damage_temp.TakeDamage(9999);
                         if(other.gameObject.tag== "Enemy")
                         {
+                            GameStateManager.Instance.DecreaseEnemy ();
                             ObjectManager.Instance.ReleaseObject(other.gameObject);
                         }
                     }

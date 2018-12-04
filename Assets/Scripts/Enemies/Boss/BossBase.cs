@@ -31,6 +31,8 @@ public abstract class BossBase : MonoBehaviour, IDamageable {
 
 	public string _animName;
 
+	public float _animLastTime = 0;
+
 	//Object for long range attack
 	public GameObject _slimeBullet;
 
@@ -57,9 +59,35 @@ public abstract class BossBase : MonoBehaviour, IDamageable {
 
 	public abstract void Init (Stats stat);
 
+
+	public bool _isLady = false;
+
 	public void Awake () {
 		_shockWave = Resources.Load ("EnemyItem/ShockWave", typeof (GameObject)) as GameObject;
 	}
+
+
+	void OnDisable()
+    {
+		//再生中のアニメーションの再生位置を記憶
+		_animLastTime = _anim.GetState(_animName).time;
+    }
+
+    void OnEnable()
+    {
+		if(!_isLady)return;
+		//再生中のアニメーションがあれば
+		if(_animName != null)
+		{	
+			//最後のアニメーションの再生位置を記憶しておいたものに変更
+			_anim.GetState (_animName).normalizedTime = _animLastTime;
+			//最後のアニメーション再生
+			_anim.CrossFade(_animName,0);
+		}
+    }
+
+
+
 
 	public void TakeDamage (float damage) {
 		_properties.HealthProperties -= damage;

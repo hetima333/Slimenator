@@ -25,7 +25,8 @@ public class AroundSlimeShot : BossSkill {
 
 			}
 			_actTime = 1.0f;
-			_boss.GetComponent<BossBase> ()._isAction = true;
+			_canActive = false;
+		_boss.GetComponent<BossBase> ()._isAction = true;
 		}
 
 	}
@@ -38,11 +39,18 @@ public class AroundSlimeShot : BossSkill {
 	}
 
 	void ShotStart () {
-		for (int i = 0; i < 12; i++) {
-			_canActive = false;
+		for (int i = 0; i < 12; i++) {	
 			CreateShotObject (i * 30.0f);
 		}
 		_actTime = 1.0f;
+		_canActive = false;
 		_boss.GetComponent<BossBase> ()._isAction = true;
+	}
+
+		void ShotEnd () {
+		if (_boss._canAnimation) {
+			_boss._anim.CrossFade ("Idle", 0);
+			_boss._animName = "Idle";
+		}
 	}
 }

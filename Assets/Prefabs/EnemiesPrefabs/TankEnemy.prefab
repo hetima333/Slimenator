@@ -1699,6 +1699,8 @@ MonoBehaviour:
   _target: {fileID: 0}
   _anim: {fileID: 0}
   _animName: 
+  _animLastTime: 0
+  _isLady: 0
   _weaponList: []
   _comboDamage:
   - 10
@@ -1716,7 +1718,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3759e2aae0f7b9a47bb98fc64bf3c543, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_PlayAutomatically: 1
+  m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingMode: 1
   m_WrapMode: 0

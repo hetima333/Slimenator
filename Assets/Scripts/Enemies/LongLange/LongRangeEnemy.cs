@@ -42,6 +42,11 @@ public class LongRangeEnemy : Enemy {
         //弾オブジェクトのロード
         _bullet = Resources.Load ("EnemyItem/EnemyBullet", typeof (GameObject)) as GameObject;
 
+        _anim.CrossFade ("Idle", 0f);
+        _animName = "Idle";
+
+        _isLady = true;
+
     }
 
     // Update is called once per frame

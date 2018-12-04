@@ -1690,10 +1690,13 @@ MonoBehaviour:
   _startPosition: {x: 0, y: 0, z: 0}
   _patienceValue: 10
   _isAction: 0
+  _isGround: 0
   _searchObj: {fileID: 0}
   _target: {fileID: 0}
   _anim: {fileID: 0}
   _animName: 
+  _animLastTime: 0
+  _isLady: 0
   _weaponList: []
 --- !u!114 &114645754824563174
 MonoBehaviour:
@@ -1709,6 +1712,7 @@ MonoBehaviour:
   _hpbarCanvas: {fileID: 1883121316519442, guid: 07f82906bffcd4ba9831779e5e2ddb31,
     type: 2}
   _offset: {x: 0, y: 5, z: 0}
+  _useDamagePop: 1
 --- !u!114 &114706709375595960
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1720,7 +1724,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3759e2aae0f7b9a47bb98fc64bf3c543, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_PlayAutomatically: 1
+  m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingMode: 1
   m_WrapMode: 0

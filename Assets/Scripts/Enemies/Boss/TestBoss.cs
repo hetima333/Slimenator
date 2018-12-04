@@ -41,7 +41,7 @@ public class TestBoss : BossBase {
         //マテリアルの取得
         _matA = (Material) Resources.Load ("Material/BossA");
         _matB = (Material) Resources.Load ("Material/BossB");
-
+        _isLady = true;
     }
 
     // Update is called once per frame
@@ -88,7 +88,7 @@ public class TestBoss : BossBase {
 
     private void UseSkill () {
 
-        if (_isAction) { Debug.Log ("今忙しい"); return; }
+        if (_isAction)  return; 
 
         foreach (var skill in _skillList) {
             if (skill._canActive == true) {
@@ -96,7 +96,7 @@ public class TestBoss : BossBase {
             }
         }
 
-        if (_canUseSkillList.Count == 0) { Debug.Log ("今使えるの無い"); return; }
+        if (_canUseSkillList.Count == 0) return;
 
         //ランダムなスキルを呼び出す。
         if (_canUseSkillList.Count != 0) {
@@ -118,7 +118,7 @@ public class TestBoss : BossBase {
                 _canUseSkillList.Remove (skill);
 
             } else {
-                Debug.Log ("被っとるんじゃ");
+                //Debug.Log ("被っとるんじゃ");
             }
         }
 

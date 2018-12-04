@@ -587,6 +587,7 @@ MonoBehaviour:
   _isAction: 0
   _anim: {fileID: 0}
   _animName: 
+  _animLastTime: 0
   _slimeBullet: {fileID: 0}
   _previousSkill: {fileID: 0}
   _skillList: []
@@ -594,6 +595,7 @@ MonoBehaviour:
   _canAnimation: 1
   _shockWave: {fileID: 0}
   _properties: {fileID: 0}
+  _isLady: 0
   Boss1: {fileID: 1117220258318152, guid: 635e16771570add458c33a06a19730e8, type: 2}
   Boss2: {fileID: 1818661371988076, guid: 02fc1ea3fb0bdfb4fa6a682873a99790, type: 2}
 --- !u!114 &114599727644001674
@@ -607,7 +609,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3759e2aae0f7b9a47bb98fc64bf3c543, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_PlayAutomatically: 1
+  m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingMode: 1
   m_WrapMode: 0

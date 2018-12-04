@@ -30,8 +30,8 @@ public class BossTwins : BossBase {
 		_anim.GetState ("WakeUp").normalizedTime = 1;
 		_anim.GetState ("WakeUp").speed = -1f;
 		_anim.CrossFade ("WakeUp", 0);
-
 		_target = GameObject.Find ("Player");
+		_isLady = true;
 
 	}
 

@@ -51,6 +51,11 @@ public class TankEnemy : Enemy {
         _freeMovePosition = _move.SetMovePos ();
         //武器プレハブの取得
         SetWeapons ();
+
+        _anim.CrossFade ("Sleep", 0f);
+        _animName = "Sleep";
+
+        _isLady = true;
     }
 
     // Update is called once per frame
@@ -185,7 +190,7 @@ public class TankEnemy : Enemy {
         //起き上がりアニメーション
         //WakeUp Animation
         _anim.CrossFade ("WakeUp", 0.5f);
-
+        _animName = "WakeUp";
         //起き上がるまで待つ
         //wait for end wakeup
         yield return new WaitForSeconds (6);

@@ -49,6 +49,11 @@ public class CloseCombatEnemy : Enemy {
         //武器プレハブの取得
         SetWeapons ();
 
+        _anim.CrossFade ("Idle", 0f);
+        _animName = "Idle";
+
+        _isLady = true;
+
     }
 
     // Update is called once per frame
@@ -194,6 +199,7 @@ public class CloseCombatEnemy : Enemy {
                 case Enemy.State.IDLE:
                     if (CurrentState == Enemy.State.DISCOVERY) {
                         _anim.CrossFade ("Close", 0.5f);
+                        _animName = "Close";
                         _inMotion = true;
                     }
                     break;
@@ -201,6 +207,7 @@ public class CloseCombatEnemy : Enemy {
                 case Enemy.State.FREE:
                     if (CurrentState == Enemy.State.DISCOVERY) {
                         _anim.CrossFade ("Close", 0.5f);
+                        _animName = "Close";
                         _inMotion = true;
                     }
                     break;
@@ -208,6 +215,7 @@ public class CloseCombatEnemy : Enemy {
                 case Enemy.State.ATTACK:
                     if (CurrentState == Enemy.State.DISCOVERY) {
                         _anim.CrossFade ("Close", 0.5f);
+                        _animName = "Close";
                         _inMotion = true;
                     }
                     break;
@@ -215,11 +223,13 @@ public class CloseCombatEnemy : Enemy {
                 case Enemy.State.DISCOVERY:
                     if (CurrentState == Enemy.State.ATTACK) {
                         _anim.CrossFade ("Open", 0.5f);
+                        _animName = "Open";
                         _inMotion = true;
                     }
 
                     if (CurrentState == Enemy.State.FREE) {
                         _anim.CrossFade ("Open", 0.5f);
+                        _animName = "Open";
                         _inMotion = true;
                     }
                     break;

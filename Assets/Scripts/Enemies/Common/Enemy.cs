@@ -74,6 +74,7 @@ public abstract class Enemy : MonoBehaviour, IDamageable, ISuckable {
     //現在再生中のアニメの名前
     public string _animName;
 
+    public float _animLastTime = 0;
     protected Status _status;
     protected Stats _properties;
 
@@ -81,6 +82,8 @@ public abstract class Enemy : MonoBehaviour, IDamageable, ISuckable {
     public float MaxHitPoint { get { return _properties.MaxHealthProperties * _properties.HealthMultiplyerProperties; } }
     //体力
     public float HitPoint { get { return _properties.HealthProperties; } }
+
+    public bool _isLady = false;
 
     public abstract void Init (Stats stat);
 
@@ -110,6 +113,27 @@ public abstract class Enemy : MonoBehaviour, IDamageable, ISuckable {
         _status = gameObject.GetComponent<Status> ();
         _status.Init ();
     }
+
+	void OnDisable()
+    {
+		//再生中のアニメーションの再生位置を記憶
+		_animLastTime = _anim.GetState(_animName).time;
+    }
+
+    void OnEnable()
+    {
+		if(!_isLady)return;
+		//再生中のアニメーションがあれば
+		if(_animName != null)
+		{
+			//最後のアニメーションの再生位置を記憶しておいたものに変更
+			_anim.GetState (_animName).normalizedTime = _animLastTime;
+			//最後のアニメーション再生
+			_anim.CrossFade(_animName,0);
+		}
+    }
+
+
 
     //ダメージを受ける
     public void TakeDamage (float damage) {
