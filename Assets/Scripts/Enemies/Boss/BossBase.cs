@@ -70,8 +70,8 @@ public abstract class BossBase : MonoBehaviour, IDamageable {
 	void OnDisable()
     {
 		//再生中のアニメーションの再生位置を記憶
-		Debug.Log(_anim.GetState(_animName).time);
-		_animLastTime = _anim.GetState(_animName).time;
+		//Debug.Log(_anim.GetState(_animName).time);
+		_animLastTime = _anim.GetState(_animName).time-(int)_anim.GetState(_animName).time;
     }
 
     void OnEnable()

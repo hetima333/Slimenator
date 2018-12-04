@@ -113,10 +113,10 @@ public abstract class Enemy : MonoBehaviour, IDamageable, ISuckable {
 
 	void OnDisable()
     {
-        Debug.Log(_animName);
+        //Debug.Log(_animName);
 		//再生中のアニメーションの再生位置を記憶
 		_animLastTime = _anim.GetState(_animName).time - (int)_anim.GetState(_animName).time;
-        Debug.Log(_animLastTime);
+        //Debug.Log(_animLastTime);
     }
 
     void OnEnable()
