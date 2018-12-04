@@ -88,6 +88,7 @@ GameObject:
   - component: {fileID: 114273251617056420}
   - component: {fileID: 114654167321587450}
   - component: {fileID: 114255174573990156}
+  - component: {fileID: 114652157915317796}
   m_Layer: 13
   m_Name: KingSlime
   m_TagString: Untagged
@@ -550,7 +551,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1354793241189908}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1a9afa2bc112e47d688b392b5032afa1, type: 3}
   m_Name: 
@@ -641,6 +642,17 @@ MonoBehaviour:
   - clip: {fileID: 7400018, guid: 2ff7f16170809b04e888c3ae62e6c2cf, type: 3}
     name: Split (3)
     defaultState: 0
+--- !u!114 &114652157915317796
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1354793241189908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d4f9e346e75be44e8a1e015cf1a11f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114654167321587450
 MonoBehaviour:
   m_ObjectHideFlags: 1

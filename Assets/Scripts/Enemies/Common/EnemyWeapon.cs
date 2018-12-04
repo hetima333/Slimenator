@@ -68,7 +68,7 @@ public class EnemyWeapon : MonoBehaviour {
                 shockWave.GetComponent<ShockWave> ().SetDamage (10);
                 //接触地点を取得
                 Vector3 ShockPos = col.ClosestPointOnBounds (this.transform.position);
-                ShockPos.y = 0.1f;
+                ShockPos.y = 2.7f;
                 shockWave.transform.position = ShockPos;
             }
         }

@@ -1873,7 +1873,7 @@ MonoBehaviour:
   _target: {fileID: 0}
   _anim: {fileID: 0}
   _animName: 
-  _outputDamage: 25
+  _outputDamage: 10
 --- !u!114 &114370842994123100
 MonoBehaviour:
   m_ObjectHideFlags: 1

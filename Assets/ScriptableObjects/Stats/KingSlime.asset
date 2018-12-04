@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Name: KingSlime
   m_EditorClassIdentifier: 
   _Prefab: {fileID: 1354793241189908, guid: a8cd674e1471a434686ffab2a2a47309, type: 2}
-  _MaxHealth: 1000
+  _MaxHealth: 400
   _MaxHealthMultiplyer: 1
-  _Health: 1000
+  _Health: 400
   _MaxDamage: 0
   _MaxDamageMultiplyer: 1
   _MaxSpeed: 1

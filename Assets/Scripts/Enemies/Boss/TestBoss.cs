@@ -25,6 +25,8 @@ public class TestBoss : BossBase {
 
     private GameObject _body;
 
+    private bool _isSleep = true;
+
     // Use this for initialization
 
     public override void Init (Stats _stat) {
@@ -35,6 +37,7 @@ public class TestBoss : BossBase {
         _body = transform.Find ("Body").gameObject;
         _anim = GetComponent<SimpleAnimation> ();
         _anim.CrossFade ("Idle", 0);
+        _animName = "Idle";
         //マテリアルの取得
         _matA = (Material) Resources.Load ("Material/BossA");
         _matB = (Material) Resources.Load ("Material/BossB");
@@ -44,7 +47,7 @@ public class TestBoss : BossBase {
     // Update is called once per frame
     void Update () {
 
-        if (_state == State.DEAD) return;
+        if (_state == State.DEAD || _isSleep == true) return;
 
         //★ステータスの更新
         _status.UpdateStatMultiplyer (ref _properties);
@@ -58,9 +61,8 @@ public class TestBoss : BossBase {
             }
         }
 
-        if (Input.GetKeyDown (KeyCode.C)) {
-            PhaseUp ();
-        }
+        //強制phaseアップ（debug用）
+        //if (Input.GetKeyDown (KeyCode.C)) {PhaseUp (); }
 
     }
 
@@ -74,7 +76,7 @@ public class TestBoss : BossBase {
             PhaseUp ();
         }
 
-        if (_properties.HealthProperties <= 200 && _phase == 1) {
+        if (_properties.HealthProperties <= 300 && _phase == 1) {
             PhaseUp ();
         }
     }
@@ -120,7 +122,7 @@ public class TestBoss : BossBase {
 
     private void PhaseUp () {
         _phase++;
-        Debug.Log ("Phase" + _phase);
+        // Debug.Log ("Phase" + _phase);
 
         switch (_phase) {
             case 1:
@@ -147,21 +149,22 @@ public class TestBoss : BossBase {
     private void Split () {
         //分裂アニメーション開始
         _anim.CrossFade ("Split", 0);
+        _animName = "Split";
         _isAction = true;
 
     }
 
     void SplitEnd () {
         Debug.Log ("分裂完了");
-        Vector3 Pos = gameObject.transform.position;
+        Vector3 Pos = new Vector3 (821, 0, 0);
         Pos.y = 2;
 
         Vector3 OffSet = new Vector3 (10, 0, 0);
 
-        GameObject BossA = ObjectManager.Instance.InstantiateWithObjectPooling (Boss1);
+        GameObject BossA = Instantiate (Boss1);
         BossA.transform.position = Pos + OffSet;
 
-        GameObject BossB = ObjectManager.Instance.InstantiateWithObjectPooling (Boss2);
+        GameObject BossB = Instantiate (Boss2);
         BossB.transform.position = Pos - OffSet;
 
         BossA.GetComponent<BossTwins> ().Init (EnumHolder.Instance.GetStats (Boss1.name));
@@ -173,8 +176,12 @@ public class TestBoss : BossBase {
         BossB.GetComponent<BossTwins> ()._target = _target;
         BossB.GetComponent<BossTwins> ().SetAvatar (BossA);
 
-        ObjectManager.Instance.ReleaseObject (gameObject);
+        Destroy(gameObject);
 
+    }
+
+    public void WakeUp () {
+        _isSleep = false;
     }
 
 }

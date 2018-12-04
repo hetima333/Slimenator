@@ -56,19 +56,19 @@ public class RandomMapGenerator : MonoBehaviour
                 //60%の確率で生成する
                 //if (RandomUtils.RandomJadge(0.6f))
                 //{
-                    int firstRoom;
-                    do
-                    {
-                        //最初に生成する部屋をランダムに決定する
-                        firstRoom = RandomUtils.GetRandomInt(0, count - 1);
-                        //通路が1つのみの部屋は除外
-                    } while ((_rooms[firstRoom].passagePos == (int)OneRoomInfo.PASSAGE.BACK) ||
-                    (_rooms[firstRoom].passagePos == (int)OneRoomInfo.PASSAGE.RIGHT) ||
-                    (_rooms[firstRoom].passagePos == (int)OneRoomInfo.PASSAGE.FRONT) ||
-                    (_rooms[firstRoom].passagePos == (int)OneRoomInfo.PASSAGE.LEFT));
+                    int firstRoom = 0;
+                    //do
+                    //{
+                    //    //最初に生成する部屋をランダムに決定する
+                    //    firstRoom = RandomUtils.GetRandomInt(0, count - 1);
+                    //    //通路が1つのみの部屋は除外
+                    //} while ((_rooms[firstRoom].passagePos == (int)OneRoomInfo.PASSAGE.BACK) ||
+                    //(_rooms[firstRoom].passagePos == (int)OneRoomInfo.PASSAGE.RIGHT) ||
+                    //(_rooms[firstRoom].passagePos == (int)OneRoomInfo.PASSAGE.FRONT) ||
+                    //(_rooms[firstRoom].passagePos == (int)OneRoomInfo.PASSAGE.LEFT));
 
                     //部屋を生成する
-                    GameObject room = Instantiate(_rooms[firstRoom].gameObject, new Vector3(x * modelSizeX, 0, z * modelSizeZ), new Quaternion());
+                    GameObject room = Instantiate(_rooms[firstRoom].gameObject, new Vector3(x * modelSizeX, 0, z * modelSizeZ), Quaternion.Euler(new Vector3(0,-90,0)));
                     room.transform.SetParent(transform);
                     //地形がデータをマップに知らせる
                     _maps[x, z] = _rooms[firstRoom];

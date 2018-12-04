@@ -25,6 +25,7 @@ public class JumpPress : BossSkill {
 		_rid.velocity = Vector3.zero;
 		if (_boss._canAnimation) {
 			_boss._anim.CrossFade ("Jump", 0);
+			_boss._animName = "Jump";
 		}
 		Jump ();
 		_canActive = false;

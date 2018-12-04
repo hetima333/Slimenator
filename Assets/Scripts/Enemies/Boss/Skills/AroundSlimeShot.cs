@@ -16,6 +16,7 @@ public class AroundSlimeShot : BossSkill {
 		_rid.velocity = Vector3.zero;
 		if (_boss._canAnimation) {
 			_boss._anim.CrossFade ("Shot2", 0);
+			_boss._animName = "Shot2";
 		} else {
 			for (int i = 0; i < 12; i++) {
 

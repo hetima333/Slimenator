@@ -12,12 +12,20 @@ using UnityEngine.UI;
 public class SkillSlotPresenter : MonoBehaviour {
 
 	// スロットの数はコアの静的メンバから取得
-	// MARK : 中央、右、左の順
 	[SerializeField]
 	private SkillImage[] _slots = new SkillImage[SkillSlotCore.SLOT_SIZE];
 
+	// 選択スキルを示す枠
+	[SerializeField]
+	private Image _selectedImage;
+
+	// デフォルトの高さ
+	private float _defaultHeight;
+
 	void Start() {
 		var core = GetComponent<SkillSlotCore>();
+
+		_defaultHeight = _slots[0].transform.position.y;
 
 		// スロットの初期化
 		foreach (var slot in _slots) {
@@ -28,27 +36,27 @@ public class SkillSlotPresenter : MonoBehaviour {
 		core.SelectedSkillNumber
 			.DistinctUntilChanged()
 			.Subscribe(selectedNumber => {
+				// 選択スキル番号の位置に枠を表示する
+				_selectedImage.rectTransform.anchoredPosition = Vector2.right * (selectedNumber * 165.0f) + new Vector2(45.0f, 0.0f);
+
+				// 選択スキル番号のスキル画像をちょっと上に上げる
 				for (int i = 0; i < SkillSlotCore.SLOT_SIZE; i++) {
-					int index = selectedNumber + i;
-					if (index >= SkillSlotCore.SLOT_SIZE) {
-						index -= SkillSlotCore.SLOT_SIZE;
+					if (i == selectedNumber) {
+						_slots[i].transform.position += Vector3.up * 15.0f;
+
+					} else {
+						var pos = _slots[i].transform.position;
+						_slots[i].transform.position = new Vector3(pos.x, _defaultHeight, pos.z);
 					}
 
-					if (index >= core.Slot.Count) {
-						return;
-					}
-					_slots[i].ChangeSkillImage(core.Slot[index]);
 				}
 			});
 
 		core.Slot.ObserveReplace()
 			.Where(x => x.NewValue != x.OldValue)
 			.Subscribe(x => {
-				int index = core.SelectedSkillNumber.Value + x.Index;
-				if (index >= SkillSlotCore.SLOT_SIZE) {
-					index -= SkillSlotCore.SLOT_SIZE;
-				}
-				_slots[index].ChangeSkillImage(x.NewValue);
+				// 変更されたスキルの画像を更新
+				_slots[x.Index].ChangeSkillImage(x.NewValue);
 			});
 	}
 }

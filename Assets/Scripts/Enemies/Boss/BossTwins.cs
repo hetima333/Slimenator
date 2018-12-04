@@ -191,8 +191,7 @@ public class BossTwins : BossBase {
 		if (_avatar != null) {
 			_avatar.GetComponent<BossTwins> ()._isAlone = true;
 		}
-		//Destroy (gameObject);
-		ObjectManager.Instance.ReleaseObject (gameObject);
+		Destroy (gameObject);
 	}
 
 	void WakeUp () {

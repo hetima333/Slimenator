@@ -11,9 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c65c188f4e6a30419aa87e60efe5c63, type: 3}
   m_Name: Blackhole properies
   m_EditorClassIdentifier: 
-  _CastingAudio: {fileID: 0}
+  _CastingAudio: {fileID: 8300000, guid: 3812c1c648492bf4f84e2322a3d04c35, type: 3}
   _EndingAudio: {fileID: 8300000, guid: 5886022a0ba488148808723bb4b6aa87, type: 3}
-  _IsCastingAudioLoop: 0
+  _IsCastingAudioLoop: 1
   _IsEndingAudioLoop: 0
   _MovingParticle: {fileID: 1944823738675336, guid: f39284406c395ee49b4036e1f1624447,
     type: 2}

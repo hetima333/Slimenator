@@ -1,8 +1,10 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UniRx;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 
 public class ObjectManager : SingletonMonoBehaviour<ObjectManager> {
@@ -24,7 +26,6 @@ public class ObjectManager : SingletonMonoBehaviour<ObjectManager> {
 	/// </summary>
 	/// <returns></returns>
 	private bool CheckPooledObject(GameObject obj) {
-
 		// プレハブのキーを取得する
 		int key = obj.GetInstanceID();
 
@@ -37,7 +38,13 @@ public class ObjectManager : SingletonMonoBehaviour<ObjectManager> {
 	/// </summary>
 	/// <returns></returns>
 	public GameObject InstantiateWithObjectPooling(GameObject obj, Vector3 position = new Vector3(), Quaternion rotation = new Quaternion()) {
-
+#if UNITY_EDITOR
+		// 引数のオブジェクトがプレハブでなければエラーを返す
+		if (PrefabUtility.GetPrefabObject(obj) == null) {
+			Debug.LogWarning("InstantiateWithObjectPooling() argment must be prefab / 引数はプレハブである必要があります");
+			return null;
+		}
+#endif
 		// インスタンスIDを取得
 		int key = obj.GetInstanceID();
 		GameObject go = null;
@@ -74,14 +81,6 @@ public class ObjectManager : SingletonMonoBehaviour<ObjectManager> {
 	/// </summary>
 	/// <param name="obj">未使用にするGameObject</param>
 	public void ReleaseObject(GameObject obj) {
-#if UNIY_EDITOR
-		// 引数のオブジェクトがプレハブでなければエラーを返す
-		if (PrefabUtility.GetPrefabParent(obj) == null) {
-			Debug.LogWarning("GetActiveObjects() argment must be prefab / 引数はプレハブである必要があります");
-			return;
-		}
-#endif
-
 		obj.SetActive(false);
 	}
 
@@ -90,12 +89,11 @@ public class ObjectManager : SingletonMonoBehaviour<ObjectManager> {
 	/// </summary>
 	/// <returns></returns>
 	public List<GameObject> GetActiveObjects(GameObject obj) {
-
-#if UNIY_EDITOR
+#if UNITY_EDITOR
 		// 引数のオブジェクトがプレハブでなければエラーを返す
-		if (PrefabUtility.GetPrefabParent(obj) == null) {
+		if (PrefabUtility.GetPrefabObject(obj) == null) {
 			Debug.LogWarning("GetActiveObjects() argment must be prefab / 引数はプレハブである必要があります");
-			return;
+			return null;
 		}
 #endif
 
@@ -112,11 +110,11 @@ public class ObjectManager : SingletonMonoBehaviour<ObjectManager> {
 	/// <returns></returns>
 	public List<GameObject> GetSleepObjects(GameObject obj) {
 
-#if UNIY_EDITOR
+#if UNTIY_EDITOR
 		// 引数のオブジェクトがプレハブでなければエラーを返す
-		if (PrefabUtility.GetPrefabParent(obj) == null) {
-			Debug.LogWarning("GetActiveObjects() argment must be prefab / 引数はプレハブである必要があります");
-			return;
+		if (PrefabUtility.GetPrefabObject(obj) == null) {
+			Debug.LogWarning("GetSleepObjects() argment must be prefab / 引数はプレハブである必要があります");
+			return null;
 		}
 #endif
 

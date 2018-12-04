@@ -24,7 +24,7 @@ public class EnemyBullet : MonoBehaviour {
         _aliveTime -= Time.deltaTime;
 
         if (_aliveTime <= 0) {
-            ObjectManager.Instance.ReleaseObject (gameObject);
+            Destroy (gameObject);
         }
     }
 
@@ -50,6 +50,6 @@ public class EnemyBullet : MonoBehaviour {
         }
 
         //Release bullet
-        ObjectManager.Instance.ReleaseObject (gameObject);
+        Destroy (gameObject);
     }
 }
