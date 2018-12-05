@@ -425,3 +425,5 @@ ASALocalRun/
 /Assets/Plugins/UniRx*
 /Assets/Demigiant/DOTween*
 /Assets/Resources/DOTween*
+
+\.vscode/launch\.json

@@ -24,7 +24,7 @@ MonoBehaviour:
   _StatusEffect:
   - {fileID: 11400000, guid: a983e4dbbcbe3714fb3bab69798f84e7, type: 2}
   _StatusApplyPercentage: 15
-  _Damage: 3
+  _Damage: 2
   _RestrictUserMovement: 0
   _ChannelingShakeScreen: 0
   _CastingShakeScreen: 0
@@ -38,4 +38,4 @@ MonoBehaviour:
   _CastingTime: 0
   _AnimationID: 1
   _CastingType: {fileID: 11400000, guid: 7777f7888ac2cc243ad6e788a1715d00, type: 2}
-  _AttackDelay: 0.5
+  _AttackDelay: 0.2

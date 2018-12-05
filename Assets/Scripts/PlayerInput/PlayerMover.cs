@@ -28,7 +28,7 @@ public class PlayerMover : MonoBehaviour {
 		// マウス座標を元にプレイヤーの向きを判断する
 		input.MousePosition
 			.Where (_ => player.GetPlayerState () != EnumHolder.States.DIE)
-
+			.DistinctUntilChanged()
 			.Subscribe (position => {
 				// マウス移動量を見てその方向を向く
 				var target = camera.ScreenToWorldPoint (position);
