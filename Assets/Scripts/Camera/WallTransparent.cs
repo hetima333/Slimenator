@@ -16,12 +16,15 @@ public class WallTransparent : MonoBehaviour
     private GameObject _player;
     private GameObject _wall;
 
+    private ChangeWallMaterial _wallMaterial;
+
     // Use this for initialization
     void Start()
     {
         _camera = GameObject.FindGameObjectWithTag("MainCamera");
         _player = GameObject.FindGameObjectWithTag("Player");
         _wall = GameObject.FindGameObjectWithTag("Wall");
+        _wallMaterial = gameObject.GetComponent<ChangeWallMaterial>();
 
     }
 
@@ -36,12 +39,12 @@ public class WallTransparent : MonoBehaviour
             if (_rayHit.collider.gameObject == _wall)
             {
                 //壁を透明化する
-                _wall.GetComponent<MeshRenderer>().material.color = new Color(0,0,0,0.5f);
+                _wallMaterial.IsTranslucent(true);
             }
             else
             {
                 //無ければ透明化しない
-                _wall.GetComponent<MeshRenderer>().material.color = new Color(1, 1, 1, 1.0f);
+                _wallMaterial.IsTranslucent(false);
             }
         }
     }

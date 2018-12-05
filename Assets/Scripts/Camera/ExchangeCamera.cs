@@ -10,6 +10,7 @@ public class ExchangeCamera : MonoBehaviour {
         transform.GetChild(0).gameObject.GetComponent<MultipleTargetCamera>().enabled = false;
         //壁(ボス部屋)の透明化スクリプトはオフ
         gameObject.GetComponent<WallTransparent>().enabled = false;
+        gameObject.GetComponent<ChangeWallMaterial>().enabled = false;
     }
 
     // Update is called once per frame
@@ -33,5 +34,6 @@ public class ExchangeCamera : MonoBehaviour {
         gameObject.GetComponent<CameraFollowTarget>().enabled = false;
         //壁(ボス部屋)の透明化スクリプトはオン
         gameObject.GetComponent<WallTransparent>().enabled = true;
+        gameObject.GetComponent<ChangeWallMaterial>().enabled = true;
     }
 }
