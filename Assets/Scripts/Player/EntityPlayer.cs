@@ -142,6 +142,11 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
 		_SuckingParticle.SetActive(false);
 		_SuckingRadius.SetActive(false);
 		_Animator.SetBool("IsSucking", false);
+
+		_Skills.Capacity = (int) _Skill_Slots;
+		for (int i = 0; i < _Skill_Slots; i++) {
+			_Skills.Add(null);
+		}
 	}
 
 	private void IdleCheckFunction() {
@@ -452,10 +457,8 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
 
 	protected void StoreSkills() {
 		if (_CurrentSkillOutcome != null) {
-			_Skills.Add(_CurrentSkillOutcome);
-
-			if (_Skills.Count > _Skill_Slots)
-				_Skills.RemoveAt(0);
+			// 選択スキル番号にスキルをセットする
+			_Skills[_CurrentSelection] = _CurrentSkillOutcome;
 
 			ResetOrbSlots();
 			AudioManager.Instance.PlaySE(_SkillStoreSFX.name);
@@ -465,12 +468,13 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
 	}
 
 	protected void UseSkill() {
-		if (_Skills.Count > 0) {
-			_CurrentUseSkill = _Skills[_CurrentSelection];
-			_CurrentUseSkill.Init();
-			_Skills.RemoveAt(_CurrentSelection);
-			_Is_Casting = true;
+		if (_Skills[_CurrentSelection] == null) {
+			return;
 		}
+		_CurrentUseSkill = _Skills[_CurrentSelection];
+		_CurrentUseSkill.Init();
+		_Skills[_CurrentSelection] = null;
+		_Is_Casting = true;
 	}
 
 	private void ResetCurrentUsedSkill() {
@@ -511,13 +515,18 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
 		GUI.Box(new Rect(10, 50 * 5, 500, 50), "Output: " + ((_CurrentSkillOutcome != null) ? ((_CurrentSkillOutcome.GetSkillTier() != null) ? _CurrentSkillOutcome.GetSkillTier().name + " " : "") + _CurrentSkillOutcome.name : "None"));
 
 		GUI.Box(new Rect(1500, 10, 100, 50), "Skill Slots");
+
 		for (int i = 0; i < _Skills.Count; ++i) {
-			GUI.Box(new Rect(1500, 50 * (i + 1), 500, 50), ((_Skills[i].GetSkillTier() != null) ? _Skills[i].GetSkillTier().name + " " : "") + _Skills[i].name);
+			if (_Skills[i] != null) {
+				GUI.Box(new Rect(1500, 50 * (i + 1), 500, 50), ((_Skills[i].GetSkillTier() != null) ? _Skills[i].GetSkillTier().name + " " : "") + _Skills[i].name);
+			}
 		}
 
 		if (_Skills.Count > 0) {
-			GUI.Box(new Rect(1500, 50 * 5, 500, 50), ((_Skills[_CurrentSelection].GetSkillTier() != null) ? _Skills[_CurrentSelection].GetSkillTier().name + " " : "") + _Skills[_CurrentSelection].name);
-			GUI.Box(new Rect(1500, 50 * 6, 500, 50), "Description: " + _Skills[_CurrentSelection].GetDescription());
+			if (_Skills[_CurrentSelection] != null) {
+				GUI.Box(new Rect(1500, 50 * 5, 500, 50), ((_Skills[_CurrentSelection].GetSkillTier() != null) ? _Skills[_CurrentSelection].GetSkillTier().name + " " : "") + _Skills[_CurrentSelection].name);
+				GUI.Box(new Rect(1500, 50 * 6, 500, 50), "Description: " + _Skills[_CurrentSelection].GetDescription());
+			}
 		}
 
 		GUI.Box(new Rect(900, 10, 100, 50), "State: " + _Player_State);
