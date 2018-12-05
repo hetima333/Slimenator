@@ -209,12 +209,23 @@ public class TankEnemy : Enemy {
     void StartHit () {
         //所持している武器に対しての更新
         _weaponList.ForEach (weapon => {
+            //武器をスイングする音
+            AudioManager.Instance.PlaySE("Tank_Swing");
             //武器のダメージセット
             weapon.GetComponent<EnemyWeapon> ().SetDamage (_comboDamage[_comboCount]);
             //武器の当たり判定の実体化
             weapon.GetComponent<EnemyWeapon> ().ActiveCollision (true);
             //武器の既当たり判定をリセット
             weapon.GetComponent<EnemyWeapon> ().HashReset ();
+
+        //コンボ数に応じたSEをセット
+        if(_comboCount<1){
+            weapon.GetComponent<EnemyWeapon> ()._hitSE ="Tank_Hit"+(_comboCount+1).ToString();
+        }
+        else{
+            weapon.GetComponent<EnemyWeapon> ()._hitSE ="Tank_Hit"+(_comboCount).ToString();
+        }
+    
         });
     }
 

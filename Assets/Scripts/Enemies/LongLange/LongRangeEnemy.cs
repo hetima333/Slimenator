@@ -8,8 +8,6 @@ using UnityEngine;
 
 public class LongRangeEnemy : Enemy {
     //TODO Enemy Performance
-    //const float MAX_HP = 100.0f;
-    //const float MOVE_SPEED = 2.5f;
     const float SEARCH_RANGE = 14.0f;
     const float ATTACK_RANGE = 10.0f;
     const float MOVE_RANGE = 10.0f;
@@ -157,6 +155,8 @@ public class LongRangeEnemy : Enemy {
             bullet.transform.position = gameObject.transform.position + transform.forward;
             //set bullet speed(TODO)
             bullet.GetComponent<Rigidbody> ().velocity = gameObject.transform.forward * 10;
+            //発射音
+            AudioManager.Instance.PlaySE("Long_Shot");
         }
     }
 

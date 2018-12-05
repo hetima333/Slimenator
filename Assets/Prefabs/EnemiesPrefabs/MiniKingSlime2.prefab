@@ -225,7 +225,7 @@ GameObject:
   - component: {fileID: 114493458786186030}
   m_Layer: 13
   m_Name: MiniKingSlime2
-  m_TagString: Untagged
+  m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

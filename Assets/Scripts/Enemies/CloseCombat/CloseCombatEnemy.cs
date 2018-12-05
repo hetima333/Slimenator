@@ -174,6 +174,7 @@ public class CloseCombatEnemy : Enemy {
             weapon.GetComponent<EnemyWeapon> ().ActiveCollision (true);
             //武器の既当たり判定をリセット
             weapon.GetComponent<EnemyWeapon> ().HashReset ();
+            weapon.GetComponent<EnemyWeapon> ()._hitSE = "Melee_AttackHit";
         });
     }
 
