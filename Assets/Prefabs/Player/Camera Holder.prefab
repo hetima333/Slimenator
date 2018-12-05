@@ -195,9 +195,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _camera: {fileID: 20100311265079470}
   _camHolder: {fileID: 1996584274457292}
-  _offset: {x: 0, y: 80, z: -70}
+  _offset: {x: 0, y: 70, z: -70}
   _smoothTime: 0.2
-  _minZoom: 70
+  _minZoom: 50
   _maxZoom: 30
   _zoomLimiter: 50
 --- !u!114 &114925962276477986
