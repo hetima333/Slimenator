@@ -34,8 +34,8 @@ public class MultipleTargetCamera : MonoBehaviour {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         _targets.Add(player.transform);
         //ボス達をターゲットに追加  
-        //GameObject boss = GameObject.FindGameObjectWithTag("Boss");
-        GameObject boss = GameObject.Find("KingSlime(Clone)");
+        GameObject boss = GameObject.FindGameObjectWithTag("Boss");
+        //GameObject boss = GameObject.Find("KingSlime(Clone)");
         _targets.Add(boss.transform);
     }
 
@@ -50,12 +50,18 @@ public class MultipleTargetCamera : MonoBehaviour {
         Zoom();
     }
 
+    /// <summary>
+    /// ターゲットに合わせて補間で拡大
+    /// </summary>
     private void Zoom()
     {
         var newZoom = Mathf.Lerp(_maxZoom, _minZoom, GetGreatestDistance() / _zoomLimiter);
         _camera.fieldOfView = Mathf.Lerp(_camera.fieldOfView, newZoom, Time.deltaTime);
     }
 
+    /// <summary>
+    /// カメラの移動
+    /// </summary>
     private void Move()
     {
         var centerPoint = GetCenterPoint();
@@ -63,6 +69,10 @@ public class MultipleTargetCamera : MonoBehaviour {
         _camHolder.transform.position = Vector3.SmoothDamp(transform.position, newPosition, ref _velocity, _smoothTime);
     }
 
+    /// <summary>
+    /// 最大距離の取得
+    /// </summary>
+    /// <returns></returns>
     private float GetGreatestDistance()
     {
         var bounds = new Bounds(_targets[0].position, Vector3.zero);
@@ -73,9 +83,15 @@ public class MultipleTargetCamera : MonoBehaviour {
         return bounds.size.x;
     }
 
+    /// <summary>
+    /// 中心座標の取得
+    /// </summary>
+    /// <returns></returns>
     private Vector3 GetCenterPoint()
     {
+        //ターゲットが1体のみならそのターゲットが中心
         if (_targets.Count == 1) return _targets[0].position;
+
         var bounds = new Bounds(_targets[0].position, Vector3.zero);
         for (int i = 0; i < _targets.Count; i++)
         {
