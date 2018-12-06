@@ -73,7 +73,8 @@ public abstract class Enemy : MonoBehaviour, IDamageable, ISuckable {
     public SimpleAnimation _anim;
     //現在再生中のアニメの名前
     public string _animName;
-
+    //停止時のアニメの再生時間
+    public float _animLastTime = 0;
     protected Status _status;
     protected Stats _properties;
 
@@ -81,6 +82,8 @@ public abstract class Enemy : MonoBehaviour, IDamageable, ISuckable {
     public float MaxHitPoint { get { return _properties.MaxHealthProperties * _properties.HealthMultiplyerProperties; } }
     //体力
     public float HitPoint { get { return _properties.HealthProperties; } }
+
+    public bool _isLady = false;
 
     public abstract void Init (Stats stat);
 
@@ -102,14 +105,34 @@ public abstract class Enemy : MonoBehaviour, IDamageable, ISuckable {
         if (_money == 0) { _money = money; }
         //初期位置の記憶
         _startPosition = gameObject.transform.position;
-        //animationSystem Set
-        _anim = GetComponent<SimpleAnimation> ();
         //Managerに生まれたっていう
         GameStateManager.Instance.IncreaseEnemy ();
-
         _status = gameObject.GetComponent<Status> ();
         _status.Init ();
     }
+
+	void OnDisable()
+    {
+        //Debug.Log(_animName);
+		//再生中のアニメーションの再生位置を記憶
+		_animLastTime = _anim.GetState(_animName).time - (int)_anim.GetState(_animName).time;
+        //Debug.Log(_animLastTime);
+    }
+
+    void OnEnable()
+    {
+		if(!_isLady)return;
+		//再生中のアニメーションがあれば
+		if(_animName != null)
+		{
+			//最後のアニメーションの再生位置を記憶しておいたものに変更
+			_anim.GetState (_animName).normalizedTime = _animLastTime;
+			//最後のアニメーション再生
+			_anim.CrossFade(_animName,0);
+		}
+    }
+
+
 
     //ダメージを受ける
     public void TakeDamage (float damage) {
@@ -149,6 +172,7 @@ public abstract class Enemy : MonoBehaviour, IDamageable, ISuckable {
     //死亡アクション
     private void Dying () {
         //Dead Animation
+        _currentState = State.DEAD;
         _anim.CrossFade ("Dead", 0);
 
     }

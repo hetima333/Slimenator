@@ -19,6 +19,7 @@ public class EnemyWeapon : MonoBehaviour {
     //一度当たったオブジェクトを記憶するHashSet（多段ヒット防止）
     private HashSet<GameObject> _hitObjects;
 
+    public string _hitSE{get;set;}
     void Start () {
         //衝撃波オブジェクトのロード
         _shockWave = Resources.Load ("EnemyItem/ShockWave", typeof (GameObject)) as GameObject;
@@ -43,7 +44,6 @@ public class EnemyWeapon : MonoBehaviour {
     //自分の本体に何かが接触した場合
     void OnTriggerEnter (Collider col) {
 
-        //Debug.Log (col.gameObject.name);
         //Make sure the target has components
         var hasIDamageableObject = col.gameObject.GetComponent<IDamageable> ();
 
@@ -54,6 +54,7 @@ public class EnemyWeapon : MonoBehaviour {
             if (!_hitObjects.Contains (col.gameObject)) {
                 //ダメージを与える
                 hasIDamageableObject.TakeDamage (_damage);
+                AudioManager.Instance.PlaySE(_hitSE);
                 //一度当たったオブジェクトリストに追加
                 _hitObjects.Add (col.gameObject);
             }
@@ -63,6 +64,8 @@ public class EnemyWeapon : MonoBehaviour {
         if (LayerMask.LayerToName (col.gameObject.layer) == "Ground" && _groundHit) {
 
             if (_shockWave) {
+                //地面ヒット時の音
+                AudioManager.Instance.PlaySE("Tank_GroundHit");
                 GameObject shockWave = Instantiate (_shockWave);
                 shockWave.GetComponent<ShockWave> ().SetScale (20);
                 shockWave.GetComponent<ShockWave> ().SetDamage (10);

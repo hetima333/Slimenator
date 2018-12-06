@@ -31,6 +31,8 @@ public abstract class BossBase : MonoBehaviour, IDamageable {
 
 	public string _animName;
 
+	public float _animLastTime = 0;
+
 	//Object for long range attack
 	public GameObject _slimeBullet;
 
@@ -57,9 +59,36 @@ public abstract class BossBase : MonoBehaviour, IDamageable {
 
 	public abstract void Init (Stats stat);
 
+
+	public bool _isLady = false;
+
 	public void Awake () {
 		_shockWave = Resources.Load ("EnemyItem/ShockWave", typeof (GameObject)) as GameObject;
 	}
+
+
+	void OnDisable()
+    {
+		//再生中のアニメーションの再生位置を記憶
+		//Debug.Log(_anim.GetState(_animName).time);
+		_animLastTime = _anim.GetState(_animName).time-(int)_anim.GetState(_animName).time;
+    }
+
+    void OnEnable()
+    {
+		if(!_isLady)return;
+		//再生中のアニメーションがあれば
+		if(_animName != null)
+		{	
+			//最後のアニメーションの再生位置を記憶しておいたものに変更
+			_anim.GetState (_animName).normalizedTime = _animLastTime;
+			//最後のアニメーション再生
+			_anim.CrossFade(_animName,0);
+		}
+    }
+
+
+
 
 	public void TakeDamage (float damage) {
 		_properties.HealthProperties -= damage;
@@ -72,31 +101,29 @@ public abstract class BossBase : MonoBehaviour, IDamageable {
 			var hasIDamageableObject = col.gameObject.GetComponent<IDamageable> ();
 
 			//If have a component
-			if (hasIDamageableObject != null) {
+			if (hasIDamageableObject != null &&_isAction == true) {
 				//ダメージ判定
 				//TODO take damage   
 				hasIDamageableObject.TakeDamage (10);
+				_isAction = false;
 			}
 		}
 
 		if (col.gameObject.layer == LayerMask.NameToLayer ("Ground") && _state == BossBase.State.ALIVE) {
-			if (_isGround == false) {
-				Debug.Log ("着地");
-				if (_isAction == true)
-					if (_canAnimation) {
-						_anim.CrossFade ("Fall", 0);
-						_animName = "Fall";
-						if (_shockWave) {
-							GameObject shockWave = Instantiate (_shockWave);
-							shockWave.GetComponent<ShockWave> ().SetScale (35);
-							shockWave.GetComponent<ShockWave> ().SetDamage (10);
-							//接触地点を取得
-							Vector3 ShockPos = gameObject.transform.position;
-							ShockPos.y = 1f;
-							shockWave.transform.position = ShockPos;
+			if (_isGround == false&&_isAction == true) {
+				if (_canAnimation) {
+					_anim.CrossFade ("Fall", 0);
+					_animName = "Fall";
+					if (_shockWave) {
+						GameObject shockWave = Instantiate (_shockWave);
+						shockWave.GetComponent<ShockWave> ().SetScale (35);
+						shockWave.GetComponent<ShockWave> ().SetDamage (10);
+						//接触地点を取得
+						Vector3 ShockPos = gameObject.transform.position;
+						ShockPos.y = 1f;
+						shockWave.transform.position = ShockPos;
 						}
 					}
-
 				_isGround = true;
 			}
 		}

@@ -48,6 +48,11 @@ public class CloseCombatEnemy : Enemy {
         _freeMovePosition = _move.SetMovePos ();
         //武器プレハブの取得
         SetWeapons ();
+        _anim = GetComponent<SimpleAnimation>();
+        _anim.CrossFade ("Idle", 0f);
+        _animName = "Idle";
+
+        _isLady = true;
 
     }
 
@@ -169,6 +174,7 @@ public class CloseCombatEnemy : Enemy {
             weapon.GetComponent<EnemyWeapon> ().ActiveCollision (true);
             //武器の既当たり判定をリセット
             weapon.GetComponent<EnemyWeapon> ().HashReset ();
+            weapon.GetComponent<EnemyWeapon> ()._hitSE = "Melee_AttackHit";
         });
     }
 
@@ -194,6 +200,7 @@ public class CloseCombatEnemy : Enemy {
                 case Enemy.State.IDLE:
                     if (CurrentState == Enemy.State.DISCOVERY) {
                         _anim.CrossFade ("Close", 0.5f);
+                        _animName = "Close";
                         _inMotion = true;
                     }
                     break;
@@ -201,6 +208,7 @@ public class CloseCombatEnemy : Enemy {
                 case Enemy.State.FREE:
                     if (CurrentState == Enemy.State.DISCOVERY) {
                         _anim.CrossFade ("Close", 0.5f);
+                        _animName = "Close";
                         _inMotion = true;
                     }
                     break;
@@ -208,6 +216,7 @@ public class CloseCombatEnemy : Enemy {
                 case Enemy.State.ATTACK:
                     if (CurrentState == Enemy.State.DISCOVERY) {
                         _anim.CrossFade ("Close", 0.5f);
+                        _animName = "Close";
                         _inMotion = true;
                     }
                     break;
@@ -215,11 +224,13 @@ public class CloseCombatEnemy : Enemy {
                 case Enemy.State.DISCOVERY:
                     if (CurrentState == Enemy.State.ATTACK) {
                         _anim.CrossFade ("Open", 0.5f);
+                        _animName = "Open";
                         _inMotion = true;
                     }
 
                     if (CurrentState == Enemy.State.FREE) {
                         _anim.CrossFade ("Open", 0.5f);
+                        _animName = "Open";
                         _inMotion = true;
                     }
                     break;
@@ -233,5 +244,8 @@ public class CloseCombatEnemy : Enemy {
         }
 
     }
+
+
+    
 
 }

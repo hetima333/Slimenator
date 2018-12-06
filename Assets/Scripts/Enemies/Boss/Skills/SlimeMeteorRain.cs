@@ -6,6 +6,8 @@ public class SlimeMeteorRain : BossSkill {
 
 	private GameObject _slimeMeteor;
 
+	private GameObject _meteor;
+
 	// Use this for initialization
 	void Start () {
 		_slimeMeteor = Resources.Load ("EnemyItem/SlimeMeteor", typeof (GameObject)) as GameObject;
@@ -15,7 +17,7 @@ public class SlimeMeteorRain : BossSkill {
 		Debug.Log ("メテオ");
 		_actTime = 1.0f;
 
-		MeteorFall (20);
+		MeteorFall (30);
 		_canActive = false;
 
 		_boss._isAction = true;
@@ -30,7 +32,7 @@ public class SlimeMeteorRain : BossSkill {
 			pos.x += Random.Range (-50, 50);
 			pos.y = 50;
 			pos.z += Random.Range (-50, 50);
-			GameObject meteor = Instantiate (_slimeMeteor, pos, Quaternion.identity);
+			_meteor = Instantiate (_slimeMeteor, pos, Quaternion.identity);
 		}
 
 	}

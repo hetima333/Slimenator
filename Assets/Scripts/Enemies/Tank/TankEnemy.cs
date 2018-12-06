@@ -34,8 +34,6 @@ public class TankEnemy : Enemy {
     [SerializeField]
     private float[] _comboDamage = { 10, 15, 20 };
 
-    private float[] _comboDelay = { 1.5f, 0.8f, 1.7f };
-
     public override void Init (Stats _stat) {
         _properties = _stat;
         //ステータスのセット
@@ -53,6 +51,11 @@ public class TankEnemy : Enemy {
         _freeMovePosition = _move.SetMovePos ();
         //武器プレハブの取得
         SetWeapons ();
+        _anim = GetComponent<SimpleAnimation>();
+        _anim.CrossFade ("Sleep", 0f);
+        _animName = "Sleep";
+
+        _isLady = true;
     }
 
     // Update is called once per frame
@@ -72,29 +75,41 @@ public class TankEnemy : Enemy {
                 case State.IDLE:
                     //待機
                     StartCoroutine (_move.Idle ());
-                    _anim.CrossFade ("Idle", 0);
-                    _animName = "Idle";
+                    if(_animName != "Idle")
+                    {
+                        _anim.CrossFade ("Idle", 0.5f);
+                        _animName = "Idle";
+                    }
                     break;
 
                 case State.FREE:
                     //自由移動
                     _move.FreeMove ();
-                    _anim.CrossFade ("Move", 0.5f);
-                    _animName = "Move";
+                    if(_animName != "Move")
+                    {
+                        _anim.CrossFade ("Move", 0.5f);
+                        _animName = "Move";
+                    }
                     break;
 
                 case State.DISCOVERY:
                     //プレイヤー追従
                     _move.Move2Player ();
-                    _anim.CrossFade ("Move", 0.5f);
-                    _animName = "Move";
+                    if(_animName != "Move")
+                    {
+                        _anim.CrossFade ("Move", 0.5f);
+                        _animName = "Move";
+                    }
                     break;
 
                 case State.RETURN:
                     //初期位置に帰る
                     _move.Return2FirstPos ();
-                    _anim.CrossFade ("Move", 0.5f);
-                    _animName = "Move";
+                    if(_animName != "Move")
+                    {
+                        _anim.CrossFade ("Move", 0.5f);
+                        _animName = "Move";
+                    }
                     break;
 
                 case State.ATTACK:
@@ -174,8 +189,8 @@ public class TankEnemy : Enemy {
         _target = obj;
         //寝ている場合
         if (_isSleeping) {
-            //起き上がるコルーチン
-            StartCoroutine (WakeUp ());
+            //起き上がる
+            WakeUp ();
         } else if (CurrentState != State.DEAD && !IsAction) {
             //発見状態にする
             CurrentState = State.DISCOVERY;
@@ -183,30 +198,34 @@ public class TankEnemy : Enemy {
         }
     }
 
-    private IEnumerator WakeUp () {
+    private void WakeUp () {
         //起き上がりアニメーション
         //WakeUp Animation
-        _anim.CrossFade ("WakeUp", 0.5f);
-
-        //起き上がるまで待つ
-        //wait for end wakeup
-        yield return new WaitForSeconds (6);
-        //眠り判定を解除
-        _isSleeping = false;
-        //Change State
-        CurrentState = State.DISCOVERY;
+        _anim.CrossFade ("WakeUp", 0f);
+        _animName = "WakeUp";
     }
 
     //攻撃判定開始（AnimationEvent用）
     void StartHit () {
         //所持している武器に対しての更新
         _weaponList.ForEach (weapon => {
+            //武器をスイングする音
+            AudioManager.Instance.PlaySE("Tank_Swing");
             //武器のダメージセット
             weapon.GetComponent<EnemyWeapon> ().SetDamage (_comboDamage[_comboCount]);
             //武器の当たり判定の実体化
             weapon.GetComponent<EnemyWeapon> ().ActiveCollision (true);
             //武器の既当たり判定をリセット
             weapon.GetComponent<EnemyWeapon> ().HashReset ();
+
+        //コンボ数に応じたSEをセット
+        if(_comboCount<1){
+            weapon.GetComponent<EnemyWeapon> ()._hitSE ="Tank_Hit"+(_comboCount+1).ToString();
+        }
+        else{
+            weapon.GetComponent<EnemyWeapon> ()._hitSE ="Tank_Hit"+(_comboCount).ToString();
+        }
+    
         });
     }
 
@@ -220,7 +239,13 @@ public class TankEnemy : Enemy {
     }
 
     void HitWakeUp () {
+        //眠り判定を解除
         _isSleeping = false;
+        //Change State
+        CurrentState = State.DISCOVERY;
     }
+
+
+    
 
 }
