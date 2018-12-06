@@ -233,7 +233,6 @@ public class TankEnemy : Enemy {
     void EndHit () {
         //武器の判定を消す
         _weaponList.ForEach (weapon => weapon.GetComponent<EnemyWeapon> ().ActiveCollision (false));
-
         //行動終了
         IsAction = false;
     }
