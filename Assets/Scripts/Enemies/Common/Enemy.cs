@@ -160,13 +160,15 @@ public abstract class Enemy : MonoBehaviour, IDamageable, ISuckable {
 
     //★アニメーションを状態異常に適応させるためのLateUpdate
     protected virtual void LateUpdate () {
-        //現在再生中のアニメがある
-        if (_anim.GetState (_animName) != null)
-            //再生中のアニメのスピードが想定される再生速度と異なる場合
-            if (_anim.GetState (_animName).speed != _properties.SpeedMultiplyerProperties) {
-                //再生速度の変更を行う
-                _anim.GetState (_animName).speed = _properties.SpeedMultiplyerProperties;
+        
+        //セットされている全てのアニメーションの速度調整（-1はデフォルトクリップ回避）
+        for (int i =0 ;i< _anim.GetClipCount()-1;i++)
+        {
+            if (_anim.GetState (_anim.m_States[i].name).speed != _properties.SpeedMultiplyerProperties) {
+                    //再生速度の変更を行う
+                    _anim.GetState (_anim.m_States[i].name).speed = _properties.SpeedMultiplyerProperties;
             }
+        }
     }
 
     //死亡アクション
