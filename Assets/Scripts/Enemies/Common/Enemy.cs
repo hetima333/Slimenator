@@ -78,6 +78,10 @@ public abstract class Enemy : MonoBehaviour, IDamageable, ISuckable {
     protected Status _status;
     protected Stats _properties;
 
+    public GameObject _body;
+
+    public Material _deadMat;
+
     //最大値
     public float MaxHitPoint { get { return _properties.MaxHealthProperties * _properties.HealthMultiplyerProperties; } }
     //体力
@@ -89,6 +93,8 @@ public abstract class Enemy : MonoBehaviour, IDamageable, ISuckable {
 
     //ステータスのセット関数
     public void SetStatus (Enemy.Type type, float maxHp, float speed, float searchRange, float attackRange, float moveRange, float money) {
+        _body = transform.Find ("Body").gameObject;
+        _deadMat = (Material) Resources.Load ("Material/Dead");
         //タイプセット
         _enemyType = type;
         //初期はアイドル
@@ -173,14 +179,23 @@ public abstract class Enemy : MonoBehaviour, IDamageable, ISuckable {
 
     //死亡アクション
     private void Dying () {
-        //Dead Animation
-        _currentState = State.DEAD;
         _anim.CrossFade ("Dead", 0);
+        _animName = "Dead";
 
     }
 
     //死亡したときに呼ばれる関数（AnimationEvent）
     public void Dead () {
+        //死亡コルーチン
+        _body.GetComponent<Renderer>().material = _deadMat;
+        _body.GetComponent<DissolveTest>().enabled = true;
+        StartCoroutine(DeadCol());
+    }
+
+    public IEnumerator DeadCol()
+    {
+        //適当な時間経過後死ぬ
+        yield return new WaitForSeconds(2.0f);
         //マネージャーに死んだよっていう
         GameStateManager.Instance.DecreaseEnemy ();
         ObjectManager.Instance.ReleaseObject (gameObject);

@@ -14,11 +14,11 @@ MonoBehaviour:
   _Prefab: {fileID: 1314456541332650, guid: d8cee6a6bac30c9458bb392d98cdb343, type: 2}
   _MaxHealth: 100
   _MaxHealthMultiplyer: 1
-  _Health: -23
+  _Health: 100
   _MaxDamage: 1
   _MaxDamageMultiplyer: 1
   _MaxSpeed: 23
   _MaxSpeedMultiplyer: 1
-  _SuckingPower: 10
+  _SuckingPower: 50
   _SuckingPowerMultiplyer: 1
   _UsedByMultipleEntities: 0

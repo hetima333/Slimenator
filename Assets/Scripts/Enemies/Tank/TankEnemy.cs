@@ -124,17 +124,12 @@ public class TankEnemy : Enemy {
 
     }
 
-    //攻撃コルーチン
+    //攻撃
     private void Attack () {
+
         //行動中はreturn
         if (IsAction || CurrentState == State.DEAD) return;
-        //攻撃範囲から出れば攻撃をやめる
-        if ((gameObject.transform.position - _target.transform.position).sqrMagnitude > Mathf.Pow (_attackRange, 2) + ERROR_RANGE) {
-            IsAction = false;
-            CurrentState = State.DISCOVERY;
-            _comboCount = 0;
-            return;
-        }
+
         //行動開始
         IsAction = true;
 
@@ -185,13 +180,17 @@ public class TankEnemy : Enemy {
 
     //発見時
     public override void Discover (GameObject obj) {
+    if (CurrentState == Enemy.State.DEAD) return;
+
         //Set Target
         _target = obj;
+        //行動終了
+        IsAction = false;
         //寝ている場合
         if (_isSleeping) {
             //起き上がる
             WakeUp ();
-        } else if (CurrentState != State.DEAD && !IsAction) {
+        } else if (CurrentState != State.DEAD) {
             //発見状態にする
             CurrentState = State.DISCOVERY;
             _comboCount = 0;
@@ -207,6 +206,8 @@ public class TankEnemy : Enemy {
 
     //攻撃判定開始（AnimationEvent用）
     void StartHit () {
+        if (CurrentState == Enemy.State.DEAD) return;
+
         //所持している武器に対しての更新
         _weaponList.ForEach (weapon => {
             //武器をスイングする音
@@ -231,20 +232,28 @@ public class TankEnemy : Enemy {
 
     //攻撃判定終了（AnimationEvent用）
     void EndHit () {
+        if (CurrentState == Enemy.State.DEAD) return;
+
         //武器の判定を消す
         _weaponList.ForEach (weapon => weapon.GetComponent<EnemyWeapon> ().ActiveCollision (false));
+
+        //攻撃範囲から出れば攻撃をやめる
+        if ((gameObject.transform.position - _target.transform.position).sqrMagnitude > Mathf.Pow (_attackRange, 2) + ERROR_RANGE) {
+            IsAction = false;
+            _anim.CrossFade ("Move", 0);
+            CurrentState = State.DISCOVERY;
+            _comboCount = 0;
+            return;
+        }
         //行動終了
         IsAction = false;
     }
 
     void HitWakeUp () {
+        if (CurrentState == Enemy.State.DEAD) return;
         //眠り判定を解除
         _isSleeping = false;
         //Change State
         CurrentState = State.DISCOVERY;
     }
-
-
-    
-
 }

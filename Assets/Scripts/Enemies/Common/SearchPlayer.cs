@@ -39,7 +39,6 @@ public class SearchPlayer : MonoBehaviour {
 			if (_enemy.CurrentState != Enemy.State.DEAD) {
 				//Set Target
 				//_enemy._target = null;
-
 				_enemy.IsAction = false;
 				//Change State
 				_enemy.CurrentState = Enemy.State.FREE;

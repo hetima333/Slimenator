@@ -49,6 +49,8 @@ public class CloseCombatEnemy : Enemy {
         //武器プレハブの取得
         SetWeapons ();
         _anim = GetComponent<SimpleAnimation>();
+        _anim.GetState("Open").speed = 5.0f;
+        _anim.GetState("Close").speed = 5.0f;
         _anim.CrossFade ("Idle", 0f);
         _animName = "Idle";
 

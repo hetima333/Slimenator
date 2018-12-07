@@ -329,8 +329,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4600550496946758}
   - component: {fileID: 137842417852815370}
+  - component: {fileID: 114794835948400360}
   m_Layer: 11
-  m_Name: Lowpoly
+  m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1712,7 +1713,7 @@ Rigidbody:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1106937644777684}
   serializedVersion: 2
-  m_Mass: 15
+  m_Mass: 100
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -1874,6 +1875,8 @@ MonoBehaviour:
   _anim: {fileID: 0}
   _animName: 
   _animLastTime: 0
+  _body: {fileID: 0}
+  _deadMat: {fileID: 0}
   _isLady: 0
   _outputDamage: 10
 --- !u!114 &114370842994123100
@@ -1924,6 +1927,18 @@ MonoBehaviour:
     type: 2}
   _offset: {x: 0, y: 3.4, z: 1.71}
   _useDamagePop: 1
+--- !u!114 &114794835948400360
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1407255263233258}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8ec3ef66fe44a04b97578748ca683aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  f_dissolveChangingSpeed: 0.5
 --- !u!135 &135359599673845736
 SphereCollider:
   m_ObjectHideFlags: 1
