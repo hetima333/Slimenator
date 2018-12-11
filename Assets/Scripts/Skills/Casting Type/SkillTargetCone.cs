@@ -28,4 +28,15 @@ public class SkillTargetCone : SkillCastingType
 
         return list;
     }  
+
+    public float GetRange()
+    {
+        return _Range;
+    }
+
+    public float GetRadius()
+    {
+        return _Radius;
+    }
 }
+
