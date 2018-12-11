@@ -15,7 +15,7 @@ public class CloseCombatEnemy : Enemy {
     //const float MOVE_SPEED = 3.0f;
     const float SEARCH_RANGE = 6.0f;
     const float ATTACK_RANGE = 4.0f;
-    const float MOVE_RANGE = 3.0f;
+    const float MOVE_RANGE = 5.0f;
     const float MONEY = 10.0f;
     const float PATIENCE_VALUE = 15.0f;
 
