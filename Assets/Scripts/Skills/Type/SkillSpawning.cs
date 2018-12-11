@@ -62,4 +62,9 @@ public class SkillSpawning : Skill
             }
         }
     }
+
+    public SkillCastingType GetCastType()
+    {
+        return _CastingType;
+    }
 }

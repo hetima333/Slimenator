@@ -30,6 +30,10 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
     private GameObject
     _PrefabInstance;
 
+    // prediction manager
+    [SerializeField]
+    private PredictionManager _preMan;
+
     public Stats
     _Player_Stats;
 
@@ -69,6 +73,9 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
 
     private int
     _CurrentSelection;
+
+    private int
+    _OldSelection;
 
     private EnumHolder.States
     _Player_State;
@@ -265,7 +272,8 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
 
             //Storing of skill
             if (InputManager.CombineOrbs_Input ()) {
-                StoreSkills ();
+                StoreSkills();
+                _preMan.SwitchMode(_Skills[_CurrentSelection]);
             }
 
             if (_Skills.Count > 0) {
@@ -277,14 +285,18 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
                     } else if (position < 0f) {
                         AudioManager.Instance.PlaySE (_SkillSwapSFX.name);
                         ++_CurrentSelection;
+
                     }
                 } else
                     _CurrentSelection = 0;
+                
 
                 if (InputManager.UseSkills_Input ()) {
                     if (!_Cast_Trigger) {
                         UseSkill ();
                         _Cast_Trigger = true;
+                        if(_Skills.Count>0)
+                        _preMan.SwitchMode(_Skills[_CurrentSelection]);
                     }
                 } else
                     _Cast_Trigger = false;
@@ -305,6 +317,21 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
             _CurrentSelection = _Skills.Count - 1;
         else if (_CurrentSelection > _Skills.Count - 1)
             _CurrentSelection = 0;
+
+        // change prediction line by current skill
+        if(_Skills.Count > 0)
+        {
+            if (_CurrentSelection != _OldSelection)
+                _preMan.SwitchMode(_Skills[_CurrentSelection]);
+
+            _Skills[_CurrentSelection].GetSkillTier();
+        }
+        else
+        {
+            _preMan.SwitchMode(null);
+        }
+
+        _OldSelection = _CurrentSelection;
     }
 
     protected virtual void LateUpdate () {
