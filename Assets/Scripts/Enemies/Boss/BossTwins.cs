@@ -36,6 +36,7 @@ public class BossTwins : BossBase {
 		_animName = "WakeUp";
 		_target = GameObject.Find ("Player");
 		_isLady = true;
+		GameStateManager.Instance.IncreaseBoss();
 
 	}
 
@@ -199,6 +200,7 @@ public class BossTwins : BossBase {
 			//生き残った方のピンボール封印
 			_avatar.GetComponent<BossBase>()._skillList.Remove (gameObject.GetComponent<PinballAttack> ());
 		}
+		GameStateManager.Instance.DecreaseBoss();
 		ObjectManager.Instance.ReleaseObject (gameObject);
 	}
 
