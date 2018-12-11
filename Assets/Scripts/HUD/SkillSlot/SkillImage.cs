@@ -45,9 +45,17 @@ public class SkillImage : MonoBehaviour {
 
 			// MARK : 現在ユニークスキル以外はエンチャント1つなのでこの書き方にしている
 			var effects = skill.GetStatusEffects();
-			var enchantmentOrb = effects.Count > 0 ? effects[0].ToOrb() : Orb.NONE;
+			var enchantmentOrb = effects.Count > 1 ? effects[1].ToOrb() : Orb.NONE;
 			_enchantmentImage.sprite = OrbToSprite(enchantmentOrb);
-			// _enchantmentTierText.text = enchantmentOrb == Orb.NONE ? "" : skill.GetEnchantmentTier().ToString();
+
+			// エンチャントがなければ透明にする
+			if (enchantmentOrb == Orb.NONE) {
+				_enchantmentImage.color = new Color(1, 1, 1, 0);
+				_enchantmentBackImage.color = new Color(1, 1, 1, 0);
+			} else {
+				_enchantmentImage.color = new Color(1, 1, 1, 1);
+				_enchantmentBackImage.color = new Color(1, 1, 1, 1);
+			}
 		}
 	}
 
