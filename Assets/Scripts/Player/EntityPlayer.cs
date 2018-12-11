@@ -504,8 +504,9 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
 		return _Is_Casting;
 	}
 
-	void OnGUI() {
+/*
 #if UNITY_EDITOR
+	void OnGUI() {
 		GUI.Box(new Rect(10, 10, 100, 50), "Orb Slots");
 
 		for (int i = 0; i < _OrbSlot.Count; ++i) {
@@ -530,8 +531,9 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
 		}
 
 		GUI.Box(new Rect(900, 10, 100, 50), "State: " + _Player_State);
-#endif
 	}
+#endif
+*/
 
 	public void TakeDamage(float Damage) {
 		if (Damage > 0) {
