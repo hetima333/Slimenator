@@ -527,34 +527,34 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
         return _Is_Casting;
     }
 
-    void OnGUI () {
-#if UNITY_EDITOR
-		GUI.Box(new Rect(10, 10, 100, 50), "Orb Slots");
+    //void OnGUI () {
+		//#if UNITY_EDITOR
+		//GUI.Box(new Rect(10, 10, 100, 50), "Orb Slots");
 
-		for (int i = 0; i < _OrbSlot.Count; ++i) {
-			GUI.Box(new Rect(10, 50 * (i + 1), 100, 50), _OrbSlot[i].name);
-		}
+		//for (int i = 0; i < _OrbSlot.Count; ++i) {
+		//	GUI.Box(new Rect(10, 50 * (i + 1), 100, 50), _OrbSlot[i].name);
+		//}
 
-		GUI.Box(new Rect(10, 50 * 5, 500, 50), "Output: " + ((_CurrentSkillOutcome != null) ? ((_CurrentSkillOutcome.GetSkillTier() != null) ? _CurrentSkillOutcome.GetSkillTier().name + " " : "") + _CurrentSkillOutcome.name : "None"));
+		//GUI.Box(new Rect(10, 50 * 5, 500, 50), "Output: " + ((_CurrentSkillOutcome != null) ? ((_CurrentSkillOutcome.GetSkillTier() != null) ? _CurrentSkillOutcome.GetSkillTier().name + " " : "") + _CurrentSkillOutcome.name : "None"));
 
-		GUI.Box(new Rect(1500, 10, 100, 50), "Skill Slots");
+		//GUI.Box(new Rect(1500, 10, 100, 50), "Skill Slots");
 
-		for (int i = 0; i < _Skills.Count; ++i) {
-			if (_Skills[i] != null) {
-				GUI.Box(new Rect(1500, 50 * (i + 1), 500, 50), ((_Skills[i].GetSkillTier() != null) ? _Skills[i].GetSkillTier().name + " " : "") + _Skills[i].name);
-			}
-		}
+		//for (int i = 0; i < _Skills.Count; ++i) {
+		//	if (_Skills[i] != null) {
+		//		GUI.Box(new Rect(1500, 50 * (i + 1), 500, 50), ((_Skills[i].GetSkillTier() != null) ? _Skills[i].GetSkillTier().name + " " : "") + _Skills[i].name);
+		//	}
+		//}
 
-		if (_Skills.Count > 0) {
-			if (_Skills[_CurrentSelection] != null) {
-				GUI.Box(new Rect(1500, 50 * 5, 500, 50), ((_Skills[_CurrentSelection].GetSkillTier() != null) ? _Skills[_CurrentSelection].GetSkillTier().name + " " : "") + _Skills[_CurrentSelection].name);
-				GUI.Box(new Rect(1500, 50 * 6, 500, 50), "Description: " + _Skills[_CurrentSelection].GetDescription());
-			}
-		}
+		//if (_Skills.Count > 0) {
+		//	if (_Skills[_CurrentSelection] != null) {
+		//		GUI.Box(new Rect(1500, 50 * 5, 500, 50), ((_Skills[_CurrentSelection].GetSkillTier() != null) ? _Skills[_CurrentSelection].GetSkillTier().name + " " : "") + _Skills[_CurrentSelection].name);
+		//		GUI.Box(new Rect(1500, 50 * 6, 500, 50), "Description: " + _Skills[_CurrentSelection].GetDescription());
+		//	}
+		//}
 
-		GUI.Box(new Rect(900, 10, 100, 50), "State: " + _Player_State);
-#endif
-	}
+		//GUI.Box(new Rect(900, 10, 100, 50), "State: " + _Player_State);
+		//#endif
+	//	}
 
 	public void TakeDamage(float Damage) {
 		if (Damage > 0) {
