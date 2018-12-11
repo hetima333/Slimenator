@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameStateManager : SingletonMonoBehaviour<GameStateManager>
 {
@@ -15,11 +16,14 @@ public class GameStateManager : SingletonMonoBehaviour<GameStateManager>
     //生成されたボスの数
     private int _bossNum;
 
+    [SerializeField]
+    private Canvas _canvas;
+
     // Use this for initialization
     void Start()
     {   
         //通常BGM
-        AudioManager.Instance.PlayBGM("Stage_bgm",1);
+        AudioManager.Instance.PlayBGM("Stage_bgm",2);
     }
 
     // Update is called once per frame
@@ -61,6 +65,10 @@ public class GameStateManager : SingletonMonoBehaviour<GameStateManager>
         {
             //CLEAR演出
             AudioManager.Instance.PlayBGM("Fan",1);
+            SceneManager.UnloadSceneAsync("HUD");
+            _canvas.gameObject.SetActive(true);
+            
+
         }
     }
 
