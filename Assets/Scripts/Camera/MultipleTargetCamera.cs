@@ -12,7 +12,8 @@ public class MultipleTargetCamera : MonoBehaviour {
     //カメラの範囲に入れるオブジェクト
     private List<Transform> _targets;
 
-    [SerializeField] private Vector3 _offset;
+    [SerializeField] private Vector3 _offsetPos = new Vector3(0.0f, 70.0f, -70.0f);
+    [SerializeField] private Vector3 _offsetRot = new Vector3(-30.0f, 0.0f, 0.0f);
     [SerializeField] private float _smoothTime = 0.5f;
 
     //範囲
@@ -37,6 +38,10 @@ public class MultipleTargetCamera : MonoBehaviour {
         GameObject boss = GameObject.FindGameObjectWithTag("Boss");
         //GameObject boss = GameObject.Find("KingSlime(Clone)");
         _targets.Add(boss.transform);
+
+        //カメラの向きを設定
+        _camHolder.transform.Rotate(_offsetRot);
+
     }
 
     private void LateUpdate()
@@ -65,7 +70,7 @@ public class MultipleTargetCamera : MonoBehaviour {
     private void Move()
     {
         var centerPoint = GetCenterPoint();
-        var newPosition = centerPoint + _offset;
+        var newPosition = centerPoint + _offsetPos;
         _camHolder.transform.position = Vector3.SmoothDamp(transform.position, newPosition, ref _velocity, _smoothTime);
     }
 
