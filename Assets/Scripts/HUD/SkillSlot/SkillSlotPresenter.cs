@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using DG.Tweening;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
@@ -37,7 +38,7 @@ public class SkillSlotPresenter : MonoBehaviour {
 			.DistinctUntilChanged()
 			.Subscribe(selectedNumber => {
 				// 選択スキル番号の位置に枠を表示する
-				_selectedImage.rectTransform.anchoredPosition = Vector2.right * (selectedNumber * 165.0f) + new Vector2(45.0f, 0.0f);
+				_selectedImage.rectTransform.DOAnchorPosX(45.0f + selectedNumber * 165.0f, 0.2f);
 
 				// 選択スキル番号のスキル画像をちょっと上に上げる
 				for (int i = 0; i < SkillSlotCore.SLOT_SIZE; i++) {
