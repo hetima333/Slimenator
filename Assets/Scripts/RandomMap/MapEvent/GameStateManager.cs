@@ -11,6 +11,10 @@ public class GameStateManager : SingletonMonoBehaviour<GameStateManager>
 
     [SerializeField]
     private ForceWarp _warper;
+
+    [SerializeField]
+    private ExchangeCamera _exchangeCamera;
+
     private int _enemyNum;
     private bool _isSearching = false;
     //生成されたボスの数
@@ -50,6 +54,9 @@ public class GameStateManager : SingletonMonoBehaviour<GameStateManager>
             //BossBGM
             
             _warper.Warp();
+            //撮影方法の切り替え
+            _exchangeCamera.ChangeShootingMethod();
+
         }
     }
 
