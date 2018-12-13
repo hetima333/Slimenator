@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,7 +17,15 @@ public class SkillImage : MonoBehaviour {
 	[SerializeField]
 	private OrbSprites _sprites;
 
+	// 元々のサイズ
+	private Vector3 _baseScale;
+
+	void Awake() {
+		_baseScale = transform.localScale;
+	}
+
 	public void ChangeSkillImage(Skill skill) {
+
 		// スキルがあれば不透明にする
 		if (skill != null) {
 			_baseElementImage.color = new Color(1, 1, 1, 1);
@@ -57,6 +66,10 @@ public class SkillImage : MonoBehaviour {
 				_enchantmentBackImage.color = new Color(1, 1, 1, 1);
 			}
 		}
+
+		// サイズを戻して拡大
+		transform.localScale = _baseScale;
+		transform.DOScale(_baseScale * 1.2f, 0.2f);
 	}
 
 	/// <summary>

@@ -20,13 +20,11 @@ public class SkillSlotPresenter : MonoBehaviour {
 	[SerializeField]
 	private Image _selectedImage;
 
-	// デフォルトの高さ
-	private float _defaultHeight;
+	// スキルが選択された時に拡大するスケール
+	private float _imaegPopScale = 1.3f;
 
 	void Start() {
 		var core = GetComponent<SkillSlotCore>();
-
-		_defaultHeight = _slots[0].transform.position.y;
 
 		// スロットの初期化
 		foreach (var slot in _slots) {
@@ -43,11 +41,9 @@ public class SkillSlotPresenter : MonoBehaviour {
 				// 選択スキル番号のスキル画像をちょっと上に上げる
 				for (int i = 0; i < SkillSlotCore.SLOT_SIZE; i++) {
 					if (i == selectedNumber) {
-						_slots[i].transform.position += Vector3.up * 15.0f;
-
+						_slots[i].transform.DOScale(_imaegPopScale, 0.2f);
 					} else {
-						var pos = _slots[i].transform.position;
-						_slots[i].transform.position = new Vector3(pos.x, _defaultHeight, pos.z);
+						_slots[i].transform.DOScale(1.0f, 0.2f);
 					}
 
 				}
