@@ -30,6 +30,10 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
 	private GameObject
 	_PrefabInstance;
 
+	// prediction manager
+	[SerializeField]
+	private PredictionManager _preMan;
+
 	public Stats
 	_Player_Stats;
 
@@ -69,6 +73,9 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
 
 	private int
 	_CurrentSelection;
+
+	private int
+	_OldSelection;
 
 	private EnumHolder.States
 	_Player_State;
@@ -271,7 +278,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
 			//Storing of skill
 			if (InputManager.CombineOrbs_Input()) {
 				StoreSkills();
-				 _preMan.SwitchMode(_Skills[_CurrentSelection]);
+				_preMan.SwitchMode(_Skills[_CurrentSelection]);
 			}
 
 			if (_Skills.Count > 0) {
