@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using DG.Tweening;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
@@ -40,7 +41,11 @@ public class OrbSlotPresenter : MonoBehaviour {
 				.Where(x => x.NewValue != x.OldValue)
 				.Subscribe(x => {
 					var animator = _slotAnimators[x.Index];
-					animator.SetInteger("OrbType", (int)x.NewValue);
+					animator.SetInteger("OrbType", (int) x.NewValue);
+
+					var trans = animator.transform;
+					trans.localScale = Vector3.zero;
+					trans.DOScale(Vector3.one, 0.2f);
 				});
 
 			// 生成されるスキルが更新されたら

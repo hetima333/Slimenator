@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using DG.Tweening;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,13 +20,11 @@ public class SkillSlotPresenter : MonoBehaviour {
 	[SerializeField]
 	private Image _selectedImage;
 
-	// デフォルトの高さ
-	private float _defaultHeight;
+	// スキルが選択された時に拡大するスケール
+	private float _imaegPopScale = 1.3f;
 
 	void Start() {
 		var core = GetComponent<SkillSlotCore>();
-
-		_defaultHeight = _slots[0].transform.position.y;
 
 		// スロットの初期化
 		foreach (var slot in _slots) {
@@ -37,16 +36,14 @@ public class SkillSlotPresenter : MonoBehaviour {
 			.DistinctUntilChanged()
 			.Subscribe(selectedNumber => {
 				// 選択スキル番号の位置に枠を表示する
-				_selectedImage.rectTransform.anchoredPosition = Vector2.right * (selectedNumber * 165.0f) + new Vector2(45.0f, 0.0f);
+				_selectedImage.rectTransform.DOAnchorPosX(45.0f + selectedNumber * 165.0f, 0.2f);
 
 				// 選択スキル番号のスキル画像をちょっと上に上げる
 				for (int i = 0; i < SkillSlotCore.SLOT_SIZE; i++) {
 					if (i == selectedNumber) {
-						_slots[i].transform.position += Vector3.up * 15.0f;
-
+						_slots[i].transform.DOScale(_imaegPopScale, 0.2f);
 					} else {
-						var pos = _slots[i].transform.position;
-						_slots[i].transform.position = new Vector3(pos.x, _defaultHeight, pos.z);
+						_slots[i].transform.DOScale(1.0f, 0.2f);
 					}
 
 				}
