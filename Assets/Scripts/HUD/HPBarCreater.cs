@@ -60,7 +60,7 @@ public class HPBarCreater : MonoBehaviour {
 		if (_target.HitPoint > 0) {
 			// 追従する
 			_canvas.transform.position = this.transform.position + _offset;
-			_canvas.transform.rotation = Quaternion.Euler(0, 0, 0);
+			_canvas.transform.rotation = Quaternion.Euler(Vector3.right * Camera.main.transform.rotation.x * 100);
 		}
 	}
 
