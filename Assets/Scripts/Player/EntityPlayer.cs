@@ -299,7 +299,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
 						UseSkill();
 						_Cast_Trigger = true;
 						if(_Skills.Count>0)
-                       		_preMan.SwitchMode(_Skills[_CurrentSelection]);
+                       	_preMan.SwitchMode(_Skills[_CurrentSelection]);
 					}
 				} else
 					_Cast_Trigger = false;
@@ -328,8 +328,8 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
         {
             if (_CurrentSelection != _OldSelection)
                 _preMan.SwitchMode(_Skills[_CurrentSelection]);
-
-            _Skills[_CurrentSelection].GetSkillTier();
+			if(_Skills[_CurrentSelection] != null)
+            	_Skills[_CurrentSelection].GetSkillTier();
         }
         else
         {
