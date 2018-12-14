@@ -524,6 +524,12 @@ GameObject:
   m_PrefabParentObject: {fileID: 1718353255957232, guid: e072421b92d90e64c8ea3e5b37d6e3e6,
     type: 2}
   m_PrefabInternal: {fileID: 133416772}
+--- !u!114 &1592473469 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114262090681689708, guid: e072421b92d90e64c8ea3e5b37d6e3e6,
+    type: 2}
+  m_PrefabInternal: {fileID: 133416772}
+  m_Script: {fileID: 11500000, guid: 92889e66660ae994587ded60d92f113f, type: 3}
 --- !u!114 &1592473470
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -585,6 +591,11 @@ Prefab:
       propertyPath: _warper
       value: 
       objectReference: {fileID: 219688309}
+    - target: {fileID: 114577227134291544, guid: 44e6fae741e37e24c81b5d102b048d6a,
+        type: 2}
+      propertyPath: _mapGenerator
+      value: 
+      objectReference: {fileID: 1592473469}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 44e6fae741e37e24c81b5d102b048d6a, type: 2}
   m_IsPrefabParent: 0

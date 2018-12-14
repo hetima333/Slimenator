@@ -51,5 +51,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2b40968cc04f1443b39a18b010f2c9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyCreater: {fileID: 0}
+  _mapGenerator: {fileID: 0}
   _warper: {fileID: 0}
