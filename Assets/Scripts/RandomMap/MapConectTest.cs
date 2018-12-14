@@ -6,7 +6,6 @@ public class MapConectTest : MonoBehaviour
 {
     [SerializeField]
     private RandomMapGenerator _mapGen;
-    private const int BLOCK_SIZE = 80;
     private int _baseBlockInfo;  // 繋がれる側のブロックの情報
     private OneRoomInfo _nextBlock;	// つなぐ側のブロックの情報
 
@@ -23,8 +22,6 @@ public class MapConectTest : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
-
         //最初の部屋を生成する
         _mapGen.ChoiceFirstRoom();
 
@@ -139,7 +136,7 @@ public class MapConectTest : MonoBehaviour
         }
 
         // オブジェクトの座標を計算
-        Vector3 pos = new Vector3(position.x * BLOCK_SIZE, 0, position.y * (-BLOCK_SIZE));
+        Vector3 pos = new Vector3(position.x * _mapGen.ModelSize, 0, position.y * (-_mapGen.ModelSize));
 
         // オブジェクトの回転量を計算
         Quaternion rot = Quaternion.identity;

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PassageColliderDestroyer : MonoBehaviour
 {
-    private BoxCollider[] _colliderList;
+    private BoxCollider _collidor; 
 
     // Use this for initialization
     void Start()
@@ -22,17 +22,20 @@ public class PassageColliderDestroyer : MonoBehaviour
         if (collision.gameObject.tag == "PassageCollidor")
         {
             // お前を殺して俺も死ぬ
-            Destroy(collision.gameObject);
-            Destroy(gameObject);
+            //Destroy(collision.gameObject);
+            collision.gameObject.GetComponent<BoxCollider>().isTrigger = true;
+            //Destroy(gameObject);
+
+            gameObject.GetComponent<BoxCollider>().isTrigger = true;
         }
     }
 
-    void OnCollisionStay(Collision collision)
+    void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.tag == "PassageCollidor")
+        if (other.gameObject.tag == "Player")
         {
-            Destroy(collision.gameObject);
-            Destroy(gameObject);
+            Debug.Log("通過");
+            GameStateManager.Instance.Map.GetComponent<NearBlockActivator>().Activate();
         }
     }
 }

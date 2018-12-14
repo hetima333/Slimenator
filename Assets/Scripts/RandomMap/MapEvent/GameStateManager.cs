@@ -7,7 +7,12 @@ public class GameStateManager : SingletonMonoBehaviour<GameStateManager>
 {
 
     [SerializeField]
-    private InsertObject _enemyCreater;
+    private RandomMapGenerator _mapGenerator;
+    public RandomMapGenerator Map
+    {
+        get { return _mapGenerator; }
+    }
+
 
     [SerializeField]
     private ForceWarp _warper;
@@ -82,6 +87,6 @@ public class GameStateManager : SingletonMonoBehaviour<GameStateManager>
     public void DestroyMap()
     {
         // マップの破棄
-        Destroy(_enemyCreater.gameObject);
+        Destroy(_mapGenerator.gameObject);
     }
 }
