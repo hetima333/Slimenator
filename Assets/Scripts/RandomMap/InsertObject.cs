@@ -159,6 +159,8 @@ public class InsertObject : MonoBehaviour {
                 var enemyType = RandomUtils.GetRandomInt (0, _enemys.Length - 1);
                 //敵オブジェクトを生成する
                 GameObject enemyObj = ObjectManager.Instance.InstantiateWithObjectPooling (_enemys[enemyType]._object, spawn.transform.position, new Quaternion ());
+                // 敵を部屋の子供にする
+                enemyObj.transform.SetParent(spawn.transform.parent);
                 //敵の数
                 _createEnemys.Add (enemyObj);
 
@@ -182,7 +184,10 @@ public class InsertObject : MonoBehaviour {
         //スライムスポナーは必ず生成する
         foreach (var spawner in _createSlimeSpawners) {
             //生成する
-            ObjectManager.Instance.InstantiateWithObjectPooling (_slimeSpooner._object, spawner.transform.position, new Quaternion ());
+            var spawner_obj = ObjectManager.Instance.InstantiateWithObjectPooling (_slimeSpooner._object, spawner.transform.position, new Quaternion ());
+
+            // 敵を部屋の子供にする
+            spawner_obj.transform.SetParent(spawner.transform.parent);
         }
     }
 

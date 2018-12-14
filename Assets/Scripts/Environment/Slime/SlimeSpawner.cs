@@ -84,6 +84,7 @@ public class SlimeSpawner : MonoBehaviour {
         GameObject slime_obj = ObjectManager.Instance.InstantiateWithObjectPooling(_prefab, position);
         Stats temp = EnumHolder.Instance.GetStats(_prefab.name);
         SlimeBase temp_component = slime_obj.GetComponent<SlimeBase>();
+        slime_obj.transform.SetParent(gameObject.transform);
 
         if (temp_component != null)
             Destroy(temp_component);
