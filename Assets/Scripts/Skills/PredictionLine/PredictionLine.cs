@@ -14,13 +14,14 @@ public class PredictionLine : MonoBehaviour
 	
 	// Update is called once per frame
 	void Update () {
-        CalcRange();
+       // CalcRange();
     }
 
     private void CalcRange()
     {
         // レイの発射方向を決定
         Vector3 rayDirection = gameObject.transform.forward;
+        rayDirection.y = gameObject.transform.position.y;
 
         // 向いている方向にレイを発射
         RaycastHit hitInfo;
