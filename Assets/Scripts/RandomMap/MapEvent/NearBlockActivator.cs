@@ -38,6 +38,9 @@ public class NearBlockActivator : MonoBehaviour {
         // 一度すべてのマスを非アクティブ化
         Deactivate();
 
+        // 最初のマスを強制アクティブ化
+        _rmg._maps[0, 0].gameObject.SetActive(true);
+
         // 自分のいるマスをアクティブ化
         var playerGrid = _rmg._maps[gridPpos.x, gridPpos.y];
             playerGrid.gameObject.SetActive(true);
