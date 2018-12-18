@@ -28,8 +28,6 @@ public class NearBlockActivator : MonoBehaviour {
         px = (int)(pos.x + _rmg.ModelSize / 2 )/ _rmg.ModelSize ;
         py = (int)(-pos.z + _rmg.ModelSize / 2 )/ _rmg.ModelSize ;
 
-        Debug.Log("Player[x][y] = " + "[" + px + "," + py + "]");
-
         // 周囲1マスが配列の範囲内であればそのマスをアクティブ化
 
         // プレイヤーのマス
@@ -41,9 +39,8 @@ public class NearBlockActivator : MonoBehaviour {
         Deactivate();
 
         // 自分のいるマスをアクティブ化
-        if (_rmg._maps[gridPpos.x, gridPpos.y] != null)
-            _rmg._maps[gridPpos.x, gridPpos.y].gameObject.SetActive(true);
-
+        var playerGrid = _rmg._maps[gridPpos.x, gridPpos.y];
+            playerGrid.gameObject.SetActive(true);
 
         // 調べる方向
         Vector2 vec = new Vector2(0, 1);
@@ -53,16 +50,15 @@ public class NearBlockActivator : MonoBehaviour {
         // 周囲8マスを調べる
         for (int i = 0; i < 8; i++) 
         {
-
             gridSpos.x = (int)Mathf.Round(gridPpos.x + vec.x);
             gridSpos.y = (int)Mathf.Round(gridPpos.y + vec.y);
 
             gridSpos.x = Mathf.Clamp(gridSpos.x, 0, width-1);
             gridSpos.y = Mathf.Clamp(gridSpos.y, 0, height-1);
 
-            if (_rmg._maps[gridSpos.x, gridSpos.y] != null)
-                _rmg._maps[gridSpos.x, gridSpos.y].gameObject.SetActive(true);
-
+            var searchGrid = _rmg._maps[gridSpos.x, gridSpos.y];
+            if (searchGrid != null)
+                searchGrid.gameObject.SetActive(true);
 
             vec = Quaternion.Euler(0, 0, 45) * vec;
             vec.x = Mathf.Round(vec.x);
