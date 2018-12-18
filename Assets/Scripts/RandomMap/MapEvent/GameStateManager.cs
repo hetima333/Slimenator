@@ -102,21 +102,23 @@ public class GameStateManager : SingletonMonoBehaviour<GameStateManager>
     {
         print("DestroyMap");
 
+        GameObject trashObjPool = new GameObject();
+        trashObjPool.name = "Trash";
 
         foreach (var enemy in _enemyList)
         {
-            enemy.transform.SetParent(null);
+            enemy.transform.SetParent(trashObjPool.transform);
             enemy.SetActive(false);
         }
 
         foreach (var slime in _slimeList)
         {
-            slime.transform.SetParent(null);
+            slime.transform.SetParent(trashObjPool.transform);
             slime.GetComponent<SlimeBase>().Die();
         }
 
         // マップの破棄
-        Destroy(_mapGenerator.gameObject);
+        _mapGenerator.gameObject.SetActive(false);
     }
 
 
