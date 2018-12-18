@@ -34,7 +34,10 @@ public class ExchangeCamera : MonoBehaviour {
         //プレイヤー追尾スクリプトはオフ
         gameObject.GetComponent<CameraFollowTarget>().enabled = false;
         //ボス戦時の撮影方法スクリプトはオン
-        transform.GetChild(0).gameObject.GetComponent<MultipleTargetCamera>().enabled = true;
+        if (transform.GetChild(0).gameObject.activeSelf)
+            transform.GetChild(0).gameObject.GetComponent<MultipleTargetCamera>().enabled = true;
+        if (transform.GetChild(1).gameObject.activeSelf)
+            transform.GetChild(1).gameObject.GetComponent<MultipleTargetCamera>().enabled = true;
         //壁(ボス部屋)の透明化スクリプトはオン
         gameObject.GetComponent<WallTransparent>().enabled = true;
         gameObject.GetComponent<ChangeWallMaterial>().enabled = true;
@@ -46,14 +49,15 @@ public class ExchangeCamera : MonoBehaviour {
     /// <param name="time"></param>
     public IEnumerator Sleep(float time)
     {
-        //gameObject.SetActive(false);
+        //最初のカメラのみ表示
+        //Debug.Log("OFF");
         transform.GetChild(0).gameObject.SetActive(true);
         transform.GetChild(1).gameObject.SetActive(false);
-        Debug.Log("OFF");
+
         yield return new WaitForSeconds(time);
-        //gameObject.GetComponent<CameraFollowTarget>().enabled = true;
-        //gameObject.SetActive(true);
-        Debug.Log("ON");
+        
+        //プレイ用(追尾)カメラに切り替える
+        //Debug.Log("ON");
         transform.GetChild(0).gameObject.SetActive(false);
         transform.GetChild(1).gameObject.SetActive(true);
 
