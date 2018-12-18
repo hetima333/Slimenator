@@ -7,8 +7,8 @@ using UnityEngine.UI;
 public class EnemyCountPresenter : MonoBehaviour {
 
 	public int EnemyCount {
-		get;
-		set;
+		get{return GameStateManager.Instance._norm;}
+		set{}
 	}
 
 	void Start() {

@@ -143,6 +143,9 @@ public class InsertObject : MonoBehaviour {
         CreateSlimeSpawner ();
         //敵の生成
         CreateEnemy ();
+
+        GameStateManager.Instance._norm = (int)(_createEnemys.Count *0.8f);
+        print (_createEnemys.Count);
     }
 
     /// <summary>
@@ -154,7 +157,7 @@ public class InsertObject : MonoBehaviour {
 
         foreach (var spawn in _spawnerPoint) {
             //60%の確率で
-            if (RandomUtils.RandomJadge (0.6f)) {
+            if (RandomUtils.RandomJadge (0.4f)) {
                 //敵のタイプをランダムに決定する
                 var enemyType = RandomUtils.GetRandomInt (0, _enemys.Length - 1);
                 //敵オブジェクトを生成する

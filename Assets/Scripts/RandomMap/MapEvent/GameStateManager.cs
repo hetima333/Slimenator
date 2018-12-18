@@ -29,6 +29,9 @@ public class GameStateManager : SingletonMonoBehaviour<GameStateManager>
     //生成されたボスの数
     private int _bossNum;
 
+
+    public int _norm = 0;
+
     [SerializeField]
     private Canvas _clearCanvas;
 
@@ -62,22 +65,20 @@ public class GameStateManager : SingletonMonoBehaviour<GameStateManager>
     public void IncreaseEnemy(GameObject enemy)
     {
         _enemyList.Add(enemy);
-
         _enemyNum++;
         _isSearching = true;
     }
 
     public void DecreaseEnemy()
     {
-        _enemyNum--;
-        if(_enemyNum <= 0)
+        _norm--;
+        if(_norm <= 0)
         {
             _isSearching = false;
             //BossBGM
             _warper.Warp();
             //撮影方法の切り替え
             _exchangeCamera.ChangeShootingMethod();
-
         }
     }
 
