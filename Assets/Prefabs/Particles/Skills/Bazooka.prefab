@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4146746372157970}
   - component: {fileID: 198230722762995970}
   - component: {fileID: 199779693981831424}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: BazookaParticle3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37,7 +37,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4925039102103616}
   - component: {fileID: 114194514266834744}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Bazooka
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54,7 +54,7 @@ GameObject:
   - component: {fileID: 4343986146436258}
   - component: {fileID: 198884948952966146}
   - component: {fileID: 199780820307092562}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: BazookaParticle1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,7 +71,7 @@ GameObject:
   - component: {fileID: 4510843518065080}
   - component: {fileID: 198888376983279350}
   - component: {fileID: 199825803649770392}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Flame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -89,7 +89,7 @@ GameObject:
   - component: {fileID: 33434654514359998}
   - component: {fileID: 23090399530967180}
   - component: {fileID: 114070231442020330}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: BazookaProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -106,7 +106,7 @@ GameObject:
   - component: {fileID: 4451564436029430}
   - component: {fileID: 198414080010857562}
   - component: {fileID: 199053669412637870}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: BazookaParticle2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
