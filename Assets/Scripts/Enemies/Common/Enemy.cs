@@ -112,7 +112,7 @@ public abstract class Enemy : MonoBehaviour, IDamageable, ISuckable {
         //初期位置の記憶
         _startPosition = gameObject.transform.position;
         //Managerに生まれたっていう
-        GameStateManager.Instance.IncreaseEnemy ();
+        GameStateManager.Instance.IncreaseEnemy (gameObject);
         _status = gameObject.GetComponent<Status> ();
         _status.Init ();
     }

@@ -11,7 +11,7 @@ public class ObjectManager : SingletonMonoBehaviour<ObjectManager> {
 
 	// プール済みのオブジェクト
 	// key : objのインスタンスID, value : 該当するインスタンスIDのゲームオブジェクト
-	private Dictionary<int, List<GameObject>> _pooledObjects = new Dictionary<int, List<GameObject>>();
+	public Dictionary<int, List<GameObject>> _pooledObjects = new Dictionary<int, List<GameObject>>();
 
 	// インスタンス化イベントのサブジェクト
 	private Subject<GameObject> _onInstantiate = new Subject<GameObject>();

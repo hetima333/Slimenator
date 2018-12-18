@@ -20,6 +20,10 @@ public class GameStateManager : SingletonMonoBehaviour<GameStateManager>
     [SerializeField]
     private ExchangeCamera _exchangeCamera;
 
+    private List<GameObject> _enemyList;
+
+    private List<GameObject> _slimeList;
+
     private int _enemyNum;
     private bool _isSearching = false;
     //生成されたボスの数
@@ -30,7 +34,10 @@ public class GameStateManager : SingletonMonoBehaviour<GameStateManager>
 
     // Use this for initialization
     void Start()
-    {   
+    {
+        _enemyList = new List<GameObject>();
+        _slimeList = new List<GameObject>();
+
         //通常BGM
         AudioManager.Instance.PlayBGM("Stage_bgm",2);
     }
@@ -44,8 +51,15 @@ public class GameStateManager : SingletonMonoBehaviour<GameStateManager>
         }
     }
 
-    public void IncreaseEnemy()
+    public void AddSlime(GameObject slime)
     {
+        _slimeList.Add(slime);
+    }
+
+    public void IncreaseEnemy(GameObject enemy)
+    {
+        _enemyList.Add(enemy);
+
         _enemyNum++;
         _isSearching = true;
     }
@@ -57,7 +71,6 @@ public class GameStateManager : SingletonMonoBehaviour<GameStateManager>
         {
             _isSearching = false;
             //BossBGM
-            
             _warper.Warp();
             //撮影方法の切り替え
             _exchangeCamera.ChangeShootingMethod();
@@ -86,6 +99,21 @@ public class GameStateManager : SingletonMonoBehaviour<GameStateManager>
 
     public void DestroyMap()
     {
+        print("DestroyMap");
+
+
+        foreach (var enemy in _enemyList)
+        {
+            enemy.transform.SetParent(null);
+            enemy.SetActive(false);
+        }
+
+        foreach (var slime in _slimeList)
+        {
+            slime.transform.SetParent(null);
+            slime.GetComponent<SlimeBase>().Die();
+        }
+
         // マップの破棄
         Destroy(_mapGenerator.gameObject);
     }
