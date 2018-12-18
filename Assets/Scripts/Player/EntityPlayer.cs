@@ -299,7 +299,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
 						UseSkill();
 						_Cast_Trigger = true;
 						if(_Skills.Count>0)
-                       	_preMan.SwitchMode(_Skills[_CurrentSelection]);
+                    	_preMan.SwitchMode(_Skills[_CurrentSelection]);
 					}
 				} else
 					_Cast_Trigger = false;
@@ -316,6 +316,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
 			if (_Is_Casting)
 				ResetCurrentUsedSkill();
 			_Player_State = EnumHolder.States.DIE;
+			GameStateManager.Instance.PlayerDead();
 		}
 
 		if (_CurrentSelection < 0)

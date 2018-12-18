@@ -27,7 +27,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 456c2d2c602a699419ac18bb8939be10, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -255,6 +255,12 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bca5c50cf3c1a224ba08ef669605bd05, type: 2}
   m_IsPrefabParent: 0
+--- !u!114 &548836632 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114395059633007100, guid: 2a3da13cad5184b4ba794751bf2d292a,
+    type: 2}
+  m_PrefabInternal: {fileID: 1128240751}
+  m_Script: {fileID: 11500000, guid: 89e73eb5798dd7944bffc0ff5db2e7b4, type: 3}
 --- !u!1001 &982961337
 Prefab:
   m_ObjectHideFlags: 0
@@ -513,12 +519,6 @@ Prefab:
     - {fileID: 114802383920829276, guid: d8cee6a6bac30c9458bb392d98cdb343, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: d8cee6a6bac30c9458bb392d98cdb343, type: 2}
   m_IsPrefabParent: 0
---- !u!114 &1574501985 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114570986863478406, guid: e072421b92d90e64c8ea3e5b37d6e3e6,
-    type: 2}
-  m_PrefabInternal: {fileID: 133416772}
-  m_Script: {fileID: 11500000, guid: 328622efd06378b46847fa2ccae7a025, type: 3}
 --- !u!1 &1592473467 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1718353255957232, guid: e072421b92d90e64c8ea3e5b37d6e3e6,
@@ -583,9 +583,9 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 114577227134291544, guid: 44e6fae741e37e24c81b5d102b048d6a,
         type: 2}
-      propertyPath: _enemyCreater
+      propertyPath: _mapGenerator
       value: 
-      objectReference: {fileID: 1574501985}
+      objectReference: {fileID: 1592473469}
     - target: {fileID: 114577227134291544, guid: 44e6fae741e37e24c81b5d102b048d6a,
         type: 2}
       propertyPath: _warper
@@ -593,9 +593,9 @@ Prefab:
       objectReference: {fileID: 219688309}
     - target: {fileID: 114577227134291544, guid: 44e6fae741e37e24c81b5d102b048d6a,
         type: 2}
-      propertyPath: _mapGenerator
+      propertyPath: _exchangeCamera
       value: 
-      objectReference: {fileID: 1592473469}
+      objectReference: {fileID: 548836632}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 44e6fae741e37e24c81b5d102b048d6a, type: 2}
   m_IsPrefabParent: 0

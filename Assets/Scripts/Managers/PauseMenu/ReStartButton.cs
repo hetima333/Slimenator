@@ -11,6 +11,7 @@ public class ReStartButton : MenuButtonBase {
 		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 		SceneManager.LoadScene("HUD", LoadSceneMode.Additive);
 		// ポーズ解除
+		if(Pausable.Instance!=null)
 		Pausable.Instance.Pausing = false;
 	}
 }

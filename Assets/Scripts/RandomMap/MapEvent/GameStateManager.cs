@@ -30,7 +30,10 @@ public class GameStateManager : SingletonMonoBehaviour<GameStateManager>
     private int _bossNum;
 
     [SerializeField]
-    private Canvas _canvas;
+    private Canvas _clearCanvas;
+
+    [SerializeField]
+    private Canvas _gameOverCanvas;
 
     // Use this for initialization
     void Start()
@@ -89,11 +92,9 @@ public class GameStateManager : SingletonMonoBehaviour<GameStateManager>
         if(_bossNum <= 0)
         {
             //CLEAR演出
-            AudioManager.Instance.PlayBGM("Fan",1);
+            AudioManager.Instance.PlayBGM("Fanfare",1);
             SceneManager.UnloadSceneAsync("HUD");
-            _canvas.gameObject.SetActive(true);
-            
-
+            _clearCanvas.gameObject.SetActive(true);
         }
     }
 
@@ -116,5 +117,14 @@ public class GameStateManager : SingletonMonoBehaviour<GameStateManager>
 
         // マップの破棄
         Destroy(_mapGenerator.gameObject);
+    }
+
+
+    public void PlayerDead()
+    {
+        //ゲームオーバー演出
+        AudioManager.Instance.StopBGM();
+        SceneManager.UnloadSceneAsync("HUD");
+        _gameOverCanvas.gameObject.SetActive(true);
     }
 }
