@@ -152,16 +152,16 @@ public class AreaEffect : MonoBehaviour
                 {
                     foreach (GameObject obj in _Properties.GetTargetable().GetList())
                     {
-                        if (ObjectManager.Instance.GetActiveObjects(obj) != null)
-                        {
-                            foreach (GameObject entity in ObjectManager.Instance.GetActiveObjects(obj))
-                            {
-                                if (Vector3.Distance(gameObject.transform.position, entity.transform.position) < _Properties.GetRadius())
+                        // if (ObjectManager.Instance.GetActiveObjects(obj) != null)
+                        // {
+                        //     foreach (GameObject entity in ObjectManager.Instance.GetActiveObjects(obj))
+                        //     {
+                                if (Vector3.Distance(gameObject.transform.position, obj.transform.position) < _Properties.GetRadius())
                                 {
-                                    entity.transform.position = Vector3.Slerp(entity.transform.position, new Vector3(gameObject.transform.position.x, entity.transform.position.y, gameObject.transform.position.z), (1.0f - (Vector3.Distance(gameObject.transform.position, entity.transform.position) / _Properties.GetRadius())) * 0.5f);
+                                    obj.transform.position = Vector3.Slerp(obj.transform.position, new Vector3(gameObject.transform.position.x, obj.transform.position.y, gameObject.transform.position.z), (1.0f - (Vector3.Distance(gameObject.transform.position, obj.transform.position) / _Properties.GetRadius())) * 0.5f);
                                 }
-                            }
-                        }
+                        //     }
+                        // }
                     }
                 }
                 break;
@@ -170,23 +170,23 @@ public class AreaEffect : MonoBehaviour
                 {
                     foreach (GameObject obj in _Properties.GetTargetable().GetList())
                     {
-                        if (ObjectManager.Instance.GetActiveObjects(obj) != null)
-                        {
-                            foreach (GameObject entity in ObjectManager.Instance.GetActiveObjects(obj))
-                            {
-                                if (Vector3.Distance(gameObject.transform.position, entity.transform.position) < _Properties.GetRadius())
+                        // if (ObjectManager.Instance.GetActiveObjects(obj) != null)
+                        // {
+                        //     foreach (GameObject entity in ObjectManager.Instance.GetActiveObjects(obj))
+                        //     {
+                                if (Vector3.Distance(gameObject.transform.position, obj.transform.position) < _Properties.GetRadius())
                                 {
-                                    entity.transform.position += (
-                                        new Vector3(entity.transform.position.x, entity.transform.position.y, entity.transform.position.z) -
-                                        new Vector3(gameObject.transform.position.x, entity.transform.position.y, gameObject.transform.position.z)).normalized *
-                                        (1.0f - (Vector3.Distance(gameObject.transform.position, entity.transform.position) / _Properties.GetRadius()));
+                                    obj.transform.position += (
+                                        new Vector3(obj.transform.position.x, obj.transform.position.y, obj.transform.position.z) -
+                                        new Vector3(gameObject.transform.position.x, obj.transform.position.y, gameObject.transform.position.z)).normalized *
+                                        (1.0f - (Vector3.Distance(gameObject.transform.position, obj.transform.position) / _Properties.GetRadius()));
 
                                     if (_Delay <= 0)
                                     {
-                                        IDamageable dmg = entity.GetComponent<IDamageable>();
+                                        IDamageable dmg = obj.GetComponent<IDamageable>();
                                         if (dmg != null)
                                         {
-                                            if (Vector3.Distance(gameObject.transform.position, entity.transform.position) < _Properties.GetRadius())
+                                            if (Vector3.Distance(gameObject.transform.position, obj.transform.position) < _Properties.GetRadius())
                                             {
                                                 dmg.TakeDamage(_Properties.GetDamage());
                                             }
@@ -195,8 +195,8 @@ public class AreaEffect : MonoBehaviour
                                     }
                                     else
                                         _Delay -= Time.deltaTime;
-                                }
-                            }
+                            //     }
+                            // }
                         }
                     }
                 }
