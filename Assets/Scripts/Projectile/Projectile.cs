@@ -108,13 +108,13 @@ public abstract class Projectile : MonoBehaviour
         {
             foreach (GameObject obj in _Targetable)
             {
-                // if (ObjectManager.Instance.GetActiveObjects(obj) != null)
-                // {
-                    // foreach (GameObject entity in ObjectManager.Instance.GetActiveObjects(obj))
-                    // {
-                        if (Vector3.Distance(gameObject.transform.position, obj.transform.position) < _ProjectileProperties.GetImpactRadius() * _multiplyer)
+                if (ObjectManager.Instance.GetActiveObjects(obj) != null)
+                {
+                    foreach (GameObject entity in ObjectManager.Instance.GetActiveObjects(obj))
+                    {
+                        if (Vector3.Distance(gameObject.transform.position, entity.transform.position) < _ProjectileProperties.GetImpactRadius() * _multiplyer)
                         {
-                            IDamageable dmg = obj.GetComponent<IDamageable>();
+                            IDamageable dmg = entity.GetComponent<IDamageable>();
 
                             if (dmg != null)
                             {
@@ -135,8 +135,8 @@ public abstract class Projectile : MonoBehaviour
                                 }
                             }
                         }
-                    // }
-                // }
+                    }
+                }
             }
         }
 
