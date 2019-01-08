@@ -82,6 +82,17 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
 	private Animator
 	_Animator;
 
+	private bool _controllable = true;
+	// プレイヤーが操作可能か？
+	public bool Controllable {
+		get {
+			return _controllable;
+		}
+		set {
+			_controllable = value;
+		}
+	}
+
 	public float MaxHitPoint { get { return _Player_Stats.MaxHealthProperties * _Player_Stats.HealthMultiplyerProperties; } }
 	public float HitPoint { get { return _Player_Stats.HealthProperties; } }
 	public float MoneyAmount { get { return _Money; } }
