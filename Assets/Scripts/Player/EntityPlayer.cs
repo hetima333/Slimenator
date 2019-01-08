@@ -30,6 +30,10 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
 	private GameObject
 	_PrefabInstance;
 
+	// prediction manager
+	[SerializeField]
+	private PredictionManager _preMan;
+
 	public Stats
 	_Player_Stats;
 
@@ -69,6 +73,9 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
 
 	private int
 	_CurrentSelection;
+
+	private int
+	_OldSelection;
 
 	private EnumHolder.States
 	_Player_State;
@@ -210,7 +217,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
 		if (RestrictMovement != _CurrentUseSkill.IsMoveOnCast())
 			RestrictMovement = _CurrentUseSkill.IsMoveOnCast();
 
-		if (_CurrentUseSkill.IsSkillOver() && _CurrentUseSkill.IsTimeOver() || Input.GetKey(KeyCode.Mouse1)) {
+		if (_CurrentUseSkill.IsSkillOver() && _CurrentUseSkill.IsTimeOver()) {
 			ResetCurrentUsedSkill();
 			if (_Animator.GetBool("IsCasting")) {
 				_Animator.SetBool("IsCasting", false);
@@ -271,6 +278,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
 			//Storing of skill
 			if (InputManager.CombineOrbs_Input()) {
 				StoreSkills();
+				_preMan.SwitchMode(_Skills[_CurrentSelection]);
 			}
 
 			if (_Skills.Count > 0) {
@@ -290,10 +298,14 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
 					if (!_Cast_Trigger) {
 						UseSkill();
 						_Cast_Trigger = true;
+						if(_Skills.Count>0)
+                    	_preMan.SwitchMode(_Skills[_CurrentSelection]);
 					}
 				} else
 					_Cast_Trigger = false;
 			}
+
+			
 		}
 
 		if (_Is_Casting) {
@@ -304,12 +316,28 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
 			if (_Is_Casting)
 				ResetCurrentUsedSkill();
 			_Player_State = EnumHolder.States.DIE;
+			GameStateManager.Instance.PlayerDead();
 		}
 
 		if (_CurrentSelection < 0)
 			_CurrentSelection = _Skills.Count - 1;
 		else if (_CurrentSelection > _Skills.Count - 1)
 			_CurrentSelection = 0;
+
+		// change prediction line by current skill
+        if(_Skills.Count > 0)
+        {
+            if (_CurrentSelection != _OldSelection)
+                _preMan.SwitchMode(_Skills[_CurrentSelection]);
+			if(_Skills[_CurrentSelection] != null)
+            	_Skills[_CurrentSelection].GetSkillTier();
+        }
+        else
+        {
+            _preMan.SwitchMode(null);
+        }
+
+        _OldSelection = _CurrentSelection;
 	}
 
 	protected virtual void LateUpdate() {
@@ -457,8 +485,14 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
 
 	protected void StoreSkills() {
 		if (_CurrentSkillOutcome != null) {
-			// 選択スキル番号にスキルをセットする
-			_Skills[_CurrentSelection] = _CurrentSkillOutcome;
+
+			// 空いているスロットにスキルを登録する。なければ選択中のスロットに登録する。
+			int storeSlotNumber = _CurrentSelection;
+			var emptySlot = _Skills.Select((Value, Index) => new { Value, Index }).FirstOrDefault(x => x.Value == null);
+			if (emptySlot != null) {
+				storeSlotNumber = emptySlot.Index;
+			}
+			_Skills[storeSlotNumber] = _CurrentSkillOutcome;
 
 			ResetOrbSlots();
 			AudioManager.Instance.PlaySE(_SkillStoreSFX.name);
@@ -504,36 +538,36 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
 		return _Is_Casting;
 	}
 
-/*
-#if UNITY_EDITOR
-	void OnGUI() {
-		GUI.Box(new Rect(10, 10, 100, 50), "Orb Slots");
+	/*
+	#if UNITY_EDITOR
+		void OnGUI() {
+			GUI.Box(new Rect(10, 10, 100, 50), "Orb Slots");
 
-		for (int i = 0; i < _OrbSlot.Count; ++i) {
-			GUI.Box(new Rect(10, 50 * (i + 1), 100, 50), _OrbSlot[i].name);
-		}
-
-		GUI.Box(new Rect(10, 50 * 5, 500, 50), "Output: " + ((_CurrentSkillOutcome != null) ? ((_CurrentSkillOutcome.GetSkillTier() != null) ? _CurrentSkillOutcome.GetSkillTier().name + " " : "") + _CurrentSkillOutcome.name : "None"));
-
-		GUI.Box(new Rect(1500, 10, 100, 50), "Skill Slots");
-
-		for (int i = 0; i < _Skills.Count; ++i) {
-			if (_Skills[i] != null) {
-				GUI.Box(new Rect(1500, 50 * (i + 1), 500, 50), ((_Skills[i].GetSkillTier() != null) ? _Skills[i].GetSkillTier().name + " " : "") + _Skills[i].name);
+			for (int i = 0; i < _OrbSlot.Count; ++i) {
+				GUI.Box(new Rect(10, 50 * (i + 1), 100, 50), _OrbSlot[i].name);
 			}
-		}
 
-		if (_Skills.Count > 0) {
-			if (_Skills[_CurrentSelection] != null) {
-				GUI.Box(new Rect(1500, 50 * 5, 500, 50), ((_Skills[_CurrentSelection].GetSkillTier() != null) ? _Skills[_CurrentSelection].GetSkillTier().name + " " : "") + _Skills[_CurrentSelection].name);
-				GUI.Box(new Rect(1500, 50 * 6, 500, 50), "Description: " + _Skills[_CurrentSelection].GetDescription());
+			GUI.Box(new Rect(10, 50 * 5, 500, 50), "Output: " + ((_CurrentSkillOutcome != null) ? ((_CurrentSkillOutcome.GetSkillTier() != null) ? _CurrentSkillOutcome.GetSkillTier().name + " " : "") + _CurrentSkillOutcome.name : "None"));
+
+			GUI.Box(new Rect(1500, 10, 100, 50), "Skill Slots");
+
+			for (int i = 0; i < _Skills.Count; ++i) {
+				if (_Skills[i] != null) {
+					GUI.Box(new Rect(1500, 50 * (i + 1), 500, 50), ((_Skills[i].GetSkillTier() != null) ? _Skills[i].GetSkillTier().name + " " : "") + _Skills[i].name);
+				}
 			}
-		}
 
-		GUI.Box(new Rect(900, 10, 100, 50), "State: " + _Player_State);
-	}
-#endif
-*/
+			if (_Skills.Count > 0) {
+				if (_Skills[_CurrentSelection] != null) {
+					GUI.Box(new Rect(1500, 50 * 5, 500, 50), ((_Skills[_CurrentSelection].GetSkillTier() != null) ? _Skills[_CurrentSelection].GetSkillTier().name + " " : "") + _Skills[_CurrentSelection].name);
+					GUI.Box(new Rect(1500, 50 * 6, 500, 50), "Description: " + _Skills[_CurrentSelection].GetDescription());
+				}
+			}
+
+			GUI.Box(new Rect(900, 10, 100, 50), "State: " + _Player_State);
+		}
+	#endif
+	*/
 
 	public void TakeDamage(float Damage) {
 		if (Damage > 0) {

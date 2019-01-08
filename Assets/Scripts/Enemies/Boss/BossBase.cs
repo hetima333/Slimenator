@@ -131,6 +131,8 @@ public abstract class BossBase : MonoBehaviour, IDamageable {
 
 	//★アニメーションを状態異常に適応させるためのLateUpdate
 	protected virtual void LateUpdate () {
+		//活動開始まではアニメーション速度に変動を与えない
+		if(_phase == 0)return;
 		//現在再生中のアニメがある
 		if (_anim.GetState (_animName) != null)
 			//再生中のアニメのスピードが想定される再生速度と異なる場合

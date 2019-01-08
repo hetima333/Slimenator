@@ -160,7 +160,7 @@ public partial class SimpleAnimation: MonoBehaviour
     protected bool m_Initialized;
     protected bool m_IsPlaying;
 
-    protected SimpleAnimationPlayable m_Playable;
+    public SimpleAnimationPlayable m_Playable;
 
     [SerializeField]
     protected bool m_PlayAutomatically = true;
@@ -178,7 +178,7 @@ public partial class SimpleAnimation: MonoBehaviour
     protected AnimationClip m_Clip;
 
     [SerializeField]
-    private EditorState[] m_States;
+    public EditorState[] m_States;
 
     protected virtual void OnEnable()
     {

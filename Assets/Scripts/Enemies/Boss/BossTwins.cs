@@ -25,16 +25,18 @@ public class BossTwins : BossBase {
 		_properties = _stat;
 
 		SetStatus ();
-		_anim = this.gameObject.GetComponent<SimpleAnimation> ();
-		_anim.CrossFade ("Idle", 0);
+		_anim = this.gameObject.GetComponent<SimpleAnimation> ();	
 		//分裂アニメの再生開始位置を終点に設定
-		_anim.GetState ("WakeUp").normalizedTime = 1;
+		_anim.GetState ("WakeUp").normalizedTime = 0.9f;
 		//再生速度を逆に
 		_anim.GetState ("WakeUp").speed = -1f;
+
+		//アニメーションの再生
 		_anim.CrossFade ("WakeUp", 0);
 		_animName = "WakeUp";
 		_target = GameObject.Find ("Player");
 		_isLady = true;
+		GameStateManager.Instance.IncreaseBoss();
 
 	}
 
@@ -198,6 +200,7 @@ public class BossTwins : BossBase {
 			//生き残った方のピンボール封印
 			_avatar.GetComponent<BossBase>()._skillList.Remove (gameObject.GetComponent<PinballAttack> ());
 		}
+		GameStateManager.Instance.DecreaseBoss();
 		ObjectManager.Instance.ReleaseObject (gameObject);
 	}
 

@@ -42,6 +42,7 @@ public class TestBoss : BossBase {
         _matA = (Material) Resources.Load ("Material/BossA");
         _matB = (Material) Resources.Load ("Material/BossB");
         _isLady = true;
+        GameStateManager.Instance.IncreaseBoss();
     }
 
     // Update is called once per frame
@@ -181,6 +182,7 @@ public class TestBoss : BossBase {
         BossB.GetComponent<BossTwins> ()._target = _target;
         BossB.GetComponent<BossTwins> ().SetAvatar (BossA);
         //オブジェクトの破棄
+        GameStateManager.Instance.DecreaseBoss();
         ObjectManager.Instance.ReleaseObject(gameObject);
 
     }

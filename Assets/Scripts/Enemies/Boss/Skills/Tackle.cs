@@ -25,7 +25,7 @@ public class Tackle : BossSkill {
 		transform.LookAt (lookPos);
 
 		//相手に向かって体当たりを開始。
-		_rid.AddForce (transform.forward * 50000);
+		_rid.AddForce (transform.forward * 5000*_rid.mass);
 		//速度調整
 		_rid.velocity = _rid.velocity * _boss._properties.SpeedMultiplyerProperties;
 		_canActive = false;

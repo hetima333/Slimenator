@@ -26,6 +26,7 @@ public class SlimeSpawner : MonoBehaviour {
     public SkillTier
       _startingTier;
 
+
     #region Getter/Setter
     public float SpawnTimer
     {
@@ -50,7 +51,7 @@ public class SlimeSpawner : MonoBehaviour {
 
     private void Start()
     {
-        _maxSpawnCount = 4;
+        _maxSpawnCount = 10;
     }
 
     private void Update()
@@ -84,6 +85,8 @@ public class SlimeSpawner : MonoBehaviour {
         GameObject slime_obj = ObjectManager.Instance.InstantiateWithObjectPooling(_prefab, position);
         Stats temp = EnumHolder.Instance.GetStats(_prefab.name);
         SlimeBase temp_component = slime_obj.GetComponent<SlimeBase>();
+        slime_obj.transform.SetParent(gameObject.transform);
+        GameStateManager.Instance.AddSlime(slime_obj);
 
         if (temp_component != null)
             Destroy(temp_component);

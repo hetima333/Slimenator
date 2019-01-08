@@ -53,6 +53,9 @@ public class LongRangeEnemy : Enemy {
         _status.UpdateStatMultiplyer (ref _properties);
         TakeDamage (_status.GetValue (EnumHolder.EffectType.TAKEDAMAGE));
 
+        //Speed０（麻痺中は行動しない）
+        if(_properties.SpeedMultiplyerProperties== 0)return;
+
         //被ダメアニメーション中は行動できない
         if (IsDamaged == true) return;
 

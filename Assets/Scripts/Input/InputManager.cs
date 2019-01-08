@@ -99,7 +99,7 @@ public static class InputManager {
 
     public static bool CombineOrbs_Input()
     {
-        return Input.GetKey(KeyCode.LeftShift) || A_Button();
+        return Input.GetKeyDown(KeyCode.Mouse1) || A_Button();
     }
 
     public static bool UseSkills_Input()

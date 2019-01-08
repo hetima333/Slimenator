@@ -64,4 +64,9 @@ public class SkillEvent : Skill
             }
         }
     }
+
+    public SkillCastingType GetCastType()
+    {
+        return _CastingType;
+    }
 }

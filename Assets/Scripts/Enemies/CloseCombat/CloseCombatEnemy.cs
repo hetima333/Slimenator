@@ -15,7 +15,7 @@ public class CloseCombatEnemy : Enemy {
     //const float MOVE_SPEED = 3.0f;
     const float SEARCH_RANGE = 6.0f;
     const float ATTACK_RANGE = 4.0f;
-    const float MOVE_RANGE = 3.0f;
+    const float MOVE_RANGE = 5.0f;
     const float MONEY = 10.0f;
     const float PATIENCE_VALUE = 15.0f;
 
@@ -49,6 +49,8 @@ public class CloseCombatEnemy : Enemy {
         //武器プレハブの取得
         SetWeapons ();
         _anim = GetComponent<SimpleAnimation>();
+        _anim.GetState("Open").speed = 5.0f;
+        _anim.GetState("Close").speed = 5.0f;
         _anim.CrossFade ("Idle", 0f);
         _animName = "Idle";
 
@@ -65,6 +67,9 @@ public class CloseCombatEnemy : Enemy {
         TakeDamage (_status.GetValue (EnumHolder.EffectType.TAKEDAMAGE));
         //開閉アニメーションの為の状態チェック
         StateCheck ();
+
+        //Speed０（麻痺中は行動しない）
+        if(_properties.SpeedMultiplyerProperties== 0)return;
 
         //被ダメアニメーション中は行動できない
         if (IsDamaged == true || _inMotion == true) return;
