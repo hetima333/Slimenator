@@ -35,24 +35,26 @@ public class TestBoss : BossBase {
         PhaseUp ();
         _target = GameObject.Find ("Player");
         _body = transform.Find ("Body").gameObject;
-        _anim = GetComponent<SimpleAnimation> ();
+        _anim = this.gameObject.GetComponent<SimpleAnimation> ();
         _anim.CrossFade ("Idle", 0);
         _animName = "Idle";
         //マテリアルの取得
         _matA = (Material) Resources.Load ("Material/BossA");
         _matB = (Material) Resources.Load ("Material/BossB");
-
+        _isLady = true;
+        GameStateManager.Instance.IncreaseBoss();
     }
 
     // Update is called once per frame
     void Update () {
 
-        if (_state == State.DEAD || _isSleep == true) return;
-
         //★ステータスの更新
         _status.UpdateStatMultiplyer (ref _properties);
         //★状態ダメージを受ける
         TakeDamage (_status.GetValue (EnumHolder.EffectType.TAKEDAMAGE));
+
+        if (_state == State.DEAD || _isSleep == true) return;
+        
 
         _actInterval -= Time.deltaTime; {
             if (_actInterval <= 0) {
@@ -62,17 +64,21 @@ public class TestBoss : BossBase {
         }
 
         //強制phaseアップ（debug用）
-        //if (Input.GetKeyDown (KeyCode.C)) {PhaseUp (); }
+        if (Input.GetKeyDown (KeyCode.C)) {PhaseUp (); }
 
     }
 
     //ダメージを受ける
     public new void TakeDamage (float damage) {
 
+
         if (_state == State.DEAD) return;
+
         _properties.HealthProperties -= damage;
 
         if (_properties.HealthProperties <= 0) {
+            
+            _state = State.DEAD;
             PhaseUp ();
         }
 
@@ -83,7 +89,7 @@ public class TestBoss : BossBase {
 
     private void UseSkill () {
 
-        if (_isAction) { Debug.Log ("今忙しい"); return; }
+        if (_isAction)  return; 
 
         foreach (var skill in _skillList) {
             if (skill._canActive == true) {
@@ -91,7 +97,7 @@ public class TestBoss : BossBase {
             }
         }
 
-        if (_canUseSkillList.Count == 0) { Debug.Log ("今使えるの無い"); return; }
+        if (_canUseSkillList.Count == 0) return;
 
         //ランダムなスキルを呼び出す。
         if (_canUseSkillList.Count != 0) {
@@ -113,7 +119,7 @@ public class TestBoss : BossBase {
                 _canUseSkillList.Remove (skill);
 
             } else {
-                Debug.Log ("被っとるんじゃ");
+                //Debug.Log ("被っとるんじゃ");
             }
         }
 
@@ -135,8 +141,7 @@ public class TestBoss : BossBase {
                 _skillList.Add (gameObject.AddComponent<Tackle> ());
                 break;
             case 3:
-                //分裂
-                _state = State.DEAD;
+                //分裂             
                 Split ();
                 break;
             default:
@@ -156,27 +161,29 @@ public class TestBoss : BossBase {
 
     void SplitEnd () {
         Debug.Log ("分裂完了");
+        //ミニボス出現位置一時的処理
         Vector3 Pos = new Vector3 (821, 0, 0);
         Pos.y = 2;
 
         Vector3 OffSet = new Vector3 (10, 0, 0);
 
-        GameObject BossA = Instantiate (Boss1);
+        GameObject BossA = ObjectManager.Instance.InstantiateWithObjectPooling (Boss1);
         BossA.transform.position = Pos + OffSet;
 
-        GameObject BossB = Instantiate (Boss2);
+        GameObject BossB = ObjectManager.Instance.InstantiateWithObjectPooling (Boss2);
         BossB.transform.position = Pos - OffSet;
-
+        //それぞれのミニボスの初期化
         BossA.GetComponent<BossTwins> ().Init (EnumHolder.Instance.GetStats (Boss1.name));
         BossB.GetComponent<BossTwins> ().Init (EnumHolder.Instance.GetStats (Boss2.name));
-
+        //それぞれのミニボスにTarget（Player）と相方を設定
         BossA.GetComponent<BossTwins> ()._target = _target;
         BossA.GetComponent<BossTwins> ().SetAvatar (BossB);
 
         BossB.GetComponent<BossTwins> ()._target = _target;
         BossB.GetComponent<BossTwins> ().SetAvatar (BossA);
-
-        Destroy(gameObject);
+        //オブジェクトの破棄
+        GameStateManager.Instance.DecreaseBoss();
+        ObjectManager.Instance.ReleaseObject(gameObject);
 
     }
 

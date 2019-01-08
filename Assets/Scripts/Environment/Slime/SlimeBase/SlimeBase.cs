@@ -98,7 +98,7 @@ public abstract class SlimeBase : MonoBehaviour, ISuckable, IDamageable, IElemen
   
     public void TakeDamage(float dmg)
     {
-        if (dmg > 0)
+        if (dmg >= 9999)
         {
             _properties.HealthProperties -= dmg;
 

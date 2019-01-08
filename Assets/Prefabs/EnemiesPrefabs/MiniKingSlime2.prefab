@@ -225,7 +225,7 @@ GameObject:
   - component: {fileID: 114493458786186030}
   m_Layer: 13
   m_Name: MiniKingSlime2
-  m_TagString: Untagged
+  m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -519,7 +519,7 @@ Rigidbody:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1818661371988076}
   serializedVersion: 2
-  m_Mass: 20
+  m_Mass: 100
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -560,12 +560,16 @@ MonoBehaviour:
   _target: {fileID: 0}
   _isAction: 0
   _anim: {fileID: 0}
+  _animName: 
+  _animLastTime: 0
   _slimeBullet: {fileID: 0}
   _previousSkill: {fileID: 0}
   _skillList: []
   _canUseSkillList: []
   _canAnimation: 1
   _shockWave: {fileID: 0}
+  _properties: {fileID: 0}
+  _isLady: 0
   _type: 1
   _avatar: {fileID: 0}
   _isAlone: 0
@@ -670,7 +674,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3759e2aae0f7b9a47bb98fc64bf3c543, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_PlayAutomatically: 1
+  m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingMode: 1
   m_WrapMode: 0
@@ -688,7 +692,7 @@ MonoBehaviour:
   - clip: {fileID: 7400020, guid: 2ff7f16170809b04e888c3ae62e6c2cf, type: 3}
     name: Damage
     defaultState: 0
-  - clip: {fileID: 7400006, guid: 2ff7f16170809b04e888c3ae62e6c2cf, type: 3}
+  - clip: {fileID: 7400028, guid: 2ff7f16170809b04e888c3ae62e6c2cf, type: 3}
     name: Jump
     defaultState: 0
   - clip: {fileID: 7400000, guid: 2ff7f16170809b04e888c3ae62e6c2cf, type: 3}

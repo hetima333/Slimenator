@@ -32,6 +32,10 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
 	private GameObject
 	_PrefabInstance;
 
+	// prediction manager
+	[SerializeField]
+	private PredictionManager _preMan;
+
 	public Stats
 	_Player_Stats;
 
@@ -71,6 +75,9 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
 
 	private int
 	_CurrentSelection;
+
+	private int
+	_OldSelection;
 
 	private EnumHolder.States
 	_Player_State;
@@ -254,7 +261,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
 		if (RestrictMovement != _CurrentUseSkill.IsMoveOnCast())
 			RestrictMovement = _CurrentUseSkill.IsMoveOnCast();
 
-		if (_CurrentUseSkill.IsSkillOver() && _CurrentUseSkill.IsTimeOver() || Input.GetKey(KeyCode.Mouse1)) {
+		if (_CurrentUseSkill.IsSkillOver() && _CurrentUseSkill.IsTimeOver()) {
 			ResetCurrentUsedSkill();
 			if (_Animator.GetBool("IsCasting")) {
 				_Animator.SetBool("IsCasting", false);
@@ -315,6 +322,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
 			//Storing of skill
 			if (InputManager.CombineOrbs_Input()) {
 				StoreSkills();
+				_preMan.SwitchMode(_Skills[_CurrentSelection]);
 			}
 
 			if (_Skills.Count > 0) {
@@ -334,10 +342,14 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
 					if (!_Cast_Trigger) {
 						UseSkill();
 						_Cast_Trigger = true;
+						if(_Skills.Count>0)
+                    	_preMan.SwitchMode(_Skills[_CurrentSelection]);
 					}
 				} else
 					_Cast_Trigger = false;
 			}
+
+			
 		}
 
 		if (_Is_Casting) {
@@ -348,12 +360,28 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
 			if (_Is_Casting)
 				ResetCurrentUsedSkill();
 			_Player_State = EnumHolder.States.DIE;
+			GameStateManager.Instance.PlayerDead();
 		}
 
 		if (_CurrentSelection < 0)
 			_CurrentSelection = _Skills.Count - 1;
 		else if (_CurrentSelection > _Skills.Count - 1)
 			_CurrentSelection = 0;
+
+		// change prediction line by current skill
+        if(_Skills.Count > 0)
+        {
+            if (_CurrentSelection != _OldSelection)
+                _preMan.SwitchMode(_Skills[_CurrentSelection]);
+			if(_Skills[_CurrentSelection] != null)
+            	_Skills[_CurrentSelection].GetSkillTier();
+        }
+        else
+        {
+            _preMan.SwitchMode(null);
+        }
+
+        _OldSelection = _CurrentSelection;
 	}
 
 	protected virtual void LateUpdate() {

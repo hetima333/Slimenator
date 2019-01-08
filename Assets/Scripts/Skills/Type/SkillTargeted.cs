@@ -60,4 +60,9 @@ public class SkillTargeted : Skill
             }
         }
     }
+
+    public SkillCastingType GetCastType()
+    {
+        return _CastingType;
+    }
 }

@@ -17,8 +17,11 @@ public class RandomMapGenerator : MonoBehaviour
     public OneRoomInfo[,] _maps;
 
     //モデルサイズ
-    static int modelSizeX = 80;
-    static int modelSizeZ = 80;
+    static int modelSize = 80;
+    public int ModelSize
+    {
+        get{ return modelSize; }
+    }
 
     void Awake()
     {
@@ -68,7 +71,7 @@ public class RandomMapGenerator : MonoBehaviour
                     //(_rooms[firstRoom].passagePos == (int)OneRoomInfo.PASSAGE.LEFT));
 
                     //部屋を生成する
-                    GameObject room = Instantiate(_rooms[firstRoom].gameObject, new Vector3(x * modelSizeX, 0, z * modelSizeZ), Quaternion.Euler(new Vector3(0,-90,0)));
+                    GameObject room = Instantiate(_rooms[firstRoom].gameObject, new Vector3(x * modelSize, 0, z * modelSize), Quaternion.Euler(new Vector3(0,-90,0)));
                     room.transform.SetParent(transform);
                     //地形がデータをマップに知らせる
                     _maps[x, z] = _rooms[firstRoom];

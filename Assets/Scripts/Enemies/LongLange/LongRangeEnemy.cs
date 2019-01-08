@@ -8,8 +8,6 @@ using UnityEngine;
 
 public class LongRangeEnemy : Enemy {
     //TODO Enemy Performance
-    //const float MAX_HP = 100.0f;
-    //const float MOVE_SPEED = 2.5f;
     const float SEARCH_RANGE = 14.0f;
     const float ATTACK_RANGE = 10.0f;
     const float MOVE_RANGE = 10.0f;
@@ -41,6 +39,11 @@ public class LongRangeEnemy : Enemy {
         _freeMovePosition = _move.SetMovePos ();
         //弾オブジェクトのロード
         _bullet = Resources.Load ("EnemyItem/EnemyBullet", typeof (GameObject)) as GameObject;
+        _anim = GetComponent<SimpleAnimation>();
+        _anim.CrossFade ("Idle", 0f);
+        _animName = "Idle";
+
+        _isLady = true;
 
     }
 
@@ -49,6 +52,9 @@ public class LongRangeEnemy : Enemy {
 
         _status.UpdateStatMultiplyer (ref _properties);
         TakeDamage (_status.GetValue (EnumHolder.EffectType.TAKEDAMAGE));
+
+        //Speed０（麻痺中は行動しない）
+        if(_properties.SpeedMultiplyerProperties== 0)return;
 
         //被ダメアニメーション中は行動できない
         if (IsDamaged == true) return;
@@ -59,31 +65,44 @@ public class LongRangeEnemy : Enemy {
                 //待機
                 IsAction = false;
                 StartCoroutine (_move.Idle ());
-                _anim.CrossFade ("Idle", 0.5f);
-                _animName = "Idle";
+                if(_animName != "Idle")
+                {
+                    _anim.CrossFade ("Idle", 0.5f);
+                    _animName = "Idle";
+                }
+                
                 break;
 
             case State.FREE:
                 //自由移動
                 IsAction = false;
                 _move.FreeMove ();
-                _anim.CrossFade ("Move", 0.5f);
-                _animName = "Move";
+                if(_animName != "Move")
+                {
+                    _anim.CrossFade ("Move", 0.5f);
+                    _animName = "Move";
+                }
                 break;
             case State.DISCOVERY:
                 //プレイヤー追従
                 IsAction = false;
                 _move.Move2Player ();
-                _anim.CrossFade ("Move", 0.5f);
-                _animName = "Move";
+                if(_animName != "Move")
+                {
+                    _anim.CrossFade ("Move", 0.5f);
+                    _animName = "Move";
+                }
                 break;
 
             case State.RETURN:
                 //初期位置に帰る
                 IsAction = false;
                 _move.Return2FirstPos ();
-                _anim.CrossFade ("Move", 0.5f);
-                _animName = "Move";
+                if(_animName != "Move")
+                {
+                    _anim.CrossFade ("Move", 0.5f);
+                    _animName = "Move";
+                }
                 break;
 
             case State.ATTACK:
@@ -139,6 +158,8 @@ public class LongRangeEnemy : Enemy {
             bullet.transform.position = gameObject.transform.position + transform.forward;
             //set bullet speed(TODO)
             bullet.GetComponent<Rigidbody> ().velocity = gameObject.transform.forward * 10;
+            //発射音
+            AudioManager.Instance.PlaySE("Long_Shot");
         }
     }
 
@@ -151,5 +172,8 @@ public class LongRangeEnemy : Enemy {
         //行動終了
         IsAction = false;
     }
+
+
+    
 
 }

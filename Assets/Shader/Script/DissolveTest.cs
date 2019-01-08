@@ -22,7 +22,6 @@ public class DissolveTest : MonoBehaviour
     {
         f_dissolveValue = 0;
         b_switch = false;
-
         mat_effect = gameObject.GetComponent<Renderer>().material;
     }
 

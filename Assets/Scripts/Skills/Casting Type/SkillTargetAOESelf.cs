@@ -27,4 +27,9 @@ public class SkillTargetAOESelf : SkillCastingType
 
         return list;
     }
+
+    public float GetRange()
+    {
+        return _Range;
+    }
 }

@@ -73,19 +73,28 @@ public abstract class Enemy : MonoBehaviour, IDamageable, ISuckable {
     public SimpleAnimation _anim;
     //現在再生中のアニメの名前
     public string _animName;
-
+    //停止時のアニメの再生時間
+    public float _animLastTime = 0;
     protected Status _status;
     protected Stats _properties;
+
+    public GameObject _body;
+
+    public Material _deadMat;
 
     //最大値
     public float MaxHitPoint { get { return _properties.MaxHealthProperties * _properties.HealthMultiplyerProperties; } }
     //体力
     public float HitPoint { get { return _properties.HealthProperties; } }
 
+    public bool _isLady = false;
+
     public abstract void Init (Stats stat);
 
     //ステータスのセット関数
     public void SetStatus (Enemy.Type type, float maxHp, float speed, float searchRange, float attackRange, float moveRange, float money) {
+        _body = transform.Find ("Body").gameObject;
+        _deadMat = (Material) Resources.Load ("Material/Dead");
         //タイプセット
         _enemyType = type;
         //初期はアイドル
@@ -102,14 +111,34 @@ public abstract class Enemy : MonoBehaviour, IDamageable, ISuckable {
         if (_money == 0) { _money = money; }
         //初期位置の記憶
         _startPosition = gameObject.transform.position;
-        //animationSystem Set
-        _anim = GetComponent<SimpleAnimation> ();
         //Managerに生まれたっていう
-        GameStateManager.Instance.IncreaseEnemy ();
-
+        GameStateManager.Instance.IncreaseEnemy (gameObject);
         _status = gameObject.GetComponent<Status> ();
         _status.Init ();
     }
+
+	void OnDisable()
+    {
+        //Debug.Log(_animName);
+		//再生中のアニメーションの再生位置を記憶
+		_animLastTime = _anim.GetState(_animName).time - (int)_anim.GetState(_animName).time;
+        //Debug.Log(_animLastTime);
+    }
+
+    void OnEnable()
+    {
+		if(!_isLady)return;
+		//再生中のアニメーションがあれば
+		if(_animName != null)
+		{
+			//最後のアニメーションの再生位置を記憶しておいたものに変更
+			_anim.GetState (_animName).normalizedTime = _animLastTime;
+			//最後のアニメーション再生
+			_anim.CrossFade(_animName,0);
+		}
+    }
+
+
 
     //ダメージを受ける
     public void TakeDamage (float damage) {
@@ -137,24 +166,36 @@ public abstract class Enemy : MonoBehaviour, IDamageable, ISuckable {
 
     //★アニメーションを状態異常に適応させるためのLateUpdate
     protected virtual void LateUpdate () {
-        //現在再生中のアニメがある
-        if (_anim.GetState (_animName) != null)
-            //再生中のアニメのスピードが想定される再生速度と異なる場合
-            if (_anim.GetState (_animName).speed != _properties.SpeedMultiplyerProperties) {
-                //再生速度の変更を行う
-                _anim.GetState (_animName).speed = _properties.SpeedMultiplyerProperties;
+        
+        //セットされている全てのアニメーションの速度調整（-1はデフォルトクリップ回避）
+        for (int i =0 ;i< _anim.GetClipCount()-1;i++)
+        {
+            if (_anim.GetState (_anim.m_States[i].name).speed != _properties.SpeedMultiplyerProperties) {
+                    //再生速度の変更を行う
+                    _anim.GetState (_anim.m_States[i].name).speed = _properties.SpeedMultiplyerProperties;
             }
+        }
     }
 
     //死亡アクション
     private void Dying () {
-        //Dead Animation
         _anim.CrossFade ("Dead", 0);
+        _animName = "Dead";
 
     }
 
     //死亡したときに呼ばれる関数（AnimationEvent）
     public void Dead () {
+        //死亡コルーチン
+        _body.GetComponent<Renderer>().material = _deadMat;
+        _body.GetComponent<DissolveTest>().enabled = true;
+        StartCoroutine(DeadCol());
+    }
+
+    public IEnumerator DeadCol()
+    {
+        //適当な時間経過後死ぬ
+        yield return new WaitForSeconds(2.0f);
         //マネージャーに死んだよっていう
         GameStateManager.Instance.DecreaseEnemy ();
         ObjectManager.Instance.ReleaseObject (gameObject);

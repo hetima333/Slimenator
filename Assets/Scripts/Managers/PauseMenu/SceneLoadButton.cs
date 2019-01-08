@@ -8,7 +8,12 @@ public class SceneLoadButton : MenuButtonBase {
 	private string _sceneName;
 
 	protected override void OnExecute (PointerEventData e) {
+		AudioManager.Instance.StopBGM();
 		SceneManager.LoadScene (_sceneName);
-		Pausable.Instance.Pausing = false;
+		if(Pausable.Instance)
+		{
+			Pausable.Instance.Pausing = false;
+		}
+		
 	}
 }

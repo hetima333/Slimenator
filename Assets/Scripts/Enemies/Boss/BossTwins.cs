@@ -25,25 +25,31 @@ public class BossTwins : BossBase {
 		_properties = _stat;
 
 		SetStatus ();
-		_anim = GetComponent<SimpleAnimation> ();
+		_anim = this.gameObject.GetComponent<SimpleAnimation> ();	
 		//分裂アニメの再生開始位置を終点に設定
-		_anim.GetState ("WakeUp").normalizedTime = 1;
+		_anim.GetState ("WakeUp").normalizedTime = 0.9f;
+		//再生速度を逆に
 		_anim.GetState ("WakeUp").speed = -1f;
-		_anim.CrossFade ("WakeUp", 0);
 
+		//アニメーションの再生
+		_anim.CrossFade ("WakeUp", 0);
+		_animName = "WakeUp";
 		_target = GameObject.Find ("Player");
+		_isLady = true;
+		GameStateManager.Instance.IncreaseBoss();
 
 	}
 
 	// Update is called once per frame
 	void Update () {
 
-		if (_state == State.DEAD) return;
-
 		//★ステータスの更新
 		_status.UpdateStatMultiplyer (ref _properties);
+
 		//★状態ダメージを受ける
 		TakeDamage (_status.GetValue (EnumHolder.EffectType.TAKEDAMAGE));
+		
+		if (_state == State.DEAD) return;
 
 		_actInterval -= Time.deltaTime; {
 			if (_actInterval <= 0) {
@@ -84,6 +90,7 @@ public class BossTwins : BossBase {
 		_properties.HealthProperties -= damage;
 		if (_properties.HealthProperties <= 0) {
 			_anim.CrossFade ("Dead", 0);
+			_animName = "Dead";
 			_state = State.DEAD;
 		}
 
@@ -159,8 +166,7 @@ public class BossTwins : BossBase {
 				break;
 
 			case 2:
-				//ピンボール封印
-				_skillList.Remove (gameObject.GetComponent<PinballAttack> ());
+				
 
 				//タイプ別に(相方の)スキルの追加
 				switch (_type) {
@@ -189,9 +195,13 @@ public class BossTwins : BossBase {
 
 	public void DeadCall () {
 		if (_avatar != null) {
+			//相方に一人になったと自覚させる
 			_avatar.GetComponent<BossTwins> ()._isAlone = true;
+			//生き残った方のピンボール封印
+			_avatar.GetComponent<BossBase>()._skillList.Remove (gameObject.GetComponent<PinballAttack> ());
 		}
-		Destroy (gameObject);
+		GameStateManager.Instance.DecreaseBoss();
+		ObjectManager.Instance.ReleaseObject (gameObject);
 	}
 
 	void WakeUp () {

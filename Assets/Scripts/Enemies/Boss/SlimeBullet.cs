@@ -52,10 +52,15 @@ public class SlimeBullet : MonoBehaviour {
 			//TODO take damage   
 			hasIDamageableObject.TakeDamage (_damage);
 		} else {
-			int random = Random.Range (0, _elements.GetList ().Count - 1);
-			GetSlimeFromPool (random, gameObject.transform.position);
+			//ステージに存在するスライムの数が指定数以下なら
+			if(ObjectManager.Instance.GetActiveObjects(_prefab).Count < 20){
+				//ランダムなスライムを生成する
+				int random = Random.Range (0, _elements.GetList ().Count - 1);
+				GetSlimeFromPool (random, gameObject.transform.position);
+			}
+			
 		}
-
+		
 		//Release bullet
 		ObjectManager.Instance.ReleaseObject (gameObject);
 	}

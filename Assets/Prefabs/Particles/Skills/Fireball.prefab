@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4389676945535710}
   - component: {fileID: 198583802809907366}
   - component: {fileID: 199229306333451538}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Flame2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38,7 +38,7 @@ GameObject:
   - component: {fileID: 4226282668125226}
   - component: {fileID: 198024273532407510}
   - component: {fileID: 199237140639528932}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Flame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -56,7 +56,7 @@ GameObject:
   - component: {fileID: 114443713107077548}
   - component: {fileID: 114821038171845096}
   - component: {fileID: 135093760226397600}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Fireball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73,7 +73,7 @@ GameObject:
   - component: {fileID: 4330784382946818}
   - component: {fileID: 198282340648791512}
   - component: {fileID: 199695227010011456}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Flame4Smoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -91,7 +91,7 @@ GameObject:
   - component: {fileID: 33188382621077754}
   - component: {fileID: 23595208480174614}
   - component: {fileID: 114422519845246576}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Fireball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 4480406063024884}
   - component: {fileID: 198976023441639064}
   - component: {fileID: 199660182241936994}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Flame3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -125,7 +125,7 @@ GameObject:
   - component: {fileID: 4545547774296182}
   - component: {fileID: 198759691001495374}
   - component: {fileID: 199260277744189100}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Flame1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

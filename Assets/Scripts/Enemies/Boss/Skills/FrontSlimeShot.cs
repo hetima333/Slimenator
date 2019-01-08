@@ -23,9 +23,10 @@ public class FrontSlimeShot : BossSkill {
 			CreateShotObject (0);
 			CreateShotObject (30f);
 			CreateShotObject (-30f);
+			_canActive = false;
+			_boss.GetComponent<BossBase> ()._isAction = true;
 		}
-		_canActive = false;
-		_boss.GetComponent<BossBase> ()._isAction = true;
+		
 
 	}
 
@@ -37,11 +38,13 @@ public class FrontSlimeShot : BossSkill {
 	}
 
 	void ShotStart () {
-		Debug.Log ("射撃");
+		if(!_canActive)return;
 		_actTime = 1.0f;
 		CreateShotObject (0);
 		CreateShotObject (30f);
 		CreateShotObject (-30f);
+		_canActive = false;
+		_boss.GetComponent<BossBase> ()._isAction = true;
 	}
 
 	void ShotEnd () {

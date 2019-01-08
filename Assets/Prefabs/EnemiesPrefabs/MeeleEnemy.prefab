@@ -140,8 +140,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4780243311276566}
   - component: {fileID: 137571132946518874}
+  - component: {fileID: 114512773885624500}
   m_Layer: 0
-  m_Name: Sphere_001
+  m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -385,9 +386,9 @@ GameObject:
   - component: {fileID: 95417147419697002}
   - component: {fileID: 54918158090121080}
   - component: {fileID: 136595765718401776}
+  - component: {fileID: 114706709375595960}
   - component: {fileID: 114494412914832682}
   - component: {fileID: 114386889372078764}
-  - component: {fileID: 114706709375595960}
   - component: {fileID: 114645754824563174}
   - component: {fileID: 114281775402795380}
   - component: {fileID: 114824929247800312}
@@ -1599,7 +1600,7 @@ Rigidbody:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1511007971229264}
   serializedVersion: 2
-  m_Mass: 15
+  m_Mass: 100
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -1690,11 +1691,28 @@ MonoBehaviour:
   _startPosition: {x: 0, y: 0, z: 0}
   _patienceValue: 10
   _isAction: 0
+  _isGround: 0
   _searchObj: {fileID: 0}
   _target: {fileID: 0}
   _anim: {fileID: 0}
   _animName: 
+  _animLastTime: 0
+  _body: {fileID: 0}
+  _deadMat: {fileID: 0}
+  _isLady: 0
   _weaponList: []
+--- !u!114 &114512773885624500
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1203038973348900}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8ec3ef66fe44a04b97578748ca683aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  f_dissolveChangingSpeed: 0.5
 --- !u!114 &114645754824563174
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1709,6 +1727,7 @@ MonoBehaviour:
   _hpbarCanvas: {fileID: 1883121316519442, guid: 07f82906bffcd4ba9831779e5e2ddb31,
     type: 2}
   _offset: {x: 0, y: 5, z: 0}
+  _useDamagePop: 1
 --- !u!114 &114706709375595960
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1720,7 +1739,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3759e2aae0f7b9a47bb98fc64bf3c543, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_PlayAutomatically: 1
+  m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingMode: 1
   m_WrapMode: 0

@@ -54,7 +54,7 @@ public class HPBarCore : MonoBehaviour {
 				// ダメージのポップ
 				var dmg = _slider.value - x;
 				// ダメージが1以上なら表示する
-				if (dmg > 0 && _useDamagePop) {
+				if (dmg > 0 && _useDamagePop && DamagePoper.Instance != null) {
 					DamagePoper.Instance.PopDamage(transform.parent, (int) dmg);
 				}
 
