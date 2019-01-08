@@ -23,7 +23,7 @@ MonoBehaviour:
   _Targetable: {fileID: 11400000, guid: 921fd2909285c1b40ac6aee462dd0d4a, type: 2}
   _StatusEffect: []
   _StatusApplyPercentage: 0
-  _Damage: 10
+  _Damage: 50
   _RestrictUserMovement: 0
   _ChannelingShakeScreen: 0
   _CastingShakeScreen: 0

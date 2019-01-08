@@ -93,7 +93,8 @@ public class GameStateManager : SingletonMonoBehaviour<GameStateManager>
         if(_bossNum <= 0)
         {
             //CLEAR演出
-            AudioManager.Instance.PlayBGM("Fanfare",1);
+            AudioManager.Instance.StopBGM();
+            AudioManager.Instance.PlaySE("Fanfare");
             SceneManager.UnloadSceneAsync("HUD");
             _clearCanvas.gameObject.SetActive(true);
         }

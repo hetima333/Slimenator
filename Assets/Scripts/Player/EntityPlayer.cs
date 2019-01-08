@@ -217,7 +217,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
 		if (RestrictMovement != _CurrentUseSkill.IsMoveOnCast())
 			RestrictMovement = _CurrentUseSkill.IsMoveOnCast();
 
-		if (_CurrentUseSkill.IsSkillOver() && _CurrentUseSkill.IsTimeOver() || Input.GetKey(KeyCode.Mouse1)) {
+		if (_CurrentUseSkill.IsSkillOver() && _CurrentUseSkill.IsTimeOver()) {
 			ResetCurrentUsedSkill();
 			if (_Animator.GetBool("IsCasting")) {
 				_Animator.SetBool("IsCasting", false);

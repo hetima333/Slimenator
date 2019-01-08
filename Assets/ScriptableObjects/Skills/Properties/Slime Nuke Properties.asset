@@ -21,7 +21,7 @@ MonoBehaviour:
   _Radius: 30
   _Delay: 10
   _YOffset: 0
-  _Damage: 40
+  _Damage: 20
   _StartingType: 5
   _EndingType: 0
   _ElementType: {fileID: 11400000, guid: dafcf0a15e8eadb4fa33c1a792f407fa, type: 2}
