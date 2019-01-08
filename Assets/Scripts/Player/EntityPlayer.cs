@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UniRx;
 using UnityEngine;
 
 public class EntityPlayer : MonoBehaviour, IDamageable {
@@ -93,6 +95,12 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
 		}
 	}
 
+	// 無敵時間
+	[SerializeField, Range(0.0f, 3.0f)]
+	private float _invincibleTime = 3.0f;
+
+	private bool _isInvincible = false;
+
 	public float MaxHitPoint { get { return _Player_Stats.MaxHealthProperties * _Player_Stats.HealthMultiplyerProperties; } }
 	public float HitPoint { get { return _Player_Stats.HealthProperties; } }
 	public float MoneyAmount { get { return _Money; } }
@@ -123,6 +131,31 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
 	_SuckSFX,
 	_WalkingSFX,
 	_SkillSwapSFX;
+
+	private void Start() {
+		_Player_Stats.IsInvincible = false;
+
+		// プレイヤーのHPが減少したら
+		this.ObserveEveryValueChanged(_ => this.HitPoint)
+			.Buffer(2, 1)
+			.Where(x => x.Count == 2)
+			.Select(x => x.First() - x.Last())
+			.Where(x => x > 0)
+			.Subscribe(x => {
+				_Player_Stats.IsInvincible = true;
+				if (_isInvincible) {
+					StopCoroutine(InvincibleTimer());
+				}
+				StartCoroutine(InvincibleTimer());
+			});
+	}
+
+	IEnumerator InvincibleTimer() {
+		_isInvincible = true;
+		yield return new WaitForSeconds(_invincibleTime);
+		_Player_Stats.IsInvincible = false;
+		_isInvincible = false;
+	}
 
 	private void Awake() {
 		_CurrentSkillOutcome = null;

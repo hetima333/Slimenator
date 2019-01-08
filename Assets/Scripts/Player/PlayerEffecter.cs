@@ -15,7 +15,6 @@ public class PlayerEffecter : MonoBehaviour {
 	// Use this for initialization
 	void Start() {
 		var player = GetComponent<EntityPlayer>();
-		var renderer = GetComponentInChildren<SkinnedMeshRenderer>();
 
 		// プレイヤーのHPが減少したら
 		player.ObserveEveryValueChanged(x => x.HitPoint)
@@ -29,11 +28,6 @@ public class PlayerEffecter : MonoBehaviour {
 				}
 				StartCoroutine(FlashColor());
 			});
-	}
-
-	// Update is called once per frame
-	void Update() {
-
 	}
 
 	/// <summary>
