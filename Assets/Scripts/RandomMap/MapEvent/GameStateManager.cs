@@ -43,6 +43,7 @@ public class GameStateManager : SingletonMonoBehaviour<GameStateManager>
     private GameObject _clearCamera;
     [SerializeField]
     private GameObject _mainCamera;
+    //演出用カメラ
     [SerializeField]
     private GameObject _cmCameras;
 
@@ -109,7 +110,6 @@ public class GameStateManager : SingletonMonoBehaviour<GameStateManager>
             _clearCamera.gameObject.SetActive(true);
             _mainCamera.gameObject.SetActive(false);
             _cmCameras.transform.GetChild(0).gameObject.SetActive(false);
-            _cmCameras.transform.GetChild(1).gameObject.SetActive(true);
         }
     }
 
