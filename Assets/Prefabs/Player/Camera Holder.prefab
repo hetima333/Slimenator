@@ -98,8 +98,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1641467534743126}
-  m_LocalRotation: {x: -0.056762755, y: -0.6769951, z: 0.72598827, w: 0.10675525}
-  m_LocalPosition: {x: -69.61187, y: -28.177677, z: 83.97059}
+  m_LocalRotation: {x: -0.3712871, y: -0.2286264, z: 0.28716552, w: 0.8528844}
+  m_LocalPosition: {x: -69.64187, y: -41.82482, z: 80.23103}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4738093723788198}
@@ -237,7 +237,7 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 5000
-  field of view: 40
+  field of view: 50
   orthographic: 0
   orthographic size: 10
   m_Depth: -1

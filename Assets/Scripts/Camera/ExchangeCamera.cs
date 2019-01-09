@@ -13,7 +13,7 @@ public class ExchangeCamera : MonoBehaviour {
         gameObject.GetComponent<ChangeWallMaterial>().enabled = false;
 
         //一時的にカメラを停止する
-        StartCoroutine(Sleep(5.0f));
+        StartCoroutine(Sleep(2.5f));
     }
 
     // Update is called once per frame
