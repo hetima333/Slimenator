@@ -38,6 +38,14 @@ public class GameStateManager : SingletonMonoBehaviour<GameStateManager>
     [SerializeField]
     private Canvas _gameOverCanvas;
 
+    //カメラ
+    [SerializeField]
+    private GameObject _clearCamera;
+    [SerializeField]
+    private GameObject _mainCamera;
+    [SerializeField]
+    private GameObject _cmCameras;
+
     // Use this for initialization
     void Start()
     {
@@ -97,6 +105,11 @@ public class GameStateManager : SingletonMonoBehaviour<GameStateManager>
             AudioManager.Instance.PlaySE("Fanfare");
             SceneManager.UnloadSceneAsync("HUD");
             _clearCanvas.gameObject.SetActive(true);
+            //カメラの切り替え
+            _clearCamera.gameObject.SetActive(true);
+            _mainCamera.gameObject.SetActive(false);
+            _cmCameras.transform.GetChild(0).gameObject.SetActive(false);
+            _cmCameras.transform.GetChild(1).gameObject.SetActive(true);
         }
     }
 
