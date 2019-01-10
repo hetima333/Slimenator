@@ -36,7 +36,7 @@ public class EntityDetector : MonoBehaviour
                     if (element_temp != null)
                     {
                         for (int i = 0; i < multiplyer; ++i)
-                            _Player.StoreElementInOrb(element_temp.GetElementType());
+                            _Player.StockSlime(element_temp.GetElementType());
                     }
 
                     IDamageable damage_temp = other.gameObject.GetComponent<IDamageable>();
