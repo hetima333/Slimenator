@@ -10,8 +10,13 @@ public class SlimeBullet : MonoBehaviour {
 	private Rigidbody rb;
 	private GameObject characterObject;
 
+	private int _randomNumber =0;
+
 	[SerializeField]
 	private GameObject _prefab;
+
+	[SerializeField]
+	private Material[] _mat;
 
 	[SerializeField]
 	public SOList
@@ -26,6 +31,10 @@ public class SlimeBullet : MonoBehaviour {
 	void Start () {
 		rb = this.GetComponent<Rigidbody> ();
 		forward = characterObject.transform.forward;
+		//生成するスライムの番号をランダムで決める
+		_randomNumber =  Random.Range (0, _elements.GetList ().Count - 1);
+		//色変え
+		GetComponent<Renderer>().material = _mat[_randomNumber]; 
 	}
 
 	void Update () {
@@ -55,8 +64,8 @@ public class SlimeBullet : MonoBehaviour {
 			//ステージに存在するスライムの数が指定数以下なら
 			if(ObjectManager.Instance.GetActiveObjects(_prefab).Count < 20){
 				//ランダムなスライムを生成する
-				int random = Random.Range (0, _elements.GetList ().Count - 1);
-				GetSlimeFromPool (random, gameObject.transform.position);
+			
+				GetSlimeFromPool (_randomNumber, gameObject.transform.position);
 			}
 			
 		}
