@@ -51,7 +51,7 @@ public class PinballAttack : BossSkill {
 		//軸をずらす（ピンボール感を出すため）
 		transform.Rotate (new Vector3 (0, 3, 0));
 		//相手に向かって体当たりを開始。
-		_rid.AddForce (transform.forward * 100000);
+		_rid.AddForce (transform.forward * 7000*_rid.mass);
 	}
 
 }

@@ -710,6 +710,9 @@ MonoBehaviour:
   - clip: {fileID: 7400026, guid: 2ff7f16170809b04e888c3ae62e6c2cf, type: 3}
     name: Dead
     defaultState: 0
+  - clip: {fileID: 7400030, guid: 2ff7f16170809b04e888c3ae62e6c2cf, type: 3}
+    name: TackleChage
+    defaultState: 0
 --- !u!135 &135815901918266508
 SphereCollider:
   m_ObjectHideFlags: 1

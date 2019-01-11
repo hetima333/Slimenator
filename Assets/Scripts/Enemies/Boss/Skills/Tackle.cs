@@ -16,14 +16,20 @@ public class Tackle : BossSkill {
 	override public void Action () {
 		_actTime = 2.0f;
 		if (_boss._canAnimation) {
-			_boss._anim.CrossFade ("Tackle", 0);
-			_boss._animName = "Tackle";
+			//予備動作開始
+			_boss._anim.CrossFade ("TackleChage", 0);
+			_boss._animName = "TackleChage";
 		}
 
 		Vector3 lookPos = _target.transform.position;
 		lookPos.y = gameObject.transform.position.y;
 		transform.LookAt (lookPos);
 
+	}
+
+
+	public void TackleStart()
+	{
 		//相手に向かって体当たりを開始。
 		_rid.AddForce (transform.forward * 5000*_rid.mass);
 		//速度調整
@@ -31,7 +37,7 @@ public class Tackle : BossSkill {
 		_canActive = false;
 		//行動中にする
 		_boss.GetComponent<BossBase> ()._isAction = true;
-	
+
 	}
 
 }
