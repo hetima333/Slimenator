@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
+guid: 5739e4338b08a5f4bbfcecd3460ccae2
+=======
 guid: cfede9e084ad84d748b289d4622f6f38
+>>>>>>> feature/GameAdjustment
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

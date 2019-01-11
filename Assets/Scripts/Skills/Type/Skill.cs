@@ -183,7 +183,15 @@ public abstract class Skill : ScriptableObject
                         _PlayedCastingAudio = false;
                     }
                 }
-            }
+				// ギガバキュームの際の応急処置
+				if(name == "Giga Vacuum"){
+					var player = caster.GetComponent<EntityPlayer>();
+					if(player == null){
+						return;
+					}
+					player.Controllable = true;
+				}
+			}
             else
             {
                 if (!_PlayedCastingAudio)
@@ -207,6 +215,15 @@ public abstract class Skill : ScriptableObject
                     _CastingParticleCopy = Instantiate(_CastingParticle, spawn_position, caster.transform.rotation, caster.transform);
                     _CastingParticleCopy.transform.localScale = new Vector3(_Multiplyer, _Multiplyer, _Multiplyer);
                     Debug.Log("+++CASTING SKILL+++");
+
+					// ギガバキュームの際の応急処置
+					if(name == "Giga Vacuum"){
+						var player = caster.GetComponent<EntityPlayer>();
+						if(player == null){
+							return;
+						}
+						player.Controllable = false;
+					}
                 }
             }
         }

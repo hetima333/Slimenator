@@ -3,139 +3,128 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Entity/Stats")]
-public class Stats : ScriptableObject
-{
-    [SerializeField]
-    private GameObject
-        _Prefab;
+public class Stats : ScriptableObject {
+	[SerializeField]
+	private GameObject
+	_Prefab;
 
-    [SerializeField]
-    private float
-        _MaxHealth,
-        _MaxHealthMultiplyer,
-        _Health,
+	[SerializeField]
+	private float
+	_MaxHealth,
+	_MaxHealthMultiplyer,
+	_Health,
 
-        _MaxDamage,
-        _MaxDamageMultiplyer,
+	_MaxDamage,
+	_MaxDamageMultiplyer,
 
-        _MaxSpeed,
-        _MaxSpeedMultiplyer,
+	_MaxSpeed,
+	_MaxSpeedMultiplyer,
 
-        _SuckingPower,
-        _SuckingPowerMultiplyer;
+	_SuckingPower,
+	_SuckingPowerMultiplyer;
 
+	[SerializeField]
+	private bool
+	_UsedByMultipleEntities = true;
 
-    [SerializeField]
-    private bool
-        _UsedByMultipleEntities = true;
+	private bool _isInvincible = false;
+	public bool IsInvincible {
+		get {
+			return _isInvincible;
+		}
+		set {
+			_isInvincible = value;
+		}
+	}
 
-    public float MaxHealthProperties
-    {
-        get
-        {
-            return _MaxHealth * _MaxHealthMultiplyer;
-        }
-    }
+	public float MaxHealthProperties {
+		get {
+			return _MaxHealth * _MaxHealthMultiplyer;
+		}
+	}
 
-    public float HealthProperties
-    {
-        get
-        {
-            return _Health;
-        }
+	public float HealthProperties {
+		get {
+			return _Health;
+		}
 
-        set
-        {
-            _Health = value;
-        }
-    }
+		set {
+			float old = _Health;
+			_Health = value;
 
-    public float DamageProperties
-    {
-        get
-        {
-            return _MaxDamage * _MaxDamageMultiplyer;
-        }
-    }
+			if (_isInvincible && old > _Health) {
+				Debug.Log("c : " + _Health + ", o : " + old);
 
-    public float SpeedProperties
-    {
-        get
-        {
-            return _MaxSpeed * _MaxSpeedMultiplyer;
-        }
-    }
+				_Health = old;
+			}
+		}
+	}
 
-    public float HealthMultiplyerProperties
-    {
-        get
-        {
-            return _MaxHealthMultiplyer;
-        }
+	public float DamageProperties {
+		get {
+			return _MaxDamage * _MaxDamageMultiplyer;
+		}
+	}
 
-        set
-        {
-            _MaxHealthMultiplyer = Mathf.Clamp(value, 0, 100);
-        }
-    }
+	public float SpeedProperties {
+		get {
+			return _MaxSpeed * _MaxSpeedMultiplyer;
+		}
+	}
 
-    public float DamageMultiplyerProperties
-    {
-        get
-        {
-            return _MaxDamageMultiplyer;
-        }
+	public float HealthMultiplyerProperties {
+		get {
+			return _MaxHealthMultiplyer;
+		}
 
-        set
-        {
-            _MaxDamageMultiplyer = Mathf.Clamp(value, 0, 100);
-        }
-    }
+		set {
+			_MaxHealthMultiplyer = Mathf.Clamp(value, 0, 100);
+		}
+	}
 
-    public float SpeedMultiplyerProperties
-    {
-        get
-        {
-            return _MaxSpeedMultiplyer;
-        }
+	public float DamageMultiplyerProperties {
+		get {
+			return _MaxDamageMultiplyer;
+		}
 
-        set
-        {
-            _MaxSpeedMultiplyer = Mathf.Clamp(value, 0, 100);
-        }
-    }
+		set {
+			_MaxDamageMultiplyer = Mathf.Clamp(value, 0, 100);
+		}
+	}
 
-    public float SuckingPowerProperties
-    {
-        get
-        {
-            return _SuckingPower * _SuckingPowerMultiplyer;
-        }
-    }
+	public float SpeedMultiplyerProperties {
+		get {
+			return _MaxSpeedMultiplyer;
+		}
 
-    public float SuckingPowerMultiplyerProperties
-    {
-        get
-        {
-            return _SuckingPowerMultiplyer;
-        }
+		set {
+			_MaxSpeedMultiplyer = Mathf.Clamp(value, 0, 100);
+		}
+	}
 
-        set
-        {
-            _SuckingPowerMultiplyer = Mathf.Clamp(value, 0, 100);
-        }
-    }
+	public float SuckingPowerProperties {
+		get {
+			return _SuckingPower * _SuckingPowerMultiplyer;
+		}
+	}
 
-    public bool IsUseByMultiple
-    {
-        get
-        {
-            return _UsedByMultipleEntities;
-        }
-    }
+	public float SuckingPowerMultiplyerProperties {
+		get {
+			return _SuckingPowerMultiplyer;
+		}
 
-    public string GetPrefabName()
-    {
-        return _Prefab.name;
-    }
+		set {
+			_SuckingPowerMultiplyer = Mathf.Clamp(value, 0, 100);
+		}
+	}
+
+	public bool IsUseByMultiple {
+		get {
+			return _UsedByMultipleEntities;
+		}
+	}
+
+	public string GetPrefabName() {
+		return _Prefab.name;
+	}
 }
