@@ -88,6 +88,13 @@ public abstract class SlimeBase : MonoBehaviour, ISuckable, IDamageable, IElemen
         {
             gameObject.transform.localScale = new Vector3(_tier.GetMultiplyer(), _tier.GetMultiplyer(), _tier.GetMultiplyer());
         }
+
+        //もし一定高度以下（落下したら）
+        if(gameObject.transform.position.y <= -2)
+        {
+            //死ぬ
+            Die();
+        }
     }
 
     protected virtual void LateUpdate()
@@ -95,7 +102,6 @@ public abstract class SlimeBase : MonoBehaviour, ISuckable, IDamageable, IElemen
         if (_animator.speed != _properties.SpeedMultiplyerProperties)
             _animator.speed = _properties.SpeedMultiplyerProperties;
     }
-  
     public void TakeDamage(float dmg)
     {
         if (dmg >= 9999)
