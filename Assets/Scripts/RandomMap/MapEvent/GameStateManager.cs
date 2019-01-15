@@ -110,6 +110,8 @@ public class GameStateManager : SingletonMonoBehaviour<GameStateManager>
             _clearCamera.gameObject.SetActive(true);
             _mainCamera.gameObject.SetActive(false);
             _cmCameras.transform.GetChild(0).gameObject.SetActive(false);
+            _cmCameras.transform.GetChild(2).gameObject.SetActive(false);
+            _cmCameras.transform.GetChild(1).gameObject.SetActive(true);
         }
     }
 

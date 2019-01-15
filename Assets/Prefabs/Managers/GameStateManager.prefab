@@ -581,8 +581,12 @@ MonoBehaviour:
   _mapGenerator: {fileID: 0}
   _warper: {fileID: 0}
   _exchangeCamera: {fileID: 0}
+  _norm: 0
   _clearCanvas: {fileID: 223320873690050526}
   _gameOverCanvas: {fileID: 223265510287152364}
+  _clearCamera: {fileID: 0}
+  _mainCamera: {fileID: 0}
+  _cmCameras: {fileID: 0}
 --- !u!114 &114598569152286088
 MonoBehaviour:
   m_ObjectHideFlags: 1

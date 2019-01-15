@@ -33,11 +33,16 @@ public class ExchangeCamera : MonoBehaviour {
     {
         //プレイヤー追尾スクリプトはオフ
         gameObject.GetComponent<CameraFollowTarget>().enabled = false;
+
         //ボス戦時の撮影方法スクリプトはオン
-        if (transform.GetChild(0).gameObject.activeSelf)
-            transform.GetChild(0).gameObject.GetComponent<MultipleTargetCamera>().enabled = true;
-        if (transform.GetChild(1).gameObject.activeSelf)
-            transform.GetChild(1).gameObject.GetComponent<MultipleTargetCamera>().enabled = true;
+        //if (transform.GetChild(0).gameObject.activeSelf)
+        //    transform.GetChild(0).gameObject.GetComponent<MultipleTargetCamera>().enabled = true;
+        //if (transform.GetChild(1).gameObject.activeSelf)
+        //    transform.GetChild(1).gameObject.GetComponent<MultipleTargetCamera>().enabled = true;
+
+        transform.GetChild(1).gameObject.GetComponent<MultipleTargetCamera>().enabled = true;
+        Debug.Log(transform.GetChild(1).gameObject.GetComponent<MultipleTargetCamera>().enabled);
+
         //壁(ボス部屋)の透明化スクリプトはオン
         gameObject.GetComponent<WallTransparent>().enabled = true;
         gameObject.GetComponent<ChangeWallMaterial>().enabled = true;
@@ -60,8 +65,6 @@ public class ExchangeCamera : MonoBehaviour {
         //Debug.Log("ON");
         transform.GetChild(0).gameObject.SetActive(false);
         transform.GetChild(1).gameObject.SetActive(true);
-
-
     }
 
 }
