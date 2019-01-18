@@ -63,6 +63,7 @@ public class GameStateManager : SingletonMonoBehaviour<GameStateManager>
         if(Input.GetKeyDown(KeyCode.O))
         {
             _warper.Warp();
+            _exchangeCamera.ChangeShootingMethod();
         }
     }
 
