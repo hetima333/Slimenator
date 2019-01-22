@@ -218,6 +218,10 @@ public class AreaEffect : MonoBehaviour
                                         if (Vector3.Distance(gameObject.transform.position, entity.transform.position) < _Properties.GetRadius())
                                         {
                                             dmg.TakeDamage(_Properties.GetDamage());
+                                           if (LayerMask.LayerToName(entity.layer) == "Slime")
+                                            {
+                                                entity.SetActive(false);
+                                            }
                                         }
                                     }
                                 }
