@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UniRx.Triggers;
 
 public class GameStateManager : SingletonMonoBehaviour<GameStateManager>
 {
@@ -12,7 +13,6 @@ public class GameStateManager : SingletonMonoBehaviour<GameStateManager>
     {
         get { return _mapGenerator; }
     }
-
 
     [SerializeField]
     private ForceWarp _warper;
@@ -38,6 +38,8 @@ public class GameStateManager : SingletonMonoBehaviour<GameStateManager>
     [SerializeField]
     private Canvas _gameOverCanvas;
 
+    private GameObject _player;
+
     //カメラ
     [SerializeField]
     private GameObject _clearCamera;
@@ -52,6 +54,7 @@ public class GameStateManager : SingletonMonoBehaviour<GameStateManager>
     {
         _enemyList = new List<GameObject>();
         _slimeList = new List<GameObject>();
+        _player = GameObject.FindGameObjectWithTag("Player");
 
         //通常BGM
         AudioManager.Instance.PlayBGM("Stage_bgm",2);
@@ -113,6 +116,10 @@ public class GameStateManager : SingletonMonoBehaviour<GameStateManager>
             _cmCameras.transform.GetChild(0).gameObject.SetActive(false);
             _cmCameras.transform.GetChild(2).gameObject.SetActive(false);
             _cmCameras.transform.GetChild(1).gameObject.SetActive(true);
+            //プレイヤーの移動を停止
+            _player.GetComponent<ObservableUpdateTrigger>().enabled = false;
+            _player.GetComponent<ObservableFixedUpdateTrigger>().enabled = false;
+
         }
     }
 
