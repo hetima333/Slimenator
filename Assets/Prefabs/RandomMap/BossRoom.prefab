@@ -733,6 +733,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _target: {fileID: 1564239865324246}
   _Player: {fileID: 0}
-  _mainCamera: {fileID: 0}
-  _bossStartCamera: {fileID: 0}
+  _cameraHolder: {fileID: 0}
   _cmCameras: {fileID: 0}

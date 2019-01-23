@@ -11,11 +11,23 @@ public class ForceWarp : MonoBehaviour
     private GameObject _Boss;
 
     [SerializeField]
-    private GameObject _mainCamera;
-    [SerializeField]
-    private GameObject _bossStartCamera;
+    private GameObject _cameraHolder;
+    private enum Camera
+    {
+        START,
+        MAIN,
+        BOSS_START,
+        CLEAR
+    }
+
     [SerializeField]
     private GameObject _cmCameras;
+    private enum CMCamera
+    {
+        START,
+        BOSS_START,
+        CLEAR
+    }
 
     // Use this for initialization
     void Start()
@@ -34,11 +46,12 @@ public class ForceWarp : MonoBehaviour
         _Player.transform.position = _target.transform.position;
         _Boss = GameObject.Find("KingSlime(Clone)");
         //ボス開始演出カメラの切り替え
-        _mainCamera.gameObject.SetActive(false);
-        _bossStartCamera.gameObject.SetActive(true);
-        _cmCameras.transform.GetChild(0).gameObject.SetActive(false);
-        _cmCameras.transform.GetChild(1).gameObject.SetActive(false);
-        _cmCameras.transform.GetChild(2).gameObject.SetActive(true);
+        _cameraHolder.transform.GetChild((int)Camera.MAIN).gameObject.SetActive(false);
+        _cameraHolder.transform.GetChild((int)Camera.BOSS_START).gameObject.SetActive(true);
+
+        _cmCameras.transform.GetChild((int)CMCamera.START).gameObject.SetActive(false);
+        _cmCameras.transform.GetChild((int)CMCamera.CLEAR).gameObject.SetActive(false);
+        _cmCameras.transform.GetChild((int)CMCamera.BOSS_START).gameObject.SetActive(true);
 
         //演出終了後にカメラを切り替える
         Invoke("ChangeCamera", 3.0f);
@@ -52,9 +65,9 @@ public class ForceWarp : MonoBehaviour
 
     public void ChangeCamera()
     {
-        _cmCameras.transform.GetChild(2).gameObject.SetActive(false);
-        _bossStartCamera.gameObject.SetActive(false);
-        _mainCamera.gameObject.SetActive(true);
+        _cmCameras.transform.GetChild((int)CMCamera.BOSS_START).gameObject.SetActive(false);
+        _cameraHolder.transform.GetChild((int)Camera.BOSS_START).gameObject.SetActive(false);
+        _cameraHolder.transform.GetChild((int)Camera.MAIN).gameObject.SetActive(true);
     }
 
 }

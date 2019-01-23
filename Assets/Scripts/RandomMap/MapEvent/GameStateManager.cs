@@ -42,12 +42,24 @@ public class GameStateManager : SingletonMonoBehaviour<GameStateManager>
 
     //カメラ
     [SerializeField]
-    private GameObject _clearCamera;
-    [SerializeField]
-    private GameObject _mainCamera;
+    private GameObject _cameraHolder;
+    private enum Camera
+    {
+        START,
+        MAIN,
+        BOSS_START,
+        CLEAR
+    }
+
     //演出用カメラ
     [SerializeField]
     private GameObject _cmCameras;
+    private enum CMCamera
+    {
+        START,
+        BOSS_START,
+        CLEAR
+    }
 
     // Use this for initialization
     void Start()
@@ -111,11 +123,12 @@ public class GameStateManager : SingletonMonoBehaviour<GameStateManager>
             SceneManager.UnloadSceneAsync("HUD");
             _clearCanvas.gameObject.SetActive(true);
             //カメラの切り替え
-            _clearCamera.gameObject.SetActive(true);
-            _mainCamera.gameObject.SetActive(false);
-            _cmCameras.transform.GetChild(0).gameObject.SetActive(false);
-            _cmCameras.transform.GetChild(2).gameObject.SetActive(false);
-            _cmCameras.transform.GetChild(1).gameObject.SetActive(true);
+            _cameraHolder.transform.GetChild((int)Camera.CLEAR).gameObject.SetActive(true);
+            _cameraHolder.transform.GetChild((int)Camera.MAIN).gameObject.SetActive(false);
+
+            _cmCameras.transform.GetChild((int)CMCamera.START).gameObject.SetActive(false);
+            _cmCameras.transform.GetChild((int)CMCamera.BOSS_START).gameObject.SetActive(false);
+            _cmCameras.transform.GetChild((int)CMCamera.CLEAR).gameObject.SetActive(true);
             //プレイヤーの移動を停止
             _player.GetComponent<ObservableUpdateTrigger>().enabled = false;
             _player.GetComponent<ObservableFixedUpdateTrigger>().enabled = false;

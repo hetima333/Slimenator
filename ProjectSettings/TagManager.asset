@@ -15,6 +15,7 @@ TagManager:
   - Enemy
   - SlimeSpawner
   - Boss
+  - CMCamera
   layers:
   - Default
   - TransparentFX
