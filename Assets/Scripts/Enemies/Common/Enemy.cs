@@ -77,10 +77,10 @@ public abstract class Enemy : MonoBehaviour, IDamageable, ISuckable {
     public float _animLastTime = 0;
     protected Status _status;
     protected Stats _properties;
-
     public GameObject _body;
-
     public Material _deadMat;
+
+    private EntityPlayer _player;
 
     //最大値
     public float MaxHitPoint { get { return _properties.MaxHealthProperties * _properties.HealthMultiplyerProperties; } }
@@ -95,6 +95,7 @@ public abstract class Enemy : MonoBehaviour, IDamageable, ISuckable {
     public void SetStatus (Enemy.Type type, float maxHp, float speed, float searchRange, float attackRange, float moveRange, float money) {
         _body = transform.Find ("Body").gameObject;
         _deadMat = (Material) Resources.Load ("Material/Dead");
+        _player = GameObject.Find("Player").GetComponent<EntityPlayer>();
         //タイプセット
         _enemyType = type;
         //初期はアイドル
@@ -181,7 +182,6 @@ public abstract class Enemy : MonoBehaviour, IDamageable, ISuckable {
     private void Dying () {
         _anim.CrossFade ("Dead", 0);
         _animName = "Dead";
-
     }
 
     //死亡したときに呼ばれる関数（AnimationEvent）
@@ -189,6 +189,7 @@ public abstract class Enemy : MonoBehaviour, IDamageable, ISuckable {
         //死亡コルーチン
         _body.GetComponent<Renderer>().material = _deadMat;
         _body.GetComponent<DissolveTest>().enabled = true;
+        _player.MoneyAmount = _player.MoneyAmount+_money;
         StartCoroutine(DeadCol());
     }
 
@@ -198,6 +199,7 @@ public abstract class Enemy : MonoBehaviour, IDamageable, ISuckable {
         yield return new WaitForSeconds(2.0f);
         //マネージャーに死んだよっていう
         GameStateManager.Instance.DecreaseEnemy ();
+        //プレイヤーに金を与える!
         ObjectManager.Instance.ReleaseObject (gameObject);
     }
 

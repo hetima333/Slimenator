@@ -21,7 +21,10 @@ public class Stats : ScriptableObject {
 	_MaxSpeedMultiplyer,
 
 	_SuckingPower,
-	_SuckingPowerMultiplyer;
+	_SuckingPowerMultiplyer,
+	
+	_SkillPower,
+	_SkillPowerMultiplyer;
 
 	[SerializeField]
 	private bool
@@ -39,7 +42,7 @@ public class Stats : ScriptableObject {
 
 	public float MaxHealthProperties {
 		get {
-			return _MaxHealth * _MaxHealthMultiplyer;
+			return _MaxHealth;
 		}
 	}
 
@@ -78,7 +81,7 @@ public class Stats : ScriptableObject {
 		}
 
 		set {
-			_MaxHealthMultiplyer = Mathf.Clamp(value, 0, 100);
+			_MaxHealthMultiplyer = Mathf.Clamp(value, 0, 5);
 		}
 	}
 
@@ -115,6 +118,22 @@ public class Stats : ScriptableObject {
 
 		set {
 			_SuckingPowerMultiplyer = Mathf.Clamp(value, 0, 100);
+		}
+	}
+
+	public float SkillPowerProperties {
+		get {
+			return _SkillPower;
+		}
+	}
+
+	public float SkillPowerMultiplyerProperties {
+		get {
+			return _SkillPowerMultiplyer;
+		}
+
+		set {
+			_SkillPowerMultiplyer = Mathf.Clamp(value, 0, 5);
 		}
 	}
 
