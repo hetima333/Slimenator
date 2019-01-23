@@ -1925,6 +1925,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _upGradeManuPanel: {fileID: 1448614208}
+  _pauseButtons: {fileID: 1384334786}
 --- !u!114 &735210756
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3314,6 +3315,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _upGradeManuPanel: {fileID: 1448614208}
+  _pauseButtons: {fileID: 1384334786}
 --- !u!114 &1540947057
 MonoBehaviour:
   m_ObjectHideFlags: 0
