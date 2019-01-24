@@ -42,7 +42,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1191236107850756
 GameObject:
   m_ObjectHideFlags: 1
@@ -639,27 +639,7 @@ MonoBehaviour:
   - {fileID: 114147082892549008}
   - {fileID: 114926421897606634}
   - {fileID: 114158443322560610}
-  m_Instructions:
-  - m_VirtualCamera: {fileID: 114747267691098756}
-    m_Hold: 1
-    m_Blend:
-      m_Style: 0
-      m_Time: 0
-  - m_VirtualCamera: {fileID: 114147082892549008}
-    m_Hold: 1
-    m_Blend:
-      m_Style: 1
-      m_Time: 1
-  - m_VirtualCamera: {fileID: 114926421897606634}
-    m_Hold: 1
-    m_Blend:
-      m_Style: 1
-      m_Time: 1
-  - m_VirtualCamera: {fileID: 114158443322560610}
-    m_Hold: 0
-    m_Blend:
-      m_Style: 2
-      m_Time: 1
+  m_Instructions: []
 --- !u!114 &114012602470933212
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -804,18 +784,10 @@ MonoBehaviour:
   m_Follow: {fileID: 0}
   m_ShowDebugText: 0
   m_EnableAllChildCameras: 0
-  m_ChildCameras: []
-  m_Instructions:
-  - m_VirtualCamera: {fileID: 114530222209638282}
-    m_Hold: 0
-    m_Blend:
-      m_Style: 0
-      m_Time: 0
-  - m_VirtualCamera: {fileID: 114012602470933212}
-    m_Hold: 0
-    m_Blend:
-      m_Style: 2
-      m_Time: 1
+  m_ChildCameras:
+  - {fileID: 114530222209638282}
+  - {fileID: 114012602470933212}
+  m_Instructions: []
 --- !u!114 &114204206555028636
 MonoBehaviour:
   m_ObjectHideFlags: 1
