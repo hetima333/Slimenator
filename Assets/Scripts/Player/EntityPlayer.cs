@@ -139,23 +139,34 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
 	[SerializeField]
 	private GameObject
 	_CastingPoint;
-	private void Start() {
-		_Player_Stats.IsInvincible = false;
+    private void Start(){
+        _Player_Stats.IsInvincible = false;
 
-		// プレイヤーのHPが減少したら
-		this.ObserveEveryValueChanged(_ => this.HitPoint)
-			.Buffer(2, 1)
-			.Where(x => x.Count == 2)
-			.Select(x => x.First() - x.Last())
-			.Where(x => x > 0)
-			.Subscribe(x => {
-				_Player_Stats.IsInvincible = true;
-				if (_isInvincible) {
-					StopCoroutine(InvincibleTimer());
-				}
-				StartCoroutine(InvincibleTimer());
-			});
-	}
+        // プレイヤーのHPが減少したら
+        this.ObserveEveryValueChanged(_ => this.HitPoint)
+            .Buffer(2, 1)
+            .Where(x => x.Count == 2)
+            .Select(x => x.First() - x.Last())
+            .Where(x => x > 0)
+            .Subscribe(x =>
+            {
+                _Player_Stats.IsInvincible = true;
+                if (_isInvincible)
+                {
+                    StopCoroutine(InvincibleTimer());
+                }
+                StartCoroutine(InvincibleTimer());
+            });
+
+        // プレイヤー死亡時、スロットを空にする
+        this.ObserveEveryValueChanged(_ => this._Player_State)
+            .Where(x => x == EnumHolder.States.DIE)
+            .Subscribe(x =>
+            {
+                _OrbSlot.Clear();
+                _Skills.Clear();
+            });
+    }
 
 	IEnumerator InvincibleTimer() {
 		_isInvincible = true;
