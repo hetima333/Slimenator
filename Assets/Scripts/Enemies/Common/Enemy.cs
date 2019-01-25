@@ -201,6 +201,8 @@ public abstract class Enemy : MonoBehaviour, IDamageable, ISuckable {
         GameStateManager.Instance.DecreaseEnemy ();
         //プレイヤーに金を与える!
         ObjectManager.Instance.ReleaseObject (gameObject);
+        //金の音
+        AudioManager.Instance.PlaySE("Money",false,1);
     }
 
     //発見時に呼ばれる関数

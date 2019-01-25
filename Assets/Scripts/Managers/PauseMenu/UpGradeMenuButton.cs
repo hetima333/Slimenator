@@ -14,10 +14,10 @@ private GameObject _upGradeManuPanel;
 private GameObject _pauseButtons;
 
 	private void Awake() {
-	// ボタンの参照を取得
+	// エスケープキーが押されたら消す
 	IObservable<long> escapeStream = Observable
             .EveryUpdate()
-            .Where (_ => Input.GetKeyDown(KeyCode.Escape)); // 左クリックしたフレームだけに
+            .Where (_ => Input.GetKeyDown(KeyCode.Escape)); 
 
         escapeStream.Subscribe (_ => {_upGradeManuPanel.SetActive(false);
 		_pauseButtons.SetActive(true);}).AddTo(gameObject);
@@ -32,10 +32,11 @@ private GameObject _pauseButtons;
 		}
 		else
 		{
-			// パネルのアクティブ化
+		// パネルのアクティブ化
 		_upGradeManuPanel.SetActive(true);
 		_pauseButtons.SetActive(false);
 		}
+		AudioManager.Instance.PlaySE("Decide",false,1);
 
 	}
 }
