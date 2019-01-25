@@ -132,7 +132,8 @@ public class GameStateManager : SingletonMonoBehaviour<GameStateManager>
             //プレイヤーの移動を停止
             _player.GetComponent<ObservableUpdateTrigger>().enabled = false;
             _player.GetComponent<ObservableFixedUpdateTrigger>().enabled = false;
-
+            //プレイヤーの向きを正面に指定
+            _player.gameObject.transform.rotation = Quaternion.LookRotation(Vector3.forward);
         }
     }
 
