@@ -5,13 +5,12 @@ using UnityEngine;
 public class ClearKeep : MonoBehaviour {
 
     [SerializeField]
-    private GameObject _clearCamera;
-
+    private Camera _clearCamera;
 
 	// Use this for initialization
 	void Start () {
-		
-	}
+
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -24,7 +23,9 @@ public class ClearKeep : MonoBehaviour {
     public void CameraPosition()
     {
         //クリアー演出カメラの位置を設定
-        var target = _clearCamera.gameObject.transform.position;
-        gameObject.transform.position = target;
+        var pos = _clearCamera.gameObject.transform.position;
+        gameObject.transform.position = pos;
+        var rot = _clearCamera.gameObject.transform.rotation;
+        gameObject.transform.rotation = rot;
     }
 }

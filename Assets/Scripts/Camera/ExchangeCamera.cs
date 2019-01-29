@@ -60,7 +60,6 @@ public class ExchangeCamera : MonoBehaviour {
     public IEnumerator Pause(float time)
     {
         //最初のカメラのみ表示
-        //Debug.Log("OFF");
         transform.GetChild((int)Camera.START).gameObject.SetActive(true);
         transform.GetChild((int)Camera.MAIN).gameObject.SetActive(false);
 
