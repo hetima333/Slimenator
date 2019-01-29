@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UniRx.Triggers;
 
 public class GameStateManager : SingletonMonoBehaviour<GameStateManager>
 {
@@ -13,9 +14,11 @@ public class GameStateManager : SingletonMonoBehaviour<GameStateManager>
         get { return _mapGenerator; }
     }
 
-
     [SerializeField]
     private ForceWarp _warper;
+
+    [SerializeField]
+    private ClearKeep _clearKeep;
 
     [SerializeField]
     private ExchangeCamera _exchangeCamera;
@@ -38,11 +41,36 @@ public class GameStateManager : SingletonMonoBehaviour<GameStateManager>
     [SerializeField]
     private Canvas _gameOverCanvas;
 
+    private GameObject _player;
+
+    //カメラ
+    [SerializeField]
+    private GameObject _cameraHolder;
+    private enum Camera
+    {
+        START,
+        MAIN,
+        BOSS_START,
+        CLEAR,
+        CLEAR_KEEP
+    }
+
+    //演出用カメラ
+    [SerializeField]
+    private GameObject _cmCameras;
+    private enum CMCamera
+    {
+        START,
+        BOSS_START,
+        CLEAR
+    }
+
     // Use this for initialization
     void Start()
     {
         _enemyList = new List<GameObject>();
         _slimeList = new List<GameObject>();
+        _player = GameObject.FindGameObjectWithTag("Player");
 
         //通常BGM
         AudioManager.Instance.PlayBGM("Stage_bgm",2);
@@ -54,6 +82,7 @@ public class GameStateManager : SingletonMonoBehaviour<GameStateManager>
         if(Input.GetKeyDown(KeyCode.O))
         {
             _warper.Warp();
+            _exchangeCamera.ChangeShootingMethod();
         }
     }
 
@@ -97,6 +126,10 @@ public class GameStateManager : SingletonMonoBehaviour<GameStateManager>
             AudioManager.Instance.PlaySE("Fanfare");
             SceneManager.UnloadSceneAsync("HUD");
             _clearCanvas.gameObject.SetActive(true);
+            ClearChangeCamera();
+
+            //カメラをキープする
+            StartCoroutine(KeepCamera(4.0f));
         }
     }
 
@@ -131,4 +164,41 @@ public class GameStateManager : SingletonMonoBehaviour<GameStateManager>
         SceneManager.UnloadSceneAsync("HUD");
         _gameOverCanvas.gameObject.SetActive(true);
     }
+
+    /// <summary>
+    /// カメラをクリアー演出用カメラに切り替える
+    /// </summary>
+    public void ClearChangeCamera()
+    {
+        _cameraHolder.transform.GetChild((int)Camera.CLEAR).gameObject.SetActive(true);
+        _cameraHolder.transform.GetChild((int)Camera.MAIN).gameObject.SetActive(false);
+
+        _cmCameras.transform.GetChild((int)CMCamera.START).gameObject.SetActive(false);
+        _cmCameras.transform.GetChild((int)CMCamera.BOSS_START).gameObject.SetActive(false);
+        _cmCameras.transform.GetChild((int)CMCamera.CLEAR).gameObject.SetActive(true);
+
+        //プレイヤーの移動を停止
+        PlayerMoveStop();
+    }
+
+    /// <summary>
+    /// プレイヤーの入力移動を一時停止する
+    /// </summary>
+    public void PlayerMoveStop()
+    {
+        _player.GetComponent<ObservableUpdateTrigger>().enabled = false;
+        _player.GetComponent<ObservableFixedUpdateTrigger>().enabled = false;
+        //プレイヤーの向きを正面に指定
+        _player.gameObject.transform.rotation = Quaternion.LookRotation(Vector3.forward);
+    }
+
+    public IEnumerator KeepCamera(float time)
+    {
+        yield return new WaitForSeconds(time);
+
+        _cameraHolder.transform.GetChild((int)Camera.CLEAR).gameObject.SetActive(false);
+        _cameraHolder.transform.GetChild((int)Camera.CLEAR_KEEP).gameObject.SetActive(true);
+        _clearKeep.CameraPosition();
+    }
+
 }
