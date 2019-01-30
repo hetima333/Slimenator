@@ -5,6 +5,7 @@ using System.Linq;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class EntityPlayer : MonoBehaviour, IDamageable {
 	private enum DIRECTION {
@@ -565,6 +566,8 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
 					debug += "[Created Skill] " + _CurrentSkillOutcome.name + "\n";
 					debug += "------------------------------------------------";
 
+					
+
 					break;
 				} else
 					_CurrentSkillOutcome = null;
@@ -591,6 +594,11 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
 					//     else
 					//         break;
 					// }
+
+
+					
+
+
 
 					_CurrentSkillOutcome.SetSkillTier((SkillTier) _skillTier.GetList() [temp_tier]);
 					debug += "[Setting Tier] " + _CurrentSkillOutcome.GetSkillTier() + "\n";
@@ -632,6 +640,15 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
 			AudioManager.Instance.PlaySE(_SkillStoreSFX.name);
 
 			_CurrentSkillOutcome = null;
+
+			if (SceneManager.GetActiveScene().name == "TutorialScene") {
+					// Tutorialシーンのみの動作 
+						if(TutorialManager.Instance.Step ==3)
+						{
+							TutorialManager.Instance.CreateCount++;
+						}
+					
+					}
 		}
 	}
 
@@ -643,6 +660,15 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
 		_CurrentUseSkill.Init();
 		_Skills[_CurrentSelection] = null;
 		_Is_Casting = true;
+
+		if (SceneManager.GetActiveScene().name == "TutorialScene") {
+					// Tutorialシーンのみの動作 
+						if(TutorialManager.Instance.Step ==4)
+						{
+							TutorialManager.Instance.SkillUseCount++;
+						}
+					
+					}
 	}
 
 	private void ResetCurrentUsedSkill() {

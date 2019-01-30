@@ -100,6 +100,8 @@ public class GameStateManager : SingletonMonoBehaviour<GameStateManager>
 
     public void DecreaseEnemy()
     {
+        if (SceneManager.GetActiveScene().name == "TutorialScene") return;
+        
         _norm--;
         if(_norm <= 0)
         {

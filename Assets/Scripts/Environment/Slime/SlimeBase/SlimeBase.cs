@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public abstract class SlimeBase : MonoBehaviour, ISuckable, IDamageable, IElement, IExplodable, IGrowable
 {
@@ -110,6 +111,10 @@ public abstract class SlimeBase : MonoBehaviour, ISuckable, IDamageable, IElemen
 
             if (_properties.HealthProperties <= 0)
             {
+                if (SceneManager.GetActiveScene().name == "TutorialScene") {
+					// Tutorialシーンのみの動作 
+					TutorialManager.Instance.SuckCount++;
+				}
                 Die();
             }
         }
