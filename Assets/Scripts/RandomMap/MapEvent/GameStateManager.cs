@@ -84,6 +84,12 @@ public class GameStateManager : SingletonMonoBehaviour<GameStateManager>
             _warper.Warp();
             _exchangeCamera.ChangeShootingMethod();
         }
+
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            //スタート時のカメラ演出をスキップする
+            _exchangeCamera.StartProductSkip();
+        }
     }
 
     public void AddSlime(GameObject slime)
