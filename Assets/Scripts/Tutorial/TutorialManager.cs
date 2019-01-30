@@ -16,6 +16,9 @@ public class TutorialManager : SingletonMonoBehaviour<TutorialManager> {
 	[SerializeField]
 	private GameObject _testEnemy;
 
+	[SerializeField]
+	private GameObject _scenePortal;
+
 
 	[SerializeField]
 	private Text _announceText;
@@ -28,6 +31,13 @@ public class TutorialManager : SingletonMonoBehaviour<TutorialManager> {
 
 	[SerializeField]
 	public int SkillUseCount;
+
+
+	[SerializeField]
+	private Text[] _controllTexts; 
+
+	[SerializeField]
+	private Image[] _controllImages; 
 	
 
 	// Use this for initialization
@@ -51,7 +61,9 @@ public class TutorialManager : SingletonMonoBehaviour<TutorialManager> {
 		switch(Step)
 		{
 			case 1:
-				_announceText.text = "目的地に移動してみよう";
+				_announceText.text = "マーカーまで移動しよう";
+				_controllTexts[0].text ="移動";
+				_controllTexts[1].text ="向きの回転";
 			break;
 
 			case 2:
@@ -66,20 +78,28 @@ public class TutorialManager : SingletonMonoBehaviour<TutorialManager> {
 			Pos = new Vector3(-20,1,0);
 			GameObject lightningSpowner = ObjectManager.Instance.InstantiateWithObjectPooling(_spawner,Pos);
 			lightningSpowner.GetComponent<TutrialSlimeSpowner>().SetType(TutrialSlimeSpowner.SLIME.LIGHTNING);
+
+			_controllTexts[0].text ="吸い込み";
+			_controllTexts[1].text ="向きの回転";
 				
 				_announceText.text = "スライムを吸ってみよう";
 			break;
 
 			case 3:
-				_announceText.text = "スキルを作ろう";
+				_announceText.text = "スライムを使ってスキルを作ろう";
+				_controllTexts[0].text ="スライムのセット";
+				_controllTexts[1].text ="スキル生成";
 			break;
 
 			case 4:
 				_announceText.text = "スキルを使ってみよう";
+				_controllTexts[0].text ="スキル選択";
+				_controllTexts[1].text ="スキル使用";
 			break;
 
 			case 5:
 				_announceText.text = "Tutorial終了";
+				_scenePortal.SetActive(true);
 			break;
 		}
 	}

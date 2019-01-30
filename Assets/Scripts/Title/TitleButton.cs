@@ -14,6 +14,10 @@ public class TitleButton : MenuButtonBase {
 		//決定SE
 		AudioManager.Instance.PlaySE("Decide",false,1);
 		SceneManager.LoadScene (_sceneName);
-		Application.LoadLevelAdditive (_HUD);
+		if(_sceneName != "TutorialScene")
+		{
+			Application.LoadLevelAdditive (_HUD);
+		}
+		
 	}
 }
