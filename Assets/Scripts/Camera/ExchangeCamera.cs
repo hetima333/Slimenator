@@ -59,24 +59,42 @@ public class ExchangeCamera : MonoBehaviour {
     /// <param name="time"></param>
     public IEnumerator Pause(float time)
     {
-        //最初のカメラのみ表示
-        transform.GetChild((int)Camera.START).gameObject.SetActive(true);
-        transform.GetChild((int)Camera.MAIN).gameObject.SetActive(false);
-
-        //プレイヤーの移動スクリプト停止
-        _player.GetComponent<ObservableUpdateTrigger>().enabled = false;
-        _player.GetComponent<ObservableFixedUpdateTrigger>().enabled = false;
+        //メインカメラを消す
+        IsActiveMainCamera(false);
 
         yield return new WaitForSeconds(time);
-        
-        //プレイ用(追尾)カメラに切り替える
-        transform.GetChild((int)Camera.START).gameObject.SetActive(false);
-        transform.GetChild((int)Camera.MAIN).gameObject.SetActive(true);
 
-        //プレイヤーの移動スクリプト再生
-        _player.GetComponent<ObservableUpdateTrigger>().enabled = true;
-        _player.GetComponent<ObservableFixedUpdateTrigger>().enabled = true;
+        //メインカメラをつける
+        IsActiveMainCamera(true);
+    }
 
+    /// <summary>
+    /// メインカメラをつけるかどうか
+    /// </summary>
+    public void IsActiveMainCamera(bool active)
+    {
+        //つける
+        if (active)
+        {
+            //プレイ用(追尾)カメラに切り替える
+            transform.GetChild((int)Camera.START).gameObject.SetActive(false);
+            transform.GetChild((int)Camera.MAIN).gameObject.SetActive(true);
+
+            //プレイヤーの移動スクリプト再生
+            _player.GetComponent<ObservableUpdateTrigger>().enabled = true;
+            _player.GetComponent<ObservableFixedUpdateTrigger>().enabled = true;
+        }
+        //消す
+        else
+        {
+            //最初のカメラのみ表示
+            transform.GetChild((int)Camera.START).gameObject.SetActive(true);
+            transform.GetChild((int)Camera.MAIN).gameObject.SetActive(false);
+
+            //プレイヤーの移動スクリプト停止
+            _player.GetComponent<ObservableUpdateTrigger>().enabled = false;
+            _player.GetComponent<ObservableFixedUpdateTrigger>().enabled = false;
+        }
     }
 
     /// <summary>
@@ -93,5 +111,11 @@ public class ExchangeCamera : MonoBehaviour {
 
         _player.GetComponent<ObservableUpdateTrigger>().enabled = true;
         _player.GetComponent<ObservableFixedUpdateTrigger>().enabled = true;
+    }
+
+    public void StartProductSkip()
+    {
+        IsActiveMainCamera(false);
+        IsActiveMainCamera(true);
     }
 }
