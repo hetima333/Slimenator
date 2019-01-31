@@ -130,7 +130,7 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager> {
 		this.ObserveEveryValueChanged(_ => Time.timeScale)
 			.DistinctUntilChanged()
 			.Subscribe(x => {
-				if (x <= 1) {
+				if (x < 1) {
 					PauseAllAudio();
 				} else {
 					UnPauseAllAudio();
