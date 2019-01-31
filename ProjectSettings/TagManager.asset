@@ -16,6 +16,7 @@ TagManager:
   - SlimeSpawner
   - Boss
   - CMCamera
+  - BossRoomWarpPortal
   layers:
   - Default
   - TransparentFX

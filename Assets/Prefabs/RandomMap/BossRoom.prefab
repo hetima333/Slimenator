@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 54497632934167254}
   m_Layer: 0
   m_Name: WarpPortal-B
-  m_TagString: Untagged
+  m_TagString: BossRoomWarpPortal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -706,7 +706,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58ed40bc5a246ce49b1143d068f86bf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _transferTarget: {fileID: 0}
+  _transferTarget: {fileID: 114074141151002374}
 --- !u!114 &114075631489619512
 MonoBehaviour:
   m_ObjectHideFlags: 1
