@@ -124,6 +124,8 @@ GameObject:
   - component: {fileID: 224423659494244502}
   - component: {fileID: 222130145627728668}
   - component: {fileID: 114625590961484392}
+  - component: {fileID: 114596925111767040}
+  - component: {fileID: 114845621891135182}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -208,6 +210,18 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\xD7 0"
+--- !u!114 &114596925111767040
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1550858480713492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf3b5bd58a52fc044b8be914ebf85bf2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _manager: {fileID: 0}
 --- !u!114 &114598252000853066
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -343,6 +357,20 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\xD7 0"
+--- !u!114 &114845621891135182
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1550858480713492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b90935de477614ea1e7fc2f0251ff0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showPos_x: 100
+  _hidePos_x: -100
+  _duration: 0.75
 --- !u!114 &114889306905312878
 MonoBehaviour:
   m_ObjectHideFlags: 1
