@@ -43,6 +43,8 @@ public class GameStateManager : SingletonMonoBehaviour<GameStateManager>
 
     private GameObject _player;
 
+    private GameObject _warpPortal;
+
     //カメラ
     [SerializeField]
     private GameObject _cameraHolder;
@@ -71,6 +73,7 @@ public class GameStateManager : SingletonMonoBehaviour<GameStateManager>
         _enemyList = new List<GameObject>();
         _slimeList = new List<GameObject>();
         _player = GameObject.FindGameObjectWithTag("Player");
+        _warpPortal = GameObject.FindGameObjectWithTag("BossRoomWarpPortal");
 
         //通常BGM
         AudioManager.Instance.PlayBGM("Stage_bgm",2);
@@ -176,15 +179,15 @@ public class GameStateManager : SingletonMonoBehaviour<GameStateManager>
     /// </summary>
     public void ClearChangeCamera()
     {
+        //プレイヤーの移動を停止
+        PlayerMoveStop();
+
         _cameraHolder.transform.GetChild((int)Camera.CLEAR).gameObject.SetActive(true);
         _cameraHolder.transform.GetChild((int)Camera.MAIN).gameObject.SetActive(false);
 
         _cmCameras.transform.GetChild((int)CMCamera.START).gameObject.SetActive(false);
         _cmCameras.transform.GetChild((int)CMCamera.BOSS_START).gameObject.SetActive(false);
         _cmCameras.transform.GetChild((int)CMCamera.CLEAR).gameObject.SetActive(true);
-
-        //プレイヤーの移動を停止
-        PlayerMoveStop();
     }
 
     /// <summary>
@@ -196,6 +199,8 @@ public class GameStateManager : SingletonMonoBehaviour<GameStateManager>
         _player.GetComponent<ObservableFixedUpdateTrigger>().enabled = false;
         //プレイヤーの向きを正面に指定
         _player.gameObject.transform.rotation = Quaternion.LookRotation(Vector3.forward);
+        //プレイヤーをワープ位置に指定
+        _player.gameObject.transform.position = _warpPortal.transform.position;
     }
 
     public IEnumerator KeepCamera(float time)
