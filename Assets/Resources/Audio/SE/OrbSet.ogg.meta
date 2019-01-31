@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: 99672e0cd474f0e4abb22856d3cbd6f6
+=======
+guid: 14141a6c740dda543aadf08b1467499a
+>>>>>>> feature/SlimeUI
 AudioImporter:
   externalObjects: {}
   serializedVersion: 6

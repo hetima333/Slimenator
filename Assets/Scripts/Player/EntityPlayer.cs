@@ -38,9 +38,6 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
 	[SerializeField]
 	private PredictionManager _preMan;
 
-	[SerializeField]
-	private Canvas _slimeStockCanvas;
-
 	public Stats
 	_Player_Stats;
 
@@ -96,7 +93,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
 	private DIRECTION
 	_Player_Dir;
 
-	private Dictionary<EnumHolder.States, CheckFunctions>
+    private Dictionary<EnumHolder.States, CheckFunctions>
 		_CheckFuntions = new Dictionary<EnumHolder.States, CheckFunctions>();
 	private bool _controllable = true;
 	// プレイヤーが操作可能か？
@@ -114,6 +111,8 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
 	private float _invincibleTime = 3.0f;
 
 	private bool _isInvincible = false;
+
+    public Dictionary<ElementType, int> SlimeStock { get { return _SlimeStock; } }
 
 	public float MaxHitPoint { get { return _Player_Stats.MaxHealthProperties * _Player_Stats.HealthMultiplyerProperties; } }
 	public float HitPoint { get { return _Player_Stats.HealthProperties; } }
@@ -140,23 +139,34 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
 	[SerializeField]
 	private GameObject
 	_CastingPoint;
-	private void Start() {
-		_Player_Stats.IsInvincible = false;
+    private void Start(){
+        _Player_Stats.IsInvincible = false;
 
-		// プレイヤーのHPが減少したら
-		this.ObserveEveryValueChanged(_ => this.HitPoint)
-			.Buffer(2, 1)
-			.Where(x => x.Count == 2)
-			.Select(x => x.First() - x.Last())
-			.Where(x => x > 0)
-			.Subscribe(x => {
-				_Player_Stats.IsInvincible = true;
-				if (_isInvincible) {
-					StopCoroutine(InvincibleTimer());
-				}
-				StartCoroutine(InvincibleTimer());
-			});
-	}
+        // プレイヤーのHPが減少したら
+        this.ObserveEveryValueChanged(_ => this.HitPoint)
+            .Buffer(2, 1)
+            .Where(x => x.Count == 2)
+            .Select(x => x.First() - x.Last())
+            .Where(x => x > 0)
+            .Subscribe(x =>
+            {
+                _Player_Stats.IsInvincible = true;
+                if (_isInvincible)
+                {
+                    StopCoroutine(InvincibleTimer());
+                }
+                StartCoroutine(InvincibleTimer());
+            });
+
+        // プレイヤー死亡時、スロットを空にする
+        this.ObserveEveryValueChanged(_ => this._Player_State)
+            .Where(x => x == EnumHolder.States.DIE)
+            .Subscribe(x =>
+            {
+                _OrbSlot.Clear();
+                _Skills.Clear();
+            });
+    }
 
 	IEnumerator InvincibleTimer() {
 		_isInvincible = true;
@@ -396,19 +406,13 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
 			_preMan.SwitchMode(null);
 		}
 
-		// テキストコンポーネントを取得し、スライムの数を入れる
-		foreach (var slime in _SlimeStock) {
-			var panel = _slimeStockCanvas.gameObject.transform.Find("Panel");
-			var image = panel.Find(slime.Key.name.ToString());
-			var text = image.Find("Num").GetComponent<Text>();
-			text.text = "× " + slime.Value.ToString();
-		}
-
-		// スライムリストの表示/非表示切り替え
-		if (Input.GetKeyDown(KeyCode.LeftShift)) {
-			var texts = _slimeStockCanvas.GetComponentsInChildren<Image>();
-			_slimeStockCanvas.enabled = !_slimeStockCanvas.enabled;
-		}
+		//// テキストコンポーネントを取得し、スライムの数を入れる
+		//foreach (var slime in _SlimeStock) {
+		//	var panel = _slimeStockCanvas.gameObject.transform.Find("Panel");
+		//	var image = panel.Find(slime.Key.name.ToString());
+		//	var text = image.Find("Num").GetComponent<Text>();
+		//	text.text = "× " + slime.Value.ToString();
+		//}
 
 		// スライムの選択を行う
 		SelectSlime();
@@ -478,10 +482,10 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
 			_tmpStock.Enqueue(type);
 			StoreElementInOrb(type);
 
-			Debug.Log("type:" + type + "slot" + slot);
-		}
+            AudioManager.Instance.PlaySE("OrbSet");
+        }
 
-	}
+    }
 
 	int CountSearchQueue<T>(T target, Queue<T> list) {
 		int result = 0;
