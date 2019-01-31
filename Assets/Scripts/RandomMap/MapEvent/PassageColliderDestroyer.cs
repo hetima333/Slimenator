@@ -7,23 +7,11 @@ public class PassageColliderDestroyer : MonoBehaviour
     private BoxCollider _collidor;
     private bool _isPassed = true;
 
-    // Use this for initialization
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-    }
-
-    void OnCollisionEnter(Collision collision)
+    void OnCollisionEnter(Collision collision)        
     {
         if (collision.gameObject.tag == "PassageCollidor")
         {
             // 相手をTrigger化させる
-            //Destroy(collision.gameObject);
             collision.gameObject.GetComponent<BoxCollider>().isTrigger = true;
 
             var aX = gameObject.transform.position.x;
