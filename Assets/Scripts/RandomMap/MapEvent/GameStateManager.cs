@@ -88,6 +88,7 @@ public class GameStateManager : SingletonMonoBehaviour<GameStateManager>
         if(Input.GetKeyDown(KeyCode.O))
         {
             _warper.Warp();
+            _warper.MyCamera = _exchangeCamera;
             _exchangeCamera.ChangeShootingMethod();
         }
 
@@ -121,7 +122,7 @@ public class GameStateManager : SingletonMonoBehaviour<GameStateManager>
             _warper.IsActive = true;
 
             //撮影カメラの切り替え
-            _warper.ChangeCamera = _exchangeCamera;
+            _warper.MyCamera = _exchangeCamera;
         }
     }
 
