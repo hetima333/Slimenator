@@ -23,6 +23,9 @@ public class GameStateManager : SingletonMonoBehaviour<GameStateManager>
     [SerializeField]
     private ExchangeCamera _exchangeCamera;
 
+    [SerializeField]
+    private GameObject _protal;
+
     private List<GameObject> _enemyList;
 
     private List<GameObject> _slimeList;
@@ -115,12 +118,14 @@ public class GameStateManager : SingletonMonoBehaviour<GameStateManager>
         if(_norm <= 0)
         {
             _isSearching = false;
-            //BossBGM
-            _warper.Warp();
-            //撮影方法の切り替え
-            _exchangeCamera.ChangeShootingMethod();
+            _warper.IsActive = true;
+
+            //撮影カメラの切り替え
+            _warper.ChangeCamera = _exchangeCamera;
         }
     }
+
+    
 
     public void IncreaseBoss()
     {
