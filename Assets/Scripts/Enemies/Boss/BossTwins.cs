@@ -85,9 +85,6 @@ public class BossTwins : BossBase {
 	//ダメージを受ける
 	public new void TakeDamage (float damage) {
 
-		if (_state == State.DEAD) return;
-
-		_properties.HealthProperties -= damage;
 		if (_properties.HealthProperties <= 0) {
 			_anim.CrossFade ("Dead", 0);
 			_animName = "Dead";

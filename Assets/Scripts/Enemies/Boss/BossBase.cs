@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 [RequireComponent (typeof (Rigidbody))]
 [RequireComponent (typeof (SimpleAnimation))]
-public abstract class BossBase : MonoBehaviour, IDamageable {
+public abstract class BossBase : MonoBehaviour, IDamageable,ISuckable {
 
 	public enum State {
 		ALIVE,
@@ -37,6 +37,9 @@ public abstract class BossBase : MonoBehaviour, IDamageable {
 	public GameObject _slimeBullet;
 
 	public BossSkill _previousSkill;
+
+
+	public bool _isSacking = false;
 
 	[SerializeField]
 	//発動できるスキルリスト
@@ -91,6 +94,8 @@ public abstract class BossBase : MonoBehaviour, IDamageable {
 
 
 	public void TakeDamage (float damage) {
+		if (_state == State.DEAD) return;
+		if(damage > 5000.0f){damage =1;_isSacking=true;}
 		_properties.HealthProperties -= damage;
 	}
 
@@ -153,5 +158,11 @@ public abstract class BossBase : MonoBehaviour, IDamageable {
 		_status = gameObject.GetComponent<Status> ();
 		_status.Init ();
 	}
+
+
+	//★吸い込まれた時呼ばれる関数
+    public void Sacking () {
+        return;
+    }
 
 }

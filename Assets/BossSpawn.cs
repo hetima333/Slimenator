@@ -14,6 +14,7 @@ public class BossSpawn : MonoBehaviour {
 		}
 
 		GameObject obj = ObjectManager.Instance.InstantiateWithObjectPooling(_bossPrefab, gameObject.transform.position, new Quaternion ());
+		obj.transform.Rotate(new Vector3(0,180,0));
 		BossBase boss = obj.GetComponent<BossBase> ();
 		boss.Init (EnumHolder.Instance.GetStats (_bossPrefab.name));
 	}

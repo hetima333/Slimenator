@@ -13,6 +13,8 @@ public class TestBoss : BossBase {
     const float MAX_HP = 3000.0f;
     const float MONEY = 2000.0f;
 
+    const float DAMAGE_TIME_LATE = 1.0f;
+
     //分裂時生成するボスオブジェクト
     [SerializeField]
     private GameObject Boss1;
@@ -26,6 +28,8 @@ public class TestBoss : BossBase {
     private GameObject _body;
 
     private bool _isSleep = true;
+
+    private float _damageCount;
 
     // Use this for initialization
 
@@ -53,7 +57,17 @@ public class TestBoss : BossBase {
         //★状態ダメージを受ける
         TakeDamage (_status.GetValue (EnumHolder.EffectType.TAKEDAMAGE));
 
-        if (_state == State.DEAD || _isSleep == true) return;
+        if(_isSacking)
+        {
+            _damageCount -= Time.deltaTime;
+            if(_damageCount <= 0)
+            {
+                _isSacking = false;
+                _damageCount = DAMAGE_TIME_LATE;
+            }
+        }
+
+        if (_state == State.DEAD || _isSleep == true||_isSacking ==true) return;
         
 
         _actInterval -= Time.deltaTime; {
@@ -71,13 +85,7 @@ public class TestBoss : BossBase {
     //ダメージを受ける
     public new void TakeDamage (float damage) {
 
-
-        if (_state == State.DEAD) return;
-
-        _properties.HealthProperties -= damage;
-
-        if (_properties.HealthProperties <= 0) {
-            
+        if (_properties.HealthProperties <= 0) {   
             _state = State.DEAD;
             PhaseUp ();
         }
@@ -188,7 +196,14 @@ public class TestBoss : BossBase {
     }
 
     public void WakeUp () {
+        StartCoroutine(Entry());
+    }
+
+    IEnumerator Entry()
+    {
+        yield return new WaitForSeconds(2.0f);
         _isSleep = false;
+
     }
 
 }
