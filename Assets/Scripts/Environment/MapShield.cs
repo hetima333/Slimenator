@@ -18,10 +18,11 @@ public class MapShield : MonoBehaviour {
 
             ContactPoint contact = collision.contacts[0];
             GameObject effect = Instantiate(Resources.Load(EFFECT_PATH)) as GameObject;
+
             effect.transform.position = contact.point;
 
             // 向き
-            effect.transform.LookAt(effect.transform.position + gameObject.transform.forward);
+            effect.transform.LookAt(effect.transform.position + new Vector3(0,0,-1));
         }
     }
 }
