@@ -19,9 +19,12 @@ public class SkillTargeted : Skill
     private float
         _Timer = 0;
 
+    private Stats _PlayerStats;
     public override void Engage(GameObject caster, Vector3 spawn_position = new Vector3(), Vector3 dir = new Vector3())
     {
         base.Engage(caster, spawn_position, dir);
+
+        if(!_PlayerStats)_PlayerStats =caster.GetComponent<EntityPlayer>()._Player_Stats;
 
         if (IsTimeOver())
         {
@@ -37,7 +40,7 @@ public class SkillTargeted : Skill
                         {
                             Debug.DrawLine(spawn_position, obj.transform.position, Color.yellow, 1f);
 
-                            dmg.TakeDamage(_Damage * ((_SkillTier != null) ? _SkillTier.GetMultiplyer() : 1));
+                            dmg.TakeDamage(_Damage * ((_SkillTier != null) ? _SkillTier.GetMultiplyer() : 1)*_PlayerStats.SkillPowerMultiplyerProperties);
                             Debug.Log("[Damaging (" + _Damage * ((_SkillTier != null) ? _SkillTier.GetMultiplyer() : 1) + ")] " + obj.name);
 
                             if (_StatusEffect.Count > 0)

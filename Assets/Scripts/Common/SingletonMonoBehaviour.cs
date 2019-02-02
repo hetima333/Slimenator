@@ -27,7 +27,7 @@ public class SingletonMonoBehaviour<T> : MonoBehaviour where T : SingletonMonoBe
 		CheckInstance();
 	}
 	
-	protected bool CheckInstance(){
+	protected virtual bool CheckInstance(){
 		if( instance == null){
 			instance = (T)this;
 			return true;
