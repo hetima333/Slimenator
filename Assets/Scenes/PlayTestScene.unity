@@ -281,6 +281,16 @@ Prefab:
       propertyPath: _slimeStockCanvas
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 114645841446893710, guid: d8cee6a6bac30c9458bb392d98cdb343,
+        type: 2}
+      propertyPath: _invincibleTime
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114645841446893710, guid: d8cee6a6bac30c9458bb392d98cdb343,
+        type: 2}
+      propertyPath: _invincibleDamage
+      value: 15
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d8cee6a6bac30c9458bb392d98cdb343, type: 2}
   m_IsPrefabParent: 0

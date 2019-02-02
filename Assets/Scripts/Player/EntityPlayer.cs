@@ -5,6 +5,7 @@ using System.Linq;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class EntityPlayer : MonoBehaviour, IDamageable {
 	private enum DIRECTION {
@@ -635,6 +636,15 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
 			AudioManager.Instance.PlaySE(_SkillStoreSFX.name);
 
 			_CurrentSkillOutcome = null;
+
+			if (SceneManager.GetActiveScene().name == "TutorialScene") {
+					// Tutorialシーンのみの動作 
+					if(TutorialManager.Instance.Step ==3)
+					{
+					TutorialManager.Instance.CreateCount++;
+					}
+				}
+
 		}
 	}
 
@@ -646,6 +656,15 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
 		_CurrentUseSkill.Init();
 		_Skills[_CurrentSelection] = null;
 		_Is_Casting = true;
+
+		if (SceneManager.GetActiveScene().name == "TutorialScene") {
+					// Tutorialシーンのみの動作 
+					if(TutorialManager.Instance.Step ==4)
+					{
+					TutorialManager.Instance.SkillUseCount++;
+					}
+				}
+
 
 		// スキルが入っているスロット番号を取得して設定する
 		var skillSlot = _Skills.Select((Value, Index) => new { Value, Index }).FirstOrDefault(x => x.Value != null);
