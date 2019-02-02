@@ -92,7 +92,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
 	private DIRECTION
 	_Player_Dir;
 
-    private Dictionary<EnumHolder.States, CheckFunctions>
+	private Dictionary<EnumHolder.States, CheckFunctions>
 		_CheckFuntions = new Dictionary<EnumHolder.States, CheckFunctions>();
 	private bool _controllable = true;
 	// プレイヤーが操作可能か？
@@ -105,17 +105,19 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
 		}
 	}
 
-	// 無敵時間
-	[SerializeField, Range(0.0f, 3.0f)]
+	[SerializeField, Range(0.0f, 3.0f), Tooltip("無敵時間")]
 	private float _invincibleTime = 3.0f;
+
+	[SerializeField, Range(0.0f, 100.0f), Tooltip("無敵になるダメージのしきい値")]
+	private float _invincibleDamage = 2.0f;
 
 	private bool _isInvincible = false;
 
-    public Dictionary<ElementType, int> SlimeStock { get { return _SlimeStock; } }
+	public Dictionary<ElementType, int> SlimeStock { get { return _SlimeStock; } }
 
 	public float MaxHitPoint { get { return _Player_Stats.MaxHealthProperties * _Player_Stats.HealthMultiplyerProperties; } }
 	public float HitPoint { get { return _Player_Stats.HealthProperties; } }
-	public float MoneyAmount { get { return _Money; } set{_Money = value;}}
+	public float MoneyAmount { get { return _Money; } set { _Money = value; } }
 	public float Speed {
 		get {
 			return _Player_Stats.SpeedProperties * _Player_Stats.SpeedMultiplyerProperties;
@@ -138,34 +140,31 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
 	[SerializeField]
 	private GameObject
 	_CastingPoint;
-    private void Start(){
-        _Player_Stats.IsInvincible = false;
+	private void Start() {
+		_Player_Stats.IsInvincible = false;
 
-        // プレイヤーのHPが減少したら
-        this.ObserveEveryValueChanged(_ => this.HitPoint)
-            .Buffer(2, 1)
-            .Where(x => x.Count == 2)
-            .Select(x => x.First() - x.Last())
-            .Where(x => x > 0)
-            .Subscribe(x =>
-            {
-                _Player_Stats.IsInvincible = true;
-                if (_isInvincible)
-                {
-                    StopCoroutine(InvincibleTimer());
-                }
-                StartCoroutine(InvincibleTimer());
-            });
+		// プレイヤーのHPが減少したら
+		this.ObserveEveryValueChanged(_ => this.HitPoint)
+			.Buffer(2, 1)
+			.Where(x => x.Count == 2)
+			.Select(x => x.First() - x.Last())
+			.Where(x => x >= _invincibleDamage)
+			.Subscribe(x => {
+				_Player_Stats.IsInvincible = true;
+				if (_isInvincible) {
+					StopCoroutine(InvincibleTimer());
+				}
+				StartCoroutine(InvincibleTimer());
+			});
 
-        // プレイヤー死亡時、スロットを空にする
-        this.ObserveEveryValueChanged(_ => this._Player_State)
-            .Where(x => x == EnumHolder.States.DIE)
-            .Subscribe(x =>
-            {
-                _OrbSlot.Clear();
-                _Skills.Clear();
-            });
-    }
+		// プレイヤー死亡時、スロットを空にする
+		this.ObserveEveryValueChanged(_ => this._Player_State)
+			.Where(x => x == EnumHolder.States.DIE)
+			.Subscribe(x => {
+				_OrbSlot.Clear();
+				_Skills.Clear();
+			});
+	}
 
 	IEnumerator InvincibleTimer() {
 		_isInvincible = true;
@@ -481,10 +480,10 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
 			_tmpStock.Enqueue(type);
 			StoreElementInOrb(type);
 
-            AudioManager.Instance.PlaySE("OrbSet");
-        }
+			AudioManager.Instance.PlaySE("OrbSet");
+		}
 
-    }
+	}
 
 	int CountSearchQueue<T>(T target, Queue<T> list) {
 		int result = 0;
