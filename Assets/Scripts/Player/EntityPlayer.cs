@@ -640,6 +640,12 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
 		_CurrentUseSkill.Init();
 		_Skills[_CurrentSelection] = null;
 		_Is_Casting = true;
+
+		// スキルが入っているスロット番号を取得して設定する
+		var skillSlot = _Skills.Select((Value, Index) => new { Value, Index }).FirstOrDefault(x => x.Value != null);
+		if (skillSlot != null) {
+			_CurrentSelection = skillSlot.Index;
+		}
 	}
 
 	private void ResetCurrentUsedSkill() {
