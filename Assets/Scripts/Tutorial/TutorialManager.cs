@@ -19,6 +19,9 @@ public class TutorialManager : SingletonMonoBehaviour<TutorialManager> {
 	[SerializeField]
 	private GameObject _scenePortal;
 
+	[SerializeField]
+	private GameObject _lockWall;
+
 
 	[SerializeField]
 	private Text _announceText;
@@ -37,7 +40,14 @@ public class TutorialManager : SingletonMonoBehaviour<TutorialManager> {
 	private Text[] _controllTexts; 
 
 	[SerializeField]
+	private Text[] _countTexts; 
+
+	[SerializeField]
 	private Image[] _controllImages; 
+
+
+	[SerializeField]
+	private Sprite[] _controllSprite;
 	
 
 	// Use this for initialization
@@ -49,6 +59,14 @@ public class TutorialManager : SingletonMonoBehaviour<TutorialManager> {
 		gameObject.ObserveEveryValueChanged(x => CreateCount).Where(x => (Step==3&&x>=3)).Subscribe(_ => StepUp());
 
 		gameObject.ObserveEveryValueChanged(x => SkillUseCount).Where(x => (Step==4&&x>=3)).Subscribe(_ => StepUp());
+
+		gameObject.UpdateAsObservable().Where(_=>Step == 2).Subscribe(_=>_countTexts[0].text = SuckCount.ToString());
+
+		gameObject.UpdateAsObservable().Where(_=>Step == 3).Subscribe(_=>_countTexts[0].text = CreateCount.ToString());
+
+		gameObject.UpdateAsObservable().Where(_=>Step == 4).Subscribe(_=>_countTexts[0].text = SkillUseCount.ToString());
+
+	
 	}
 	
 
@@ -66,25 +84,33 @@ public class TutorialManager : SingletonMonoBehaviour<TutorialManager> {
 				_announceText.text = "マーカーまで移動しよう";
 				_controllTexts[0].text ="移動";
 				_controllTexts[1].text ="向きの回転";
+				
 			}
 			else
 			{
 				_announceText.text = "Move to Marker";
 				_controllTexts[0].text ="Move";
+
 				_controllTexts[1].text ="Turning";
 			}
+
+				_controllImages[0].sprite = _controllSprite[0];
+				_controllImages[1].sprite = _controllSprite[2];
+
 			break;
 
 			case 2:
-			Vector3 Pos = new Vector3(0,1,20);
+			_countTexts[0].gameObject.SetActive(true);
+			_countTexts[1].gameObject.SetActive(true);
+			Vector3 Pos = new Vector3(0,1,5);
 			GameObject fireSpowner = ObjectManager.Instance.InstantiateWithObjectPooling(_spawner,Pos);
 			fireSpowner.GetComponent<TutrialSlimeSpowner>().SetType(TutrialSlimeSpowner.SLIME.FIRE);
 
-			Pos = new Vector3(20,1,20);
+			Pos = new Vector3(20,1,5);
 			GameObject iceSpowner = ObjectManager.Instance.InstantiateWithObjectPooling(_spawner,Pos);
 			iceSpowner.GetComponent<TutrialSlimeSpowner>().SetType(TutrialSlimeSpowner.SLIME.ICE);
 
-			Pos = new Vector3(-20,1,20);
+			Pos = new Vector3(-20,1,5);
 			GameObject lightningSpowner = ObjectManager.Instance.InstantiateWithObjectPooling(_spawner,Pos);
 			lightningSpowner.GetComponent<TutrialSlimeSpowner>().SetType(TutrialSlimeSpowner.SLIME.LIGHTNING);
 
@@ -100,14 +126,17 @@ public class TutorialManager : SingletonMonoBehaviour<TutorialManager> {
 				_controllTexts[1].text ="Turning";
 				_announceText.text = "Suck a slime";
 			}
+
+			_controllImages[0].sprite = _controllSprite[3];
+			_controllImages[1].sprite = _controllSprite[2];
 			
 			break;
 
 			case 3:
 			if(Language.Instance.language == "Japanese")
 			{
-				_announceText.text = "スライムを使ってスキルを作ろう";
-				_controllTexts[0].text ="スライムのセット";
+				_announceText.text = "スキルを作ろう";
+				_controllTexts[0].text ="スライムセット";
 				_controllTexts[1].text ="スキル生成";
 			}
 			else
@@ -117,6 +146,10 @@ public class TutorialManager : SingletonMonoBehaviour<TutorialManager> {
 				_controllTexts[1].text ="Skill generation";
 				
 			}
+
+			_controllImages[0].sprite = _controllSprite[1];
+			_controllImages[1].sprite = _controllSprite[4];
+
 			break;
 
 			case 4:
@@ -132,18 +165,27 @@ public class TutorialManager : SingletonMonoBehaviour<TutorialManager> {
 				_controllTexts[0].text ="Select skill";
 				_controllTexts[1].text ="Use skills";
 			}
+
+
+			_controllImages[0].sprite = _controllSprite[5];
+			_controllImages[1].sprite = _controllSprite[6];
+
 			break;
 
 			case 5:
+			_controllImages[0].gameObject.transform.parent.gameObject.SetActive(false);
+			_countTexts[0].gameObject.SetActive(false);
+			_countTexts[1].gameObject.SetActive(false);
+
 			if(Language.Instance.language == "Japanese")
 			{
 				_announceText.text = "チュートリアル終了";	
 			}
 			else
 			{
-				_announceText.text = "TutorialEnd";	
+				_announceText.text = "Tutorial End";	
 			}
-
+			_lockWall.SetActive(false);
 			_scenePortal.SetActive(true);
 			break;
 		}
