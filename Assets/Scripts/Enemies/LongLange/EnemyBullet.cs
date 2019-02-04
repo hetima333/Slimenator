@@ -47,9 +47,10 @@ public class EnemyBullet : MonoBehaviour {
             //ダメージ判定
             //TODO take damage   
             hasIDamageableObject.TakeDamage (_damage);
+            //HitSE
+            AudioManager.Instance.PlaySE("Water");
         }
-        //HitSE
-        AudioManager.Instance.PlaySE("Water");
+        
         //Release bullet
         Destroy (gameObject);
     }

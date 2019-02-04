@@ -56,7 +56,7 @@ public abstract class BossBase : MonoBehaviour, IDamageable,ISuckable {
 	public Stats _properties;
 
 	//最大値
-	public float MaxHitPoint { get { return _properties.MaxHealthProperties * _properties.HealthMultiplyerProperties; } }
+	public float MaxHitPoint { get { return _properties.MaxHealthProperties * _properties.HealthMultiplyerProperties*Difficulty.Instance._statusMagnification; } }
 	//体力
 	public float HitPoint { get { return _properties.HealthProperties; } }
 
