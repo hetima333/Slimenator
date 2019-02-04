@@ -29,9 +29,9 @@ public class SlimeMeteorRain : BossSkill {
 		for (int i = 0; i < num; i++) {
 			Vector3 pos = gameObject.transform.position;
 
-			pos.x += Random.Range (-50, 50);
+			pos.x += Random.Range (-70, 70);
 			pos.y = 50;
-			pos.z += Random.Range (-50, 50);
+			pos.z += Random.Range (-70, 70);
 			_meteor = Instantiate (_slimeMeteor, pos, Quaternion.identity);
 		}
 

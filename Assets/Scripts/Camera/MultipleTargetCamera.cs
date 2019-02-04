@@ -105,4 +105,18 @@ public class MultipleTargetCamera : MonoBehaviour {
         return bounds.center;
     }
 
+    /// <summary>
+    /// ターゲットの再読み込み
+    /// </summary>
+    public void ReloadTargt()
+    {
+        _targets = new List<Transform>();
+        //プレイヤーをターゲットに追加
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        _targets.Add(player.transform);
+        //ボス達をターゲットに追加  
+        GameObject boss = GameObject.FindGameObjectWithTag("Boss");
+        _targets.Add(boss.transform);
+    }
+
 }
