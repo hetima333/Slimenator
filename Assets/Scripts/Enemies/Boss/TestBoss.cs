@@ -189,6 +189,10 @@ public class TestBoss : BossBase {
 
         BossB.GetComponent<BossTwins> ()._target = _target;
         BossB.GetComponent<BossTwins> ().SetAvatar (BossA);
+
+
+        Camera.main.GetComponent<MultipleTargetCamera>().ReloadTargt();
+
         //オブジェクトの破棄
         GameStateManager.Instance.DecreaseBoss();
         ObjectManager.Instance.ReleaseObject(gameObject);
