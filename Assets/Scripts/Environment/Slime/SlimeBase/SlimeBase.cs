@@ -100,7 +100,14 @@ public abstract class SlimeBase : MonoBehaviour, ISuckable, IDamageable, IElemen
 
     private void OnDisable()
     {
-        if (transform.parent.parent.gameObject.activeSelf == false)
+        if(transform.parent == null)
+            return;
+
+        var parent = transform.parent.parent;
+        if(parent == null)
+            return;
+
+        if (parent.gameObject.activeSelf == false)
             ObjectManager.Instance.ReleaseObject(gameObject);
     }
 
