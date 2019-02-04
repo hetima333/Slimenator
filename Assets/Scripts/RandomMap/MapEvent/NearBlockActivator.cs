@@ -10,16 +10,22 @@ public class NearBlockActivator : MonoBehaviour {
     private RandomMapGenerator _rmg;
 
     private int size;
-
 	// Use this for initialization
 	void Start () {
         _rmg = GetComponent<RandomMapGenerator>();
 
         Activate();
+
+        //// 最初のマスを強制アクティブ化
+        _rmg._maps[0, 0].gameObject.SetActive(true);
+        _rmg._maps[0, 0].UpdateActived(true);
     }
 
     public void Activate()
     {
+        // 一度すべてのマスを非アクティブ化
+        Deactivate();
+
         // プレイヤーの現在位置を取得
         var pos = _player.transform.position;
 
@@ -35,23 +41,20 @@ public class NearBlockActivator : MonoBehaviour {
         int height = _rmg.GetSize().y;
         Vector2Int gridPpos = new Vector2Int(px, py);
 
-        // 一度すべてのマスを非アクティブ化
-        Deactivate();
-
-        // 最初のマスを強制アクティブ化
-        _rmg._maps[0, 0].gameObject.SetActive(true);
-
         // 自分のいるマスをアクティブ化
         var playerGrid = _rmg._maps[gridPpos.x, gridPpos.y];
             playerGrid.gameObject.SetActive(true);
+        _rmg._maps[gridPpos.x, gridPpos.y].UpdateActived(true);
+        Debug.Log(_rmg._maps[gridPpos.x, gridPpos.y].gameObject.name);
+
 
         // 調べる方向
         Vector2 vec = new Vector2(0, 1);
         // 調べるマス
         Vector2Int gridSpos = Vector2Int.zero;
 
-        // 周囲8マスを調べる
-        for (int i = 0; i < 8; i++) 
+        // 周囲4マスを調べる
+        for (int i = 0; i < 4; i++) 
         {
             gridSpos.x = (int)Mathf.Round(gridPpos.x + vec.x);
             gridSpos.y = (int)Mathf.Round(gridPpos.y + vec.y);
@@ -63,7 +66,7 @@ public class NearBlockActivator : MonoBehaviour {
             if (searchGrid != null)
                 searchGrid.gameObject.SetActive(true);
 
-            vec = Quaternion.Euler(0, 0, 45) * vec;
+            vec = Quaternion.Euler(0, 0, 90) * vec;
             vec.x = Mathf.Round(vec.x);
             vec.y = Mathf.Round(vec.y);
         }
@@ -74,8 +77,12 @@ public class NearBlockActivator : MonoBehaviour {
         // 消す
         foreach (var block in _rmg._maps)
         {
-            if (block != null && block.gameObject.activeSelf)
+            if (block != null)
+            {
                 block.gameObject.SetActive(false);
+                block.UpdateActived(false);
+            }
         }
     }
+
 }

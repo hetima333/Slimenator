@@ -34,12 +34,6 @@ public class MapConectTestTest : MonoBehaviour
         GenerateMap(_mapGen._maps, _mapSize.y, _mapSize.x);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     // ブロックオブジェクトのbitデータを時計回りに1回だけ90°回転させる
     public int RotateBitClockwise(int bitData)
     {
@@ -141,7 +135,7 @@ public class MapConectTestTest : MonoBehaviour
         }
 
         // オブジェクトの座標を計算
-        Vector3 pos = new Vector3(position.x * BLOCK_SIZE, 0, position.y * (-BLOCK_SIZE));
+        Vector3 pos = new Vector3(position.x * _mapGen.ModelSize, 0, position.y * (-_mapGen.ModelSize));
 
         // オブジェクトの回転量を計算
         Quaternion rot = Quaternion.identity;

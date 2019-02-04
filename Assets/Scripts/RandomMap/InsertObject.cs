@@ -45,11 +45,6 @@ public class InsertObject : MonoBehaviour {
 
     }
 
-    // Update is called once per frame
-    void Update () {
-
-    }
-
     /// <summary>
     /// プレイヤーの座標を設定する
     /// </summary>

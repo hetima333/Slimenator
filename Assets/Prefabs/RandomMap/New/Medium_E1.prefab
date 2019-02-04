@@ -5747,6 +5747,7 @@ MonoBehaviour:
   _isFrontPassage: 0
   _isLeftPassage: 1
   passagePos: 4
+  _isSpawnerActive: 1
 --- !u!114 &114952865101358412
 MonoBehaviour:
   m_ObjectHideFlags: 1
