@@ -23,6 +23,8 @@ public class OneRoomInfo : MonoBehaviour
     //通路の位置
     public int passagePos;
 
+    public bool _isSpawnerActive = true;
+
     public enum PASSAGE
     {
         BACK = 1,
@@ -47,4 +49,12 @@ public class OneRoomInfo : MonoBehaviour
 
     }
 
+    public void UpdateActived(bool isactive) 
+    {
+        var spawners = GetComponentsInChildren<SlimeSpawner>();
+        foreach (var spawner in spawners)
+        {
+            spawner.UpdateActive(isactive);
+        }
+    }
 }

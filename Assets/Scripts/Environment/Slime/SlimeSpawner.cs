@@ -26,6 +26,8 @@ public class SlimeSpawner : MonoBehaviour {
     public SkillTier
       _startingTier;
 
+    private bool _isActive = true;
+
 
     #region Getter/Setter
     public float SpawnTimer
@@ -57,6 +59,9 @@ public class SlimeSpawner : MonoBehaviour {
     private void Update()
     {
         _spawnTimer += Time.deltaTime;
+
+        if (!_isActive)
+            return;
 
         if (_spawnTimer > _spawnRate)
         {
@@ -98,5 +103,10 @@ public class SlimeSpawner : MonoBehaviour {
         slime_obj.SetActive(true);
 
         return slime_obj;
+    }
+
+    public void UpdateActive(bool isActive)
+    {
+        _isActive = isActive;
     }
 }

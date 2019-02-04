@@ -20,8 +20,12 @@ public class MapConectTest : MonoBehaviour
     Vector2Int _mapSize;
 
     // Use this for initialization
-    void Start()
+
+    private void Awake()
     {
+        // 大きさを指定してマップを生成する
+        _mapGen.MapResize(0, 0);
+
         //最初の部屋を生成する
         _mapGen.ChoiceFirstRoom();
 
@@ -31,10 +35,10 @@ public class MapConectTest : MonoBehaviour
         GenerateMap(_mapGen._maps, _mapSize.y, _mapSize.x);
     }
 
-    // Update is called once per frame
-    void Update()
+    void Start()
     {
-
+        // 
+        _mapGen.InitPortal();
     }
 
     // ブロックオブジェクトのbitデータを時計回りに1回だけ90°回転させる
@@ -148,6 +152,7 @@ public class MapConectTest : MonoBehaviour
         // つくったオブジェクトを配列に格納
         block.passagePos = nextCorridor;
         _mapGen._maps[(int)position.x, (int)position.y] = block;
+        _mapGen._rooms.Add(block);
     }
 
 }

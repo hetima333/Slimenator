@@ -78,9 +78,16 @@ public class ForceWarp : MonoBehaviour
         {
             // ワープ発動
             Warp();
-
-
         }
+    }
+
+    public GameObject GetRandomRoom()
+    {
+        // 部屋を全て取得
+        var rooms = gameObject.transform.GetComponentsInChildren<OneRoomInfo>();
+
+        var room = rooms[Random.Range(0,rooms.Length)];
+        return room.gameObject;
     }
 }
 

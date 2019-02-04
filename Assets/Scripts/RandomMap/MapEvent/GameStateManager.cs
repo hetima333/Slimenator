@@ -23,9 +23,6 @@ public class GameStateManager : SingletonMonoBehaviour<GameStateManager>
     [SerializeField]
     private ExchangeCamera _exchangeCamera;
 
-    [SerializeField]
-    private GameObject _protal;
-
     private List<GameObject> _enemyList;
 
     private List<GameObject> _slimeList;
@@ -87,9 +84,9 @@ public class GameStateManager : SingletonMonoBehaviour<GameStateManager>
     {
         if(Input.GetKeyDown(KeyCode.O))
         {
-            _warper.Warp();
             _warper.MyCamera = _exchangeCamera;
             _exchangeCamera.ChangeShootingMethod();
+            _warper.Warp();
         }
 
         if (Input.GetKeyDown(KeyCode.K))
