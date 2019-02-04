@@ -18,7 +18,7 @@ public class AroundSlimeShot : BossSkill {
 			_boss._anim.CrossFade ("Shot2", 0);
 			_boss._animName = "Shot2";
 		} else {
-			for (int i = 0; i < 12; i++) {
+			for (int i = 0; i < 11; i++) {
 
 				_canActive = false;
 				CreateShotObject (i * 30.0f);
@@ -43,6 +43,7 @@ public class AroundSlimeShot : BossSkill {
 			CreateShotObject (i * 30.0f);
 		}
 		_actTime = 1.0f;
+		AudioManager.Instance.PlaySE("SlimeShot");
 		_canActive = false;
 		_boss.GetComponent<BossBase> ()._isAction = true;
 	}

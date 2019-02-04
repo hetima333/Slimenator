@@ -204,10 +204,11 @@ public class TestBoss : BossBase {
     }
 
     IEnumerator Entry()
-    {
+    {      
+        GameStateManager.Instance.BossCanvas.SetActive(true);
         yield return new WaitForSeconds(2.0f);
+        GameStateManager.Instance.BossCanvas.SetActive(false);
         _isSleep = false;
-
     }
 
 }

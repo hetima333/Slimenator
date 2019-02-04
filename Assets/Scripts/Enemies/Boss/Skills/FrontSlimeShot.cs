@@ -43,6 +43,7 @@ public class FrontSlimeShot : BossSkill {
 		CreateShotObject (0);
 		CreateShotObject (30f);
 		CreateShotObject (-30f);
+		AudioManager.Instance.PlaySE("SlimeShot");
 		_canActive = false;
 		_boss.GetComponent<BossBase> ()._isAction = true;
 	}

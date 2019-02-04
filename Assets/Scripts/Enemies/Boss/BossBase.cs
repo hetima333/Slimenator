@@ -123,6 +123,7 @@ public abstract class BossBase : MonoBehaviour, IDamageable,ISuckable {
 						GameObject shockWave = Instantiate (_shockWave);
 						shockWave.GetComponent<ShockWave> ().SetScale (35);
 						shockWave.GetComponent<ShockWave> ().SetDamage (10);
+						AudioManager.Instance.PlaySE("SlimeFall");
 						//接触地点を取得
 						Vector3 ShockPos = gameObject.transform.position;
 						ShockPos.y = 1f;
