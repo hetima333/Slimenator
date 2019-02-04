@@ -360,7 +360,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4170777144531922, guid: d8cee6a6bac30c9458bb392d98cdb343, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 4170777144531922, guid: d8cee6a6bac30c9458bb392d98cdb343, type: 2}
       propertyPath: m_LocalRotation.x
@@ -560,7 +560,7 @@ Light:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1086394227}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 8
   m_Type: 1
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
@@ -811,10 +811,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 4394099649035284, guid: 2a3da13cad5184b4ba794751bf2d292a, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 0.7933534
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2a3da13cad5184b4ba794751bf2d292a, type: 2}
   m_IsPrefabParent: 0
@@ -920,7 +916,7 @@ Prefab:
     - target: {fileID: 114007389808545302, guid: 2ab6ee2992eca7145af6782454fedfa7,
         type: 2}
       propertyPath: m_ChildCameras.Array.size
-      value: 0
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4784613891377364, guid: 2ab6ee2992eca7145af6782454fedfa7, type: 2}
       propertyPath: m_LocalPosition.x
@@ -970,6 +966,11 @@ Prefab:
       value: 
       objectReference: {fileID: 354618594}
     - target: {fileID: 114191908322175940, guid: 2ab6ee2992eca7145af6782454fedfa7,
+        type: 2}
+      propertyPath: m_Follow
+      value: 
+      objectReference: {fileID: 452130536}
+    - target: {fileID: 114007389808545302, guid: 2ab6ee2992eca7145af6782454fedfa7,
         type: 2}
       propertyPath: m_Follow
       value: 
