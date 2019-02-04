@@ -110,13 +110,24 @@ public class MultipleTargetCamera : MonoBehaviour {
     /// </summary>
     public void ReloadTargt()
     {
+        for (int i = _targets.Count - 1; i >= 0; i--)
+        {
+            _targets.RemoveAt(i);
+        }
+
         _targets = new List<Transform>();
         //プレイヤーをターゲットに追加
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         _targets.Add(player.transform);
         //ボス達をターゲットに追加  
-        GameObject boss = GameObject.FindGameObjectWithTag("Boss");
-        _targets.Add(boss.transform);
+        //GameObject boss = GameObject.FindGameObjectWithTag("Boss");
+        GameObject boss1 = GameObject.Find("MiniKingSlime1(Clone)");
+        _targets.Add(boss1.transform);
+        GameObject boss2 = GameObject.Find("MiniKingSlime2(Clone)");
+        _targets.Add(boss2.transform);
+
+        //for(int i=0;i<_targets.Count;i++)
+        //    Debug.Log("target:" + _targets[i].gameObject.name);
     }
 
 }
