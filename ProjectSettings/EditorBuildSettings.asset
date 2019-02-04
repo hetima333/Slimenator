@@ -11,9 +11,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/PlayTestScene.unity
     guid: e32dbd74032f3fc4498e1069b42b5551
-  - enabled: 1
-    path: Assets/Scenes/Managers/HUD.unity
+  - enabled: 0
+    path: Assets/Scenes/Managers/HUD2.unity
     guid: 4a6d7030e67df415f80a641b351afd9f
   - enabled: 1
     path: Assets/Scenes/TutorialScene.unity
     guid: 000d581ad91b7d74eb81b724e9c69716
+  - enabled: 1
+    path: Assets/Scenes/Managers/HUD.unity
+    guid: 0fbc80c5f9f8b134792bd8a42889fa86
