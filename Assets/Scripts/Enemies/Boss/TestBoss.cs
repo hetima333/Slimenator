@@ -189,6 +189,10 @@ public class TestBoss : BossBase {
 
         BossB.GetComponent<BossTwins> ()._target = _target;
         BossB.GetComponent<BossTwins> ().SetAvatar (BossA);
+
+        //ボスカメラに情報を送る
+        Camera.main.GetComponent<MultipleTargetCamera>().ReloadTargt();
+
         //オブジェクトの破棄
         GameStateManager.Instance.DecreaseBoss();
         ObjectManager.Instance.ReleaseObject(gameObject);
@@ -200,10 +204,11 @@ public class TestBoss : BossBase {
     }
 
     IEnumerator Entry()
-    {
+    {      
+        //GameStateManager.Instance.BossCanvas.SetActive(true);
         yield return new WaitForSeconds(2.0f);
+        //GameStateManager.Instance.BossCanvas.SetActive(false);
         _isSleep = false;
-
     }
 
 }

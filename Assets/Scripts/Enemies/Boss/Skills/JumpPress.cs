@@ -29,6 +29,7 @@ public class JumpPress : BossSkill {
 		}
 		Jump ();
 		_canActive = false;
+		AudioManager.Instance.PlaySE("SlimeFall");
 		_boss.GetComponent<BossBase> ()._isAction = true;
 
 	}
