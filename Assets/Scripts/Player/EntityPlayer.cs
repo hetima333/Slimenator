@@ -186,7 +186,9 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
 	_VacuumSFX,
 	_SuckSFX,
 	_WalkingSFX,
-	_SkillSwapSFX;
+	_SkillSwapSFX,
+    _MoneySE,
+    _HealSE;
 
 	private void Awake() {
 		_CurrentSkillOutcome = null;
@@ -224,7 +226,10 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
 		for (int i = 0; i < _Skill_Slots; i++) {
 			_Skills.Add(null);
 		}
-	}
+
+        
+
+    }
 
 	private void IdleCheckFunction() {
 		_PrevPosition = gameObject.transform.position;
@@ -503,21 +508,26 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
 
 	// 一旦リストに格納する
 	public void StockSlime(ElementType type) {
-		AudioManager.Instance.PlaySE(_SuckSFX.name);
 
 		switch (type.name) {
 			case "Gold":
+                AudioManager.Instance.PlaySE(_MoneySE.name);
 				_Money += type.GetRandomAmount();
-				break;
+
+                break;
 
 			case "Heal":
-				_Player_Stats.HealthProperties += type.GetRandomAmount();
+                AudioManager.Instance.PlaySE(_HealSE.name,false,0.6f);
+
+                _Player_Stats.HealthProperties += type.GetRandomAmount();
 				_Player_Stats.HealthProperties = Mathf.Clamp(_Player_Stats.HealthProperties, 0, MaxHitPoint);
 				break;
 
 			default:
-				// 新生成用のストックに加算
-				int slimeCount = 0;
+                AudioManager.Instance.PlaySE(_SuckSFX.name);
+
+                // 新生成用のストックに加算
+                int slimeCount = 0;
 				_SlimeStock.TryGetValue(type, out slimeCount);
 				_SlimeStock.AddOrReplace(type, slimeCount + 1);
 				break;

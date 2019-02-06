@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UniRx;
 
 public class ForceWarp : MonoBehaviour
 {
@@ -11,11 +12,14 @@ public class ForceWarp : MonoBehaviour
     private GameObject _Boss;
     private ExchangeCamera _camera;
 
+    [SerializeField]
+    private GameObject _efffect;
+
     public ExchangeCamera MyCamera
     {
         set { _camera = value; }
     }
-    private bool _isActive;
+    private bool _isActive = false;
     public bool IsActive
     {
         set { _isActive = value; }
@@ -38,6 +42,17 @@ public class ForceWarp : MonoBehaviour
         START,
         BOSS_START,
         CLEAR
+    }
+
+    private void Start()
+    {
+        this.ObserveEveryValueChanged(x=> x._isActive)
+            .Where(x=> true)
+            .Subscribe(_ => {
+                _efffect.SetActive(true);
+            });
+
+        _efffect.SetActive(false);
     }
 
     public void Warp()
@@ -70,7 +85,7 @@ public class ForceWarp : MonoBehaviour
     }
 
     private void OnCollisionEnter(Collision collision)
-    {
+    {   
         if (!_isActive)
             return;
 
@@ -79,15 +94,6 @@ public class ForceWarp : MonoBehaviour
             // ワープ発動
             Warp();
         }
-    }
-
-    public GameObject GetRandomRoom()
-    {
-        // 部屋を全て取得
-        var rooms = gameObject.transform.GetComponentsInChildren<OneRoomInfo>();
-
-        var room = rooms[Random.Range(0,rooms.Length)];
-        return room.gameObject;
     }
 }
 

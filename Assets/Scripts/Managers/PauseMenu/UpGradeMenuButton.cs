@@ -24,8 +24,6 @@ private GameObject _pauseButtons;
 	}
 
 	protected override void OnExecute(PointerEventData e) {
-        FadeManager.Instance.StartTransition(0.5f, "");
-
 		if(_upGradeManuPanel.activeSelf == true)
 		{
 		// パネルの非アクティブ化
