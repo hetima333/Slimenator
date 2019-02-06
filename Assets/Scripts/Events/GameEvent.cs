@@ -13,7 +13,7 @@ public class GameEvent : ScriptableObject
     {
         Event_Listeners = new List<EventListener>();
     }
- 
+
     public void InvokeAllListeners()
     {
         for (int i = Event_Listeners.Count - 1; i >= 0; i--)

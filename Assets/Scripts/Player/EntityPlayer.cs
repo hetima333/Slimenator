@@ -194,7 +194,6 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
 		_Player_Stats.DamageMultiplyerProperties = _Player_Stats.HealthMultiplyerProperties = _Player_Stats.SpeedMultiplyerProperties = _Player_Stats.SuckingPowerMultiplyerProperties = 1;
 		_Player_Stats.HealthProperties = MaxHitPoint;
 
-		_Player_Stats.HealthMultiplyerProperties = 1.0f;
 		_Player_Stats.SkillPowerMultiplyerProperties = 1.0f;
 
 		_Money = 0;

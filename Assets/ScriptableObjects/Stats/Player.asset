@@ -13,8 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _Prefab: {fileID: 1314456541332650, guid: d8cee6a6bac30c9458bb392d98cdb343, type: 2}
   _MaxHealth: 100
-  _MaxHealthMultiplyer: 1
-  _Health: 100
+  _MaxHealthMultiplyer: 1.4000001
+  _Health: 127
   _MaxDamage: 1
   _MaxDamageMultiplyer: 1
   _MaxSpeed: 23
