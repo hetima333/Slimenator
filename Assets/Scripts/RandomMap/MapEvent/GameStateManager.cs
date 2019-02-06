@@ -77,6 +77,12 @@ public class GameStateManager : SingletonMonoBehaviour<GameStateManager>
 
         //通常BGM
         AudioManager.Instance.PlayBGM("Stage_bgm",2);
+
+        var sceneName = SceneManager.GetActiveScene().name;
+        if (sceneName != "TutorialScene")
+        {
+            SceneManager.LoadScene("HUD", LoadSceneMode.Additive);
+        }
     }
 
     // Update is called once per frame
@@ -141,6 +147,7 @@ public class GameStateManager : SingletonMonoBehaviour<GameStateManager>
             SceneManager.UnloadSceneAsync("HUD");
             _clearCanvas.gameObject.SetActive(true);
             ClearChangeCamera();
+            _player.GetComponent<EntityPlayer>().ResetSkills();
 
             //カメラをキープする
             StartCoroutine(KeepCamera(4.0f));

@@ -162,12 +162,18 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
 		this.ObserveEveryValueChanged(_ => this._Player_State)
 			.Where(x => x == EnumHolder.States.DIE)
 			.Subscribe(x => {
-				_OrbSlot.Clear();
-				_Skills.Clear();
+                ResetSkills();
+
 			});
 	}
 
-	IEnumerator InvincibleTimer() {
+    public void ResetSkills()
+    {
+        _OrbSlot.Clear();
+        _Skills.Clear();
+    }
+
+    IEnumerator InvincibleTimer() {
 		_isInvincible = true;
 		yield return new WaitForSeconds(_invincibleTime);
 		_Player_Stats.IsInvincible = false;

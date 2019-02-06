@@ -9,8 +9,8 @@ public class SceneLoadButton : MenuButtonBase {
 
 	protected override void OnExecute (PointerEventData e) {
 		AudioManager.Instance.StopBGM();
-		SceneManager.LoadScene (_sceneName);
-		if(Pausable.Instance)
+        FadeManager.Instance.StartTransition(1.0f, _sceneName);
+        if (Pausable.Instance)
 		{
 			Pausable.Instance.Pausing = false;
 		}

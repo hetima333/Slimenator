@@ -10,6 +10,7 @@ public class TitleManager : MonoBehaviour {
 
 	[SerializeField]
 	private Text _DifficultyButtonText;
+
 	// Use this for initialization
 	void Start () {
 		AudioManager.Instance.StopBGM();

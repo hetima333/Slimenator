@@ -13,11 +13,7 @@ private string _sceneName;
 
 	if(col.gameObject.tag == "Player")
 	{
-		SceneManager.LoadScene(_sceneName);
-		if(_sceneName == "PlayTestScene")
-		{
-			Application.LoadLevelAdditive ("HUD");
-		}
+		FadeManager.Instance.StartTransition(1.0f,_sceneName);
 	}
 }
 
