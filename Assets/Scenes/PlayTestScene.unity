@@ -1556,6 +1556,11 @@ Prefab:
       propertyPath: _cmCameras
       value: 
       objectReference: {fileID: 1451339160}
+    - target: {fileID: 114577227134291544, guid: 44e6fae741e37e24c81b5d102b048d6a,
+        type: 2}
+      propertyPath: _bossCanvas
+      value: 
+      objectReference: {fileID: 291435720}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 44e6fae741e37e24c81b5d102b048d6a, type: 2}
   m_IsPrefabParent: 0

@@ -67,6 +67,8 @@ public class ForceWarp : MonoBehaviour
         _cmCameras.transform.GetChild((int)CMCamera.CLEAR).gameObject.SetActive(false);
         _cmCameras.transform.GetChild((int)CMCamera.BOSS_START).gameObject.SetActive(true);
 
+        //ボスの名前表示
+        StartCoroutine(GameStateManager.Instance.BossNameShow());
         //演出終了後にカメラを切り替える
         Invoke("ChangeCamera", 3.0f);
 

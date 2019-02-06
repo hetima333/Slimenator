@@ -41,6 +41,9 @@ public class GameStateManager : SingletonMonoBehaviour<GameStateManager>
     [SerializeField]
     private Canvas _gameOverCanvas;
 
+    [SerializeField]
+    private Canvas _bossCanvas;
+
     private GameObject _player;
 
     private GameObject _warpPortal;
@@ -213,6 +216,14 @@ public class GameStateManager : SingletonMonoBehaviour<GameStateManager>
         _player.gameObject.transform.rotation = Quaternion.LookRotation(Vector3.forward);
         //プレイヤーをワープ位置に指定
         _player.gameObject.transform.position = _warpPortal.transform.position;
+    }
+
+    public IEnumerator BossNameShow()
+    {
+        yield return new WaitForSeconds(1.0f);
+        _bossCanvas.gameObject.SetActive(true);
+        yield return new WaitForSeconds(2.0f);
+        _bossCanvas.gameObject.SetActive(false);
     }
 
     public IEnumerator KeepCamera(float time)
