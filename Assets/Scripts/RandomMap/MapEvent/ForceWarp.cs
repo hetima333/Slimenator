@@ -57,6 +57,9 @@ public class ForceWarp : MonoBehaviour
 
     public void Warp()
     {
+        _camera = GameStateManager.Instance.ExCamera;
+        _camera.ChangeShootingMethod();
+
         _Player.transform.position = _target.transform.position;
         _Boss = GameObject.Find("KingSlime(Clone)");
         //ボス開始演出カメラの切り替え
