@@ -33,6 +33,7 @@ public class MultipleTargetCamera : MonoBehaviour {
         _targets = new List<Transform>();
         //プレイヤーをターゲットに追加
         GameObject player = GameObject.FindGameObjectWithTag("Player");
+        _camera.transform.position = player.transform.position;
         _targets.Add(player.transform);
         //ボス達をターゲットに追加  
         GameObject boss = GameObject.FindGameObjectWithTag("Boss");
