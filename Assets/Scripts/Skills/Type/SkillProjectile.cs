@@ -27,15 +27,19 @@ public class SkillProjectile : Skill
     private float
         _Speed;
 
+    private Stats _PlayerStats;
+
     public override void Engage(GameObject caster, Vector3 spawn_position = new Vector3(), Vector3 dir = new Vector3())
     {
         base.Engage(caster, spawn_position, dir);
+
+        if(!_PlayerStats)_PlayerStats =caster.GetComponent<EntityPlayer>()._Player_Stats;
 
         if (IsTimeOver())
         {
             if (!IsSkillOver() || _CastingTimer == 0)
             {
-                float multiplyer = ((_SkillTier != null) ? _SkillTier.GetMultiplyer() : 1);
+                float multiplyer = ((_SkillTier != null) ? _SkillTier.GetMultiplyer() : 1)*_PlayerStats.SkillPowerMultiplyerProperties;
 
                 GameObject temp = ObjectManager.Instance.InstantiateWithObjectPooling(_Projectile, spawn_position, caster.transform.rotation);
                 temp.GetComponent<Projectile>().Init(dir, _Speed, _properties, _StatusEffect, _Targetable, _Range, _Damage, multiplyer);

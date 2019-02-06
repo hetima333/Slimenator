@@ -433,25 +433,25 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
 		if (_Animator.speed != _Player_Stats.SpeedMultiplyerProperties)
 			_Animator.speed = _Player_Stats.SpeedMultiplyerProperties;
 
-		if (Input.anyKeyDown) {
-			int temp = 0;
-			bool is_pressed = false;
-			foreach (KeyCode vKey in System.Enum.GetValues(typeof(KeyCode))) {
-				if (Input.GetKey(vKey)) {
-					if ((int) vKey >= (int) KeyCode.Alpha1 && (int) vKey <= (int) KeyCode.Alpha9) {
-						temp = (int) vKey - (int) KeyCode.Alpha1;
-						is_pressed = true;
-						break;
-					}
-				}
-			}
+		//if (Input.anyKeyDown) {
+		//	int temp = 0;
+		//	bool is_pressed = false;
+		//	foreach (KeyCode vKey in System.Enum.GetValues(typeof(KeyCode))) {
+		//		if (Input.GetKey(vKey)) {
+		//			if ((int) vKey >= (int) KeyCode.Alpha1 && (int) vKey <= (int) KeyCode.Alpha9) {
+		//				temp = (int) vKey - (int) KeyCode.Alpha1;
+		//is_pressed = true;
+		//				break;
+		//			}
+		//		}
+		//	}
 
-			if (is_pressed) {
-				if (_ElementType.GetList().Count > temp) {
-					StockSlime((ElementType) (_ElementType.GetList() [temp]));
-				}
-			}
-		}
+		//	if (is_pressed) {
+		//		if (_ElementType.GetList().Count > temp) {
+		//			//StockSlime((ElementType) (_ElementType.GetList() [temp]));
+		//		}
+		//	}
+		//}
 
 	}
 
