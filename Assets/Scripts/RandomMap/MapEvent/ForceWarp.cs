@@ -15,6 +15,9 @@ public class ForceWarp : MonoBehaviour
     [SerializeField]
     private GameObject _efffect;
 
+    [SerializeField]
+    private AudioClip _portalSE;
+
     public ExchangeCamera MyCamera
     {
         set { _camera = value; }
@@ -50,6 +53,7 @@ public class ForceWarp : MonoBehaviour
             .Where(x=> true)
             .Subscribe(_ => {
                 _efffect.SetActive(true);
+                AudioManager.Instance.PlaySE(_portalSE.name);
             });
 
         _efffect.SetActive(false);

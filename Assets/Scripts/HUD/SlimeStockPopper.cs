@@ -73,7 +73,7 @@ public class SlimeStockPopper : MonoBehaviour {
                 }
 
                 // 隠れているときだけポップ表示ON
-                if (_state == SequenceState.STAY_HIDE )
+                if (_state == SequenceState.STAY_HIDE || _state == SequenceState.MOVE_LEFT)
                 {
                     _sequence.Restart();
                     _state = SequenceState.MOVE_RIGHT;

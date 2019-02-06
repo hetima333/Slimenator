@@ -31,16 +31,16 @@ public class RandomMapGenerator : MonoBehaviour
 
     public void MapResize(int x = 0, int y = 0)
     {
-        if(x == 0)
-        {
+        if (x == 0)
             x = _width;
-        }
+        else
+            _width = x;
 
-        if(y == 0)
-        {
+
+        if (y == 0)
             y = _depth;
-        }
-
+        else
+            _depth = y;
         //マップ全体の大きさ
         _maps = new OneRoomInfo[x, y];
     }

@@ -23,6 +23,7 @@ public class GameStateManager : SingletonMonoBehaviour<GameStateManager>
     [SerializeField]
     private ExchangeCamera _exchangeCamera;
 
+
     public ExchangeCamera ExCamera
     {
         get { return _exchangeCamera; }

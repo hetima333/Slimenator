@@ -24,7 +24,10 @@ public class MapConectTest : MonoBehaviour
     private void Awake()
     {
         // 大きさを指定してマップを生成する
-        _mapGen.MapResize(0, 0);
+        if (Difficulty.Instance._difficulty == "NORMAL")
+            _mapGen.MapResize(3, 3);
+        else if(Difficulty.Instance._difficulty == "HARD")
+            _mapGen.MapResize(6, 6);
 
         //最初の部屋を生成する
         _mapGen.ChoiceFirstRoom();
