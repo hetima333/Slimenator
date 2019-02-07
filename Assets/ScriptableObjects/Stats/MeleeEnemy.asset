@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: MeleeEnemy
   m_EditorClassIdentifier: 
   _Prefab: {fileID: 1511007971229264, guid: a9e3da10e657e224bb215c43399fd14d, type: 2}
-  _MaxHealth: 40
+  _MaxHealth: 70
   _MaxHealthMultiplyer: 1
   _Health: 0
   _MaxDamage: 0
@@ -21,4 +21,6 @@ MonoBehaviour:
   _MaxSpeedMultiplyer: 1
   _SuckingPower: 0
   _SuckingPowerMultiplyer: 1
+  _SkillPower: 0
+  _SkillPowerMultiplyer: 0
   _UsedByMultipleEntities: 1

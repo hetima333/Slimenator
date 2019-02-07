@@ -12,13 +12,15 @@ MonoBehaviour:
   m_Name: MiniKingSlime2
   m_EditorClassIdentifier: 
   _Prefab: {fileID: 1818661371988076, guid: 02fc1ea3fb0bdfb4fa6a682873a99790, type: 2}
-  _MaxHealth: 200
+  _MaxHealth: 300
   _MaxHealthMultiplyer: 1
-  _Health: 200
+  _Health: 300
   _MaxDamage: 0
   _MaxDamageMultiplyer: 1
   _MaxSpeed: 1
   _MaxSpeedMultiplyer: 1
   _SuckingPower: 0
   _SuckingPowerMultiplyer: 1
+  _SkillPower: 0
+  _SkillPowerMultiplyer: 0
   _UsedByMultipleEntities: 1
