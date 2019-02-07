@@ -85,7 +85,7 @@ public class SlimeStockPopper : MonoBehaviour {
     private void Update()
     {
         // ポップの強制表示
-        if(Input.GetKeyDown(KeyCode.LeftShift))
+        if(Input.GetKeyDown(KeyCode.Tab))
         {
             SwithiPanel();
         }

@@ -1,11 +1,11 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UniRx;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class EntityPlayer : MonoBehaviour, IDamageable {
 	private enum DIRECTION {
@@ -452,6 +452,10 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
 		keyBind.Add(KeyCode.X, _ElementType.GetList() [1] as ElementType);
 		keyBind.Add(KeyCode.C, _ElementType.GetList() [2] as ElementType);
 
+		keyBind.Add(KeyCode.Alpha1, _ElementType.GetList() [0] as ElementType);
+		keyBind.Add(KeyCode.Alpha2, _ElementType.GetList() [1] as ElementType);
+		keyBind.Add(KeyCode.Alpha3, _ElementType.GetList() [2] as ElementType);
+
 		ElementType type = null;
 		foreach (var key in keyBind) {
 			if (Input.GetKeyDown(key.Key)) {
@@ -638,12 +642,11 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
 			_CurrentSkillOutcome = null;
 
 			if (SceneManager.GetActiveScene().name == "TutorialScene") {
-					// Tutorialシーンのみの動作 
-					if(TutorialManager.Instance.Step ==3)
-					{
+				// Tutorialシーンのみの動作 
+				if (TutorialManager.Instance.Step == 3) {
 					TutorialManager.Instance.CreateCount++;
-					}
 				}
+			}
 
 		}
 	}
@@ -658,13 +661,11 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
 		_Is_Casting = true;
 
 		if (SceneManager.GetActiveScene().name == "TutorialScene") {
-					// Tutorialシーンのみの動作 
-					if(TutorialManager.Instance.Step ==4)
-					{
-					TutorialManager.Instance.SkillUseCount++;
-					}
-				}
-
+			// Tutorialシーンのみの動作 
+			if (TutorialManager.Instance.Step == 4) {
+				TutorialManager.Instance.SkillUseCount++;
+			}
+		}
 
 		// スキルが入っているスロット番号を取得して設定する
 		var skillSlot = _Skills.Select((Value, Index) => new { Value, Index }).FirstOrDefault(x => x.Value != null);
