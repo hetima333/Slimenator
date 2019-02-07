@@ -7,14 +7,9 @@ using UnityEngine.SceneManagement;
 /// </summary>
 public class ReStartButton : MenuButtonBase {
 	protected override void OnExecute(PointerEventData e) {
-		// 現在のシーンのリロード
-		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-		//Tutorialシーンでは専用HUDを使用するのでプレイシーンのみHUD差異読み込む
-		if (SceneManager.GetActiveScene().name == "PlayTestScene") {
-					
-					SceneManager.LoadScene("HUD", LoadSceneMode.Additive);
-				}
-		
+        // 現在のシーンのリロード
+        FadeManager.Instance.StartTransition(1.0f, SceneManager.GetActiveScene().name);
+
 		// ポーズ解除
 		if(Pausable.Instance!=null)
 		Pausable.Instance.Pausing = false;

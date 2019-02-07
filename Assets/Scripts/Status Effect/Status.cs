@@ -125,7 +125,8 @@ public class Status : MonoBehaviour
                     break;
 
                 default:
-                    stats.HealthMultiplyerProperties = Mathf.Clamp(1 + temp, 0, int.MaxValue);
+                    //ハイ馬鹿しね～
+                    //stats.HealthMultiplyerProperties = Mathf.Clamp(1 + temp, 0, int.MaxValue);
                     break;
             }
         }

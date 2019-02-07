@@ -59,7 +59,7 @@ public class UpgradeButton : MenuButtonBase {
 			//所持金がレベル足りなかった場合は終了
 			if(_manager.Player.MoneyAmount <= _level*100f){Debug.Log("Money不足");break;}
 				//ステータスの向上
-				_playerStats.HealthMultiplyerProperties+= 0.2f;
+				_playerStats.HealthMultiplyerProperties += 0.2f;
 				//所持金の減少
 				_manager.Player.MoneyAmount = _manager.Player.MoneyAmount-(_level*100f);
 				//現在のレベルの更新
