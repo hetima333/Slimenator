@@ -79,7 +79,7 @@ public class TutorialManager : SingletonMonoBehaviour<TutorialManager> {
 		switch(Step)
 		{
 			case 1:
-			if(Language.Instance.language == "Japanese")
+			if(Language.Instance.language == "日本語")
 			{
 				_announceText.text = "マーカーまで移動しよう";
 				_controllTexts[0].text ="移動";
@@ -90,8 +90,7 @@ public class TutorialManager : SingletonMonoBehaviour<TutorialManager> {
 			{
 				_announceText.text = "Move to Marker";
 				_controllTexts[0].text ="Move";
-
-				_controllTexts[1].text ="Turning";
+				_controllTexts[1].text ="Turn";
 			}
 
 				_controllImages[0].sprite = _controllSprite[0];
@@ -114,7 +113,7 @@ public class TutorialManager : SingletonMonoBehaviour<TutorialManager> {
 			GameObject lightningSpowner = ObjectManager.Instance.InstantiateWithObjectPooling(_spawner,Pos);
 			lightningSpowner.GetComponent<TutrialSlimeSpowner>().SetType(TutrialSlimeSpowner.SLIME.LIGHTNING);
 
-			if(Language.Instance.language == "Japanese")
+			if(Language.Instance.language == "日本語")
 			{
 				_controllTexts[0].text ="吸い込み";
 				_controllTexts[1].text ="向きの回転";
@@ -123,7 +122,7 @@ public class TutorialManager : SingletonMonoBehaviour<TutorialManager> {
 			else
 			{
 				_controllTexts[0].text ="suck";
-				_controllTexts[1].text ="Turning";
+				_controllTexts[1].text ="Turn";
 				_announceText.text = "Suck a slime";
 			}
 
@@ -133,7 +132,7 @@ public class TutorialManager : SingletonMonoBehaviour<TutorialManager> {
 			break;
 
 			case 3:
-			if(Language.Instance.language == "Japanese")
+			if(Language.Instance.language == "日本語")
 			{
 				_announceText.text = "スキルを作ろう";
 				_controllTexts[0].text ="スライムセット";
@@ -142,8 +141,8 @@ public class TutorialManager : SingletonMonoBehaviour<TutorialManager> {
 			else
 			{
 				_announceText.text = "Make skill from slime";
-				_controllTexts[0].text ="Set of slime";
-				_controllTexts[1].text ="Skill generation";
+				_controllTexts[0].text ="Set slime";
+				_controllTexts[1].text ="Create skill";
 				
 			}
 
@@ -153,7 +152,7 @@ public class TutorialManager : SingletonMonoBehaviour<TutorialManager> {
 			break;
 
 			case 4:
-			if(Language.Instance.language == "Japanese")
+			if(Language.Instance.language == "日本語")
 			{
 				_announceText.text = "スキルを使ってみよう";
 				_controllTexts[0].text ="スキル選択";
@@ -177,7 +176,7 @@ public class TutorialManager : SingletonMonoBehaviour<TutorialManager> {
 			_countTexts[0].gameObject.SetActive(false);
 			_countTexts[1].gameObject.SetActive(false);
 
-			if(Language.Instance.language == "Japanese")
+			if(Language.Instance.language == "日本語")
 			{
 				_announceText.text = "チュートリアル終了";	
 			}

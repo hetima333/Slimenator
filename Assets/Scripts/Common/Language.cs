@@ -6,6 +6,6 @@ public class Language : MonoBehaviour {
 
 	public readonly static Language Instance = new Language();
 
-	public string  language= "Japanese";
+	public string  language= "日本語";
 	
 }

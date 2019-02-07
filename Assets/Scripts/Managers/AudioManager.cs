@@ -332,4 +332,13 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager> {
 		_bgmSource.UnPause();
 		_seSourceList.Where(x => x.isPlaying != true).ToList().ForEach(x => x.UnPause());
 	}
+
+
+	/// <summary>
+    /// 全ての音声を停止する
+    /// </summary>
+    public void StopAllAudio() {
+        _bgmSource.Stop();
+        _seSourceList.Where(x => x.isPlaying).ToList().ForEach(x => {x.loop = false; x.Stop(); x.clip = null;});
+    }
 }

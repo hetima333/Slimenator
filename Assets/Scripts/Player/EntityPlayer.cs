@@ -517,7 +517,7 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
                 break;
 
 			case "Heal":
-                AudioManager.Instance.PlaySE(_HealSE.name,false,0.6f);
+                AudioManager.Instance.PlaySE(_HealSE.name,false,0.3f);
 
                 _Player_Stats.HealthProperties += type.GetRandomAmount();
 				_Player_Stats.HealthProperties = Mathf.Clamp(_Player_Stats.HealthProperties, 0, MaxHitPoint);

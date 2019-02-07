@@ -72,7 +72,10 @@ public class FadeManager : SingletonMonoBehaviour<FadeManager> {
 
         // シーンのロード
         if(sceneName != "")
+        {
+            AudioManager.Instance.StopAllAudio();
             SceneManager.LoadScene(sceneName);
+        }
 
         _fadeState = FadeState.In;
         time = 0.0f;

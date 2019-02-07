@@ -50,7 +50,7 @@ public class ForceWarp : MonoBehaviour
     private void Start()
     {
         this.ObserveEveryValueChanged(x=> x._isActive)
-            .Where(x=> true)
+            .Where(x=> x == true)
             .Subscribe(_ => {
                 _efffect.SetActive(true);
                 AudioManager.Instance.PlaySE(_portalSE.name);
@@ -80,7 +80,7 @@ public class ForceWarp : MonoBehaviour
         Invoke("ChangeCamera", 3.0f);
 
         //ボスBGM再生
-        AudioManager.Instance.PlayBGM("Boss_theme",1);
+        AudioManager.Instance.PlayBGM("Boss_theme",0.5f);
         _Boss.GetComponent<TestBoss>().WakeUp();
         GameStateManager.Instance.DestroyMap();
     }

@@ -33,7 +33,7 @@ public class ChangeWallMaterial : MonoBehaviour {
             //既に半透明になっていれば変更する必要なし
             if (_isTranslucent) return;
             //壁を透明化する
-            _wall.GetComponent<MeshRenderer>().material.color = new Color(0.0f, 0.0f, 0.0f, 0.5f);
+            // _wall.GetComponent<MeshRenderer>().material.color = new Color(0.0f, 0.0f, 0.0f, 0.5f);
             _isTranslucent = true;
         }
         else
@@ -41,7 +41,7 @@ public class ChangeWallMaterial : MonoBehaviour {
             //既に半透明にしないなら変更する必要なし
             if (!_isTranslucent) return;
             //半透明にしない
-            _wall.GetComponent<MeshRenderer>().material.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+            //_wall.GetComponent<MeshRenderer>().material.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
             _isTranslucent = false;
         }
 

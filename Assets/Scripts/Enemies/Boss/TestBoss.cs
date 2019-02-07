@@ -170,7 +170,7 @@ public class TestBoss : BossBase {
     void SplitEnd () {
         Debug.Log ("分裂完了");
         //ミニボス出現位置一時的処理
-        Vector3 Pos = new Vector3 (821, 0, 0);
+        Vector3 Pos = new Vector3 (1000, 0, 0);
         Pos.y = 2;
 
         Vector3 OffSet = new Vector3 (10, 0, 0);
