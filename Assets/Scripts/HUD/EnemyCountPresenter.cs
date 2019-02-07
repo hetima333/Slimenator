@@ -17,6 +17,7 @@ public class EnemyCountPresenter : MonoBehaviour {
 		text.ObserveEveryValueChanged(_ => EnemyCount)
 			.DistinctUntilChanged()
 			.Subscribe(x => {
+				if(x <=0 ){x = 0;}
 				text.text = "x " + x;
 			});
 	}

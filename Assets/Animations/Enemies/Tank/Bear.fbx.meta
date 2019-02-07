@@ -138,7 +138,7 @@ ModelImporter:
     rigImportErrors: 
     rigImportWarnings: 
     animationImportErrors: 
-    animationImportWarnings: Event HitEnd has a time (0.041667) outside the clip's
+    animationImportWarnings: Event EndHit has a time (0.041667) outside the clip's
       valid range (0.041667..2.708333). It will never be fired
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
@@ -406,15 +406,15 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 1
-        functionName: Dead
+      - time: 0.03082863
+        functionName: EndHit
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.015384615
-        functionName: EndHit
+      - time: 1
+        functionName: Dead
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0

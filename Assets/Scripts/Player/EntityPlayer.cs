@@ -462,6 +462,10 @@ public class EntityPlayer : MonoBehaviour, IDamageable {
 		keyBind.Add(KeyCode.X, _ElementType.GetList() [1] as ElementType);
 		keyBind.Add(KeyCode.C, _ElementType.GetList() [2] as ElementType);
 
+		keyBind.Add(KeyCode.Alpha1, _ElementType.GetList() [0] as ElementType);
+		keyBind.Add(KeyCode.Alpha2, _ElementType.GetList() [1] as ElementType);
+		keyBind.Add(KeyCode.Alpha3, _ElementType.GetList() [2] as ElementType);
+
 		ElementType type = null;
 		foreach (var key in keyBind) {
 			if (Input.GetKeyDown(key.Key)) {

@@ -526,6 +526,11 @@ Prefab:
       propertyPath: _portalSE
       value: 
       objectReference: {fileID: 8300000, guid: 0881f2766dc27d340b571faeefcc68c1, type: 3}
+    - target: {fileID: 65326446307384606, guid: 3a341fd3773214647a2d4b3d11c467c2,
+        type: 2}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3a341fd3773214647a2d4b3d11c467c2, type: 2}
   m_IsPrefabParent: 0
@@ -685,7 +690,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -105.47}
+  m_AnchoredPosition: {x: -8.74, y: -105.47}
   m_SizeDelta: {x: 250, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1346394455

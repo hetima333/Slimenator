@@ -232,10 +232,10 @@ public class TankEnemy : Enemy {
 
     //攻撃判定終了（AnimationEvent用）
     void EndHit () {
-        if (CurrentState == Enemy.State.DEAD) return;
-
         //武器の判定を消す
         _weaponList.ForEach (weapon => weapon.GetComponent<EnemyWeapon> ().ActiveCollision (false));
+        
+        if (CurrentState == Enemy.State.DEAD) return;
 
         //攻撃範囲から出れば攻撃をやめる
         if ((gameObject.transform.position - _target.transform.position).sqrMagnitude > Mathf.Pow (_attackRange, 2) + ERROR_RANGE) {

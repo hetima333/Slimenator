@@ -93,7 +93,7 @@ public class ForceWarp : MonoBehaviour
         _cameraHolder.transform.GetChild((int)Camera.MAIN).gameObject.SetActive(true);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider collision)
     {   
         if (!_isActive)
             return;
