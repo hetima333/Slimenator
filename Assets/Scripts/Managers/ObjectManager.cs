@@ -89,6 +89,9 @@ public class ObjectManager : SingletonMonoBehaviour<ObjectManager> {
 	/// </summary>
 	/// <returns></returns>
 	public List<GameObject> GetActiveObjects(GameObject obj) {
+
+		if(obj == null)
+		return null;
 #if UNITY_EDITOR
 		// 引数のオブジェクトがプレハブでなければエラーを返す
 		if (PrefabUtility.GetPrefabObject(obj) == null) {
@@ -109,7 +112,8 @@ public class ObjectManager : SingletonMonoBehaviour<ObjectManager> {
 	/// </summary>
 	/// <returns></returns>
 	public List<GameObject> GetSleepObjects(GameObject obj) {
-
+		if(obj == null)
+		return null;
 #if UNTIY_EDITOR
 		// 引数のオブジェクトがプレハブでなければエラーを返す
 		if (PrefabUtility.GetPrefabObject(obj) == null) {
