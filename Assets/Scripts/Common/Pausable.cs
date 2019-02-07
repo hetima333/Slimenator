@@ -104,6 +104,7 @@ public class Pausable : SingletonMonoBehaviour<Pausable> {
 	void Resume() {
 		// MonoBehaviourの再開
 		foreach (var monoBehaviour in _pausingMonoBehaviours) {
+			if(monoBehaviour == null) continue;
 			monoBehaviour.enabled = true;
 		}
 
