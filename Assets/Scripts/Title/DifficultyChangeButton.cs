@@ -12,13 +12,26 @@ private Text _text;
 		if(Difficulty.Instance._difficulty == "NORMAL")
 		{
 			Difficulty.Instance._difficulty = "HARD";
-			_text.text = Difficulty.Instance._difficulty;
+			if(Language.Instance.language == "日本語")
+			{
+				_text.text = "ハード";
+			}
+			else{
+				_text.text = Difficulty.Instance._difficulty;
+			}
+			
 			Difficulty.Instance._statusMagnification = 1.5f;
 		}
 		else
 		{
 			Difficulty.Instance._difficulty = "NORMAL";
-			_text.text = Difficulty.Instance._difficulty;
+			if(Language.Instance.language == "日本語")
+			{
+				_text.text = "ノーマル";
+			}
+			else{
+				_text.text = Difficulty.Instance._difficulty;
+			}
 			Difficulty.Instance._statusMagnification = 1.0f;
 		}
 		AudioManager.Instance.PlaySE("Decide");

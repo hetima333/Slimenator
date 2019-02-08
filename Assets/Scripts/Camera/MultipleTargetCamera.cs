@@ -127,8 +127,29 @@ public class MultipleTargetCamera : MonoBehaviour {
         GameObject boss2 = GameObject.Find("MiniKingSlime2(Clone)");
         _targets.Add(boss2.transform);
 
-        //for(int i=0;i<_targets.Count;i++)
+        // for(int i=0;i<_targets.Count;i++)
         //    Debug.Log("target:" + _targets[i].gameObject.name);
+    }
+
+        /// <summary>
+    /// ターゲットの再読み込み
+    /// </summary>
+    public void ReloadTargt2(GameObject target)
+    {
+        for (int i = _targets.Count - 1; i >= 0; i--)
+        {
+            _targets.RemoveAt(i);
+        }
+
+        _targets = new List<Transform>();
+        //プレイヤーをターゲットに追加
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        _targets.Add(player.transform);
+        //ボス達をターゲットに追加 
+        _targets.Add(target.transform);
+
+        // for(int i=0;i<_targets.Count;i++)
+        //    Debug.Log("target2:" + _targets[i].gameObject.name);
     }
 
 }

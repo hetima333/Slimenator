@@ -3856,6 +3856,16 @@ Prefab:
       propertyPath: _DifficultyButtonText
       value: 
       objectReference: {fileID: 1090887729}
+    - target: {fileID: 114301585331051584, guid: b9cf8c82fea79cc4aa39310ad07a1eae,
+        type: 2}
+      propertyPath: _TutorialButtonText
+      value: 
+      objectReference: {fileID: 608238343}
+    - target: {fileID: 114301585331051584, guid: b9cf8c82fea79cc4aa39310ad07a1eae,
+        type: 2}
+      propertyPath: _StartButtonText
+      value: 
+      objectReference: {fileID: 1859831285}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b9cf8c82fea79cc4aa39310ad07a1eae, type: 2}
   m_IsPrefabParent: 0
@@ -4683,6 +4693,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 924970225}
+  _startText: {fileID: 1859831285}
+  _tutorialText: {fileID: 608238343}
+  _difText: {fileID: 1090887729}
 --- !u!114 &1860111459
 MonoBehaviour:
   m_ObjectHideFlags: 0

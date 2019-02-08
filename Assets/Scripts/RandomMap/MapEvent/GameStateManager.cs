@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UniRx;
 using UniRx.Triggers;
 
 public class GameStateManager : SingletonMonoBehaviour<GameStateManager>
@@ -49,6 +50,12 @@ public class GameStateManager : SingletonMonoBehaviour<GameStateManager>
 
     [SerializeField]
     private Canvas _bossCanvas;
+
+
+    private BoolReactiveProperty _isBossEnable = new BoolReactiveProperty(false);
+    public IObservable<bool> IsBossEnable{
+        get { return _isBossEnable.AsObservable(); }
+    }
 
     private GameObject _player;
 
@@ -228,6 +235,7 @@ public class GameStateManager : SingletonMonoBehaviour<GameStateManager>
     {
         yield return new WaitForSeconds(1.0f);
         _bossCanvas.gameObject.SetActive(true);
+        _isBossEnable.Value = true;
         yield return new WaitForSeconds(2.0f);
         _bossCanvas.gameObject.SetActive(false);
     }

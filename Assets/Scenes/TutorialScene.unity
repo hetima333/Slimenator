@@ -657,6 +657,7 @@ GameObject:
   - component: {fileID: 127998588}
   - component: {fileID: 127998590}
   - component: {fileID: 127998589}
+  - component: {fileID: 127998591}
   m_Layer: 0
   m_Name: Text
   m_TagString: Untagged
@@ -721,6 +722,20 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 127998587}
+--- !u!114 &127998591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 127998587}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3f3ae4be69cd4d478168bee9d3d35fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _text: {fileID: 127998589}
+  _str1: "\u30B9\u30BF\u30FC\u30C8"
+  _str2: Play
 --- !u!1 &135407445
 GameObject:
   m_ObjectHideFlags: 0
@@ -8889,6 +8904,7 @@ GameObject:
   - component: {fileID: 529383301}
   - component: {fileID: 529383303}
   - component: {fileID: 529383302}
+  - component: {fileID: 529383304}
   m_Layer: 0
   m_Name: Text
   m_TagString: Untagged
@@ -8953,6 +8969,20 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 529383300}
+--- !u!114 &529383304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 529383300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3f3ae4be69cd4d478168bee9d3d35fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _text: {fileID: 529383302}
+  _str1: "\u30BF\u30A4\u30C8\u30EB"
+  _str2: Title
 --- !u!1 &543266844
 GameObject:
   m_ObjectHideFlags: 0
@@ -24398,6 +24428,11 @@ Prefab:
       propertyPath: _manager
       value: 
       objectReference: {fileID: 874529802}
+    - target: {fileID: 224423659494244502, guid: b5728cb948ef6fb46a97b117fa0db4c7,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: -105.00012
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b5728cb948ef6fb46a97b117fa0db4c7, type: 2}
   m_IsPrefabParent: 0

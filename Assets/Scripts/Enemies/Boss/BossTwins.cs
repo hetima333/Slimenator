@@ -176,6 +176,8 @@ public class BossTwins : BossBase {
 						_skillList.Add (gameObject.AddComponent<Tackle> ());
 						break;
 				}
+				//ボスカメラに情報を送る
+        		Camera.main.GetComponent<MultipleTargetCamera>().ReloadTargt2(this.gameObject);
 				//特殊技メテオの追加
 				_skillList.Add (gameObject.AddComponent<SlimeMeteorRain> ());
 				break;
